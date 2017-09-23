@@ -9,6 +9,10 @@
       "Wouterds\\Tests\\": "tests"
     }
   },
+  "scripts": {
+    "migrations:migrate": "docker exec -i wouterdeschuyter-website-php-fpm ./vendor/bin/doctrine-migrations migrations:migrate",
+    "migrations:generate": "docker exec -i wouterdeschuyter-website-php-fpm ./vendor/bin/doctrine-migrations migrations:generate"
+  },
   "require": {
     "jenssegers/lean": "^0.2.2",
     "league/container": "^2.4",
