@@ -2,7 +2,6 @@
 
 namespace Wouterds\Application\Http;
 
-use Slim\Settings;
 use Jenssegers\Lean\SlimServiceProvider;
 
 class ServiceProvider extends SlimServiceProvider
