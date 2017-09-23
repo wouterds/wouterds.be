@@ -8,6 +8,8 @@ use League\Container\ReflectionContainer;
 class Container extends LeagueContainer
 {
     /**
+     * Initialize container
+     *
      * @return Container
      */
     public static function load()

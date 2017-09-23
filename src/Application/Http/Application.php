@@ -7,6 +7,9 @@ use Wouterds\Application\Container;
 
 class Application extends App
 {
+    /**
+     * Application constructor
+     */
     public function __construct()
     {
         parent::__construct(Container::load());
@@ -14,6 +17,9 @@ class Application extends App
         $this->loadRoutes();
     }
 
+    /**
+     * Load routes
+     */
     private function loadRoutes()
     {
         $app = $this;
