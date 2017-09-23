@@ -1,0 +1,11 @@
+{
+  "config": {
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Wouterds\\": "src",
+      "Wouterds\\Tests\\": "tests"
+    }
+  }
+}
