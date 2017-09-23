@@ -5,6 +5,8 @@ namespace Wouterds\Application;
 use League\Container\Container as LeagueContainer;
 use League\Container\ReflectionContainer;
 
+use Wouterds\Application\Http\ServiceProvider as HttpServiceProvider;
+
 class Container extends LeagueContainer
 {
     /**
@@ -16,6 +18,8 @@ class Container extends LeagueContainer
     {
         $container = new static();
         $container->delegate(new ReflectionContainer());
+
+        $container->addServiceProvider(HttpServiceProvider::class);
 
         return $container;
     }
