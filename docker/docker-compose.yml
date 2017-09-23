@@ -4,6 +4,7 @@ services:
   nginx:
     image: nginx:1.13-alpine
     container_name: wouterdeschuyter-website-nginx
+    working_dir: /code
     env_file:
       - ./../.env
     ports:
@@ -15,6 +16,7 @@ services:
   php-fpm:
     image: php:7.1-fpm-alpine
     container_name: wouterdeschuyter-website-php-fpm
+    working_dir: /code
     env_file:
       - ./../.env
     volumes:
