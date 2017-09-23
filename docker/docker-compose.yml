@@ -14,7 +14,7 @@ services:
       - ./../public:/code/public
 
   php-fpm:
-    image: php:7.1-fpm-alpine
+    build: php-fpm
     container_name: wouterdeschuyter-website-php-fpm
     working_dir: /code
     env_file:
