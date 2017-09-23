@@ -16,6 +16,7 @@
     "vlucas/phpdotenv": "^2.4"
   },
   "require-dev": {
+    "doctrine/migrations": "^1.5",
     "symfony/var-dumper": "^3.3"
   }
 }
