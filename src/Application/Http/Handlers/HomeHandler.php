@@ -5,8 +5,16 @@ namespace Wouterds\Application\Http\Handlers;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class HomeHandler
+class HomeHandler extends ViewHandler
 {
+    /**
+     * @return string
+     */
+    public function getTemplate(): string
+    {
+        return 'home.html.twig';
+    }
+
     /**
      * Home request handler
      *
@@ -16,8 +24,6 @@ class HomeHandler
      */
     public function __invoke(Request $request, Response $response): Response
     {
-        $response->getBody()->write('Hello World!');
-
-        return $response;
+        return $this->render($response);
     }
 }
