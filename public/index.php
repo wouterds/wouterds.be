@@ -15,7 +15,7 @@ $dotenv = new Dotenv(APP_DIR);
 // Load env variables at runtime
 $dotenv->load();
 
-// Create new http app
+// Init http app
 $app = new Application();
 
 // Run http app
