@@ -6,6 +6,7 @@ use League\Container\Container as LeagueContainer;
 use League\Container\ReflectionContainer;
 
 use Wouterds\Application\Http\ServiceProvider as HttpServiceProvider;
+use Wouterds\Infrastructure\Database\ServiceProvider as DatabaseServiceProvider;
 
 class Container extends LeagueContainer
 {
@@ -20,6 +21,7 @@ class Container extends LeagueContainer
         $container->delegate(new ReflectionContainer());
 
         $container->addServiceProvider(HttpServiceProvider::class);
+        $container->addServiceProvider(DatabaseServiceProvider::class);
 
         return $container;
     }
