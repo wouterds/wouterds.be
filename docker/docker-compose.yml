@@ -17,3 +17,12 @@ services:
       - ./../.env
     volumes:
       - ./..:/code
+
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    env_file:
+      - ./../.env
+    ports:
+      - "3306:3306"
