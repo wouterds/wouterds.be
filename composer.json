@@ -1,4 +1,10 @@
 {
+  "authors": [
+    {
+      "name": "Wouter De Schuyter",
+      "email": "wouter.de.schuyter@gmail.com"
+    }
+  ],
   "config": {
     "sort-packages": true,
     "optimize-autoloader": true
