@@ -10,5 +10,8 @@
   },
   "require-dev": {
     "symfony/var-dumper": "^3.3"
+  },
+  "require": {
+    "slim/slim": "^3.8"
   }
 }
