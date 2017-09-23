@@ -3,4 +3,5 @@
 // Application directory
 define('APP_DIR', dirname(__DIR__));
 
-echo 'Hello World!';
+// Composer autoloader
+require_once(APP_DIR . '/vendor/autoload.php');
