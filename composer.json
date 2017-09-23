@@ -9,6 +9,7 @@
     }
   },
   "require": {
+    "jenssegers/lean": "^0.2.2",
     "league/container": "^2.4",
     "slim/slim": "^3.8",
     "vlucas/phpdotenv": "^2.4"
