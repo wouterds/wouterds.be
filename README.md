@@ -30,9 +30,15 @@ Included Docker services:
 
 - **nginx**
 - **php**
+- **mysql**
 
 Just start Docker like this (add the `-d` flag to run in background):
 
+
+### Database
+
+Run the migrations on the database if not done already:
+
 ```shell
-docker-compose -f docker/docker-compose.yml up
+composer migrations:migrate
 ```
