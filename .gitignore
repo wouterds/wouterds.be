@@ -1,5 +1,6 @@
 /.version
 /.env
+/composer.phar
 /node_modules
 /vendor
 /docker/data
