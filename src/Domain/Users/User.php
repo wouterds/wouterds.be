@@ -44,13 +44,11 @@ class User
     /**
      * @param string $name
      * @param string $email
-     * @param bool $approved
      */
-    public function __construct(string $name, string $email, bool $approved)
+    public function __construct(string $name, string $email)
     {
         $this->name = $name;
         $this->email = $email;
-        $this->approved = $approved;
     }
 
     /**
