@@ -16,6 +16,11 @@ const paths = {
   },
 };
 
+const src = {
+  styles: `${paths.resources.styles}/**/**.scss`,
+  scripts: `${paths.resources.scripts}/**/**.js`,
+};
+
 class TaskRunner {
   constructor() {
     gulp.task('styles', this.styles);
@@ -24,7 +29,7 @@ class TaskRunner {
   }
 
   styles() {
-    return gulp.src(paths.resources.styles + '/**/**.scss')
+    return gulp.src(src.styles)
       .pipe(sourcemaps.init())
       .pipe(sass({
         outputStyle: 'compressed',
@@ -43,7 +48,7 @@ class TaskRunner {
   }
 
   scripts() {
-    return gulp.src(paths.resources.scripts + '/**/**.js')
+    return gulp.src(src.scripts)
       .pipe(sourcemaps.init({ loadMaps: true }))
       .pipe(babel({
         presets: [
