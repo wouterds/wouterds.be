@@ -22,6 +22,16 @@ class User
     private $email;
 
     /**
+     * @var string
+     */
+    private $salt;
+
+    /**
+     * @var string
+     */
+    private $password;
+
+    /**
      * @var boolean
      */
     private $approved;
@@ -44,11 +54,13 @@ class User
     /**
      * @param string $name
      * @param string $email
+     * @param string $password
      */
-    public function __construct(string $name, string $email)
+    public function __construct(string $name, string $email, string $password)
     {
         $this->name = $name;
         $this->email = $email;
+        $this->password = $password;
     }
 
     /**
@@ -57,7 +69,7 @@ class User
      */
     public static function fromArray(array $array): User
     {
-        $user = new User($array['name'], $array['email']);
+        $user = new User($array['name'], $array['email'], $array['password']);
         $user->id = (int) $array['id'];
         $user->approved = (bool) $array['approved'];
         $user->createdAt = Carbon::createFromFormat(Carbon::DEFAULT_TO_STRING_FORMAT, $array['created_at']);
@@ -95,6 +107,22 @@ class User
     public function getEmail(): string
     {
         return $this->email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSalt(): string
+    {
+        return $this->salt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
     }
 
     /**

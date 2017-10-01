@@ -29,11 +29,16 @@ class DbalUserRepository implements UserRepository
      */
     public function add(User $user): User
     {
+        $salt = hash('sha256', microtime(true) . $user->getEmail());
+        $password = self::hashPassword($salt, $user->getPassword());
+
         $query = $this->connection->createQueryBuilder();
         $query->insert(self::TABLE_NAME);
         $query->values([
             'name' => $query->createNamedParameter($user->getName()),
             'email' => $query->createNamedParameter($user->getEmail()),
+            'salt' => $query->createNamedParameter($salt),
+            'password' => $query->createNamedParameter($password),
         ]);
         $query->execute();
 
@@ -57,5 +62,20 @@ class DbalUserRepository implements UserRepository
         }
 
         return User::fromArray($result);
+    }
+
+    /**
+     * @param string $salt
+     * @param string $input
+     * @return string
+     */
+    public static function hashPassword(string $salt, string $input): string
+    {
+        $password = $input;
+        for ($i = 0; $i < 10000; $i++) {
+            $password = hash('256', $salt . $password . $salt);
+        }
+
+        return $password;
     }
 }
