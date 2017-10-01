@@ -84,6 +84,14 @@ class User
     }
 
     /**
+     * @return bool
+     */
+    public function isDeleted(): bool
+    {
+        return !empty($this->deletedAt);
+    }
+
+    /**
      * @return Carbon
      */
     public function getCreatedAt(): Carbon
