@@ -72,6 +72,7 @@ class DbalUserRepository implements UserRepository
     public static function hashPassword(string $salt, string $input): string
     {
         $password = $input;
+
         for ($i = 0; $i < 10000; $i++) {
             $password = hash('sha256', $salt . $password . $salt);
         }
