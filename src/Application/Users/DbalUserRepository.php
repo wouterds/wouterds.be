@@ -73,7 +73,7 @@ class DbalUserRepository implements UserRepository
     {
         $password = $input;
         for ($i = 0; $i < 10000; $i++) {
-            $password = hash('256', $salt . $password . $salt);
+            $password = hash('sha256', $salt . $password . $salt);
         }
 
         return $password;
