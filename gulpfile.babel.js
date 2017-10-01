@@ -1,3 +1,4 @@
+// Import libs
 import gulp from 'gulp';
 import sourcemaps from 'gulp-sourcemaps';
 import sass from 'gulp-sass';
@@ -5,6 +6,7 @@ import postcss from 'gulp-postcss';
 import autoprefixer from 'autoprefixer';
 import babel from 'gulp-babel';
 
+// Paths
 const paths = {
   dist: {
     styles: './public/css',
@@ -16,6 +18,7 @@ const paths = {
   },
 };
 
+// Src files
 const src = {
   styles: `${paths.resources.styles}/**/**.scss`,
   scripts: `${paths.resources.scripts}/**/**.js`,
@@ -23,8 +26,11 @@ const src = {
 
 class TaskRunner {
   constructor() {
+    // Tasks
     gulp.task('styles', this.styles);
     gulp.task('scripts', this.scripts);
+
+    // Default task
     gulp.task('default', ['styles', 'scripts']);
   }
 
@@ -60,4 +66,5 @@ class TaskRunner {
   }
 }
 
+// Start our task runner
 new TaskRunner();
