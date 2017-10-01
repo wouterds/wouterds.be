@@ -19,7 +19,16 @@ class ServiceProvider extends AbstractServiceProvider
     public function register()
     {
         $this->container->share(Config::class, function () {
-            return new Config([]);
+            // Defaults
+            $settings = $_ENV;
+
+            // Load version
+            $version = file_get_contents(APP_DIR . '/.version');
+            $version = explode(PHP_EOL, $version);
+            $settings['APP_VERSION_NUMBER'] = $version[0];
+            $settings['APP_VERSION_COMMIT'] = $version[1];
+
+            return new Config($settings);
         });
     }
 }

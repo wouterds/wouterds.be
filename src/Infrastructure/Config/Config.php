@@ -16,9 +16,9 @@ class Config
     /**
      * @param array $values
      */
-    public function __construct(array $values = [])
+    public function __construct(array $values)
     {
-        $this->values = array_merge($_ENV, $values);
+        $this->values = $values;
     }
 
     /**
