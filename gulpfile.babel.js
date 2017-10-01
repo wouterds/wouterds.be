@@ -3,6 +3,7 @@ import sourcemaps from 'gulp-sourcemaps';
 import sass from 'gulp-sass';
 import postcss from 'gulp-postcss';
 import autoprefixer from 'autoprefixer';
+import babel from 'gulp-babel';
 
 const paths = {
   dist: {
@@ -42,7 +43,15 @@ class TaskRunner {
   }
 
   scripts() {
-    console.log('scripts');
+    return gulp.src(paths.resources.scripts + '/**/**.js')
+      .pipe(sourcemaps.init({ loadMaps: true }))
+      .pipe(babel({
+        presets: [
+          "minify",
+        ]
+      }))
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest(paths.dist.scripts));
   }
 }
 
