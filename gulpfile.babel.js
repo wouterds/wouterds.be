@@ -9,8 +9,8 @@ import babel from 'gulp-babel';
 // Paths
 const paths = {
   dist: {
-    styles: './public/css',
-    scripts: './public/js',
+    styles: './public/static/css',
+    scripts: './public/static/js',
   },
   resources: {
     styles: './resources/styles',

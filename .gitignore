@@ -4,5 +4,4 @@
 /node_modules
 /vendor
 /docker/data
-/public/css
-/public/js
+/public/static
