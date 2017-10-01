@@ -17,8 +17,8 @@
     }
   },
   "scripts": {
-    "migrations:migrate": "docker exec -i wouterdeschuyter-website-php-fpm ./vendor/bin/doctrine-migrations migrations:migrate",
-    "migrations:generate": "docker exec -i wouterdeschuyter-website-php-fpm ./vendor/bin/doctrine-migrations migrations:generate"
+    "migrations:migrate": "./vendor/bin/doctrine-migrations migrations:migrate",
+    "migrations:generate": "./vendor/bin/doctrine-migrations migrations:generate"
   },
   "require": {
     "doctrine/dbal": "^2.6",

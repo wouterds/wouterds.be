@@ -21,6 +21,12 @@ node_modules: package-lock.json
 
 dependencies: vendor node_modules
 
+migrate: vendor
+	docker exec -i wouterdeschuyter-website-php-fpm php ./composer.phar migrations:migrate
+
+new-migration: vendor
+	docker exec -i wouterdeschuyter-website-php-fpm php ./composer.phar migrations:generate
+
 build: dependencies
 	-git describe --abbrev=0 --tags > ./.version
 	-git rev-list --tags --max-count=1 >> ./.version
