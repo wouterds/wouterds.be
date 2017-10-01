@@ -12,18 +12,6 @@ class HomeHandler extends ViewHandler
      */
     public function getTemplate(): string
     {
-        return 'home.html.twig';
-    }
-
-    /**
-     * Home request handler
-     *
-     * @param Request $request
-     * @param Response $response
-     * @return Response
-     */
-    public function __invoke(Request $request, Response $response): Response
-    {
-        return $this->render($response);
+        return '/home.html.twig';
     }
 }

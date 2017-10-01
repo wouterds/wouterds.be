@@ -2,6 +2,7 @@
 
 namespace Wouterds\Application\Http\Handlers;
 
+use Slim\Http\Request;
 use Slim\Http\Response;
 use Wouterds\Application\Http\Handlers\View;
 use Wouterds\Infrastructure\View\Twig;
@@ -32,5 +33,17 @@ abstract class ViewHandler implements View
     {
         // Render template to response
         return $this->renderer->renderWithResponse($response, $this->getTemplate(), $data);
+    }
+
+    /**
+     * Home request handler
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
+    public function __invoke(Request $request, Response $response): Response
+    {
+        return $this->render($response);
     }
 }
