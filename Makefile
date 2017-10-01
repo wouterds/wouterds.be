@@ -19,7 +19,7 @@ vendor: composer.phar composer.lock
 node_modules: package-lock.json
 	docker run --rm --volume=$(PWD):/code -w=/code node:8-alpine npm install
 
-dependencies: vendor
+dependencies: vendor node_modules
 
 build: dependencies
 	-git describe --abbrev=0 --tags > ./.version
