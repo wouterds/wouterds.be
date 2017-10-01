@@ -1,6 +1,6 @@
 <?php
 
-namespace Wouterds\Domain\Http\Handlers;
+namespace Wouterds\Application\Http\Handlers;
 
 use Slim\Http\Response;
 

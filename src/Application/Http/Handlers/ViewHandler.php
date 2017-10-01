@@ -3,7 +3,7 @@
 namespace Wouterds\Application\Http\Handlers;
 
 use Slim\Http\Response;
-use Wouterds\Domain\Http\Handlers\View;
+use Wouterds\Application\Http\Handlers\View;
 use Wouterds\Infrastructure\View\Twig;
 
 abstract class ViewHandler implements View
