@@ -39,7 +39,7 @@ class TaskRunner {
       }),
     ]))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest(folder.dist.styles))
+    .pipe(gulp.dest(folder.dist.styles));
   }
 
   scripts() {
