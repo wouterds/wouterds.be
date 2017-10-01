@@ -37,13 +37,28 @@ class ServiceProvider extends AbstractServiceProvider
      */
     private function loadVersion(): array
     {
+        // Version file
         $file = APP_DIR . '/.version';
+
+        // File doesn't exist?
+        if (!file_exists($file)) {
+            return [
+                'APP_VERSION_NUMBER' => 'unknown',
+                'APP_VERSION_COMMIT' => 'unknown',
+            ];
+        }
+
+        // Get contents
         $version = file_get_contents($file);
+
+        // Parse file
         $version = explode(PHP_EOL, $version);
+        $versionNumber = $version[0];
+        $versionCommit = $version[1];
 
         return [
-            'APP_VERSION_NUMBER' => $version[0],
-            'APP_VERSION_COMMIT' => $version[1],
+            'APP_VERSION_NUMBER' => $versionNumber,
+            'APP_VERSION_COMMIT' => $versionCommit,
         ];
     }
 }
