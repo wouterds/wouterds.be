@@ -20,15 +20,30 @@ class ServiceProvider extends AbstractServiceProvider
     {
         $this->container->share(Config::class, function () {
             // Defaults
-            $settings = $_ENV;
+            $defaults = $_ENV;
 
             // Load version
-            $version = file_get_contents(APP_DIR . '/.version');
-            $version = explode(PHP_EOL, $version);
-            $settings['APP_VERSION_NUMBER'] = $version[0];
-            $settings['APP_VERSION_COMMIT'] = $version[1];
+            $version = $this->loadVersion();
 
-            return new Config($settings);
+            return new Config(array_merge(
+                $defaults,
+                $version
+            ));
         });
+    }
+
+    /**
+     * @return array
+     */
+    private function loadVersion(): array
+    {
+        $file = APP_DIR . '/.version';
+        $version = file_get_contents($file);
+        $version = explode(PHP_EOL, $version);
+
+        return [
+            'APP_VERSION_NUMBER' => $version[0],
+            'APP_VERSION_COMMIT' => $version[1],
+        ];
     }
 }
