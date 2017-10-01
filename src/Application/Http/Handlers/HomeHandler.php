@@ -2,9 +2,6 @@
 
 namespace Wouterds\Application\Http\Handlers;
 
-use Slim\Http\Request;
-use Slim\Http\Response;
-
 class HomeHandler extends ViewHandler
 {
     /**

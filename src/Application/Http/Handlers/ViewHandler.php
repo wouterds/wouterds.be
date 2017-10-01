@@ -4,7 +4,6 @@ namespace Wouterds\Application\Http\Handlers;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Wouterds\Application\Http\Handlers\View;
 use Wouterds\Infrastructure\View\Twig;
 
 abstract class ViewHandler implements View

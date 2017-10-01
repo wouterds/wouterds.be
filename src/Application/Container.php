@@ -4,7 +4,6 @@ namespace Wouterds\Application;
 
 use League\Container\Container as LeagueContainer;
 use League\Container\ReflectionContainer;
-
 use Wouterds\Application\Http\ServiceProvider as HttpServiceProvider;
 use Wouterds\Application\Users\ServiceProvider as UserServiceProvider;
 use Wouterds\Infrastructure\Config\ServiceProvider as ConfigServiceProvider;
