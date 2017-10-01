@@ -37,4 +37,23 @@ class DbalUserRepository implements UserRepository
         ]);
         $query->execute();
     }
+
+    /**
+     * @param int $id
+     * @return User|null
+     */
+    public function find(int $id): ?User
+    {
+        $query = $this->connection->createQueryBuilder();
+        $query->select('*');
+        $query->from(self::TABLE_NAME);
+        $query->where('id = ' . $query->createNamedParameter($id));
+        $result = $query->execute()->fetch();
+
+        if (empty($result)) {
+            return null;
+        }
+
+        return User::fromArray($result);
+    }
 }

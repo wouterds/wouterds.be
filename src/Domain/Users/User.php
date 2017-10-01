@@ -52,6 +52,28 @@ class User
     }
 
     /**
+     * @param array $array
+     * @return User
+     */
+    public static function fromArray(array $array): User
+    {
+        $user = new User($array['name'], $array['email']);
+        $user->id = (int) $array['id'];
+        $user->approved = (bool) $array['approved'];
+        $user->createdAt = Carbon::createFromFormat(Carbon::DEFAULT_TO_STRING_FORMAT, $array['created_at']);
+
+        if (!empty($array['updated_at'])) {
+            $user->updatedAt = Carbon::createFromFormat(Carbon::DEFAULT_TO_STRING_FORMAT, $array['updated_at']);
+        }
+
+        if (!empty($array['deleted_at'])) {
+            $user->updatedAt = Carbon::createFromFormat(Carbon::DEFAULT_TO_STRING_FORMAT, $array['deleted_at']);
+        }
+
+        return $user;
+    }
+
+    /**
      * @return int
      */
     public function getId(): int
