@@ -9,6 +9,7 @@
     "babel": "^6.23.0",
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.0",
+    "babel-preset-minify": "^0.2.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.0",
     "gulp-postcss": "^7.0.0",
