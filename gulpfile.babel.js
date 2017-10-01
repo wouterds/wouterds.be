@@ -4,7 +4,7 @@ import sass from 'gulp-sass';
 import postcss from 'gulp-postcss';
 import autoprefixer from 'autoprefixer';
 
-const folder = {
+const paths = {
   dist: {
     styles: './public/css',
     scripts: './public/js',
@@ -23,7 +23,7 @@ class TaskRunner {
   }
 
   styles() {
-    return gulp.src(folder.resources.styles + '/**/**.scss')
+    return gulp.src(paths.resources.styles + '/**/**.scss')
       .pipe(sourcemaps.init())
       .pipe(sass({
         outputStyle: 'compressed',
@@ -38,7 +38,7 @@ class TaskRunner {
         }),
       ]))
       .pipe(sourcemaps.write())
-      .pipe(gulp.dest(folder.dist.styles));
+      .pipe(gulp.dest(paths.dist.styles));
   }
 
   scripts() {
