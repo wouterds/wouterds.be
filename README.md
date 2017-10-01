@@ -2,6 +2,12 @@
 
 Source code of my personal website, [wouterdeschuyter.be](http://wouterdeschuyter.be). Open-source on Github. Yolo.
 
+#### :construction: Work in progress! :construction:
+
+Started on *23th of September 2017*.
+
+Builds are auto deployed on push to [staging.wouterdeschuyter.be](http://staging.wouterdeschuyter.be).
+
 ## Setup
 
 Add an entry to your `/etc/hosts` file:
