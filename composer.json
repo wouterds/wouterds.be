@@ -24,6 +24,7 @@
     "doctrine/dbal": "^2.6",
     "jenssegers/lean": "^0.2.2",
     "league/container": "^2.4",
+    "nesbot/carbon": "^1.22",
     "slim/slim": "^3.8",
     "twig/twig": "^2.4",
     "vlucas/phpdotenv": "^2.4"
