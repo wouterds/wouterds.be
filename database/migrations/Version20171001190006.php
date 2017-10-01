@@ -21,6 +21,8 @@ class Version20171001190006 extends AbstractMigration
         $table->addColumn('id', 'integer')->setAutoincrement(true)->setUnsigned(true);
         $table->addColumn('name', 'string')->setLength(32);
         $table->addColumn('email', 'string')->setLength(64);
+        $table->addColumn('salt', 'string')->setLength(64);
+        $table->addColumn('password', 'string')->setLength(64);
         $table->addColumn('approved', 'boolean')->setDefault(false);
         $table->addColumn('created_at', 'datetime')->setDefault('CURRENT_TIMESTAMP');
         $table->addColumn('updated_at', 'datetime')->setNotnull(false);
