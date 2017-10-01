@@ -24,22 +24,22 @@ class TaskRunner {
 
   styles() {
     return gulp
-    .src(folder.resources.styles + '/**.scss')
-    .pipe(sourcemaps.init())
-    .pipe(sass({
-      outputStyle: 'compressed',
-    }).on('error', sass.logError))
-    .pipe(postcss([
-      autoprefixer({
-        browsers: [
-          'last 3 versions',
-          'last 2 major versions',
-          'ie >= 9',
-        ],
-      }),
-    ]))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest(folder.dist.styles));
+      .src(folder.resources.styles + '/**.scss')
+      .pipe(sourcemaps.init())
+      .pipe(sass({
+        outputStyle: 'compressed',
+      }).on('error', sass.logError))
+      .pipe(postcss([
+        autoprefixer({
+          browsers: [
+            'last 3 versions',
+            'last 2 major versions',
+            'ie >= 9',
+          ],
+        }),
+      ]))
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest(folder.dist.styles));
   }
 
   scripts() {
