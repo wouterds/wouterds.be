@@ -5,6 +5,7 @@ clean:
 	-rm -rf ./node_modules
 	-rm -rf ./vendor
 	-rm -f ./.build-*
+	-rm -f ./public/static
 	-rm -f composer.phar
 
 composer.phar:
