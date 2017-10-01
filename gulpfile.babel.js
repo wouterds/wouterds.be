@@ -32,6 +32,12 @@ class TaskRunner {
 
     // Default task
     gulp.task('default', ['styles', 'scripts']);
+
+    // Watch task
+    gulp.task('watch', ['default'], () => {
+      gulp.watch(src.styles, ['styles']);
+      gulp.watch(src.scripts, ['scripts']);
+    });
   }
 
   styles() {
