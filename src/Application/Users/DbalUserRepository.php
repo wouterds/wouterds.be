@@ -3,6 +3,7 @@
 namespace Wouterds\Application\Users;
 
 use Doctrine\DBAL\Connection;
+use Wouterds\Domain\Users\User;
 use Wouterds\Domain\Users\UserRepository;
 
 class DbalUserRepository implements UserRepository
@@ -20,5 +21,20 @@ class DbalUserRepository implements UserRepository
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
+    }
+
+    /**
+     * @param User $user
+     * @return User
+     */
+    public function add(User $user)
+    {
+        $query = $this->connection->createQueryBuilder();
+        $query->insert(self::TABLE_NAME);
+        $query->values([
+            'name' => $query->createNamedParameter($user->getName()),
+            'email' => $query->createNamedParameter($user->getEmail()),
+        ]);
+        $query->execute();
     }
 }
