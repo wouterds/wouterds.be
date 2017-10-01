@@ -67,3 +67,9 @@ Run the migrations on the database if not done already:
 ```shell
 composer migrations:migrate
 ```
+
+**Note:** This command needs to be run inside the running Docker container in order to be able to connect to the mysql database. But I also made a Make recipe for this to run it automatically inside the running Docker container:
+
+```shell
+make migrate
+```
