@@ -24,6 +24,32 @@ Install Composer dependencies:
 composer install
 ```
 
+Install NodeJS dependencies:
+
+```shell
+npm install
+```
+
+### Compiling frontend app
+
+Compile the frontend app using Gulp:
+
+```shell
+gulp
+```
+
+Keep watching files for changes using:
+
+```shell
+gulp watch
+```
+
+If one of above commands fails, you probably need to install Gulp first:
+
+```shell
+npm install -g gulp
+```
+
 ### Docker
 
 Included Docker services:
@@ -33,7 +59,6 @@ Included Docker services:
 - **mysql**
 
 Just start Docker like this (add the `-d` flag to run in background):
-
 
 ### Database
 
