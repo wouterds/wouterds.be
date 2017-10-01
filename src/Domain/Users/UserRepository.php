@@ -6,12 +6,13 @@ interface UserRepository
 {
     /**
      * @param User $user
+     * @return User
      */
     public function add(User $user);
 
     /**
      * @param int $id
-     * @return User
+     * @return User|null
      */
     public function find(int $id): ?User;
 }

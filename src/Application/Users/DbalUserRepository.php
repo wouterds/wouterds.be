@@ -27,7 +27,7 @@ class DbalUserRepository implements UserRepository
      * @param User $user
      * @return User
      */
-    public function add(User $user)
+    public function add(User $user): User
     {
         $query = $this->connection->createQueryBuilder();
         $query->insert(self::TABLE_NAME);
@@ -36,6 +36,8 @@ class DbalUserRepository implements UserRepository
             'email' => $query->createNamedParameter($user->getEmail()),
         ]);
         $query->execute();
+
+        return $this->find($this->connection->lastInsertId());
     }
 
     /**
