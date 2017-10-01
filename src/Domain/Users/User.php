@@ -71,6 +71,7 @@ class User
     {
         $user = new User($array['name'], $array['email'], $array['password']);
         $user->id = (int) $array['id'];
+        $user->salt = $array['salt'];
         $user->approved = (bool) $array['approved'];
         $user->createdAt = Carbon::createFromFormat(Carbon::DEFAULT_TO_STRING_FORMAT, $array['created_at']);
 
