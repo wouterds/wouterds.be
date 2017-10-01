@@ -1,3 +1,4 @@
+/.version
 /.env
 /node_modules
 /vendor
