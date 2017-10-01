@@ -24,7 +24,7 @@ class TaskRunner {
 
   styles() {
     return gulp
-      .src(folder.resources.styles + '/**.scss')
+      .src(folder.resources.styles + '/**/**.scss')
       .pipe(sourcemaps.init())
       .pipe(sass({
         outputStyle: 'compressed',
