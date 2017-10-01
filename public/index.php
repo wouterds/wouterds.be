@@ -15,6 +15,11 @@ $dotenv = new Dotenv(APP_DIR);
 // Load env variables at runtime
 $dotenv->load();
 
+// Overwrite env variables with .env when we're in a local env
+if (getenv('APP_ENV') === 'local') {
+    $dotenv->overload();
+}
+
 // Init http app
 $app = new Application();
 
