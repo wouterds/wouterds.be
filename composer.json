@@ -1,11 +1,13 @@
 {
+  "name": "wouterdeschuyter-website",
+  "description": "Personal website",
+  "version": "6.0.0-alpha",
   "authors": [
     {
       "name": "Wouter De Schuyter",
       "email": "wouter.de.schuyter@gmail.com"
     }
   ],
-  "version": "6.0.0-alpha",
   "config": {
     "sort-packages": true,
     "optimize-autoloader": true
