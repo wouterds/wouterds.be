@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="/static/css/app.css?v={{ app.config.get('APP_VERSION_NUMBER') }}">
     {% endblock %}
 </head>
-<body>
+<body id="page{{ pageInfo.pascalCase }}" class="page page--{{ pageInfo.dashedCase }}">
     {% block body %}
         Hello World!
     {% endblock %}
