@@ -4,6 +4,7 @@ namespace Wouterds\Application\Http\Middlewares;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Slim\Router;
 use Wouterds\Infrastructure\Config\Config;
 use Wouterds\Infrastructure\View\Twig;
 
@@ -20,13 +21,20 @@ class TwigMiddleware
     private $config;
 
     /**
+     * @var Router
+     */
+    private $router;
+
+    /**
      * @param Twig $twig
      * @param Config $config
+     * @param Router $router
      */
-    public function __construct(Twig $twig, Config $config)
+    public function __construct(Twig $twig, Config $config, Router $router)
     {
         $this->twig = $twig;
         $this->config = $config;
+        $this->router = $router;
     }
 
     /**
@@ -40,6 +48,7 @@ class TwigMiddleware
          $this->twig->addGlobal('app', [
              'request' => $request,
              'config' => $this->config,
+             'router' => $this->router,
          ]);
 
         return $next($request, $response);
