@@ -5,6 +5,7 @@ namespace Wouterds\Infrastructure\Database;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use Predis\Client;
 
 class ServiceProvider extends AbstractServiceProvider
 {
@@ -13,6 +14,7 @@ class ServiceProvider extends AbstractServiceProvider
      */
     protected $provides = [
         Connection::class,
+        Client::class,
     ];
 
     /**
@@ -29,6 +31,14 @@ class ServiceProvider extends AbstractServiceProvider
                 'driver' => 'pdo_mysql',
                 'charset' => 'utf8mb4',
                 'collate' => 'utf8mb4_unicode_ci',
+            ]);
+        });
+
+        $this->container->share(Client::class, function () {
+            return new Client([
+                'scheme' => 'tcp',
+                'host'   => getenv('REDIS_HOST'),
+                'port'   => getenv('REDIS_PORT'),
             ]);
         });
     }
