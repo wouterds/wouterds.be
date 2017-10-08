@@ -1,7 +1,9 @@
-$background: #f00;
-$color: #fff;
+@import 'base/reset';
+@import 'base/config';
 
 body {
   background: $background;
   color: $color;
+  font-family: $font;
+  padding: 25px;
 }
