@@ -6,7 +6,7 @@
             <div class="col-lg-12">
                 <h1>Admin - Sign Up</h1>
 
-                <form class="container-fluid form" role="form" method="post" action="">
+                <form class="container-fluid form" role="form" method="post" action="{{ app.router.getNamedRoute('api.admin.sign-up').pattern }}">
                     <div class="row">
                         <div class="form-wrapper">
                             <label class="label" for="name">Name</label>
