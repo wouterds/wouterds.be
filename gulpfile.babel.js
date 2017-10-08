@@ -5,6 +5,7 @@ import sass from 'gulp-sass';
 import postcss from 'gulp-postcss';
 import autoprefixer from 'autoprefixer';
 import babel from 'gulp-babel';
+import concat from 'gulp-concat';
 
 // Paths
 const paths = {
@@ -56,6 +57,7 @@ class TaskRunner {
         }),
       ]))
       .pipe(sourcemaps.write())
+      .pipe(concat('app.css'))
       .pipe(gulp.dest(paths.dist.styles));
   }
 
@@ -68,6 +70,7 @@ class TaskRunner {
         ]
       }))
       .pipe(sourcemaps.write())
+      .pipe(concat('app.js'))
       .pipe(gulp.dest(paths.dist.scripts));
   }
 }
