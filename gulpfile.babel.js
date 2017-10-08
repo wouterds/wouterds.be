@@ -26,6 +26,7 @@ const src = {
   styles: `${paths.resources.styles}/**/**.scss`,
   scripts: `${paths.resources.scripts}/**/**.js`,
   vendor: [
+    `${paths.resources.vendor}/jquery/dist/jquery.js`,
   ]
 };
 
