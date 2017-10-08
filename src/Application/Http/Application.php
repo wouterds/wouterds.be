@@ -23,6 +23,7 @@ class Application extends App
     private function loadRoutes()
     {
         $app = $this;
-        require __DIR__ . '/routes.php';
+        require __DIR__ . '/routes-web.php';
+        require __DIR__ . '/routes-api.php';
     }
 }
