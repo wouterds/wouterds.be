@@ -24,6 +24,17 @@ ul {
   list-style-type: none;
 }
 
+input,
+textarea,
+select {
+  -webkit-appearance: none;
+  border-radius: 0;
+
+  &[type=checkbox] {
+    -webkit-appearance: checkbox;
+  }
+}
+
 body {
   font-size: 62.5%;
 }
