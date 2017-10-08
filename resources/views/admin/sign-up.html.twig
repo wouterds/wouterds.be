@@ -1,25 +1,39 @@
 {% extends '_base.html.twig' %}
 
 {% block body %}
-    <h1>Admin - Sign Up</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>Admin - Sign Up</h1>
 
-    <form role="form" method="post" action="">
-        <div>
-            <label for="name" class="label">Name</label>
-            <input type="text" id="name" name="name">
+                <form class="container-fluid form" role="form" method="post" action="">
+                    <div class="row">
+                        <div class="form-wrapper">
+                            <label class="label" for="name">Name</label>
+                            <input class="input" type="text" id="name" name="name">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-wrapper">
+                            <label class="label" for="email">Email address</label>
+                            <input class="input" type="text" id="email" name="email">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-wrapper">
+                            <label class="label" for="password">Password</label>
+                            <input class="input" type="password" id="password" name="password">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-wrapper">
+                            <button class="button" type="submit">
+                                <span class="button__text">Sign up</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div>
-            <label for="email" class="label">Email address</label>
-            <input type="text" id="email" name="email">
-        </div>
-        <div>
-            <label for="password" class="label">Password</label>
-            <input type="password" id="password" name="password">
-        </div>
-        <div>
-            <button type="submit">
-                <span class="button__text">Sign up</span>
-            </button>
-        </div>
-    </form>
+    </div>
 {% endblock %}
