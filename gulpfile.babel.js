@@ -5,6 +5,7 @@ import sass from 'gulp-sass';
 import postcss from 'gulp-postcss';
 import autoprefixer from 'autoprefixer';
 import babel from 'gulp-babel';
+import uglify from 'gulp-uglify';
 import concat from 'gulp-concat';
 
 // Paths
@@ -16,6 +17,7 @@ const paths = {
   resources: {
     styles: './resources/styles',
     scripts: './resources/scripts',
+    vendor: './node_modules',
   },
 };
 
@@ -23,6 +25,8 @@ const paths = {
 const src = {
   styles: `${paths.resources.styles}/**/**.scss`,
   scripts: `${paths.resources.scripts}/**/**.js`,
+  vendor: [
+  ]
 };
 
 class TaskRunner {
@@ -30,14 +34,16 @@ class TaskRunner {
     // Tasks
     gulp.task('styles', this.styles);
     gulp.task('scripts', this.scripts);
+    gulp.task('vendor', this.vendor);
 
     // Default task
-    gulp.task('default', ['styles', 'scripts']);
+    gulp.task('default', ['styles', 'scripts', 'vendor']);
 
     // Watch task
     gulp.task('watch', ['default'], () => {
       gulp.watch(src.styles, ['styles']);
       gulp.watch(src.scripts, ['scripts']);
+      gulp.watch(src.vendor, ['vendor']);
     });
   }
 
@@ -46,6 +52,7 @@ class TaskRunner {
       .pipe(sourcemaps.init())
       .pipe(sass({
         outputStyle: 'compressed',
+        includePaths: ['node_modules'],
       }).on('error', sass.logError))
       .pipe(postcss([
         autoprefixer({
@@ -71,6 +78,16 @@ class TaskRunner {
       }))
       .pipe(sourcemaps.write())
       .pipe(concat('app.js'))
+      .pipe(gulp.dest(paths.dist.scripts));
+  }
+
+  vendor() {
+    console.log(src.vendor);
+    return gulp.src(src.vendor)
+      .pipe(sourcemaps.init({ loadMaps: true }))
+      .pipe(uglify())
+      .pipe(sourcemaps.write())
+      .pipe(concat('vendor.js'))
       .pipe(gulp.dest(paths.dist.scripts));
   }
 }

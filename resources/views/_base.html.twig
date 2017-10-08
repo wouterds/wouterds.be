@@ -16,6 +16,7 @@
         Hello World!
     {% endblock %}
 
+    <script src="/static/js/vendor.js?v={{ app.config.get('APP_VERSION_NUMBER') }}"></script>
     <script src="/static/js/app.js?v={{ app.config.get('APP_VERSION_NUMBER') }}"></script>
 </body>
 </html>
