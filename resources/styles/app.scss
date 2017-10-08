@@ -2,8 +2,8 @@
 @import 'base/variables';
 
 body {
-  background: $background;
-  color: $color;
+  background: $color-background;
+  color: $color-text;
   font-family: $font-family;
   padding: 25px;
 }
