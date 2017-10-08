@@ -2,4 +2,24 @@
 
 {% block body %}
     <h1>Admin - Sign Up</h1>
+
+    <form role="form" method="post" action="">
+        <div>
+            <label for="name" class="label">Name</label>
+            <input type="text" id="name" name="name">
+        </div>
+        <div>
+            <label for="email" class="label">Email address</label>
+            <input type="text" id="email" name="email">
+        </div>
+        <div>
+            <label for="password" class="label">Password</label>
+            <input type="password" id="password" name="password">
+        </div>
+        <div>
+            <button type="submit">
+                <span class="button__text">Sign up</span>
+            </button>
+        </div>
+    </form>
 {% endblock %}
