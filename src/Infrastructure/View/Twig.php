@@ -1,8 +1,8 @@
 <?php
 
-namespace Wouterds\Infrastructure\View;
+namespace WouterDeSchuyter\Infrastructure\View;
 
-use Slim\Http\Response;
+use Psr\Http\Message\ResponseInterface as Response;
 use Twig_Environment;
 
 class Twig extends Twig_Environment

@@ -1,13 +1,9 @@
 <?php
 
-namespace Wouterds\Infrastructure\Config;
+namespace WouterDeSchuyter\Infrastructure\Config;
 
 class Config
 {
-    const APP_ENV_LOCAL = 'local';
-    const APP_ENV_STAGING = 'staging';
-    const APP_ENV_PRODUCTION = 'production';
-
     /**
      * @var array
      */
@@ -19,14 +15,6 @@ class Config
     public function __construct(array $values)
     {
         $this->values = $values;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEnv(): string
-    {
-        return $this->get('APP_ENV');
     }
 
     /**

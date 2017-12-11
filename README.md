@@ -1,10 +1,6 @@
-# wouterdeschuyter.be
+# :construction: wouterdeschuyter.be
 
 Source code of my personal website, [wouterdeschuyter.be](http://wouterdeschuyter.be). Open-source on Github. Yolo.
-
-#### :construction: Work in progress! :construction:
-
-Started on *23th of September 2017*.
 
 Builds are auto deployed on push to [staging.wouterdeschuyter.be](http://staging.wouterdeschuyter.be).
 
@@ -38,22 +34,16 @@ npm install
 
 ### Compiling frontend app
 
-Compile the frontend app using Gulp:
+Compile the frontend app using:
 
 ```shell
-gulp
+npm run build
 ```
 
-Keep watching files for changes using:
+To compile and keep watching files for changes use:
 
 ```shell
-gulp watch
-```
-
-If one of above commands fails, you probably need to install Gulp first:
-
-```shell
-npm install -g gulp
+npm start
 ```
 
 ### Docker
@@ -65,6 +55,10 @@ Included Docker services:
 - **mysql**
 
 Just start Docker like this (add the `-d` flag to run in background):
+
+```shell
+docker-compose -f ./docker/docker-compose-dev.yml up
+```
 
 ### Database
 

@@ -1,13 +1,18 @@
 <?php
 
-namespace Wouterds\Domain\Users;
+namespace WouterDeSchuyter\Domain\Users;
 
-use Carbon\Carbon;
+use JsonSerializable;
 
-class User
+class User implements JsonSerializable
 {
+    private const PROTECTED = [
+        'salt',
+        'password',
+    ];
+
     /**
-     * @var int
+     * @var UserId
      */
     private $id;
 
@@ -24,72 +29,65 @@ class User
     /**
      * @var string
      */
-    private $salt;
+    private $password;
 
     /**
      * @var string
      */
-    private $password;
+    private $salt;
 
     /**
-     * @var boolean
-     */
-    private $approved;
-
-    /**
-     * @var Carbon
-     */
-    private $createdAt;
-
-    /**
-     * @var Carbon|null
-     */
-    private $updatedAt;
-
-    /**
-     * @var Carbon|null
-     */
-    private $deletedAt;
-
-    /**
-     * @param string $name
      * @param string $email
      * @param string $password
+     * @param string $salt
      */
-    public function __construct(string $name, string $email, string $password)
+    public function __construct(string $email, string $password, string $salt = null)
     {
-        $this->name = $name;
+        $this->id = new UserId();
+
+        if (empty($salt)) {
+            $salt = hash('sha256', microtime(true). $this->id);
+            $password = self::hashPassword($salt, $password);
+        }
+
         $this->email = $email;
         $this->password = $password;
+        $this->salt = $salt;
     }
 
     /**
-     * @param array $array
+     * @param array $data
      * @return User
      */
-    public static function fromArray(array $array): User
+    public static function fromArray(array $data): User
     {
-        $user = new User($array['name'], $array['email'], $array['password']);
-        $user->id = (int) $array['id'];
-        $user->salt = $array['salt'];
-        $user->approved = (bool) $array['approved'];
-        $user->createdAt = Carbon::createFromFormat(Carbon::DEFAULT_TO_STRING_FORMAT, $array['created_at']);
-
-        if (!empty($array['updated_at'])) {
-            $user->updatedAt = Carbon::createFromFormat(Carbon::DEFAULT_TO_STRING_FORMAT, $array['updated_at']);
-        }
-
-        if (!empty($array['deleted_at'])) {
-            $user->updatedAt = Carbon::createFromFormat(Carbon::DEFAULT_TO_STRING_FORMAT, $array['deleted_at']);
-        }
+        $user = new User($data['email'], $data['password'], !empty($data['salt']) ? $data['salt'] : null);
+        $user->id = new UserId(!empty($data['id']) ? $data['id'] : null);
+        $user->name = !empty($data['name']) ? $data['name'] : null;
 
         return $user;
     }
 
     /**
-     * @return int
+     * @param string $salt
+     * @param string $input
+     * @return string
      */
-    public function getId(): int
+    public static function hashPassword(string $salt, string $input): string
+    {
+        $password = $input;
+
+        for ($i = 0; $i < 1000; $i++) {
+            $password = hash('sha256', $salt . $password . $salt);
+        }
+
+        return $password;
+    }
+
+    /**
+     * @return UserId
+     */
+    public function getId(): UserId
     {
         return $this->id;
     }
@@ -103,19 +101,19 @@ class User
     }
 
     /**
-     * @return string
+     * @param string $name
      */
-    public function getEmail(): string
+    public function setName(string $name)
     {
-        return $this->email;
+        $this->name = $name;
     }
 
     /**
      * @return string
      */
-    public function getSalt(): string
+    public function getEmail(): string
     {
-        return $this->salt;
+        return $this->email;
     }
 
     /**
@@ -127,42 +125,28 @@ class User
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    public function isApproved(): bool
+    public function getSalt(): string
     {
-        return $this->approved;
+        return $this->salt;
     }
 
     /**
-     * @return bool
+     * @return array
      */
-    public function isDeleted(): bool
+    public function jsonSerialize(): array
     {
-        return !empty($this->deletedAt);
-    }
+        $properties = get_object_vars($this);
 
-    /**
-     * @return Carbon
-     */
-    public function getCreatedAt(): Carbon
-    {
-        return $this->createdAt;
-    }
+        foreach (self::PROTECTED as $property) {
+            if (!isset($properties[$property])) {
+                continue;
+            }
 
-    /**
-     * @return Carbon|null
-     */
-    public function getUpdatedAt(): ?Carbon
-    {
-        return $this->updatedAt;
-    }
+            unset($properties[$property]);
+        }
 
-    /**
-     * @return Carbon|null
-     */
-    public function getDeletedAt(): ?Carbon
-    {
-        return $this->deletedAt;
+        return $properties;
     }
 }

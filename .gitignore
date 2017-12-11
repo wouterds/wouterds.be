@@ -1,7 +1,13 @@
-/.version
+/.idea
 /.env
+/.build-*
+/.version
+/package-lock.json
 /composer.phar
-/node_modules
+/composer-setup.php
 /vendor
+/node_modules
 /docker/data
 /public/static
+/storage/logs
+/storage/files

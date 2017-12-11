@@ -1,9 +1,9 @@
 <?php
 
-namespace Wouterds\Application\Users;
+namespace WouterDeSchuyter\Application\Users;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
-use Wouterds\Domain\Users\UserRepository;
+use WouterDeSchuyter\Domain\Users\UserRepository;
 
 class ServiceProvider extends AbstractServiceProvider
 {
@@ -19,7 +19,7 @@ class ServiceProvider extends AbstractServiceProvider
      */
     public function register()
     {
-        $this->container->share(UserRepository::class, function() {
+        $this->container->share(UserRepository::class, function () {
             return $this->container->get(DbalUserRepository::class);
         });
     }

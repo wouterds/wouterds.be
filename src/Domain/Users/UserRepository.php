@@ -1,18 +1,23 @@
 <?php
 
-namespace Wouterds\Domain\Users;
+namespace WouterDeSchuyter\Domain\Users;
 
 interface UserRepository
 {
     /**
      * @param User $user
-     * @return User
      */
     public function add(User $user);
 
     /**
-     * @param int $id
+     * @param UserId $id
+     * @return null|User
+     */
+    public function find(UserId $id): ?User;
+
+    /**
+     * @param string $email
      * @return User|null
      */
-    public function find(int $id): ?User;
+    public function findByEmail(string $email): ?User;
 }

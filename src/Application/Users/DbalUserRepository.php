@@ -1,14 +1,15 @@
 <?php
 
-namespace Wouterds\Application\Users;
+namespace WouterDeSchuyter\Application\Users;
 
 use Doctrine\DBAL\Connection;
-use Wouterds\Domain\Users\User;
-use Wouterds\Domain\Users\UserRepository;
+use WouterDeSchuyter\Domain\Users\User;
+use WouterDeSchuyter\Domain\Users\UserId;
+use WouterDeSchuyter\Domain\Users\UserRepository;
 
 class DbalUserRepository implements UserRepository
 {
-    public const TABLE_NAME = 'user';
+    public const TABLE = 'user';
 
     /**
      * @var Connection
@@ -25,35 +26,27 @@ class DbalUserRepository implements UserRepository
 
     /**
      * @param User $user
-     * @return User
      */
-    public function add(User $user): User
+    public function add(User $user)
     {
-        $salt = hash('sha256', microtime(true) . $user->getEmail());
-        $password = self::hashPassword($salt, $user->getPassword());
-
-        $query = $this->connection->createQueryBuilder();
-        $query->insert(self::TABLE_NAME);
-        $query->values([
-            'name' => $query->createNamedParameter($user->getName()),
-            'email' => $query->createNamedParameter($user->getEmail()),
-            'salt' => $query->createNamedParameter($salt),
-            'password' => $query->createNamedParameter($password),
+        $this->connection->insert(self::TABLE, [
+            'id' => $user->getId(),
+            'name' => $user->getName(),
+            'email' => $user->getEmail(),
+            'salt' => $user->getSalt(),
+            'password' => $user->getPassword(),
         ]);
-        $query->execute();
-
-        return $this->find($this->connection->lastInsertId());
     }
 
     /**
-     * @param int $id
-     * @return User|null
+     * @param UserId $id
+     * @return null|User
      */
-    public function find(int $id): ?User
+    public function find(UserId $id): ?User
     {
         $query = $this->connection->createQueryBuilder();
         $query->select('*');
-        $query->from(self::TABLE_NAME);
+        $query->from(self::TABLE);
         $query->where('id = ' . $query->createNamedParameter($id));
         $result = $query->execute()->fetch();
 
@@ -65,18 +58,21 @@ class DbalUserRepository implements UserRepository
     }
 
     /**
-     * @param string $salt
-     * @param string $input
-     * @return string
+     * @param string $email
+     * @return User|null
      */
-    public static function hashPassword(string $salt, string $input): string
+    public function findByEmail(string $email): ?User
     {
-        $password = $input;
+        $query = $this->connection->createQueryBuilder();
+        $query->select('*');
+        $query->from(self::TABLE);
+        $query->where('email = ' . $query->createNamedParameter($email));
+        $result = $query->execute()->fetch();
 
-        for ($i = 0; $i < 10000; $i++) {
-            $password = hash('sha256', $salt . $password . $salt);
+        if (empty($result)) {
+            return null;
         }
 
-        return $password;
+        return User::fromArray($result);
     }
 }

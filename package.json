@@ -1,24 +1,26 @@
 {
-  "name": "wouterdeschuyter-website",
-  "description": "Personal website",
+  "name": "internal-wouterdeschuyter-website",
   "version": "6.0.0-alpha",
   "author": "Wouter De Schuyter <wouter.de.schuyter@gmail.com>",
+  "scripts": {
+    "start": "./node_modules/.bin/webpack -w",
+    "build": "./node_modules/.bin/webpack -p"
+  },
   "dependencies": {
     "bootstrap-sass": "^3.3.7",
     "jquery": "^3.2.1"
   },
   "devDependencies": {
-    "autoprefixer": "^7.1.5",
-    "babel": "^6.23.0",
     "babel-core": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
-    "babel-preset-minify": "^0.2.0",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^7.0.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-postcss": "^7.0.0",
-    "gulp-sass": "^3.1.0",
-    "gulp-sourcemaps": "^2.6.1",
-    "gulp-uglify": "^3.0.0"
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-function-bind": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.7",
+    "extract-text-webpack-plugin": "^3.0.1",
+    "node-sass": "^4.5.3",
+    "sass-loader": "^6.0.6",
+    "uglifyjs-webpack-plugin": "^1.1.2",
+    "webpack": "^3.8.1"
   }
 }

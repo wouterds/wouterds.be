@@ -1,20 +1,19 @@
 <?php
 
-namespace Wouterds\Application;
+namespace WouterDeSchuyter\Application;
 
 use League\Container\Container as LeagueContainer;
 use League\Container\ReflectionContainer;
-use Wouterds\Application\Http\ServiceProvider as HttpServiceProvider;
-use Wouterds\Application\Users\ServiceProvider as UserServiceProvider;
-use Wouterds\Infrastructure\Config\ServiceProvider as ConfigServiceProvider;
-use Wouterds\Infrastructure\Database\ServiceProvider as DatabaseServiceProvider;
-use Wouterds\Infrastructure\View\ServiceProvider as ViewServiceProvider;
+use WouterDeSchuyter\Application\Http\ServiceProvider as HttpServiceProvider;
+use WouterDeSchuyter\Application\Users\ServiceProvider as UsersServiceProvider;
+use WouterDeSchuyter\Infrastructure\ApplicationMonitor\ServiceProvider as ApplicationMonitorServiceProvider;
+use WouterDeSchuyter\Infrastructure\Config\ServiceProvider as ConfigServiceProvider;
+use WouterDeSchuyter\Infrastructure\Database\ServiceProvider as DatabaseServiceProvider;
+use WouterDeSchuyter\Infrastructure\View\ServiceProvider as ViewServiceProvider;
 
 class Container extends LeagueContainer
 {
     /**
-     * Initialize container
-     *
      * @return Container
      */
     public static function load()
@@ -23,10 +22,11 @@ class Container extends LeagueContainer
         $container->delegate(new ReflectionContainer());
 
         $container->addServiceProvider(HttpServiceProvider::class);
+        $container->addServiceProvider(UsersServiceProvider::class);
+        $container->addServiceProvider(ApplicationMonitorServiceProvider::class);
         $container->addServiceProvider(ConfigServiceProvider::class);
         $container->addServiceProvider(DatabaseServiceProvider::class);
         $container->addServiceProvider(ViewServiceProvider::class);
-        $container->addServiceProvider(UserServiceProvider::class);
 
         return $container;
     }

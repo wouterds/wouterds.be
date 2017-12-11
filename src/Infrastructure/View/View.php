@@ -1,8 +1,8 @@
 <?php
 
-namespace Wouterds\Application\Http\Handlers;
+namespace WouterDeSchuyter\Infrastructure\View;
 
-use Slim\Http\Response;
+use Psr\Http\Message\ResponseInterface as Response;
 
 interface View
 {

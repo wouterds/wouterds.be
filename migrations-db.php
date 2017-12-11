@@ -1,6 +1,17 @@
 <?php
 
-require_once('./vendor/autoload.php');
+namespace WouterDeSchuyter\Migrations;
+
+use Doctrine\DBAL\Types\Type;
+
+// Application directory
+define('APP_DIR', __DIR__);
+
+// Include composer autoloader
+require_once APP_DIR . '/vendor/autoload.php';
+
+// Uuid support
+Type::addType('uuid', 'Ramsey\Uuid\Doctrine\UuidType');
 
 return [
     'dbname' => getenv('MYSQL_DATABASE'),

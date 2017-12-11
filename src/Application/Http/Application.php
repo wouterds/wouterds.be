@@ -1,15 +1,13 @@
 <?php
 
-namespace Wouterds\Application\Http;
+namespace WouterDeSchuyter\Application\Http;
 
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
-use Wouterds\Application\Container;
+use WouterDeSchuyter\Application\Container;
 
 class Application extends App
 {
-    /**
-     * Application constructor
-     */
     public function __construct()
     {
         parent::__construct(Container::load());
@@ -17,13 +15,17 @@ class Application extends App
         $this->loadRoutes();
     }
 
-    /**
-     * Load routes
-     */
     private function loadRoutes()
     {
         $app = $this;
-        require __DIR__ . '/routes-web.php';
-        require __DIR__ . '/routes-api.php';
+        $request = $app->getContainer()->get(Request::class);
+
+        // Dirty, to be fixed
+        $routes = __DIR__ . '/routes-web.php';
+        if (stripos($request->getUri()->getHost(), 'api') !== false) {
+            $routes = __DIR__ . '/routes-api.php';
+        }
+
+        require_once $routes;
     }
 }

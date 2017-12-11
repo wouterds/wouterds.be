@@ -1,9 +1,8 @@
 <?php
 
-namespace Wouterds\Infrastructure\Config;
+namespace WouterDeSchuyter\Infrastructure\Config;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
-use Predis\Client as RedisClient;
 
 class ServiceProvider extends AbstractServiceProvider
 {
@@ -38,9 +37,6 @@ class ServiceProvider extends AbstractServiceProvider
      */
     private function loadVersion(): array
     {
-        // Get Redis client from container
-        $redisClient = $this->container->get(RedisClient::class);
-
         // Version file
         $file = APP_DIR . '/.version';
 
@@ -52,32 +48,26 @@ class ServiceProvider extends AbstractServiceProvider
             ];
         }
 
-        // Calculate file hash
-        $fileHash = md5_file($file);
-        $fileCacheKey = 'APP_VERSION.' . $fileHash;
-        $version = $redisClient->get($fileCacheKey);
-
-        // Found version in Redis?
-        if (!empty($version)) {
-            return json_decode($version, true);
-        }
-
         // Get contents
         $version = file_get_contents($file);
 
         // Parse file
-        $version = explode(PHP_EOL, $version);
+        $version = array_filter(explode(PHP_EOL, $version));
+
+        // No contents?
+        if (empty($version)) {
+            return [
+                'APP_VERSION_NUMBER' => 'unknown',
+                'APP_VERSION_COMMIT' => 'unknown',
+            ];
+        }
+
         $versionNumber = $version[0];
         $versionCommit = $version[1];
 
-        $version = [
+        return [
             'APP_VERSION_NUMBER' => $versionNumber,
             'APP_VERSION_COMMIT' => $versionCommit,
         ];
-
-        // Cache to redis
-        $redisClient->set($fileCacheKey, json_encode($version));
-
-        return $version;
     }
 }

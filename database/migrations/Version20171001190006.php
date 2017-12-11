@@ -1,6 +1,6 @@
 <?php
 
-namespace Wouterds\Migrations;
+namespace WouterDeSchuyter\Migrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
@@ -10,26 +10,24 @@ use Doctrine\DBAL\Schema\Schema;
  */
 class Version20171001190006 extends AbstractMigration
 {
-    private const TABLE_NAME = 'user';
+    private const TABLE = 'user';
 
     /**
      * @param Schema $schema
      */
     public function up(Schema $schema)
     {
-        $table = $schema->createTable(self::TABLE_NAME);
-        $table->addColumn('id', 'integer')->setAutoincrement(true)->setUnsigned(true);
-        $table->addColumn('name', 'string')->setLength(32);
+        $table = $schema->createTable(self::TABLE);
+        $table->addColumn('id', 'uuid');
+        $table->addColumn('name', 'string')->setLength(32)->setNotnull(false);
         $table->addColumn('email', 'string')->setLength(64);
         $table->addColumn('salt', 'string')->setLength(64);
         $table->addColumn('password', 'string')->setLength(64);
-        $table->addColumn('approved', 'boolean')->setDefault(false);
         $table->addColumn('created_at', 'datetime')->setDefault('CURRENT_TIMESTAMP');
         $table->addColumn('updated_at', 'datetime')->setNotnull(false);
         $table->addColumn('deleted_at', 'datetime')->setNotnull(false);
         $table->setPrimaryKey(['id']);
         $table->addUniqueIndex(['email']);
-        $table->addIndex(['approved']);
     }
 
     /**
@@ -37,6 +35,6 @@ class Version20171001190006 extends AbstractMigration
      */
     public function down(Schema $schema)
     {
-        $schema->dropTable(self::TABLE_NAME);
+        $schema->dropTable(self::TABLE);
     }
 }
