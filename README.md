@@ -9,7 +9,7 @@ Builds are auto deployed on push to [staging.wouterdeschuyter.be](http://staging
 Add an entry to your `/etc/hosts` file:
 
 ```shell
-127.0.0.1 wouterdeschuyter.dev
+127.0.0.1 dev.wouterdeschuyter.be
 ```
 
 ### Environment variables
