@@ -5,6 +5,7 @@ namespace WouterDeSchuyter\Infrastructure\View;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Router;
+use WouterDeSchuyter\Infrastructure\ApplicationMonitor\ApplicationMonitor;
 use WouterDeSchuyter\Infrastructure\Config\Config;
 
 abstract class AbstractViewHandler implements View
@@ -23,23 +24,31 @@ abstract class AbstractViewHandler implements View
      * @var Router
      */
     protected $router;
+
     /**
-     * @var RequestInterface
+     * @var Request
      */
     private $request;
+
+    /**
+     * @var ApplicationMonitor
+     */
+    private $applicationMonitor;
 
     /**
      * @param Twig $twig
      * @param Config $config
      * @param Router $router
      * @param Request $request
+     * @param ApplicationMonitor $applicationMonitor
      */
-    public function __construct(Twig $twig, Config $config, Router $router, Request $request)
+    public function __construct(Twig $twig, Config $config, Router $router, Request $request, ApplicationMonitor $applicationMonitor)
     {
         $this->twig = $twig;
         $this->config = $config;
         $this->router = $router;
         $this->request = $request;
+        $this->applicationMonitor = $applicationMonitor;
     }
 
     /**
@@ -53,6 +62,7 @@ abstract class AbstractViewHandler implements View
         $data['app']['config'] = $this->config;
         $data['app']['router'] = $this->router;
         $data['app']['request'] = $this->request;
+        $data['app']['report'] = $this->applicationMonitor->getReport();
 
         $data['page'] = [];
         $data['page']['info'] = $this->pageInfo();
@@ -66,6 +76,7 @@ abstract class AbstractViewHandler implements View
     private function pageInfo(): array
     {
         $templateName = $this->getTemplate();
+        $templateName = str_replace('pages/', null, $templateName);
         $templateName = str_replace('.html.twig', null, $templateName);
         $templateParts = preg_split( "/(-|\/)/", $templateName );
         $templateParts = array_filter($templateParts);
