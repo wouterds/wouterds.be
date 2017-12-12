@@ -13,7 +13,7 @@ class HomeHandler extends AbstractViewHandler
      */
     public function getTemplate(): string
     {
-        return 'home.html.twig';
+        return 'pages/home.html.twig';
     }
 
     /**
