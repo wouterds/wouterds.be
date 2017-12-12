@@ -24,6 +24,6 @@ class NotAllowedHandler extends AbstractViewHandler
      */
     public function __invoke(Request $request, Response $response): Response
     {
-        return $this->render($request, $response->withStatus(StatusCode::METHOD_NOT_ALLOWED));
+        return $this->render($response->withStatus(StatusCode::METHOD_NOT_ALLOWED));
     }
 }

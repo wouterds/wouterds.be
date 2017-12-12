@@ -24,6 +24,6 @@ class NotFoundHandler extends AbstractViewHandler
      */
     public function __invoke(Request $request, Response $response): Response
     {
-        return $this->render($request, $response->withStatus(StatusCode::NOT_FOUND));
+        return $this->render($response->withStatus(StatusCode::NOT_FOUND));
     }
 }
