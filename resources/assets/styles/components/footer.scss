@@ -1,0 +1,15 @@
+@import '../base/variables';
+
+$scope: 'footer';
+
+.#{$scope} {
+  color: rgba($color-tint-blue-gray, 0.4);
+  font-size: 1.4em;
+  line-height: 2;
+  padding: 65px 0;
+
+  .fa-heart {
+    color: #F56F70;
+    margin-left: 2px;
+  }
+}

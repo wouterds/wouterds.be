@@ -1,0 +1,41 @@
+@import '../base/variables';
+
+$scope: 'header';
+
+.#{$scope} {
+  padding: 23px 25px;
+  overflow: hidden;
+
+  &__title {
+    font-weight: 300;
+    font-size: 2.4em;
+    float: left;
+    display: inline-block;
+  }
+
+  &__navigation {
+    float: right;
+    display: inline-block;
+    font-size: 1.3em;
+    margin-right: -13px;
+
+    &__item {
+      display: inline-block;
+
+      &--active & {
+        &-link {
+          background: $color-tint-red;
+          color: $color-white;
+        }
+      }
+    }
+
+    &__item-link {
+      color: $color-tint-blue-gray;
+      display: block;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 3px;
+    }
+  }
+}

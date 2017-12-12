@@ -1,0 +1,12 @@
+@import 'variables';
+
+body {
+  font-size: 62.5%;
+  font-family: $font-family;
+}
+
+h1,
+.h1 {
+  font-size: 2.3em;
+  font-weight: 400;
+}

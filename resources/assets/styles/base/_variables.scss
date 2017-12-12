@@ -2,6 +2,12 @@
 $font-family: 'Helvetica Neue', Roboto, Helvetica, Arial, sans-serif;
 $font-family-code: Hack, Consolas, Monaco, 'Andale Mono', monospace;
 
+// Container
+$container: 768px;
+$container-lg: $container;
+$container-md: $container;
+$container-sm: $container;
+
 // Colors - base
 $color-white: #fff;
 $color-black: #000;
@@ -15,8 +21,3 @@ $color-tint-blue-gray: #293750;
 $color-background: $color-white;
 $color-text: $color-gray;
 
-// Container
-$container: 768px;
-$container-lg: $container;
-$container-md: $container;
-$container-sm: $container;

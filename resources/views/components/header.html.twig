@@ -1,0 +1,22 @@
+<header class="header">
+    <div class="container-fluid">
+        <h1 class="header__title">{{ app.config.get('APP_NAME') }}</h1>
+
+        <nav class="header__navigation">
+            <ul>
+                <li class="header__navigation__item header__navigation__item--active">
+                    <a class="header__navigation__item-link" href="{{ app.router.pathFor('home') }}">Home</a>
+                </li>
+                <li class="header__navigation__item">
+                    <a class="header__navigation__item-link" href="">About</a>
+                </li>
+                <li class="header__navigation__item">
+                    <a class="header__navigation__item-link" href="">Blog</a>
+                </li>
+                <li class="header__navigation__item">
+                    <a class="header__navigation__item-link" href="">Contact</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>

@@ -9,9 +9,14 @@
         {% block extra_meta %}{% endblock %}
         <title>{% block title %}{{ app.config.get('APP_NAME') }}{% endblock %}</title>
         <link rel="stylesheet" href="/static/css/app.css?v={{ app.config.get('APP_VERSION_NUMBER') }}">
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:100,300,400,500,700">
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font/build/web/hack-subset.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     {% endblock %}
 </head>
-<body id="page{{ pageInfo.pascalCase }}" class="page page--{{ pageInfo.dashedCase }}">
+<body id="page{{ page.info.pascalCase }}" class="page page--{{ page.info.dashedCase }}">
+    {% include 'components/header.html.twig' %}
+
     <main role="main" class="main">
         <div class="container-fluid">
             <div class="content-wrapper">
@@ -21,6 +26,8 @@
             </div>
         </div>
     </main>
+
+    {% include 'components/footer.html.twig' %}
 
     <script src="/static/js/app.js?v={{ app.config.get('APP_VERSION_NUMBER') }}"></script>
 </body>
