@@ -8,7 +8,7 @@
         {% else %}
             {{ app.report.getElapsedTime().inMilliseconds() }} ms
         {% endif %}
-        using {{ app.report.getUsedMemory().inMB() }} MB,
+        using {{ app.report.getUsedMemory().getValue()|readable_filesize }},
         running using Docker on a Raspberry Pi
         <i class="fa fa-heart" aria-hidden="true"></i>
     </div>

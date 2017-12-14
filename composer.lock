@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "58e9a5ccfc9b3295a59763eeed6920ff",
+    "content-hash": "94b8b07e3751971a013d3695302fbc84",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -2192,6 +2192,42 @@
             "time": "2017-11-26T19:13:09+00:00"
         },
         {
+            "name": "spe/filesize-extension-bundle",
+            "version": "1.0.0",
+            "target-dir": "SPE/FilesizeExtensionBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/loonkwil/filesize-extension-bundle.git",
+                "reference": "07f5f305112e2d9afd88a9a0e9ee0ff0d2702bfa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/loonkwil/filesize-extension-bundle/zipball/07f5f305112e2d9afd88a9a0e9ee0ff0d2702bfa",
+                "reference": "07f5f305112e2d9afd88a9a0e9ee0ff0d2702bfa",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "twig/twig": ">=1.12.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "SPE\\FilesizeExtensionBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Peter Simon",
+                    "email": "simonpepe@gmail.com"
+                }
+            ],
+            "description": "Twig filter for human readable filesize",
+            "homepage": "https://github.com/loonkwil/filesize-extension-bundle",
+            "time": "2015-12-08T09:03:02+00:00"
+        },
+        {
             "name": "symfony/console",
             "version": "v4.0.1",
             "source": {
@@ -3371,42 +3407,6 @@
                 "v2"
             ],
             "time": "2017-11-18T21:56:03+00:00"
-        },
-        {
-            "name": "spe/filesize-extension-bundle",
-            "version": "1.0.0",
-            "target-dir": "SPE/FilesizeExtensionBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/loonkwil/filesize-extension-bundle.git",
-                "reference": "07f5f305112e2d9afd88a9a0e9ee0ff0d2702bfa"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/loonkwil/filesize-extension-bundle/zipball/07f5f305112e2d9afd88a9a0e9ee0ff0d2702bfa",
-                "reference": "07f5f305112e2d9afd88a9a0e9ee0ff0d2702bfa",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3",
-                "twig/twig": ">=1.12.0"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "SPE\\FilesizeExtensionBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "Peter Simon",
-                    "email": "simonpepe@gmail.com"
-                }
-            ],
-            "description": "Twig filter for human readable filesize",
-            "homepage": "https://github.com/loonkwil/filesize-extension-bundle",
-            "time": "2015-12-08T09:03:02+00:00"
         },
         {
             "name": "symfony/polyfill-php72",
