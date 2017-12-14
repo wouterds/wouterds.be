@@ -12,6 +12,7 @@
 
 // Base styles
 @import 'base/fonts';
+@import 'base/forms';
 
 // Components
 @import 'components/header';
@@ -19,6 +20,7 @@
 
 // Pages
 @import 'pages/about';
+@import 'pages/contact';
 
 body {
   background: $color-background;

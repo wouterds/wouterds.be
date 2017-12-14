@@ -6,7 +6,7 @@ $scope: 'page--about';
 
 .#{$scope} {
   .content-wrapper {
-    margin-top: 75px;
+    margin-top: $page-margin-top;
   }
 
   h2 {

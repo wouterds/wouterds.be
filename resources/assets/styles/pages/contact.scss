@@ -1,0 +1,11 @@
+// Variables
+@import '../base/variables';
+
+// Scope
+$scope: 'page--contact';
+
+.#{$scope} {
+  .content-wrapper {
+    margin-top: $page-margin-top;
+  }
+}

@@ -1,8 +1,18 @@
 import PageAbout from './pages/about';
+import PageContact from './pages/contact';
 
 class App {
   constructor() {
-    (new PageAbout()).init();
+    this.init();
+  }
+
+  init() {
+    this.initPages();
+  }
+
+  initPages() {
+    new PageAbout();
+    new PageContact();
   }
 }
 

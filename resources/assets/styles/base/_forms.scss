@@ -1,0 +1,228 @@
+@import 'variables';
+
+.form {
+  margin: 15px -5px;
+
+  .input-wrapper {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+}
+
+.input-wrapper {
+  padding: 15px 0;
+
+  &.error,
+  &.success {
+    .input {
+      border-color: $color-orange;
+    }
+
+    .error,
+    .success {
+      color: $color-orange;
+      font-size: 1.4em;
+      line-height: 1.4em;
+      margin: 10px 0 0;
+      position: relative;
+
+      &.submit {
+        display: inline-block;
+        margin-left: 25px;
+      }
+    }
+
+    .success {
+      color: $color-green;
+    }
+  }
+}
+
+.input-select-wrapper {
+  position: relative;
+
+  &:after {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: '\f078';
+    position: absolute;
+    vertical-align: middle;
+    height: 20px;
+    width: 25px;
+    right: 0;
+    top: 13px;
+    bottom: 0;
+    opacity: 0.75;
+  }
+}
+
+.input,
+.editor-toolbar,
+.CodeMirror {
+  appearance: none;
+  opacity: 1;
+  font-size: 1.5em;
+  line-height: 1.4;
+  font-family: $font-family;
+  padding: 10px 15px;
+  background: rgba($color-blue-grey, 0.03);
+  border: 0;
+  border-bottom: 1px solid rgba($color-blue-grey, 0.06);
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  color: rgba($color-blue-grey, 0.5);
+  border-radius: 3px;
+  transition: color 150ms ease-in-out, border-color 150ms ease-in-out, background 150ms ease-in-out;
+
+  &-focused,
+  &:focus {
+    color: rgba($color-blue-grey, 0.7);
+    background: rgba($color-blue-grey, 0.04);
+    border-bottom-color: rgba($color-blue-grey, 0.12);
+  }
+}
+
+.editor-toolbar {
+  &,
+  &:hover {
+    padding: 0 10px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    opacity: 1;
+  }
+
+  &:before {
+    margin-bottom: 5px;
+  }
+
+  &:after {
+    margin-top: 4px;
+  }
+
+  a {
+    opacity: 0.7;
+  }
+
+  .fa-list-ul,
+  .no-disable,
+  .no-disable + .separator {
+    display: none;
+  }
+}
+
+.CodeMirror {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+a.button {
+  text-decoration: none;
+}
+
+.button {
+  vertical-align: top;
+  color: $color-white;
+  background: $color-blue-grey;
+  border: 0;
+  border-radius: 3px;
+  display: inline-block;
+  width: auto;
+  padding: 10px 20px;
+  line-height: normal;
+  cursor: pointer;
+
+  &[disabled] {
+    background: rgba($color-blue-grey, 0.35);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &:not([disabled]) {
+    &:hover {
+      background: rgba($color-blue-grey, 0.9);
+    }
+
+    &:focus,
+    &:active {
+      background: $color-blue-grey * 0.9;
+      color: $color-white;
+    }
+  }
+
+  &--loading {
+    padding: 8px 35px 5px;
+  }
+
+  &--loading & {
+    &__loader {
+      display: inline-block;
+    }
+
+    &__text {
+      display: none;
+    }
+  }
+
+  &__loader {
+    display: none;
+    position: relative;
+    border-top: 2px solid rgba($color-white, 0.3);
+    border-right: 2px solid rgba($color-white, 0.3);
+    border-bottom: 2px solid rgba($color-white, 0.3);
+    border-left: 2px solid $color-white;
+    transform: translateZ(0);
+    animation: rotate-animation 1s infinite linear;
+    border-radius: 50%;
+    width: 21px;
+    height: 21px;
+
+    &:after {
+      border-radius: 10px;
+      width: 20px;
+      height: 20px;
+    }
+
+    @keyframes rotate-animation {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  }
+
+  &--red {
+    background: $color-red;
+
+    &:not([disabled]) {
+      &:hover {
+        background: rgba($color-red, 0.9);
+      }
+
+      &:focus,
+      &:active {
+        background: $color-red * 0.9;
+      }
+    }
+  }
+
+  &--blue {
+    background: $color-blue;
+
+    &:not([disabled]) {
+      &:hover {
+        background: rgba($color-blue, 0.9);
+      }
+
+      &:focus,
+      &:active {
+        background: $color-blue * 0.9;
+      }
+    }
+  }
+}
+
+.label {
+  font-size: 1.5em;
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: rgba($color-blue-grey, 0.8);
+}

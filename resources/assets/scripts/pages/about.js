@@ -1,22 +1,12 @@
-import $ from 'jquery';
+import Base from './base';
 import moment from 'moment';
 
-class PageAbout {
-  constructor() {
-    let $scope = $('#pageAbout');
-
-    if (!($scope && $scope.length === 1)) {
-      return;
-    }
-
-    this.$scope = $scope;
+class About extends Base {
+  get pageId() {
+    return '#pageAbout';
   }
 
   init() {
-    if (!this.$scope) {
-      return;
-    }
-
     this.$age = this.$scope.find('[data-id=age]');
     this.birthday = this.$age.data('birthday');
 
@@ -32,4 +22,4 @@ class PageAbout {
   }
 }
 
-export default PageAbout;
+export default About;

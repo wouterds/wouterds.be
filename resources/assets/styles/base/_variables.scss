@@ -8,16 +8,21 @@ $container-lg: $container;
 $container-md: $container;
 $container-sm: $container;
 
+// Page
+$page-margin-top: 75px;
+
 // Colors - base
 $color-white: #fff;
 $color-black: #000;
-$color-gray: #434b50;
-
-// Colors - tints
-$color-tint-red: #ed1c24;
-$color-tint-blue-gray: #293750;
+$color-grey: #434b50;
+$color-blue: #3498db;
+$color-blue-grey: #293750;
+$color-red: #ed1c24;
+$color-red-matte-light: #f76e6e;
+$color-orange: #fb8c00;
+$color-green: #2a9a30;
 
 // Colors - specific
 $color-background: $color-white;
-$color-text: $color-gray;
+$color-text: $color-grey;
 

@@ -25,14 +25,14 @@ $scope: 'header';
 
       &--active & {
         &-link {
-          background: $color-tint-red;
+          background: $color-red;
           color: $color-white;
         }
       }
     }
 
     &__item-link {
-      color: $color-tint-blue-gray;
+      color: $color-blue-grey;
       text-decoration: none;
       padding: 8px 14px;
       border-radius: 3px;
