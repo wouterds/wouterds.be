@@ -1,0 +1,78 @@
+// Variables
+@import '../base/variables';
+
+// Scope
+$scope: 'page--about';
+
+.#{$scope} {
+  .content-wrapper {
+    margin-top: 75px;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  section + section {
+    margin-top: 35px;
+  }
+
+  .social-buttons {
+    margin: 15px 0;
+
+    a {
+      color: $color-white;
+    }
+
+    .fa {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      font-size: 24px;
+      display: inline-block;
+      text-align: center;
+      line-height: 41px;
+
+      &-twitter {
+        background: #00aced;
+      }
+
+      &-facebook {
+        background: #3b5998;
+      }
+
+      &-instagram {
+        font-size: 25px;
+        background: linear-gradient(#6559ca, #bc318f 30%, #e33f5f 50%, #f77638 70%, #fec66d 100%);
+      }
+
+      &-vimeo {
+        font-size: 22px;
+        background: #162221;
+      }
+
+      &-github {
+        font-size: 26px;
+        background: #333;
+      }
+
+      &-linkedin {
+        line-height: 40px;
+        font-size: 23px;
+        background: #0077b5;
+      }
+
+      &-vimeo {
+        background: #162221;
+      }
+    }
+
+    li {
+      display: inline-block;
+
+      + li {
+        margin-left: 10px;
+      }
+    }
+  }
+}

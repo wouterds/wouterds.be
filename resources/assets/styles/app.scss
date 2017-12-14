@@ -17,6 +17,9 @@
 @import 'components/header';
 @import 'components/footer';
 
+// Pages
+@import 'pages/about';
+
 body {
   background: $color-background;
   color: $color-text;

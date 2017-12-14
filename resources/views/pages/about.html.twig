@@ -1,5 +1,32 @@
 {% extends '_base.html.twig' %}
 
 {% block body %}
+    <div class="container">
+        <section>
+            <h2>About me</h2>
+            <p>Hi there, I am Wouter! I'm <span data-id="age" date-birthday="{{ birthday }}">{{ age }}</span> years old and passionate about all things digital really.</p>
+            <p>I studied Digital Design &amp; Development at Howest University College and am currently working as a full stack developer at <a href="http://inthepocket.mobi/" target="_blank">In The Pocket</a>. Before that I used to work as web &amp; mobile developer at a real estate startup, a new project of the Netlog &amp; Twoo founders, <a href="http://realo.com/" target="_blank">Realo</a>.</p>
+            <p>When I'm not creating kickass web applications I'm fiddling around with electronics, making tracking devices, robots, drones and other (useless ..?) fun projects using Arduino and Raspberry Pi.</p>
+            <p>Besides all of that I love travelling, nature, trying new things and pushing my own limits. I'm also a data geek, graphs &amp; stats are real motivators for me (loyal Fitbit user).</p>
+            <p>Oh right, also a cat person!</p>
+        </section>
 
+        <section>
+            <h2>About this website</h2>
+            <p>This website is my primary place on the internet where I collect work that I made for myself or clients. I also write here about what I do, what I like, things I experienced, guides and more.</p>
+            <p><s>It grew out of an old website that used to be the face of my secondary activity, but I decided to end that because it was becoming a bit too much.</s> It's also the face of my secondary activity where I once in a while do some IT Consultancy &amp; side projects. The current revision is also the sixth time I started from scratch and changed domains twice.. Don't ask.</p>
+        </section>
+
+        <section>
+            <h2>Connect with me</h2>
+            <ul class="social-buttons">
+                <li><a target="_blank" href="https://twitter.com/wouterds" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                <li><a target="_blank" href="https://facebook.com/wouterdeschuyter.be" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                <li><a target="_blank" href="https://instagram.com/wouterds" title="Instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                <li><a target="_blank" href="https://vimeo.com/wouterds" title="Vimeo"><i class="fa fa-vimeo" aria-hidden="true"></i></a></li>
+                <li><a target="_blank" href="https://linkedin.com/in/wouterds" title="Linked In"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                <li><a target="_blank" href="https://github.com/wouterds" title="Github"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+            </ul>
+        </section>
+    </div>
 {% endblock %}

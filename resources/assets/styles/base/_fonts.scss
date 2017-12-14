@@ -9,4 +9,23 @@ h1,
 .h1 {
   font-size: 2.3em;
   font-weight: 400;
+  color: $color-tint-blue-gray;
+}
+
+h2,
+.h2 {
+  font-size: 1.9em;
+  font-weight: 400;
+  color: rgba($color-tint-blue-gray, 0.9);
+}
+
+p {
+  font-size: 1.6em;
+  line-height: 1.7;
+  color: rgba($color-tint-blue-gray, 0.7);
+  margin: 16px 0 20px;
+
+  a {
+    color: $color-tint-red;
+  }
 }

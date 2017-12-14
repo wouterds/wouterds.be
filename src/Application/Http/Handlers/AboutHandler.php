@@ -23,6 +23,14 @@ class AboutHandler extends AbstractViewHandler
      */
     public function __invoke(Request $request, Response $response): Response
     {
-        return $this->render($response);
+        $birthday = strtotime('1992-12-13');
+        $age = date('Y') - date('Y', $birthday);
+
+        $data = [
+            'birthday' => $birthday,
+            'age' => $age,
+        ];
+
+        return $this->render($response, $data);
     }
 }
