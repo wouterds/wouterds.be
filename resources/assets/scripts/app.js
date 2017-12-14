@@ -1,6 +1,8 @@
+import PageAbout from './pages/about';
+
 class App {
   constructor() {
-    console.log('Hello World');
+    (new PageAbout()).init();
   }
 }
 
