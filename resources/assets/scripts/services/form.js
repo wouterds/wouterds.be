@@ -79,7 +79,7 @@ class Form {
 
       // Create new error
       $error = $('<p>');
-      $error.addClass('error');
+      $error.addClass('error error-message');
       $error.text(error);
 
       // Add error to dom

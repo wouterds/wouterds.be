@@ -35,6 +35,12 @@
     .success {
       color: $color-green;
     }
+
+    .error-message {
+      font-size: 1.2em;
+      line-height: 1.2em;
+      margin: 5px 0 0;
+    }
   }
 }
 
