@@ -2,8 +2,11 @@
 
 namespace WouterDeSchuyter\Infrastructure\Mail;
 
+use Exception;
 use Swift_Mailer;
+use Swift_Message;
 use Swift_SmtpTransport;
+use WouterDeSchuyter\Infrastructure\Mail\Message\Message;
 
 class SparkPostMailer implements Mailer
 {
@@ -22,5 +25,31 @@ class SparkPostMailer implements Mailer
         $transport->setPassword($apiKey);
 
         $this->swiftMailer = new Swift_Mailer($transport);
+    }
+
+    /**
+     * @param Message $message
+     * @return bool
+     */
+    public function send(Message $message): bool
+    {
+        try {
+            $receivers = [];
+            foreach ($message->getRecipients() as $receiver) {
+                $receivers[$receiver->getEmail()] = $receiver->getName();
+            }
+
+            $swiftMessage = new Swift_Message();
+            $swiftMessage->setFrom([$message->getSender()->getEmail() => $message->getSender()->getName()]);
+            $swiftMessage->setTo($receivers);
+            $swiftMessage->setSubject($message->getSubject());
+            $swiftMessage->setReplyTo([$message->getSender()->getEmail() => $message->getSender()->getName()]);
+            $swiftMessage->setBody($message->getBody());
+        } catch (Exception $e) {
+            // TODO: log
+            return false;
+        }
+
+        return true;
     }
 }
