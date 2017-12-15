@@ -15,14 +15,14 @@
     "migrations:migrate": "./vendor/bin/doctrine-migrations migrations:migrate --no-interaction",
     "migrations:generate": "./vendor/bin/doctrine-migrations migrations:generate",
     "test": "./vendor/bin/phpunit",
-    "lint": "./vendor/bin/phpcs --standard=ruleset.xml src/ tests/",
-    "lint:fix": "./vendor/bin/phpcbf --standard=ruleset.xml src/ tests/"
+    "lint": "./vendor/bin/phpcs --standard=ruleset.xml ./src ./tests",
+    "lint:fix": "./vendor/bin/phpcbf --standard=ruleset.xml ./src ./tests"
   },
   "autoload": {
     "psr-4": {
-      "WouterDeSchuyter\\": "src",
-      "WouterDeSchuyter\\Migrations\\": "database/migrations",
-      "WouterDeSchuyter\\Tests\\": "tests"
+      "WouterDeSchuyter\\": "./src",
+      "WouterDeSchuyter\\Migrations\\": "./database/migrations",
+      "WouterDeSchuyter\\Tests\\": "./tests"
     }
   },
   "require": {
