@@ -39,6 +39,9 @@ lint: vendor
 test-unit: vendor
 	docker run --rm --volume=$(PWD):/code -w=/code php:7.1-alpine php ./composer.phar test:unit
 
+test-database: vendor
+	docker exec -i internal-wouterdeschuyter-website-php-fpm php ./composer.phar test:database
+
 test: vendor
 	docker exec -i internal-wouterdeschuyter-website-php-fpm php ./composer.phar test
 
