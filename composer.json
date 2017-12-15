@@ -33,6 +33,7 @@
     "fzaninotto/faker": "^1.7",
     "jenssegers/lean": "^0.2.2",
     "league/container": "^2.4",
+    "league/tactician": "^1.0",
     "nochso/html-compress-twig": "^2.0",
     "ramsey/uuid": "^3.7",
     "ramsey/uuid-doctrine": "^1.4",
