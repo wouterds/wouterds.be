@@ -23,16 +23,17 @@ class ServiceProvider extends AbstractServiceProvider
      */
     public function register()
     {
-        $locator = new ContainerLocator($this->container, [
+        $this->container->share(CommandBus::class, function () {
+            $locator = new ContainerLocator($this->container, [
+            ]);
 
-        ]);
+            $handlerMiddleware = new CommandHandlerMiddleware(
+                new ClassNameExtractor(),
+                $locator,
+                new HandleInflector()
+            );
 
-        $handlerMiddleware = new CommandHandlerMiddleware(
-            new ClassNameExtractor(),
-            $locator,
-            new HandleInflector()
-        );
-
-        return new CommandBus([$handlerMiddleware]);
+            return new CommandBus([$handlerMiddleware]);
+        });
     }
 }
