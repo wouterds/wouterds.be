@@ -13,7 +13,8 @@
   },
   "scripts": {
     "migrations:migrate": "./vendor/bin/doctrine-migrations migrations:migrate --no-interaction",
-    "migrations:generate": "./vendor/bin/doctrine-migrations migrations:generate"
+    "migrations:generate": "./vendor/bin/doctrine-migrations migrations:generate",
+    "test": "./vendor/bin/phpunit"
   },
   "autoload": {
     "psr-4": {
