@@ -6,6 +6,7 @@ use Exception;
 use Swift_Mailer;
 use Swift_Message;
 use Swift_SmtpTransport;
+use Tracy\Debugger;
 use WouterDeSchuyter\Infrastructure\Mail\Message\Message;
 
 class SparkPostMailer implements Mailer
@@ -48,7 +49,7 @@ class SparkPostMailer implements Mailer
 
             return $this->swiftMailer->send($swiftMessage) > 0;
         } catch (Exception $e) {
-            // TODO: log
+            Debugger::log($e);
         }
 
         return false;
