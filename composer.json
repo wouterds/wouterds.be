@@ -30,7 +30,6 @@
     "nochso/html-compress-twig": "^2.0",
     "ramsey/uuid": "^3.7",
     "ramsey/uuid-doctrine": "^1.4",
-    "respect/validation": "^1.1",
     "shrikeh/teapot": "^2.3",
     "slim/slim": "^3.8",
     "spe/filesize-extension-bundle": "^1.0",
