@@ -8,6 +8,7 @@ use League\Tactician\Container\ContainerLocator;
 use League\Tactician\Handler\CommandHandlerMiddleware;
 use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 use League\Tactician\Handler\MethodNameInflector\HandleInflector;
+use WouterDeSchuyter\Domain\Commands\ContactEnquiry;
 
 class ServiceProvider extends AbstractServiceProvider
 {
@@ -25,6 +26,7 @@ class ServiceProvider extends AbstractServiceProvider
     {
         $this->container->share(CommandBus::class, function () {
             $locator = new ContainerLocator($this->container, [
+                ContactEnquiry::class => ContactEnquiryHandler::class,
             ]);
 
             $handlerMiddleware = new CommandHandlerMiddleware(
