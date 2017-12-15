@@ -35,17 +35,22 @@ node_modules: package.json
 
 dependencies: vendor node_modules
 
-test: vendor
-	docker run --rm --volume=$(PWD):/code -w=/code php:7.1-alpine php ./composer.phar test
-
 lint: vendor
 	docker run --rm --volume=$(PWD):/code -w=/code php:7.1-alpine php ./composer.phar lint
+
+test: vendor
+	docker exec -i internal-wouterdeschuyter-website-php-fpm php ./composer.phar test
 
 migrate: vendor
 	docker exec -i internal-wouterdeschuyter-website-php-fpm php ./composer.phar migrations:migrate
 
 new-migration: vendor
 	docker exec -i internal-wouterdeschuyter-website-php-fpm php ./composer.phar migrations:generate
+
+setup-db:
+	docker exec -i internal-wouterdeschuyter-website-mysql mysql -uroot -proot < ./docker/mysql/setup.sql
+
+setup: setup-db
 
 .version:
 	-git describe --abbrev=0 --tags > ./.version
