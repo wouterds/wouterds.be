@@ -2,10 +2,12 @@
 
 namespace WouterDeSchuyter\Application\Http\Handlers;
 
+use League\Tactician\CommandBus;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Teapot\StatusCode;
 use WouterDeSchuyter\Application\Http\Validators\ContactRequestValidator;
+use WouterDeSchuyter\Domain\Commands\ContactEnquiry;
 
 class ContactPostHandler
 {
@@ -15,11 +17,18 @@ class ContactPostHandler
     private $contactRequestValidator;
 
     /**
-     * @param ContactRequestValidator $contactRequestValidator
+     * @var CommandBus
      */
-    public function __construct(ContactRequestValidator $contactRequestValidator)
+    private $commandBus;
+
+    /**
+     * @param ContactRequestValidator $contactRequestValidator
+     * @param CommandBus $commandBus
+     */
+    public function __construct(ContactRequestValidator $contactRequestValidator, CommandBus $commandBus)
     {
         $this->contactRequestValidator = $contactRequestValidator;
+        $this->commandBus = $commandBus;
     }
 
     /**
@@ -36,10 +45,14 @@ class ContactPostHandler
             return $response;
         }
 
-        $data = [];
+        $this->commandBus->handle(new ContactEnquiry(
+            $request->getParsedBody()['name'],
+            $request->getParsedBody()['email'],
+            $request->getParsedBody()['subject'],
+            $request->getParsedBody()['message']
+        ));
 
-        $response->getBody()->write(json_encode($data));
-
+        $response->getBody()->write(json_encode(true));
         return $response;
     }
 }
