@@ -15,8 +15,8 @@
     "migrations:migrate": "./vendor/bin/doctrine-migrations migrations:migrate --no-interaction",
     "migrations:generate": "./vendor/bin/doctrine-migrations migrations:generate",
     "test": "./vendor/bin/phpunit",
-    "lint": "./vendor/bin/phpcs --standard=ruleset.xml ./src ./tests",
-    "lint:fix": "./vendor/bin/phpcbf --standard=ruleset.xml ./src ./tests"
+    "lint": "./vendor/bin/phpcs --standard=ruleset.xml ./src ./tests --ignore=./tests/bootstrap.php",
+    "lint:fix": "./vendor/bin/phpcbf --standard=ruleset.xml ./src ./tests --ignore=./tests/bootstrap.php"
   },
   "autoload": {
     "psr-4": {
