@@ -25,6 +25,10 @@ node {
       sh 'make build'
     }
 
+    stage('Tests') {
+      sh 'make test'
+    }
+
     stage('Deploy') {
       if (!env.BRANCH_NAME.equals('master')) {
         sh 'echo Not master branch, skip deploy.'
