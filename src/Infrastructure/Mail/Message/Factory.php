@@ -30,8 +30,16 @@ class Factory
     public static function startWithDefault()
     {
         $factory = new self();
-        $factory->sender = new Sender(getenv('MAIL_MESSAGE_SENDER_NAME'), getenv('MAIL_MESSAGE_SENDER_EMAIL'));
-        $factory->receivers = [new Receiver(getenv('MAIL_MESSAGE_RECEIVER_NAME'), getenv('MAIL_MESSAGE_RECEIVER_EMAIL'))];
+        $factory->sender = new Sender(
+            getenv('MAIL_MESSAGE_SENDER_NAME'),
+            getenv('MAIL_MESSAGE_SENDER_EMAIL')
+        );
+        $factory->receivers = [
+            new Receiver(
+                getenv('MAIL_MESSAGE_RECEIVER_NAME'),
+                getenv('MAIL_MESSAGE_RECEIVER_EMAIL')
+            )
+        ];
 
         return $factory;
     }
