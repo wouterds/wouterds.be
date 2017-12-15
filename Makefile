@@ -39,6 +39,9 @@ lint: vendor
 test: vendor
 	docker exec -i internal-wouterdeschuyter-website-php-fpm php ./composer.phar test
 
+test-unit: vendor
+	docker exec -i internal-wouterdeschuyter-website-php-fpm php ./composer.phar test:unit
+
 migrate: vendor
 	docker exec -i internal-wouterdeschuyter-website-php-fpm php ./composer.phar migrations:migrate
 
