@@ -21,6 +21,10 @@ node {
       sh 'make dependencies'
     }
 
+    stage('Lint') {
+      sh 'make lint'
+    }
+
     stage('Build') {
       sh 'make build'
     }
