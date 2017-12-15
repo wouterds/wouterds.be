@@ -49,9 +49,8 @@ class SparkPostMailer implements Mailer
             return $this->swiftMailer->send($swiftMessage) > 0;
         } catch (Exception $e) {
             // TODO: log
-            return false;
         }
 
-        return true;
+        return false;
     }
 }
