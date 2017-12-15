@@ -7,6 +7,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Respect\Validation\Exceptions\AllOfException;
 use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Exceptions\ValidationException;
+use Teapot\StatusCode;
 use WouterDeSchuyter\Application\Http\Validators\ContactRequestValidator;
 
 class ContactPostHandler
@@ -31,14 +32,11 @@ class ContactPostHandler
      */
     public function __invoke(Request $request, Response $response): Response
     {
-        try {
-            $this->contactRequestValidator->validate($request);
-        } catch (NestedValidationException $e) {
-            $errors = array_filter(array_values($e->findMessages([
-                'notEmpty' => '{{name}} - Please enter a value.',
-                'email' => '{{name}} - Please enter a valid email.',
-            ])));
-            die(json_encode($errors));
+        if (!$this->contactRequestValidator->validate($request)) {
+            $response->getBody()->write(json_encode($this->contactRequestValidator->getErrors()));
+            $response = $response->withHeader('Content-Type', 'application/json');
+            $response = $response->withStatus(StatusCode::BAD_REQUEST);
+            return $response;
         }
 
         $data = [];

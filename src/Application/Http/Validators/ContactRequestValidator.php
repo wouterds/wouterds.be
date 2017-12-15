@@ -3,22 +3,37 @@
 namespace WouterDeSchuyter\Application\Http\Validators;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Respect\Validation\Validator;
+use Valitron\Validator;
 
 class ContactRequestValidator
 {
+    /**
+     * @var Validator
+     */
+    private $validator;
+
     /**
      * @param Request $request
      * @return bool
      */
     public function validate(Request $request)
     {
-        $validator = Validator::create();
-        $validator->addRule(Validator::key('name', Validator::stringType()->notEmpty()));
-        $validator->addRule(Validator::key('email', Validator::email()->notEmpty()));
-        $validator->addRule(Validator::key('subject', Validator::stringType()->notEmpty()));
-        $validator->addRule(Validator::key('message', Validator::stringType()->notEmpty()));
+        $this->validator = new Validator($request->getParsedBody());
+        $this->validator
+            ->rule('required', ['name', 'email', 'subject', 'message'])
+            ->message('You can not leave this field empty.');
+        $this->validator
+            ->rule('email', 'email')
+            ->message('Please enter a valid email.');
 
-        return $validator->assert($request->getParsedBody());
+        return $this->validator->validate();
+    }
+
+    /**
+     * @return array|bool
+     */
+    public function getErrors()
+    {
+        return $this->validator->errors();
     }
 }
