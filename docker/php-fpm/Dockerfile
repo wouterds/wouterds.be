@@ -13,7 +13,6 @@ COPY ./vendor /code/vendor
 COPY ./database /code/database
 COPY ./src /code/src
 COPY ./public/index.php /code/public/index.php
-COPY ./public/api.php /code/public/api.php
 
 # Change working directory
 WORKDIR /code
