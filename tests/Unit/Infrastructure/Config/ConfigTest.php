@@ -88,7 +88,7 @@ class ConfigTest extends TestCase
                     'key4',
                     'key5',
                     'key6',
-                ]
+                ],
             ],
             [
                 [
@@ -100,8 +100,8 @@ class ConfigTest extends TestCase
                     'car',
                     'location',
                     'birthday',
-                ]
-            ]
+                ],
+            ],
         ];
     }
 }
