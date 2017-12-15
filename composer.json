@@ -35,7 +35,8 @@
     "spe/filesize-extension-bundle": "^1.0",
     "tracy/tracy": "^2.4",
     "twig/twig": "^2.4",
-    "vlucas/phpdotenv": "^2.4"
+    "vlucas/phpdotenv": "^2.4",
+    "vlucas/valitron": "^1.4"
   },
   "require-dev": {
     "symfony/var-dumper": "^4.0"
