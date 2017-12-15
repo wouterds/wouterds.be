@@ -35,6 +35,9 @@ node_modules: package.json
 
 dependencies: vendor node_modules
 
+test: vendor
+	docker run --rm --volume=$(PWD):/code -w=/code php:7.1-alpine php ./composer.phar test
+
 migrate: vendor
 	docker exec -i internal-wouterdeschuyter-website-php-fpm php ./composer.phar migrations:migrate
 
