@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<ruleset name="Coding Standards">
+  <config name="installed_paths" value="vendor/wp-coding-standards/wpcs" />
+  <autoload>./vendor/wp-coding-standards/wpcs/WordPress/PHPCSAliases.php</autoload>
+
+  <rule ref="PSR2"/>
+
+  <rule ref="Generic.Classes.DuplicateClassName"/>
+  <rule ref="Generic.CodeAnalysis.UselessOverridingMethod"/>
+  <rule ref="Generic.Formatting.SpaceAfterCast"/>
+  <rule ref="Generic.Functions.CallTimePassByReference"/>
+  <rule ref="Generic.PHP.DeprecatedFunctions"/>
+  <rule ref="Generic.PHP.ForbiddenFunctions">
+    <properties>
+      <property name="forbiddenFunctions" type="array" value="delete=>unset,print=>echo,create_function=>null,var_dump=>null"/>
+    </properties>
+  </rule>
+  <rule ref="Generic.Strings.UnnecessaryStringConcat">
+    <properties>
+      <property name="allowMultiline" value="true"/>
+    </properties>
+  </rule>
+  <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
+  <rule ref="Generic.WhiteSpace.ScopeIndent">
+    <properties>
+      <property name="indent" value="4"/>
+      <property name="spaceIndent" value="true"/>
+    </properties>
+  </rule>
+
+  <rule ref="PEAR.Commenting.InlineComment"/>
+
+  <rule ref="Squiz.Arrays.ArrayDeclaration">
+    <severity>5</severity>
+    <exclude name="Squiz.Arrays.ArrayDeclaration.KeyNotAligned" />
+    <exclude name="Squiz.Arrays.ArrayDeclaration.ValueNotAligned" />
+    <exclude name="Squiz.Arrays.ArrayDeclaration.CloseBraceNotAligned" />
+    <exclude name="Squiz.Arrays.ArrayDeclaration.SingleLineNotAllowed" />
+    <exclude name="Squiz.Arrays.ArrayDeclaration.MultiLineNotAllowed" />
+    <exclude name="Squiz.Arrays.ArrayDeclaration.CloseBraceNewLine" />
+  </rule>
+  <rule ref="Squiz.Classes.SelfMemberReference.NotUsed"/>
+  <rule ref="Squiz.Commenting.FunctionComment.MissingReturn"/>
+  <rule ref="Squiz.PHP.CommentedOutCode"/>
+  <rule ref="Squiz.PHP.LowercasePHPFunctions"/>
+  <rule ref="Squiz.PHP.NonExecutableCode"/>
+  <rule ref="Squiz.WhiteSpace.FunctionOpeningBraceSpace"/>
+  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
+  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.StartFile">
+    <severity>5</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EndFile">
+    <severity>5</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines">
+    <severity>5</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EndLine">
+    <severity>5</severity>
+  </rule>
+
+  <rule ref="WordPress.Arrays.CommaAfterArrayItem"/>
+  <rule ref="WordPress.CodeAnalysis.EmptyStatement"/>
+</ruleset>
