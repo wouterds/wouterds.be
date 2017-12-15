@@ -38,7 +38,7 @@ class Factory
             new Receiver(
                 getenv('MAIL_MESSAGE_RECEIVER_NAME'),
                 getenv('MAIL_MESSAGE_RECEIVER_EMAIL')
-            )
+            ),
         ];
 
         return $factory;
