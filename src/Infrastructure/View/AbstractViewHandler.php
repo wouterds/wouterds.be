@@ -42,8 +42,13 @@ abstract class AbstractViewHandler implements View
      * @param Request $request
      * @param ApplicationMonitor $applicationMonitor
      */
-    public function __construct(Twig $twig, Config $config, Router $router, Request $request, ApplicationMonitor $applicationMonitor)
-    {
+    public function __construct(
+        Twig $twig,
+        Config $config,
+        Router $router,
+        Request $request,
+        ApplicationMonitor $applicationMonitor
+    ) {
         $this->twig = $twig;
         $this->config = $config;
         $this->router = $router;
@@ -78,7 +83,7 @@ abstract class AbstractViewHandler implements View
         $templateName = $this->getTemplate();
         $templateName = str_replace('pages/', null, $templateName);
         $templateName = str_replace('.html.twig', null, $templateName);
-        $templateParts = preg_split( "/(-|\/)/", $templateName );
+        $templateParts = preg_split("/(-|\/)/", $templateName);
         $templateParts = array_filter($templateParts);
 
         $pascalCaseName = array_map('ucfirst', $templateParts);
