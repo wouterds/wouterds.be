@@ -13,18 +13,6 @@ services:
     ports:
       - '80:80'
 
-  nginx-api:
-    image: nginx:1.13-alpine
-    container_name: internal-wouterdeschuyter-website-nginx-api
-    working_dir: /code
-    volumes:
-      - ./nginx-api/default.conf:/etc/nginx/conf.d/default.conf
-      - ./../public:/code/public
-    env_file:
-      - ./../.env
-    ports:
-      - '81:80'
-
   php-fpm:
     build: php-fpm
     container_name: internal-wouterdeschuyter-website-php-fpm

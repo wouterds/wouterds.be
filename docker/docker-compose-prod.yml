@@ -13,18 +13,6 @@ services:
       - default
       - nginxproxy_default
 
-  nginx-api:
-    image: docker.wouterdeschuyter.be/internal-wouterdeschuyter-website-nginx-api
-    restart: unless-stopped
-    env_file: docker-prod.env
-    environment:
-      - VIRTUAL_HOST=api.wouterdeschuyter.be
-      - LETSENCRYPT_HOST=api.wouterdeschuyter.be
-      - LETSENCRYPT_EMAIL=wouter@wouterdeschuyter.be
-    networks:
-      - default
-      - nginxproxy_default
-
   php-fpm:
     image: docker.wouterdeschuyter.be/internal-wouterdeschuyter-website-php-fpm
     restart: unless-stopped
