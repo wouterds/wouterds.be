@@ -40,7 +40,6 @@
     <exclude name="Squiz.Arrays.ArrayDeclaration.CloseBraceNewLine" />
   </rule>
   <rule ref="Squiz.Classes.SelfMemberReference.NotUsed"/>
-  <rule ref="Squiz.Commenting.FunctionComment.MissingReturn"/>
   <rule ref="Squiz.PHP.CommentedOutCode"/>
   <rule ref="Squiz.PHP.LowercasePHPFunctions"/>
   <rule ref="Squiz.PHP.NonExecutableCode"/>
