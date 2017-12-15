@@ -4,9 +4,6 @@ namespace WouterDeSchuyter\Application\Http\Handlers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Respect\Validation\Exceptions\AllOfException;
-use Respect\Validation\Exceptions\NestedValidationException;
-use Respect\Validation\Exceptions\ValidationException;
 use Teapot\StatusCode;
 use WouterDeSchuyter\Application\Http\Validators\ContactRequestValidator;
 
