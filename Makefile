@@ -44,6 +44,9 @@ test: vendor
 migrate: vendor
 	docker exec -i internal-wouterdeschuyter-website-php-fpm php ./composer.phar migrations:migrate
 
+migrate-test: vendor
+	docker exec -e MYSQL_DATABASE=wouterdeschuyter-tests -i internal-wouterdeschuyter-website-php-fpm php ./composer.phar migrations:migrate
+
 new-migration: vendor
 	docker exec -i internal-wouterdeschuyter-website-php-fpm php ./composer.phar migrations:generate
 
