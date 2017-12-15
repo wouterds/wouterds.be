@@ -32,20 +32,4 @@ class UsedMemory
     {
         return $this->value;
     }
-
-    /**
-     * @return string
-     */
-    public function inKB(): string
-    {
-        return round($this->value / 1000, 0);
-    }
-
-    /**
-     * @return string
-     */
-    public function inMB(): string
-    {
-        return round($this->value / 1000000, 2);
-    }
 }
