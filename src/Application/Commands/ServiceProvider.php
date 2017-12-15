@@ -4,9 +4,9 @@ namespace WouterDeSchuyter\Application\Commands;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Tactician\CommandBus;
+use League\Tactician\Container\ContainerLocator;
 use League\Tactician\Handler\CommandHandlerMiddleware;
 use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
-use League\Tactician\Handler\Locator\InMemoryLocator;
 use League\Tactician\Handler\MethodNameInflector\HandleInflector;
 
 class ServiceProvider extends AbstractServiceProvider
@@ -23,9 +23,13 @@ class ServiceProvider extends AbstractServiceProvider
      */
     public function register()
     {
+        $locator = new ContainerLocator($this->container, [
+
+        ]);
+
         $handlerMiddleware = new CommandHandlerMiddleware(
             new ClassNameExtractor(),
-            new InMemoryLocator(),
+            $locator,
             new HandleInflector()
         );
 
