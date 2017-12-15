@@ -30,7 +30,7 @@ node {
     }
 
     stage('Tests') {
-      sh 'make test'
+      sh 'make test-unit'
     }
 
     stage('Deploy') {
