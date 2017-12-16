@@ -23,7 +23,7 @@ class AuthenticatedUser
     public function setUser(User $user): void
     {
         // Not activated yet?
-        if ($this->user->getActivatedAt() === null) {
+        if ($this->user && $this->user->getActivatedAt() === null) {
             return;
         }
 

@@ -31,7 +31,7 @@ class UserSession implements JsonSerializable
      */
     public static function fromArray(array $data): UserSession
     {
-        $user = new UserSession($data['user_id']);
+        $user = new UserSession(new UserId($data['user_id']));
         $user->id = new UserSessionId(!empty($data['id']) ? $data['id'] : null);
 
         return $user;

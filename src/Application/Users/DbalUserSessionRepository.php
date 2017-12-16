@@ -63,10 +63,10 @@ class DbalUserSessionRepository implements UserSessionRepository
     {
         $query = $this->connection->createQueryBuilder();
         $query->update(self::TABLE);
-        $query->setValue('updated_at', 'NOW()');
-        $query->setValue('deleted_at', 'NOW()');
+        $query->set('updated_at', 'NOW()');
+        $query->set('deleted_at', 'NOW()');
         $query->where('user_id = ' . $query->createNamedParameter($userId));
         $query->andWhere('deleted_at IS NULL');
-        $query->execute()->fetch();
+        $query->execute();
     }
 }
