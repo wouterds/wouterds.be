@@ -29,7 +29,6 @@
   },
   "require": {
     "cache/predis-adapter": "^1.0",
-    "doctrine/migrations": "^1.6",
     "jenssegers/lean": "^0.2.2",
     "league/container": "^2.4",
     "league/tactician": "^1.0",
@@ -47,6 +46,7 @@
     "vlucas/valitron": "^1.4"
   },
   "require-dev": {
+    "doctrine/migrations": "^1.6",
     "fzaninotto/faker": "^1.7",
     "phpunit/phpunit": "^6.5",
     "squizlabs/php_codesniffer": "^3.2",
