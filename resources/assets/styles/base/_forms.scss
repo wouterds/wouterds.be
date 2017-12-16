@@ -125,6 +125,14 @@ a.button {
   text-decoration: none;
 }
 
+.button-text {
+  text-decoration: none;
+  color: $color-red;
+  padding: 10px 20px;
+  font-size: 1.5em;
+  display: inline-block;
+}
+
 .button {
   vertical-align: top;
   color: $color-white;

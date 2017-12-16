@@ -10,6 +10,7 @@ use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 use League\Tactician\Handler\MethodNameInflector\HandleInflector;
 use WouterDeSchuyter\Domain\Commands\ContactEnquiry;
 use WouterDeSchuyter\Domain\Commands\SignInUser;
+use WouterDeSchuyter\Domain\Commands\SignUpUser;
 
 class ServiceProvider extends AbstractServiceProvider
 {
@@ -29,6 +30,7 @@ class ServiceProvider extends AbstractServiceProvider
             $locator = new ContainerLocator($this->container, [
                 ContactEnquiry::class => ContactEnquiryHandler::class,
                 SignInUser::class => SignInUserHandler::class,
+                SignUpUser::class => SignUpUserHandler::class,
             ]);
 
             $handlerMiddleware = new CommandHandlerMiddleware(
