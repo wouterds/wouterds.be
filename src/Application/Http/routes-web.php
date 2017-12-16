@@ -14,7 +14,7 @@ $app->group(null, function () use ($app) {
     $app->get('/about', AboutHandler::class)->setName('about');
     $app->get('/blog', BlogHandler::class)->setName('blog');
     $app->get('/contact', ContactHandler::class)->setName('contact');
-    $app->post('/contact.json', ContactPostHandler::class)->setName('contactPost');
+    $app->post('/contact.json', ContactPostHandler::class)->setName('contact_post');
 
     // Public admin routes
     $app->group('/admin', function () use ($app) {
