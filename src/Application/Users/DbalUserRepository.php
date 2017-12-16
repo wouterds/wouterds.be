@@ -48,6 +48,7 @@ class DbalUserRepository implements UserRepository
         $query->select('*');
         $query->from(self::TABLE);
         $query->where('id = ' . $query->createNamedParameter($id));
+        $query->andWhere('deleted_at IS NULL');
         $result = $query->execute()->fetch();
 
         if (empty($result)) {
@@ -67,6 +68,7 @@ class DbalUserRepository implements UserRepository
         $query->select('*');
         $query->from(self::TABLE);
         $query->where('email = ' . $query->createNamedParameter($email));
+        $query->andWhere('deleted_at IS NULL');
         $result = $query->execute()->fetch();
 
         if (empty($result)) {
