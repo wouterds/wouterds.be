@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import Base from './base';
-import FormService from '../services/form';
+import FormService from './../services/form';
 
 class Contact extends Base {
   get pageId() {
