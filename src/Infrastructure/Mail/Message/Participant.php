@@ -2,7 +2,7 @@
 
 namespace WouterDeSchuyter\Infrastructure\Mail\Message;
 
-class Sender
+class Participant
 {
     /**
      * @var string
