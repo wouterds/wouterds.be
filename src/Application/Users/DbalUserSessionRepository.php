@@ -41,6 +41,17 @@ class DbalUserSessionRepository implements UserSessionRepository
      */
     public function find(UserSessionId $id): ?UserSession
     {
-        // TODO: Implement find() method.
+        $query = $this->connection->createQueryBuilder();
+        $query->select('*');
+        $query->from(self::TABLE);
+        $query->where('id = ' . $query->createNamedParameter($id));
+        $query->andWhere('deleted_at IS NULL');
+        $result = $query->execute()->fetch();
+
+        if (empty($result)) {
+            return null;
+        }
+
+        return UserSession::fromArray($result);
     }
 }
