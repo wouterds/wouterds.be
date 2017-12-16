@@ -5,12 +5,12 @@ namespace WouterDeSchuyter\Infrastructure\Mail\Message;
 class Factory
 {
     /**
-     * @var Sender
+     * @var Participant
      */
     private $sender;
 
     /**
-     * @var Receiver[]
+     * @var Participant[]
      */
     private $receivers;
 
@@ -30,12 +30,12 @@ class Factory
     public static function startWithDefault()
     {
         $factory = new self();
-        $factory->sender = new Sender(
+        $factory->sender = new Participant(
             getenv('MAIL_MESSAGE_SENDER_NAME'),
             getenv('MAIL_MESSAGE_SENDER_EMAIL')
         );
         $factory->receivers = [
-            new Receiver(
+            new Participant(
                 getenv('MAIL_MESSAGE_RECEIVER_NAME'),
                 getenv('MAIL_MESSAGE_RECEIVER_EMAIL')
             ),
@@ -45,10 +45,10 @@ class Factory
     }
 
     /**
-     * @param Sender $sender
+     * @param Participant $sender
      * @return Factory
      */
-    public function withSender(Sender $sender)
+    public function withSender(Participant $sender)
     {
         $this->sender = $sender;
 
@@ -56,7 +56,7 @@ class Factory
     }
 
     /**
-     * @param array $receivers
+     * @param Participant[] $receivers
      * @return Factory
      */
     public function withReceivers(array $receivers)

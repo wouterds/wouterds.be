@@ -5,7 +5,7 @@ namespace WouterDeSchuyter\Application\Commands;
 use WouterDeSchuyter\Domain\Commands\ContactEnquiry;
 use WouterDeSchuyter\Infrastructure\Mail\Mailer;
 use WouterDeSchuyter\Infrastructure\Mail\Message\Factory as MessageFactory;
-use WouterDeSchuyter\Infrastructure\Mail\Message\Sender;
+use WouterDeSchuyter\Infrastructure\Mail\Message\Participant;
 
 class ContactEnquiryHandler
 {

@@ -5,12 +5,12 @@ namespace WouterDeSchuyter\Infrastructure\Mail\Message;
 class Message
 {
     /**
-     * @var Sender
+     * @var Participant
      */
     private $sender;
 
     /**
-     * @var Receiver[]
+     * @var Participant[]
      */
     private $recipients;
 
@@ -25,13 +25,17 @@ class Message
     private $body;
 
     /**
-     * @param Sender $sender
+     * @param Participant $sender
      * @param array $recipients
      * @param string $subject
      * @param string $message
      */
-    public function __construct(Sender $sender, array $recipients, string $subject, string $message)
-    {
+    public function __construct(
+        Participant $sender,
+        array $recipients,
+        string $subject,
+        string $message
+    ) {
         $this->sender = $sender;
         $this->recipients = $recipients;
         $this->subject = $subject;
@@ -39,15 +43,15 @@ class Message
     }
 
     /**
-     * @return Sender
+     * @return Participant
      */
-    public function getSender(): Sender
+    public function getSender(): Participant
     {
         return $this->sender;
     }
 
     /**
-     * @return Receiver[]
+     * @return Participant[]
      */
     public function getRecipients(): array
     {
