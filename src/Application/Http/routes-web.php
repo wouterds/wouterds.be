@@ -3,6 +3,7 @@
 use WouterDeSchuyter\Application\Http\Handlers\AboutHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\OverviewHandler as AdminOverviewHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\SignInHandler as AdminSignInHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\SignInPostHandler as AdminSignInPostHandler;
 use WouterDeSchuyter\Application\Http\Handlers\BlogHandler;
 use WouterDeSchuyter\Application\Http\Handlers\ContactHandler;
 use WouterDeSchuyter\Application\Http\Handlers\ContactPostHandler;
@@ -19,6 +20,7 @@ $app->group(null, function () use ($app) {
     // Public admin routes
     $app->group('/admin', function () use ($app) {
         $app->get('/sign-in', AdminSignInHandler::class)->setName('admin.sign-in');
+        $app->post('/sign-in.json', AdminSignInPostHandler::class)->setName('admin.sign-in_post');
     });
 
     // Private admin routes

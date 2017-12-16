@@ -14,4 +14,9 @@ interface UserSessionRepository
      * @return UserSession|null
      */
     public function find(UserSessionId $id): ?UserSession;
+
+    /**
+     * @param UserId $userId
+     */
+    public function deleteByUserId(UserId $userId);
 }

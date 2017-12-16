@@ -18,6 +18,14 @@ class AuthenticatedUser
     }
 
     /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
+    }
+
+    /**
      * @return bool
      */
     public function isLoggedIn(): bool

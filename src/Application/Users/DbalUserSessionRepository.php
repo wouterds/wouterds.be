@@ -3,6 +3,7 @@
 namespace WouterDeSchuyter\Application\Users;
 
 use Doctrine\DBAL\Connection;
+use WouterDeSchuyter\Domain\Users\UserId;
 use WouterDeSchuyter\Domain\Users\UserSession;
 use WouterDeSchuyter\Domain\Users\UserSessionId;
 use WouterDeSchuyter\Domain\Users\UserSessionRepository;
@@ -53,5 +54,19 @@ class DbalUserSessionRepository implements UserSessionRepository
         }
 
         return UserSession::fromArray($result);
+    }
+
+    /**
+     * @param UserId $userId
+     */
+    public function deleteByUserId(UserId $userId)
+    {
+        $query = $this->connection->createQueryBuilder();
+        $query->update(self::TABLE);
+        $query->setValue('updated_at', 'NOW()');
+        $query->setValue('deleted_at', 'NOW()');
+        $query->where('user_id = ' . $query->createNamedParameter($userId));
+        $query->andWhere('deleted_at IS NULL');
+        $query->execute()->fetch();
     }
 }
