@@ -10,6 +10,11 @@ class Factory
     private $sender;
 
     /**
+     * @var Participant
+     */
+    private $replyTo;
+
+    /**
      * @var Participant[]
      */
     private $receivers;
@@ -56,6 +61,17 @@ class Factory
     }
 
     /**
+     * @param Participant $replyTo
+     * @return Factory
+     */
+    public function withReplyTo(Participant $replyTo)
+    {
+        $this->replyTo = $replyTo;
+
+        return $this;
+    }
+
+    /**
      * @param Participant[] $receivers
      * @return Factory
      */
@@ -95,6 +111,7 @@ class Factory
     {
         return new Message(
             $this->sender,
+            $this->replyTo,
             $this->receivers,
             $this->subject,
             $this->body

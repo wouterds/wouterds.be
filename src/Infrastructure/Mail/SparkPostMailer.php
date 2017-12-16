@@ -44,7 +44,7 @@ class SparkPostMailer implements Mailer
             $swiftMessage->setFrom([$message->getSender()->getEmail() => $message->getSender()->getName()]);
             $swiftMessage->setTo($receivers);
             $swiftMessage->setSubject($message->getSubject());
-            $swiftMessage->setReplyTo([$message->getSender()->getEmail() => $message->getSender()->getName()]);
+            $swiftMessage->setReplyTo([$message->getReplyTo()->getEmail() => $message->getReplyTo()->getName()]);
             $swiftMessage->setBody($message->getBody());
 
             return $this->swiftMailer->send($swiftMessage) > 0;

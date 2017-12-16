@@ -10,6 +10,11 @@ class Message
     private $sender;
 
     /**
+     * @var Participant
+     */
+    private $replyTo;
+
+    /**
      * @var Participant[]
      */
     private $recipients;
@@ -26,17 +31,20 @@ class Message
 
     /**
      * @param Participant $sender
+     * @param Participant $replyTo
      * @param array $recipients
      * @param string $subject
      * @param string $message
      */
     public function __construct(
         Participant $sender,
+        Participant $replyTo,
         array $recipients,
         string $subject,
         string $message
     ) {
         $this->sender = $sender;
+        $this->replyTo = $replyTo;
         $this->recipients = $recipients;
         $this->subject = $subject;
         $this->body = $message;
@@ -48,6 +56,14 @@ class Message
     public function getSender(): Participant
     {
         return $this->sender;
+    }
+
+    /**
+     * @return Participant
+     */
+    public function getReplyTo(): Participant
+    {
+        return $this->replyTo;
     }
 
     /**

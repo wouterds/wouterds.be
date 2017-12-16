@@ -28,7 +28,7 @@ class ContactEnquiryHandler
     public function handle(ContactEnquiry $contactEnquiry)
     {
         $message = MessageFactory::startWithDefault()
-            ->withSender(new Sender($contactEnquiry->getName(), $contactEnquiry->getEmail()))
+            ->withReplyTo(new Participant($contactEnquiry->getName(), $contactEnquiry->getEmail()))
             ->withSubject($contactEnquiry->getSubject())
             ->withBody($contactEnquiry->getMessage())
             ->build();
