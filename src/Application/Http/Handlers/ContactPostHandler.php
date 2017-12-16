@@ -53,6 +53,7 @@ class ContactPostHandler
         ));
 
         $response->getBody()->write(json_encode(true));
+        $response = $response->withHeader('Content-Type', 'application/json');
         return $response;
     }
 }
