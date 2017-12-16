@@ -1,5 +1,6 @@
 import PageAbout from './pages/about';
 import PageContact from './pages/contact';
+import PageAdminSignIn from './pages/admin/sign-in';
 
 class App {
   constructor() {
@@ -13,6 +14,7 @@ class App {
   initPages() {
     new PageAbout();
     new PageContact();
+    new PageAdminSignIn();
   }
 }
 
