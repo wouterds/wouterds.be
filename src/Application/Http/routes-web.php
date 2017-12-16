@@ -1,6 +1,7 @@
 <?php
 
 use WouterDeSchuyter\Application\Http\Handlers\AboutHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\OverviewHandler as AdminOverviewHandler;
 use WouterDeSchuyter\Application\Http\Handlers\BlogHandler;
 use WouterDeSchuyter\Application\Http\Handlers\ContactHandler;
 use WouterDeSchuyter\Application\Http\Handlers\ContactPostHandler;
@@ -12,4 +13,9 @@ $app->group(null, function () use ($app) {
     $app->get('/blog', BlogHandler::class)->setName('blog');
     $app->get('/contact', ContactHandler::class)->setName('contact');
     $app->post('/contact.json', ContactPostHandler::class)->setName('contactPost');
+
+
+    $app->group('/admin', function () use ($app) {
+        $app->get('', AdminOverviewHandler::class)->setName('admin.overview');
+    });
 });
