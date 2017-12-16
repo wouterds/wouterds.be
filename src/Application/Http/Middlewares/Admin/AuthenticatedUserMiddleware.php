@@ -75,6 +75,7 @@ class AuthenticatedUserMiddleware
 
         // Not logged in?
         if ($this->authenticatedUser->isLoggedIn() === false) {
+            setcookie('user_session_id', false, -1);
             $response = $response->withStatus(StatusCode::TEMPORARY_REDIRECT);
             $response = $response->withHeader('Location', $this->router->pathFor('admin.sign-in'));
             return $response;

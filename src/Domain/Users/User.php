@@ -2,6 +2,7 @@
 
 namespace WouterDeSchuyter\Domain\Users;
 
+use DateTimeImmutable;
 use JsonSerializable;
 
 class User implements JsonSerializable
@@ -37,6 +38,11 @@ class User implements JsonSerializable
     private $salt;
 
     /**
+     * @var DateTimeImmutable|null
+     */
+    private $activatedAt;
+
+    /**
      * @param string $email
      * @param string $password
      * @param string $salt
@@ -64,6 +70,7 @@ class User implements JsonSerializable
         $user = new User($data['email'], $data['password'], !empty($data['salt']) ? $data['salt'] : null);
         $user->id = new UserId(!empty($data['id']) ? $data['id'] : null);
         $user->name = !empty($data['name']) ? $data['name'] : null;
+        $user->activatedAt = !empty($data['activated_at']) ? new DateTimeImmutable($data['activated_at']) : null;
 
         return $user;
     }
@@ -130,6 +137,14 @@ class User implements JsonSerializable
     public function getSalt(): string
     {
         return $this->salt;
+    }
+
+    /**
+     * @return DateTimeImmutable|null
+     */
+    public function getActivatedAt(): ?DateTimeImmutable
+    {
+        return $this->activatedAt;
     }
 
     /**
