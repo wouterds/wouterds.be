@@ -7,8 +7,8 @@ use WouterDeSchuyter\Infrastructure\Mail\Message\Message;
 interface Mailer
 {
     /**
-     * @param Message $mail
+     * @param Message $message
      * @return bool
      */
-    public function send(Message $mail): bool;
+    public function send(Message $message): bool;
 }

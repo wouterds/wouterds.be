@@ -39,6 +39,10 @@ class Factory
             getenv('MAIL_MESSAGE_SENDER_NAME'),
             getenv('MAIL_MESSAGE_SENDER_EMAIL')
         );
+        $factory->replyTo = new Participant(
+            getenv('MAIL_MESSAGE_SENDER_NAME'),
+            getenv('MAIL_MESSAGE_SENDER_EMAIL')
+        );
         $factory->receivers = [
             new Participant(
                 getenv('MAIL_MESSAGE_RECEIVER_NAME'),
