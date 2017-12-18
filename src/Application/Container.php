@@ -7,6 +7,7 @@ use League\Container\ReflectionContainer;
 use WouterDeSchuyter\Application\Commands\ServiceProvider as CommandsServiceProvider;
 use WouterDeSchuyter\Application\Http\ServiceProvider as HttpServiceProvider;
 use WouterDeSchuyter\Application\Users\ServiceProvider as UsersServiceProvider;
+use WouterDeSchuyter\Application\Media\ServiceProvider as MediaServiceProvider;
 use WouterDeSchuyter\Infrastructure\ApplicationMonitor\ServiceProvider as ApplicationMonitorServiceProvider;
 use WouterDeSchuyter\Infrastructure\Config\ServiceProvider as ConfigServiceProvider;
 use WouterDeSchuyter\Infrastructure\Database\ServiceProvider as DatabaseServiceProvider;
@@ -25,6 +26,7 @@ class Container extends LeagueContainer
 
         $container->addServiceProvider(CommandsServiceProvider::class);
         $container->addServiceProvider(HttpServiceProvider::class);
+        $container->addServiceProvider(MediaServiceProvider::class);
         $container->addServiceProvider(UsersServiceProvider::class);
         $container->addServiceProvider(ApplicationMonitorServiceProvider::class);
         $container->addServiceProvider(ConfigServiceProvider::class);
