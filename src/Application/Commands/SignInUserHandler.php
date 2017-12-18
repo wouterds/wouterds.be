@@ -5,6 +5,7 @@ namespace WouterDeSchuyter\Application\Commands;
 use WouterDeSchuyter\Domain\Commands\SignInUser;
 use WouterDeSchuyter\Domain\Users\InvalidUserCredentials;
 use WouterDeSchuyter\Domain\Users\User;
+use WouterDeSchuyter\Domain\Users\UserNotActivatedYet;
 use WouterDeSchuyter\Domain\Users\UserRepository;
 use WouterDeSchuyter\Domain\Users\UserSession;
 use WouterDeSchuyter\Domain\Users\UserSessionRepository;
@@ -34,6 +35,7 @@ class SignInUserHandler
     /**
      * @param SignInUser $signInUser
      * @throws InvalidUserCredentials
+     * @throws UserNotActivatedYet
      */
     public function handle(SignInUser $signInUser)
     {
@@ -47,6 +49,11 @@ class SignInUserHandler
         // Invalid password?
         if (User::hashPassword($user->getSalt(), $signInUser->getPassword()) !== $user->getPassword()) {
             throw new InvalidUserCredentials();
+        }
+
+        // Activated already?
+        if (empty($user->getActivatedAt())) {
+            throw new UserNotActivatedYet();
         }
 
         // Delete old sessions, allow only 1 client to be signed in at the time

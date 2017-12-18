@@ -69,6 +69,11 @@ class AuthenticatedUserMiddleware
             $user = $this->userRepository->find($userSession->getUserId());
         }
 
+        // No activated yet?
+        if ($user && empty($user->getActivatedAt())) {
+            $user = null;
+        }
+
         if (!empty($user)) {
             $this->authenticatedUser->setUser($user);
         }

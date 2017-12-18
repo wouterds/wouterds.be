@@ -22,11 +22,6 @@ class AuthenticatedUser
      */
     public function setUser(User $user): void
     {
-        // Not activated yet?
-        if ($this->user && $this->user->getActivatedAt() === null) {
-            return;
-        }
-
         $this->user = $user;
     }
 

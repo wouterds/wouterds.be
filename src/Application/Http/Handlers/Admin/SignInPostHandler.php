@@ -9,6 +9,7 @@ use Teapot\StatusCode;
 use WouterDeSchuyter\Application\Http\Validators\Admin\SignInRequestValidator;
 use WouterDeSchuyter\Domain\Commands\SignInUser;
 use WouterDeSchuyter\Domain\Users\InvalidUserCredentials;
+use WouterDeSchuyter\Domain\Users\UserNotActivatedYet;
 
 class SignInPostHandler
 {
@@ -52,6 +53,11 @@ class SignInPostHandler
                 $request->getParsedBody()['password']
             ));
         } catch (InvalidUserCredentials $e) {
+            $response->getBody()->write(json_encode(false));
+            $response = $response->withStatus(StatusCode::UNAUTHORIZED);
+            $response = $response->withHeader('Content-Type', 'application/json');
+            return $response;
+        } catch (UserNotActivatedYet $e) {
             $response->getBody()->write(json_encode(false));
             $response = $response->withStatus(StatusCode::UNAUTHORIZED);
             $response = $response->withHeader('Content-Type', 'application/json');
