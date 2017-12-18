@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3cc929e9852be2b34534eb03648aa97b",
+    "content-hash": "3185d9592c5ae70937905c03b11e016f",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -395,6 +395,54 @@
                 "validator"
             ],
             "time": "2017-11-15T23:40:40+00:00"
+        },
+        {
+            "name": "emgag/flysystem-hash",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/emgag/flysystem-hash.git",
+                "reference": "467c938edef53e359e5b709fbac5246904a74286"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/emgag/flysystem-hash/zipball/467c938edef53e359e5b709fbac5246904a74286",
+                "reference": "467c938edef53e359e5b709fbac5246904a74286",
+                "shasum": ""
+            },
+            "require": {
+                "league/flysystem": "^1.0"
+            },
+            "require-dev": {
+                "league/flysystem-webdav": "^1.0",
+                "phpunit/phpunit": "^4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Emgag\\Flysystem\\Hash\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Blaser",
+                    "email": "git@mooch.ch"
+                }
+            ],
+            "description": "Flysystem plugin for generating a hash value of a given file",
+            "homepage": "https://github.com/emgag/flysystem-hash",
+            "keywords": [
+                "Flysystem",
+                "MD5",
+                "hash",
+                "sha1",
+                "sha256"
+            ],
+            "time": "2015-09-28T22:16:20+00:00"
         },
         {
             "name": "jenssegers/lean",
