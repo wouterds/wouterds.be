@@ -24,10 +24,10 @@
 // Pages
 @import 'pages/about';
 @import 'pages/contact';
-@import 'pages/admin/index';
-@import 'pages/admin/sign-in';
-@import 'pages/admin/sign-up';
-@import 'pages/admin/users';
+@import 'pages/admin/base';
+@import 'pages/admin/users/sign-in';
+@import 'pages/admin/users/sign-up';
+@import 'pages/admin/users/index';
 
 body {
   background: $color-background;

@@ -1,10 +1,10 @@
 import $ from 'jquery';
-import Base from './../base';
-import FormService from './../../services/form';
+import Base from '../../base';
+import FormService from '../../../services/form';
 
 class SignUp extends Base {
   get pageId() {
-    return '#pageAdminSignUp';
+    return '#pageAdminUsersSignUp';
   }
 
   init() {

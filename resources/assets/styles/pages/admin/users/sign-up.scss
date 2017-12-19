@@ -1,8 +1,8 @@
 // Variables
-@import '../../base/variables';
+@import '../../../base/variables';
 
 // Scope
-$scope: 'page--admin--sign-in';
+$scope: 'page--admin--users--sign-up';
 
 .#{$scope} {
   .content-wrapper {

@@ -13,7 +13,7 @@ class SignUpHandler extends ViewHandler
      */
     public function getTemplate(): string
     {
-        return 'pages/admin/sign-up.html.twig';
+        return 'pages/admin/users/sign-up.html.twig';
     }
 
     /**

@@ -91,10 +91,11 @@ abstract class ViewHandler implements View
         $templateName = $this->getTemplate();
         $templateName = str_replace('pages/', null, $templateName);
         $templateName = str_replace('.html.twig', null, $templateName);
-        $templateParts = preg_split("/(-|\/)/", $templateName);
+        $templateParts = explode('/', $templateName);
+        $templatePartsWords = preg_split('/(-|\/)/', $templateName);
         $templateParts = array_filter($templateParts);
 
-        $pascalCaseName = array_map('ucfirst', $templateParts);
+        $pascalCaseName = array_map('ucfirst', $templatePartsWords);
         $pascalCaseName = implode('', $pascalCaseName);
 
         $dashedCaseName = implode('-', $templateParts);

@@ -1,7 +1,7 @@
 <?php
 
 use WouterDeSchuyter\Application\Http\Handlers\AboutHandler;
-use WouterDeSchuyter\Application\Http\Handlers\Admin\MediaHandler as AdminMediaHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\Media\IndexHandler as AdminMediaIndexHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\OverviewHandler as AdminOverviewHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\SignInHandler as AdminUsersSignInHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\SignInPostHandler as AdminUsersSignInPostHandler;
@@ -27,16 +27,22 @@ $app->group(null, function () use ($app) {
 
     // Public admin routes
     $app->group('/admin', function () use ($app) {
-        $app->get('/sign-in', AdminUsersSignInHandler::class)->setName('admin.sign-in');
-        $app->post('/sign-in.json', AdminUsersSignInPostHandler::class)->setName('admin.sign-in_post');
-        $app->get('/sign-up', AdminUsersSignUpHandler::class)->setName('admin.sign-up');
-        $app->post('/sign-up.json', AdminSignUpPostHandler::class)->setName('admin.sign-up_post');
+        $app->group('/users', function () use ($app) {
+            $app->get('/sign-in', AdminUsersSignInHandler::class)->setName('admin.users.sign-in');
+            $app->post('/sign-in.json', AdminUsersSignInPostHandler::class)->setName('admin.users.sign-in_post');
+            $app->get('/sign-up', AdminUsersSignUpHandler::class)->setName('admin.users.sign-up');
+            $app->post('/sign-up.json', AdminUsersSignUpPostHandler::class)->setName('admin.users.sign-up_post');
+        });
     });
 
     // Private admin routes
     $app->group('/admin', function () use ($app) {
         $app->get('', AdminOverviewHandler::class)->setName('admin.overview');
-        $app->get('/media', AdminMediaHandler::class)->setName('admin.media');
+
+        $app->group('/media', function () use ($app) {
+            $app->get('', AdminMediaIndexHandler::class)->setName('admin.media');
+        });
+
         $app->group('/users', function () use ($app) {
             $app->get('', AdminUsersIndexHandler::class)->setName('admin.users');
             $app->get('/{id}/activate', AdminUsersActivateHandler::class)->setName('admin.users.activate');

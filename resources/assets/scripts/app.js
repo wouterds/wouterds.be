@@ -1,7 +1,7 @@
 import PageAbout from './pages/about';
 import PageContact from './pages/contact';
-import PageAdminSignIn from './pages/admin/sign-in';
-import PageAdminSignUp from './pages/admin/sign-up';
+import PageAdminUsersSignIn from './pages/admin/users/sign-in';
+import PageAdminUsersSignUp from './pages/admin/users/sign-up';
 
 class App {
   constructor() {
@@ -15,8 +15,8 @@ class App {
   initPages() {
     new PageAbout();
     new PageContact();
-    new PageAdminSignIn();
-    new PageAdminSignUp();
+    new PageAdminUsersSignIn();
+    new PageAdminUsersSignUp();
   }
 }
 
