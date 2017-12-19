@@ -10,6 +10,11 @@ interface UserRepository
     public function add(User $user);
 
     /**
+     * @return User[]
+     */
+    public function findAll(): array;
+
+    /**
      * @param UserId $id
      * @return null|User
      */

@@ -39,6 +39,26 @@ class DbalUserRepository implements UserRepository
     }
 
     /**
+     * @return User[]
+     */
+    public function findAll(): array
+    {
+        $query = $this->connection->createQueryBuilder();
+        $query->select('*');
+        $query->from(self::TABLE);
+        $query->where('deleted_at IS NULL');
+        $rows = $query->execute()->fetchAll();
+
+        if (empty($rows)) {
+            return [];
+        }
+
+        return array_map(function ($row) {
+            return User::fromArray($row);
+        }, $rows);
+    }
+
+    /**
      * @param UserId $id
      * @return null|User
      */
