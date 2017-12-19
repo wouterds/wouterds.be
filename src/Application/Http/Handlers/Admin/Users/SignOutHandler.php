@@ -1,6 +1,6 @@
 <?php
 
-namespace WouterDeSchuyter\Application\Http\Handlers\Admin;
+namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Users;
 
 use League\Tactician\CommandBus;
 use Psr\Http\Message\ResponseInterface as Response;

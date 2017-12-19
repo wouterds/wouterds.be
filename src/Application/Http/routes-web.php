@@ -5,7 +5,7 @@ use WouterDeSchuyter\Application\Http\Handlers\Admin\MediaHandler as AdminMediaH
 use WouterDeSchuyter\Application\Http\Handlers\Admin\OverviewHandler as AdminOverviewHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\SignInHandler as AdminUsersSignInHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\SignInPostHandler as AdminUsersSignInPostHandler;
-use WouterDeSchuyter\Application\Http\Handlers\Admin\SignOutHandler as AdminSignOutHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\SignOutHandler as AdminUsersSignOutHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\SignUpHandler as AdminSignUpHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\SignUpPostHandler as AdminSignUpPostHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\ActivateHandler as AdminUsersActivateHandler;
@@ -43,6 +43,6 @@ $app->group(null, function () use ($app) {
             $app->get('/{id}/deactivate', AdminUsersDeactivateHandler::class)->setName('admin.users.deactivate');
             $app->get('/{id}/delete', AdminUsersDeleteHandler::class)->setName('admin.users.delete');
         });
-        $app->get('/sign-out', AdminSignOutHandler::class)->setName('admin.sign-out');
+        $app->get('/sign-out', AdminUsersSignOutHandler::class)->setName('admin.sign-out');
     })->add(AdminAuthenticatedUserMiddleware::class);
 });
