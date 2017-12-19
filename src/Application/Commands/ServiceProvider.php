@@ -10,6 +10,7 @@ use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 use League\Tactician\Handler\MethodNameInflector\HandleInflector;
 use WouterDeSchuyter\Domain\Commands\ContactEnquiry;
 use WouterDeSchuyter\Domain\Commands\SignInUser;
+use WouterDeSchuyter\Domain\Commands\SignOutUser;
 use WouterDeSchuyter\Domain\Commands\SignUpUser;
 
 class ServiceProvider extends AbstractServiceProvider
@@ -31,6 +32,7 @@ class ServiceProvider extends AbstractServiceProvider
                 ContactEnquiry::class => ContactEnquiryHandler::class,
                 SignInUser::class => SignInUserHandler::class,
                 SignUpUser::class => SignUpUserHandler::class,
+                SignOutUser::class => SignOutUserHandler::class,
             ]);
 
             $handlerMiddleware = new CommandHandlerMiddleware(

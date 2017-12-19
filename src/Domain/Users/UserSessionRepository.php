@@ -19,4 +19,9 @@ interface UserSessionRepository
      * @param UserId $userId
      */
     public function deleteByUserId(UserId $userId);
+
+    /**
+     * @param UserSessionId $id
+     */
+    public function delete(UserSessionId $id);
 }

@@ -63,6 +63,6 @@ class SignInUserHandler
         $userSession = new UserSession($user->getId());
         $this->userSessionRepository->add($userSession);
 
-        setcookie('user_session_id', $userSession->getId(), time() + strtotime('1 month'));
+        setcookie('user_session_id', $userSession->getId(), time() + strtotime('1 month'), '/');
     }
 }

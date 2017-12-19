@@ -7,6 +7,7 @@ use WouterDeSchuyter\Application\Http\Handlers\Admin\SignInHandler as AdminSignI
 use WouterDeSchuyter\Application\Http\Handlers\Admin\SignInPostHandler as AdminSignInPostHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\SignUpHandler as AdminSignUpHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\SignUpPostHandler as AdminSignUpPostHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\SignOutHandler as AdminSignOutHandler;
 use WouterDeSchuyter\Application\Http\Handlers\BlogHandler;
 use WouterDeSchuyter\Application\Http\Handlers\ContactHandler;
 use WouterDeSchuyter\Application\Http\Handlers\ContactPostHandler;
@@ -32,5 +33,6 @@ $app->group(null, function () use ($app) {
     $app->group('/admin', function () use ($app) {
         $app->get('', AdminOverviewHandler::class)->setName('admin.overview');
         $app->get('/media', AdminMediaHandler::class)->setName('admin.media');
+        $app->get('/sign-out', AdminSignOutHandler::class)->setName('admin.sign-out');
     })->add(AdminAuthenticatedUserMiddleware::class);
 });

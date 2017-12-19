@@ -80,14 +80,14 @@ class AuthenticatedUserMiddleware
 
         // Not logged in?
         if ($this->authenticatedUser->isLoggedIn() === false) {
-            setcookie('user_session_id', false, -1);
+            setcookie('user_session_id', false, -1, '/');
             $response = $response->withStatus(StatusCode::TEMPORARY_REDIRECT);
             $response = $response->withHeader('Location', $this->router->pathFor('admin.sign-in'));
             return $response;
         }
 
         // Prolong session cookie
-        setcookie('user_session_id', $userSession->getId(), time() + strtotime('1 month'));
+        setcookie('user_session_id', $userSession->getId(), time() + strtotime('1 month'), '/');
 
         return $next($request, $response);
     }

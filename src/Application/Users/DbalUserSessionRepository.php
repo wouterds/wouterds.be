@@ -69,4 +69,18 @@ class DbalUserSessionRepository implements UserSessionRepository
         $query->andWhere('deleted_at IS NULL');
         $query->execute();
     }
+
+    /**
+     * @param UserSessionId $id
+     */
+    public function delete(UserSessionId $id)
+    {
+        $query = $this->connection->createQueryBuilder();
+        $query->update(self::TABLE);
+        $query->set('updated_at', 'NOW()');
+        $query->set('deleted_at', 'NOW()');
+        $query->where('id = ' . $query->createNamedParameter($id));
+        $query->andWhere('deleted_at IS NULL');
+        $query->execute();
+    }
 }
