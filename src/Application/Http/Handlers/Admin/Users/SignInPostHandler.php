@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Teapot\StatusCode;
 use WouterDeSchuyter\Application\Http\Validators\Admin\SignInRequestValidator;
-use WouterDeSchuyter\Domain\Commands\SignInUser;
+use WouterDeSchuyter\Domain\Commands\Users\SignInUser;
 use WouterDeSchuyter\Domain\Users\InvalidUserCredentials;
 use WouterDeSchuyter\Domain\Users\UserNotActivatedYet;
 

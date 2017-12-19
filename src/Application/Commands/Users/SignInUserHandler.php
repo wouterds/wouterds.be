@@ -2,7 +2,7 @@
 
 namespace WouterDeSchuyter\Application\Commands\Users;
 
-use WouterDeSchuyter\Domain\Commands\SignInUser;
+use WouterDeSchuyter\Domain\Commands\Users\SignInUser;
 use WouterDeSchuyter\Domain\Users\InvalidUserCredentials;
 use WouterDeSchuyter\Domain\Users\User;
 use WouterDeSchuyter\Domain\Users\UserNotActivatedYet;
