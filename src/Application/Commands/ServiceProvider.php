@@ -13,6 +13,7 @@ use WouterDeSchuyter\Application\Commands\Users\DeactivateUserHandler;
 use WouterDeSchuyter\Application\Commands\Users\DeleteUserHandler;
 use WouterDeSchuyter\Application\Commands\Users\SignInUserHandler;
 use WouterDeSchuyter\Application\Commands\Users\SignOutUserHandler;
+use WouterDeSchuyter\Application\Commands\Users\SignUpUserHandler;
 use WouterDeSchuyter\Domain\Commands\ContactEnquiry;
 use WouterDeSchuyter\Domain\Commands\SignInUser;
 use WouterDeSchuyter\Domain\Commands\SignOutUser;

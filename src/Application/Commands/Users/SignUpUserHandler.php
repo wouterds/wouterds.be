@@ -1,6 +1,6 @@
 <?php
 
-namespace WouterDeSchuyter\Application\Commands;
+namespace WouterDeSchuyter\Application\Commands\Users;
 
 use WouterDeSchuyter\Domain\Commands\SignUpUser;
 use WouterDeSchuyter\Domain\Users\User;
