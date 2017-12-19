@@ -11,6 +11,7 @@ use League\Tactician\Handler\MethodNameInflector\HandleInflector;
 use WouterDeSchuyter\Application\Commands\Users\ActivateUserHandler;
 use WouterDeSchuyter\Application\Commands\Users\DeactivateUserHandler;
 use WouterDeSchuyter\Application\Commands\Users\DeleteUserHandler;
+use WouterDeSchuyter\Application\Commands\Users\SignInUserHandler;
 use WouterDeSchuyter\Domain\Commands\ContactEnquiry;
 use WouterDeSchuyter\Domain\Commands\SignInUser;
 use WouterDeSchuyter\Domain\Commands\SignOutUser;
