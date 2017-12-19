@@ -3,6 +3,29 @@
 {% block body %}
     <div class="container-fluid">
         <h2 class="h2">Media - Add</h2>
-        
+
+        <form class="container-fluid form" role="form" enctype="multipart/form-data" method="post" action="{{ app.router.pathFor('admin.media.add_post') }}">
+            <div class="row">
+                <div class="col-sm-6 input-wrapper">
+                    <label for="label" class="label">Label (leave blank to use filename)</label>
+                    <input type="text" id="label" name="label" class="input">
+                </div>
+                <div class="col-sm-6 input-wrapper">
+                    <label class="label">File</label>
+                    <input type="file" id="file" name="file" class="input input--file">
+                    <label for="file" class="label input-file-placeholder">
+                        <span data-id="placeholder" class="input-file-placeholder__placeholder"></span>
+                        <span class="input-file-placeholder__label">Choose a file..</span>
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 input-wrapper">
+                    <button type="submit" class="input button" disabled data-loader="true">
+                        <span class="button__text">Upload</span>
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
 {% endblock %}

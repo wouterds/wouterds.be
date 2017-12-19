@@ -62,6 +62,8 @@
 }
 
 .input,
+.input-file-placeholder,
+.input-file-placeholder__placeholder,
 .editor-toolbar,
 .CodeMirror {
   appearance: none;
@@ -85,6 +87,66 @@
     color: rgba($color-blue-grey, 0.7);
     background: rgba($color-blue-grey, 0.04);
     border-bottom-color: rgba($color-blue-grey, 0.12);
+  }
+}
+
+.input--file {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.input-file-placeholder {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  padding: 0;
+  height: 42px;
+
+  * {
+    pointer-events: none;
+  }
+
+  &:hover & {
+    &__label {
+      background: rgba($color-blue-grey, 0.9);
+    }
+  }
+
+  &__label {
+    color: $color-white;
+    background-color: $color-blue-grey;
+    transition: background 150ms ease-in-out;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: -1px;
+    line-height: 43px;
+    padding: 0 12px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+  }
+
+  &__placeholder {
+    line-height: 43px;
+    height: 42px;
+    padding: 0 12px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: top;
+    background: none;
+    border: 0;
+    font-size: inherit;
+    font-weight: 400;
+    max-width: 240px;
   }
 }
 

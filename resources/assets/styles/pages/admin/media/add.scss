@@ -1,0 +1,11 @@
+// Variables
+@import '../../../base/variables';
+
+// Scope
+$scope: 'page--admin--media--add';
+
+.#{$scope} {
+  .content-wrapper {
+    max-width: $container;
+  }
+}
