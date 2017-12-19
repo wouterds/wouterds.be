@@ -2,8 +2,8 @@
 
 namespace WouterDeSchuyter\Domain\Users;
 
-use DateTimeImmutable;
 use JsonSerializable;
+use WouterDeSchuyter\Infrastructure\ValueObjects\DateTime;
 
 class User implements JsonSerializable
 {
@@ -38,7 +38,17 @@ class User implements JsonSerializable
     private $salt;
 
     /**
-     * @var DateTimeImmutable|null
+     * @var DateTime|null
+     */
+    private $createdAt;
+
+    /**
+     * @var DateTime|null
+     */
+    private $updatedAt;
+
+    /**
+     * @var DateTime|null
      */
     private $activatedAt;
 
@@ -59,6 +69,9 @@ class User implements JsonSerializable
         $this->email = $email;
         $this->password = $password;
         $this->salt = $salt;
+        $this->createdAt = new DateTime();
+        $this->updatedAt = new DateTime();
+        $this->activatedAt = null;
     }
 
     /**
@@ -70,7 +83,9 @@ class User implements JsonSerializable
         $user = new User($data['email'], $data['password'], !empty($data['salt']) ? $data['salt'] : null);
         $user->id = new UserId(!empty($data['id']) ? $data['id'] : null);
         $user->name = !empty($data['name']) ? $data['name'] : null;
-        $user->activatedAt = !empty($data['activated_at']) ? new DateTimeImmutable($data['activated_at']) : null;
+        $user->activatedAt = !empty($data['activated_at']) ? new DateTime($data['activated_at']) : null;
+        $user->createdAt = !empty($data['created_at']) ? new DateTime($data['created_at']) : null;
+        $user->updatedAt = !empty($data['updated_at']) ? new DateTime($data['updated_at']) : null;
 
         return $user;
     }
@@ -140,9 +155,25 @@ class User implements JsonSerializable
     }
 
     /**
-     * @return DateTimeImmutable|null
+     * @return DateTime|null
      */
-    public function getActivatedAt(): ?DateTimeImmutable
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getActivatedAt(): ?DateTime
     {
         return $this->activatedAt;
     }
