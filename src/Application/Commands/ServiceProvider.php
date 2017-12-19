@@ -8,10 +8,12 @@ use League\Tactician\Container\ContainerLocator;
 use League\Tactician\Handler\CommandHandlerMiddleware;
 use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 use League\Tactician\Handler\MethodNameInflector\HandleInflector;
+use WouterDeSchuyter\Application\Commands\Users\ActivateUserHandler;
 use WouterDeSchuyter\Domain\Commands\ContactEnquiry;
 use WouterDeSchuyter\Domain\Commands\SignInUser;
 use WouterDeSchuyter\Domain\Commands\SignOutUser;
 use WouterDeSchuyter\Domain\Commands\SignUpUser;
+use WouterDeSchuyter\Domain\Commands\Users\ActivateUser;
 
 class ServiceProvider extends AbstractServiceProvider
 {
@@ -33,6 +35,7 @@ class ServiceProvider extends AbstractServiceProvider
                 SignInUser::class => SignInUserHandler::class,
                 SignUpUser::class => SignUpUserHandler::class,
                 SignOutUser::class => SignOutUserHandler::class,
+                ActivateUser::class => ActivateUserHandler::class,
             ]);
 
             $handlerMiddleware = new CommandHandlerMiddleware(
