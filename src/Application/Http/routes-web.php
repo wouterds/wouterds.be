@@ -2,7 +2,10 @@
 
 use WouterDeSchuyter\Application\Http\Handlers\AboutHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\MediaHandler as AdminMediaHandler;
-use WouterDeSchuyter\Application\Http\Handlers\Admin\UsersHandler as AdminUsersHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\IndexHandler as AdminUsersIndexHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\ActivateHandler as AdminUsersActivateHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\DeactivateHandler as AdminUsersDeactivateHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\DeleteHandler as AdminUsersDeleteHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\OverviewHandler as AdminOverviewHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\SignInHandler as AdminSignInHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\SignInPostHandler as AdminSignInPostHandler;
@@ -34,7 +37,12 @@ $app->group(null, function () use ($app) {
     $app->group('/admin', function () use ($app) {
         $app->get('', AdminOverviewHandler::class)->setName('admin.overview');
         $app->get('/media', AdminMediaHandler::class)->setName('admin.media');
-        $app->get('/users', AdminUsersHandler::class)->setName('admin.users');
+        $app->group('/users', function () use ($app) {
+            $app->get('', AdminUsersIndexHandler::class)->setName('admin.users');
+            $app->get('/{id}/activate', AdminUsersActivateHandler::class)->setName('admin.users.activate');
+            $app->get('/{id}/deactivate', AdminUsersDeactivateHandler::class)->setName('admin.users.deactivate');
+            $app->get('/{id}/delete', AdminUsersDeleteHandler::class)->setName('admin.users.delete');
+        });
         $app->get('/sign-out', AdminSignOutHandler::class)->setName('admin.sign-out');
     })->add(AdminAuthenticatedUserMiddleware::class);
 });

@@ -23,9 +23,9 @@
                     <td title="{{ user.createdAt }}">{{ user.createdAt|date('d.m.Y, H:i') }}</td>
                     <td title="{{ user.updatedAt }}">{{ user.updatedAt|date('d.m.Y, H:i') }}</td>
                     <td class="actions">
-                        <a href="#activate"{% if user.activatedAt is not null %} class="hidden"{% endif %}>Activate</a>
-                        <a href="#deactivate"{% if user.activatedAt is null %} class="hidden"{% endif %}>Deactivate</a>
-                        <a href="#activate">Delete</a>
+                        <a href="{{ app.router.pathFor('admin.users.activate', {'id': user.id}) }}"{% if user.activatedAt is not null %} class="hidden"{% endif %}>Activate</a>
+                        <a href="{{ app.router.pathFor('admin.users.deactivate', {'id': user.id}) }}"{% if user.activatedAt is null %} class="hidden"{% endif %}>Deactivate</a>
+                        <a href="{{ app.router.pathFor('admin.users.delete', {'id': user.id}) }}">Delete</a>
                     </td>
                 </tr>
             {% endfor %}

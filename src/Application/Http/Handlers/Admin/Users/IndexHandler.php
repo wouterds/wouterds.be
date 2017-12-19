@@ -1,18 +1,19 @@
 <?php
 
-namespace WouterDeSchuyter\Application\Http\Handlers\Admin;
+namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Users;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Router;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\ViewHandler;
 use WouterDeSchuyter\Domain\Users\AuthenticatedUser;
 use WouterDeSchuyter\Domain\Users\UserRepository;
 use WouterDeSchuyter\Infrastructure\ApplicationMonitor\ApplicationMonitor;
 use WouterDeSchuyter\Infrastructure\Config\Config;
 use WouterDeSchuyter\Infrastructure\View\Twig;
 
-class UsersHandler extends ViewHandler
+class IndexHandler extends ViewHandler
 {
     /**
      * @var UserRepository
@@ -45,7 +46,7 @@ class UsersHandler extends ViewHandler
      */
     public function getTemplate(): string
     {
-        return 'pages/admin/users.html.twig';
+        return 'pages/admin/users/index.html.twig';
     }
 
     /**
