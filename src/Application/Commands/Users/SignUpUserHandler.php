@@ -2,7 +2,7 @@
 
 namespace WouterDeSchuyter\Application\Commands\Users;
 
-use WouterDeSchuyter\Domain\Commands\SignUpUser;
+use WouterDeSchuyter\Domain\Commands\Users\SignUpUser;
 use WouterDeSchuyter\Domain\Users\User;
 use WouterDeSchuyter\Domain\Users\UserRepository;
 use WouterDeSchuyter\Infrastructure\Mail\Mailer;

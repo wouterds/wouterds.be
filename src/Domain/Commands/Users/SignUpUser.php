@@ -1,6 +1,6 @@
 <?php
 
-namespace WouterDeSchuyter\Domain\Commands;
+namespace WouterDeSchuyter\Domain\Commands\Users;
 
 class SignUpUser
 {

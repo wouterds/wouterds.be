@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Teapot\StatusCode;
 use WouterDeSchuyter\Application\Http\Validators\Admin\SignUpRequestValidator;
-use WouterDeSchuyter\Domain\Commands\SignUpUser;
+use WouterDeSchuyter\Domain\Commands\Users\SignUpUser;
 
 class SignUpPostHandler
 {
