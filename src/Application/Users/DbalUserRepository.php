@@ -69,6 +69,7 @@ class DbalUserRepository implements UserRepository
         $query->from(self::TABLE);
         $query->where('id = ' . $query->createNamedParameter($id));
         $query->andWhere('deleted_at IS NULL');
+        $query->orderBy('created_at', 'DESC');
         $result = $query->execute()->fetch();
 
         if (empty($result)) {
