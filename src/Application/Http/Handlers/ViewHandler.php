@@ -65,13 +65,19 @@ abstract class ViewHandler implements View
      */
     public function render(Response $response, array $data = []): Response
     {
-        $data['app'] = [];
+        if (empty($data['app'])) {
+            $data['app'] = [];
+        }
+
         $data['app']['config'] = $this->config;
         $data['app']['router'] = $this->router;
         $data['app']['request'] = $this->request;
         $data['app']['report'] = $this->applicationMonitor->getReport();
 
-        $data['page'] = [];
+        if (empty($data['page'])) {
+            $data['page'] = [];
+        }
+
         $data['page']['info'] = $this->pageInfo();
 
         return $this->twig->renderWithResponse($response, $this->getTemplate(), $data);
