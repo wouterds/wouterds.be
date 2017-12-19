@@ -1,9 +1,10 @@
 <?php
 
-namespace WouterDeSchuyter\Application\Http\Handlers\Admin;
+namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Users;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\ViewHandler;
 
 class SignInHandler extends ViewHandler
 {

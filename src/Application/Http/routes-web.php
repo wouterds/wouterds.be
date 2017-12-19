@@ -3,7 +3,7 @@
 use WouterDeSchuyter\Application\Http\Handlers\AboutHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\MediaHandler as AdminMediaHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\OverviewHandler as AdminOverviewHandler;
-use WouterDeSchuyter\Application\Http\Handlers\Admin\SignInHandler as AdminSignInHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\SignInHandler as AdminUsersSignInHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\SignInPostHandler as AdminSignInPostHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\SignOutHandler as AdminSignOutHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\SignUpHandler as AdminSignUpHandler;
@@ -27,7 +27,7 @@ $app->group(null, function () use ($app) {
 
     // Public admin routes
     $app->group('/admin', function () use ($app) {
-        $app->get('/sign-in', AdminSignInHandler::class)->setName('admin.sign-in');
+        $app->get('/sign-in', AdminUsersSignInHandler::class)->setName('admin.sign-in');
         $app->post('/sign-in.json', AdminSignInPostHandler::class)->setName('admin.sign-in_post');
         $app->get('/sign-up', AdminSignUpHandler::class)->setName('admin.sign-up');
         $app->post('/sign-up.json', AdminSignUpPostHandler::class)->setName('admin.sign-up_post');
