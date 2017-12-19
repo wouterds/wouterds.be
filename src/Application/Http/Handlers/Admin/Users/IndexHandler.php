@@ -29,13 +29,14 @@ class IndexHandler extends ViewHandler
      * @param AuthenticatedUser $authenticatedUser
      * @param UserRepository $userRepository
      */
-    public function __construct(Twig $twig,
-                                Config $config,
-                                Router $router,
-                                RequestInterface $request,
-                                ApplicationMonitor $applicationMonitor,
-                                AuthenticatedUser $authenticatedUser,
-                                UserRepository $userRepository
+    public function __construct(
+        Twig $twig,
+        Config $config,
+        Router $router,
+        RequestInterface $request,
+        ApplicationMonitor $applicationMonitor,
+        AuthenticatedUser $authenticatedUser,
+        UserRepository $userRepository
     ) {
         parent::__construct($twig, $config, $router, $request, $applicationMonitor, $authenticatedUser);
         $this->userRepository = $userRepository;

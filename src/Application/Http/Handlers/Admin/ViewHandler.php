@@ -27,12 +27,13 @@ abstract class ViewHandler extends BaseViewHandler implements View
      * @param ApplicationMonitor $applicationMonitor
      * @param AuthenticatedUser $authenticatedUser
      */
-    public function __construct(Twig $twig,
-                                Config $config,
-                                Router $router,
-                                Request $request,
-                                ApplicationMonitor $applicationMonitor,
-                                AuthenticatedUser $authenticatedUser
+    public function __construct(
+        Twig $twig,
+        Config $config,
+        Router $router,
+        Request $request,
+        ApplicationMonitor $applicationMonitor,
+        AuthenticatedUser $authenticatedUser
     ) {
         parent::__construct($twig, $config, $router, $request, $applicationMonitor);
         $this->authenticatedUser = $authenticatedUser;
