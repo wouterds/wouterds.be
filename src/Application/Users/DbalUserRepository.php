@@ -97,4 +97,21 @@ class DbalUserRepository implements UserRepository
 
         return User::fromArray($result);
     }
+
+    /**
+     * @param User $user
+     */
+    public function update(User $user)
+    {
+        $query = $this->connection->createQueryBuilder();
+        $query->update(self::TABLE);
+        $query->set('name', $query->createNamedParameter($user->getName()));
+        $query->set('email', $query->createNamedParameter($user->getEmail()));
+        $query->set('password', $query->createNamedParameter($user->getPassword()));
+        $query->set('salt', $query->createNamedParameter($user->getSalt()));
+        $query->set('activated_at', $query->createNamedParameter($user->getActivatedAt()));
+        $query->set('updated_at', 'NOW()');
+        $query->where('id = ' . $query->createNamedParameter($user->getId()));
+        $query->execute();
+    }
 }

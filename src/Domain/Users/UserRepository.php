@@ -25,4 +25,9 @@ interface UserRepository
      * @return User|null
      */
     public function findByEmail(string $email): ?User;
+
+    /**
+     * @param User $user
+     */
+    public function update(User $user);
 }
