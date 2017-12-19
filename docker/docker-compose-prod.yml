@@ -9,6 +9,8 @@ services:
       - VIRTUAL_HOST=wouterdeschuyter.be
       - LETSENCRYPT_HOST=wouterdeschuyter.be
       - LETSENCRYPT_EMAIL=wouter@wouterdeschuyter.be
+    volumes:
+      - ./media:/code/storage/media
     networks:
       - default
       - nginxproxy_default
@@ -20,6 +22,7 @@ services:
     volumes:
       - ./docker-prod.env:/code/.env:ro
       - ./logs:/code/storage/logs
+      - ./media:/code/storage/media
     external_links:
       - mariadb
     networks:

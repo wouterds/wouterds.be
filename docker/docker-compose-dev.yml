@@ -20,6 +20,7 @@ services:
     volumes:
       - ./..:/code
       - ./../storage/logs:/code/storage/logs
+      - ./../storage/media:/code/storage/media
     env_file:
       - ./../.env
 
