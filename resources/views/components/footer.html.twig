@@ -1,5 +1,5 @@
-<footer class="footer">
-    <div class="container">
+<footer class="footer{% if footer.admin %} footer--admin{% endif %}">
+    <div class="container{% if footer.admin %}-fluid{% endif %}">
         &copy; Copyright {{ 'now'|date('Y') }} {{ app.config.get('APP_NAME') }}
         <br>
         Page generated in

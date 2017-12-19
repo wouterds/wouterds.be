@@ -38,6 +38,17 @@ $scope: 'header';
       border-radius: 3px;
     }
   }
+
+  &--admin {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  &--admin & {
+    &__navigation {
+      margin-right: 0;
+    }
+  }
 }
 
 @media only screen and (max-width: $container) {
