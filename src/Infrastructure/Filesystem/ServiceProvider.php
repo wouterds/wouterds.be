@@ -4,8 +4,8 @@ namespace WouterDeSchuyter\Infrastructure\Filesystem;
 
 use Emgag\Flysystem\Hash\HashPlugin;
 use League\Container\ServiceProvider\AbstractServiceProvider;
-use League\Flysystem\Filesystem;
 use League\Flysystem\Adapter\Local as LocalAdapter;
+use League\Flysystem\Filesystem;
 
 class ServiceProvider extends AbstractServiceProvider
 {

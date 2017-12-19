@@ -1,12 +1,12 @@
 <?php
 
 use WouterDeSchuyter\Application\Http\Handlers\AboutHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\MediaHandler as AdminMediaHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\OverviewHandler as AdminOverviewHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\SignInHandler as AdminSignInHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\SignInPostHandler as AdminSignInPostHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\SignUpHandler as AdminSignUpHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\SignUpPostHandler as AdminSignUpPostHandler;
-use WouterDeSchuyter\Application\Http\Handlers\Admin\MediaHandler as AdminMediaHandler;
 use WouterDeSchuyter\Application\Http\Handlers\BlogHandler;
 use WouterDeSchuyter\Application\Http\Handlers\ContactHandler;
 use WouterDeSchuyter\Application\Http\Handlers\ContactPostHandler;
