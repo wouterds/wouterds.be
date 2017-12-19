@@ -19,7 +19,7 @@
                     <td>{{ user.id }}</td>
                     <td>{{ user.name }}</td>
                     <td>{{ user.email }}</td>
-                    <td title="{{ user.activatedAt }}">{% if user.activatedAt %}{{ user.activatedAt|date('d.m.Y, H:i') }}{% else %}Not activated{% endif %}</td>
+                    <td title="{{ user.activatedAt }}">{% if user.activatedAt %}{{ user.activatedAt|date('d.m.Y, H:i') }}{% else %}--{% endif %}</td>
                     <td title="{{ user.createdAt }}">{{ user.createdAt|date('d.m.Y, H:i') }}</td>
                     <td title="{{ user.updatedAt }}">{% if user.updatedAt %}{{ user.updatedAt|date('d.m.Y, H:i') }}{% else %}--{% endif %}</td>
                     <td class="actions">
