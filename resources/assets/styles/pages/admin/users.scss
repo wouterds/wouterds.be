@@ -1,0 +1,13 @@
+// Variables
+@import '../../base/variables';
+
+// Scope
+$scope: 'page--admin--users';
+
+.#{$scope} {
+  .actions {
+    a + a {
+      margin-left: 5px;
+    }
+  }
+}

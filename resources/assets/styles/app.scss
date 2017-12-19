@@ -13,6 +13,7 @@
 @import '~bootstrap-sass/assets/stylesheets/bootstrap/tables';
 
 // Base styles
+@import 'base/utilities';
 @import 'base/fonts';
 @import 'base/forms';
 
@@ -26,8 +27,17 @@
 @import 'pages/admin/index';
 @import 'pages/admin/sign-in';
 @import 'pages/admin/sign-up';
+@import 'pages/admin/users';
 
 body {
   background: $color-background;
   color: $color-text;
+}
+
+a {
+  color: $color-red;
+
+  &:hover {
+    color: $color-blue-grey;
+  }
 }
