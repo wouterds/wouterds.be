@@ -19,9 +19,9 @@
                     <td>{{ user.id }}</td>
                     <td>{{ user.name }}</td>
                     <td>{{ user.email }}</td>
-                    <td title="{{ user.activatedAt }}">{{ user.activatedAt|date('d.m.Y, H:i') }}</td>
+                    <td title="{{ user.activatedAt }}">{% if user.activatedAt %}{{ user.activatedAt|date('d.m.Y, H:i') }}{% else %}Not activated{% endif %}</td>
                     <td title="{{ user.createdAt }}">{{ user.createdAt|date('d.m.Y, H:i') }}</td>
-                    <td title="{{ user.updatedAt }}">{{ user.updatedAt|date('d.m.Y, H:i') }}</td>
+                    <td title="{{ user.updatedAt }}">{% if user.updatedAt %}{{ user.updatedAt|date('d.m.Y, H:i') }}{% else %}--{% endif %}</td>
                     <td class="actions">
                         <a href="{{ app.router.pathFor('admin.users.activate', {'id': user.id}) }}"{% if user.activatedAt is not null %} class="hidden"{% endif %}>Activate</a>
                         <a href="{{ app.router.pathFor('admin.users.deactivate', {'id': user.id}) }}"{% if user.activatedAt is null %} class="hidden"{% endif %}>Deactivate</a>
