@@ -1,0 +1,11 @@
+// Variables
+@import '../../base/variables';
+
+// Scope
+$scope: 'page--admin-sign-in';
+
+.#{$scope} {
+  .content-wrapper {
+    max-width: $container;
+  }
+}
