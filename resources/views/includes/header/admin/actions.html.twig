@@ -2,6 +2,9 @@
     <li class="header__navigation__item{% if page.info.dashedCase == 'overview' %} header__navigation__item--active{% endif %}">
         <a class="header__navigation__item-link" href="{{ app.router.pathFor('admin.overview') }}">Overview</a>
     </li>
+    <li class="header__navigation__item{% if page.info.dashedCase == 'users' %} header__navigation__item--active{% endif %}">
+        <a class="header__navigation__item-link" href="{{ app.router.pathFor('admin.users') }}">Users</a>
+    </li>
     <li class="header__navigation__item{% if page.info.dashedCase == 'media' %} header__navigation__item--active{% endif %}">
         <a class="header__navigation__item-link" href="{{ app.router.pathFor('admin.media') }}">Media</a>
     </li>
