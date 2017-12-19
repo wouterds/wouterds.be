@@ -1,0 +1,17 @@
+// Variables
+@import '../../../base/variables';
+
+// Scope
+$scope: 'page--admin--media--index';
+
+.#{$scope} {
+  .h2 {
+    &__action {
+      font-size: 0.8em;
+
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+}
