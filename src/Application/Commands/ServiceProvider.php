@@ -16,7 +16,7 @@ use WouterDeSchuyter\Application\Commands\Users\SignOutUserHandler;
 use WouterDeSchuyter\Application\Commands\Users\SignUpUserHandler;
 use WouterDeSchuyter\Domain\Commands\ContactEnquiry;
 use WouterDeSchuyter\Domain\Commands\Users\SignInUser;
-use WouterDeSchuyter\Domain\Commands\SignOutUser;
+use WouterDeSchuyter\Domain\Commands\Users\SignOutUser;
 use WouterDeSchuyter\Domain\Commands\SignUpUser;
 use WouterDeSchuyter\Domain\Commands\Users\ActivateUser;
 use WouterDeSchuyter\Domain\Commands\Users\DeactivateUser;

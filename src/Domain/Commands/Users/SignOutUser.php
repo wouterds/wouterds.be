@@ -1,6 +1,6 @@
 <?php
 
-namespace WouterDeSchuyter\Domain\Commands;
+namespace WouterDeSchuyter\Domain\Commands\Users;
 
 use WouterDeSchuyter\Domain\Users\UserSessionId;
 

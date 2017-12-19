@@ -2,7 +2,7 @@
 
 namespace WouterDeSchuyter\Application\Commands\Users;
 
-use WouterDeSchuyter\Domain\Commands\SignOutUser;
+use WouterDeSchuyter\Domain\Commands\Users\SignOutUser;
 use WouterDeSchuyter\Domain\Users\UserSessionRepository;
 
 class SignOutUserHandler

@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Router;
 use Teapot\StatusCode;
-use WouterDeSchuyter\Domain\Commands\SignOutUser;
+use WouterDeSchuyter\Domain\Commands\Users\SignOutUser;
 use WouterDeSchuyter\Domain\Users\UserSessionId;
 
 class SignOutHandler
