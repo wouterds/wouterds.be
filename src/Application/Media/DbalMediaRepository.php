@@ -39,6 +39,27 @@ class DbalMediaRepository implements MediaRepository
     }
 
     /**
+     * @return Media[]
+     */
+    public function findAll(): array
+    {
+        $query = $this->connection->createQueryBuilder();
+        $query->select('*');
+        $query->from(self::TABLE);
+        $query->where('deleted_at IS NULL');
+        $query->orderBy('created_at', 'DESC');
+        $rows = $query->execute()->fetchAll();
+
+        if (empty($rows)) {
+            return [];
+        }
+
+        return array_map(function ($row) {
+            return Media::fromArray($row);
+        }, $rows);
+    }
+
+    /**
      * @param MediaId $id
      * @return Media|null
      */
