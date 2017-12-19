@@ -4,9 +4,9 @@ namespace WouterDeSchuyter\Application\Http\Handlers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use WouterDeSchuyter\Infrastructure\View\AbstractViewHandler;
+use WouterDeSchuyter\Application\Http\Handlers\ViewHandler;
 
-class AboutHandler extends AbstractViewHandler
+class AboutHandler extends ViewHandler
 {
     /**
      * @return string

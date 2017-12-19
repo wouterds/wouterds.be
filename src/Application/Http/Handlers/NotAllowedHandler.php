@@ -5,9 +5,9 @@ namespace WouterDeSchuyter\Application\Http\Handlers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Teapot\StatusCode;
-use WouterDeSchuyter\Infrastructure\View\AbstractViewHandler;
+use WouterDeSchuyter\Application\Http\Handlers\ViewHandler;
 
-class NotAllowedHandler extends AbstractViewHandler
+class NotAllowedHandler extends ViewHandler
 {
     /**
      * @return string

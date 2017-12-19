@@ -1,14 +1,16 @@
 <?php
 
-namespace WouterDeSchuyter\Infrastructure\View;
+namespace WouterDeSchuyter\Application\Http\Handlers;
 
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Router;
 use WouterDeSchuyter\Infrastructure\ApplicationMonitor\ApplicationMonitor;
 use WouterDeSchuyter\Infrastructure\Config\Config;
+use WouterDeSchuyter\Infrastructure\View\Twig;
+use WouterDeSchuyter\Infrastructure\View\View;
 
-abstract class AbstractViewHandler implements View
+abstract class ViewHandler implements View
 {
     /**
      * @var Twig
