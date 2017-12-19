@@ -179,6 +179,14 @@ class User implements JsonSerializable
     }
 
     /**
+     * @param DateTime|null $activatedAt
+     */
+    public function setActivatedAt(DateTime $activatedAt = null)
+    {
+        $this->activatedAt = $activatedAt;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize(): array
