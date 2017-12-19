@@ -53,9 +53,14 @@ class DbalUserRepository implements UserRepository
             return [];
         }
 
-        return array_map(function ($row) {
-            return User::fromArray($row);
-        }, $rows);
+        $data = [];
+        foreach ($rows as $row) {
+            $user = User::fromArray($row);
+
+            $data[$user->getId()->getValue()] = $user;
+        }
+
+        return $data;
     }
 
     /**
@@ -76,9 +81,14 @@ class DbalUserRepository implements UserRepository
             return [];
         }
 
-        return array_map(function ($row) {
-            return User::fromArray($row);
-        }, $rows);
+        $data = [];
+        foreach ($rows as $row) {
+            $user = User::fromArray($row);
+
+            $data[$user->getId()->getValue()] = $user;
+        }
+
+        return $data;
     }
 
     /**
