@@ -15,6 +15,12 @@ interface UserRepository
     public function findAll(): array;
 
     /**
+     * @param UserId[] $ids
+     * @return User[]
+     */
+    public function findMultiple(array $ids): array;
+
+    /**
      * @param UserId $id
      * @return null|User
      */

@@ -59,6 +59,29 @@ class DbalUserRepository implements UserRepository
     }
 
     /**
+     * @param UserId[] $ids
+     * @return User[]
+     */
+    public function findMultiple(array $ids): array
+    {
+        $query = $this->connection->createQueryBuilder();
+        $query->select('*');
+        $query->from(self::TABLE);
+        $query->where('id IN (' . $query->createNamedParameter($ids, Connection::PARAM_STR_ARRAY) . ')');
+        $query->andWhere('deleted_at IS NULL');
+        $query->orderBy('created_at', 'DESC');
+        $rows = $query->execute()->fetch();
+
+        if (empty($rows)) {
+            return [];
+        }
+
+        return array_map(function ($row) {
+            return User::fromArray($row);
+        }, $rows);
+    }
+
+    /**
      * @param UserId $id
      * @return null|User
      */
