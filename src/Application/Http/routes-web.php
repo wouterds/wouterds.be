@@ -7,7 +7,7 @@ use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\SignInHandler as Admi
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\SignInPostHandler as AdminUsersSignInPostHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\SignOutHandler as AdminUsersSignOutHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\SignUpHandler as AdminUsersSignUpHandler;
-use WouterDeSchuyter\Application\Http\Handlers\Admin\SignUpPostHandler as AdminSignUpPostHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\SignUpPostHandler as AdminUsersSignUpPostHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\ActivateHandler as AdminUsersActivateHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\DeactivateHandler as AdminUsersDeactivateHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\DeleteHandler as AdminUsersDeleteHandler;
