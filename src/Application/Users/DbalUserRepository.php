@@ -114,4 +114,17 @@ class DbalUserRepository implements UserRepository
         $query->where('id = ' . $query->createNamedParameter($user->getId()));
         $query->execute();
     }
+
+    /**
+     * @param UserId $id
+     */
+    public function delete(UserId $id)
+    {
+        $query = $this->connection->createQueryBuilder();
+        $query->update(self::TABLE);
+        $query->set('updated_at', 'NOW()');
+        $query->set('deleted_at', 'NOW()');
+        $query->where('id = ' . $query->createNamedParameter($id));
+        $query->execute();
+    }
 }

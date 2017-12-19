@@ -30,4 +30,9 @@ interface UserRepository
      * @param User $user
      */
     public function update(User $user);
+
+    /**
+     * @param UserId $id
+     */
+    public function delete(UserId $id);
 }
