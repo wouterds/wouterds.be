@@ -70,7 +70,7 @@ class DbalUserRepository implements UserRepository
         $query->where('id IN (' . $query->createNamedParameter($ids, Connection::PARAM_STR_ARRAY) . ')');
         $query->andWhere('deleted_at IS NULL');
         $query->orderBy('created_at', 'DESC');
-        $rows = $query->execute()->fetch();
+        $rows = $query->execute()->fetchAll();
 
         if (empty($rows)) {
             return [];
@@ -87,19 +87,13 @@ class DbalUserRepository implements UserRepository
      */
     public function find(UserId $id): ?User
     {
-        $query = $this->connection->createQueryBuilder();
-        $query->select('*');
-        $query->from(self::TABLE);
-        $query->where('id = ' . $query->createNamedParameter($id));
-        $query->andWhere('deleted_at IS NULL');
-        $query->orderBy('created_at', 'DESC');
-        $result = $query->execute()->fetch();
+        $users = $this->findMultiple([$id]);
 
-        if (empty($result)) {
+        if (empty($users)) {
             return null;
         }
 
-        return User::fromArray($result);
+        return reset($users);
     }
 
     /**
