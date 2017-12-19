@@ -100,9 +100,22 @@ abstract class ViewHandler implements View
         $dashedCaseName = implode('-', $templateParts);
         $dashedCaseName = lcfirst($dashedCaseName);
 
+        $className = 'page';
+        $page = '';
+        foreach ($templateParts as $part) {
+            if (!empty($page)) {
+                $page .= '--';
+            }
+
+            $page .= $part;
+
+            $className .= ' page--' . $page;
+        }
+
         return [
             'pascalCase' => $pascalCaseName,
             'dashedCase' => $dashedCaseName,
+            'className' => $className,
         ];
     }
 }

@@ -2,10 +2,9 @@
 @import '../../base/variables';
 
 // Scope
-$scope: 'page--admin--sign-up';
+$scope: 'page--admin';
 
 .#{$scope} {
   .content-wrapper {
-    max-width: $container;
   }
 }
