@@ -46,9 +46,17 @@ class Uuid implements JsonSerializable
     /**
      * @return string
      */
-    public function __toString(): string
+    public function getValue(): string
     {
         return $this->value;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->getValue();
     }
 
     /**
