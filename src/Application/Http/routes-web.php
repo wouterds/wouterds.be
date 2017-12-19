@@ -6,7 +6,7 @@ use WouterDeSchuyter\Application\Http\Handlers\Admin\OverviewHandler as AdminOve
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\SignInHandler as AdminUsersSignInHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\SignInPostHandler as AdminUsersSignInPostHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\SignOutHandler as AdminUsersSignOutHandler;
-use WouterDeSchuyter\Application\Http\Handlers\Admin\SignUpHandler as AdminSignUpHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\SignUpHandler as AdminUsersSignUpHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\SignUpPostHandler as AdminSignUpPostHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\ActivateHandler as AdminUsersActivateHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\DeactivateHandler as AdminUsersDeactivateHandler;
@@ -29,7 +29,7 @@ $app->group(null, function () use ($app) {
     $app->group('/admin', function () use ($app) {
         $app->get('/sign-in', AdminUsersSignInHandler::class)->setName('admin.sign-in');
         $app->post('/sign-in.json', AdminUsersSignInPostHandler::class)->setName('admin.sign-in_post');
-        $app->get('/sign-up', AdminSignUpHandler::class)->setName('admin.sign-up');
+        $app->get('/sign-up', AdminUsersSignUpHandler::class)->setName('admin.sign-up');
         $app->post('/sign-up.json', AdminSignUpPostHandler::class)->setName('admin.sign-up_post');
     });
 
