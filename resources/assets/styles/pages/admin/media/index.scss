@@ -14,4 +14,10 @@ $scope: 'page--admin--media--index';
       }
     }
   }
+
+  .actions {
+    a + a {
+      margin-left: 5px;
+    }
+  }
 }
