@@ -31,6 +31,7 @@ class DbalMediaRepository implements MediaRepository
     {
         $this->connection->insert(self::TABLE, [
             'id' => $media->getId(),
+            'user_id' => $media->getUserId(),
             'name' => $media->getName(),
             'content_type' => $media->getContentType(),
             'size' => $media->getSize(),
