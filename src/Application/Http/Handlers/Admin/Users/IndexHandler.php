@@ -3,8 +3,8 @@
 namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Users;
 
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use Slim\Router;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\ViewHandler;
 use WouterDeSchuyter\Domain\Users\AuthenticatedUser;
@@ -61,6 +61,7 @@ class IndexHandler extends ViewHandler
 
         $data = [];
         $data['users'] = $users;
+
         return $this->render($response, $data);
     }
 }

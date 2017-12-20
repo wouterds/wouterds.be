@@ -3,10 +3,9 @@
 namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Users;
 
 use League\Tactician\CommandBus;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use Slim\Router;
-use Teapot\StatusCode;
 use WouterDeSchuyter\Domain\Commands\Users\SignOutUser;
 use WouterDeSchuyter\Domain\Users\UserSessionId;
 
@@ -39,12 +38,10 @@ class SignOutHandler
      */
     public function __invoke(Request $request, Response $response): Response
     {
-        $userSessionId = new UserSessionId($request->getCookieParams()['user_session_id']);
+        $userSessionId = new UserSessionId($request->getCookieParam('user_session_id'));
 
         $this->commandBus->handle(new SignOutUser($userSessionId));
 
-        $response = $response->withHeader('Location', $this->router->pathFor('admin.overview'));
-        $response = $response->withStatus(StatusCode::TEMPORARY_REDIRECT);
-        return $response;
+        return $response->withRedirect($this->router->pathFor('admin.overview'));
     }
 }

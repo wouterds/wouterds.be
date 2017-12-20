@@ -3,8 +3,8 @@
 namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Media;
 
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use Slim\Router;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\ViewHandler;
 use WouterDeSchuyter\Domain\Media\MediaRepository;
@@ -40,7 +40,7 @@ class IndexHandler extends ViewHandler
         Twig $twig,
         Config $config,
         Router $router,
-        RequestInterface $request,
+        Request $request,
         ApplicationMonitor $applicationMonitor,
         AuthenticatedUser $authenticatedUser,
         MediaRepository $mediaRepository,

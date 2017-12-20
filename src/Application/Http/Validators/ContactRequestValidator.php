@@ -2,7 +2,7 @@
 
 namespace WouterDeSchuyter\Application\Http\Validators;
 
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Http\Request;
 use Valitron\Validator;
 
 class ContactRequestValidator
@@ -18,7 +18,7 @@ class ContactRequestValidator
      */
     public function validate(Request $request)
     {
-        $this->validator = new Validator($request->getParsedBody());
+        $this->validator = new Validator($request->getParams());
         $this->validator
             ->rule('required', ['name', 'email', 'subject', 'message'])
             ->message('You can not leave this field empty.');

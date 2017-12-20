@@ -3,10 +3,9 @@
 namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Users;
 
 use League\Tactician\CommandBus;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use Slim\Router;
-use Teapot\StatusCode;
 use WouterDeSchuyter\Domain\Commands\Users\DeleteUser;
 use WouterDeSchuyter\Domain\Users\UserId;
 
@@ -42,8 +41,6 @@ class DeleteHandler
     {
         $this->commandBus->handle(new DeleteUser(new UserId($id)));
 
-        $response = $response->withHeader('Location', $this->router->pathFor('admin.users'));
-        $response = $response->withStatus(StatusCode::TEMPORARY_REDIRECT);
-        return $response;
+        return $response->withRedirect($this->router->pathFor('admin.users'));
     }
 }

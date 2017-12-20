@@ -2,10 +2,9 @@
 
 namespace WouterDeSchuyter\Application\Http\Middlewares\Admin;
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use Slim\Router;
-use Teapot\StatusCode;
 use WouterDeSchuyter\Domain\Users\AuthenticatedUser;
 use WouterDeSchuyter\Domain\Users\UserRepository;
 use WouterDeSchuyter\Domain\Users\UserSessionId;
@@ -27,6 +26,7 @@ class AuthenticatedUserMiddleware
      * @var UserSessionRepository
      */
     private $userSessionRepository;
+
     /**
      * @var UserRepository
      */
@@ -59,8 +59,8 @@ class AuthenticatedUserMiddleware
     public function __invoke(Request $request, Response $response, $next): Response
     {
         $userSession = null;
-        if (!empty($request->getCookieParams()['user_session_id'])) {
-            $userSessionId = new UserSessionId($request->getCookieParams()['user_session_id']);
+        if (!empty($request->getCookieParam('user_session_id'))) {
+            $userSessionId = new UserSessionId($request->getCookieParam('user_session_id'));
             $userSession = $this->userSessionRepository->find($userSessionId);
         }
 
@@ -81,9 +81,7 @@ class AuthenticatedUserMiddleware
         // Not logged in?
         if ($this->authenticatedUser->isLoggedIn() === false) {
             setcookie('user_session_id', false, -1, '/');
-            $response = $response->withStatus(StatusCode::TEMPORARY_REDIRECT);
-            $response = $response->withHeader('Location', $this->router->pathFor('admin.users.sign-in'));
-            return $response;
+            return $response->withRedirect($this->router->pathFor('admin.users.sign-in'));
         }
 
         // Prolong session cookie

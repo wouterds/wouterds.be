@@ -3,8 +3,8 @@
 namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Users;
 
 use League\Tactician\CommandBus;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use Teapot\StatusCode;
 use WouterDeSchuyter\Application\Http\Validators\Admin\SignUpRequestValidator;
 use WouterDeSchuyter\Domain\Commands\Users\SignUpUser;
@@ -39,20 +39,15 @@ class SignUpPostHandler
     public function __invoke(Request $request, Response $response): Response
     {
         if (!$this->signUpRequestValidator->validate($request)) {
-            $response->getBody()->write(json_encode($this->signUpRequestValidator->getErrors()));
-            $response = $response->withHeader('Content-Type', 'application/json');
-            $response = $response->withStatus(StatusCode::BAD_REQUEST);
-            return $response;
+            return $response->withJson($this->signUpRequestValidator->getErrors(), StatusCode::BAD_REQUEST);
         }
 
         $this->commandBus->handle(new SignUpUser(
-            $request->getParsedBody()['name'],
-            $request->getParsedBody()['email'],
-            $request->getParsedBody()['password']
+            $request->getParam('name'),
+            $request->getParam('email'),
+            $request->getParam('password')
         ));
 
-        $response->getBody()->write(json_encode(true));
-        $response = $response->withHeader('Content-Type', 'application/json');
-        return $response;
+        return $response->withJson(true);
     }
 }

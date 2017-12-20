@@ -2,7 +2,7 @@
 
 namespace WouterDeSchuyter\Infrastructure\View;
 
-use Psr\Http\Message\ResponseInterface as Response;
+use Slim\Http\Response;
 use Twig_Environment;
 
 class Twig extends Twig_Environment

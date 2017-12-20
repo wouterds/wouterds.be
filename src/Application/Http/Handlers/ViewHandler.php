@@ -2,8 +2,8 @@
 
 namespace WouterDeSchuyter\Application\Http\Handlers;
 
-use Psr\Http\Message\RequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use Slim\Router;
 use WouterDeSchuyter\Infrastructure\ApplicationMonitor\ApplicationMonitor;
 use WouterDeSchuyter\Infrastructure\Config\Config;

@@ -2,17 +2,9 @@
 
 namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Media;
 
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Router;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\ViewHandler;
-use WouterDeSchuyter\Domain\Media\MediaRepository;
-use WouterDeSchuyter\Domain\Users\AuthenticatedUser;
-use WouterDeSchuyter\Domain\Users\UserRepository;
-use WouterDeSchuyter\Infrastructure\ApplicationMonitor\ApplicationMonitor;
-use WouterDeSchuyter\Infrastructure\Config\Config;
-use WouterDeSchuyter\Infrastructure\View\Twig;
 
 class AddHandler extends ViewHandler
 {

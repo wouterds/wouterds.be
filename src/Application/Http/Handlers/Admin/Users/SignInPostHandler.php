@@ -3,8 +3,8 @@
 namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Users;
 
 use League\Tactician\CommandBus;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use Teapot\StatusCode;
 use WouterDeSchuyter\Application\Http\Validators\Admin\SignInRequestValidator;
 use WouterDeSchuyter\Domain\Commands\Users\SignInUser;
@@ -41,31 +41,20 @@ class SignInPostHandler
     public function __invoke(Request $request, Response $response): Response
     {
         if (!$this->signInRequestValidator->validate($request)) {
-            $response->getBody()->write(json_encode($this->signInRequestValidator->getErrors()));
-            $response = $response->withHeader('Content-Type', 'application/json');
-            $response = $response->withStatus(StatusCode::BAD_REQUEST);
-            return $response;
+            return $response->withJson($this->signInRequestValidator->getErrors(), StatusCode::BAD_REQUEST);
         }
 
         try {
             $this->commandBus->handle(new SignInUser(
-                $request->getParsedBody()['email'],
-                $request->getParsedBody()['password']
+                $request->getParam('email'),
+                $request->getParam('password')
             ));
         } catch (InvalidUserCredentials $e) {
-            $response->getBody()->write(json_encode(false));
-            $response = $response->withStatus(StatusCode::UNAUTHORIZED);
-            $response = $response->withHeader('Content-Type', 'application/json');
-            return $response;
+            return $response->withJson(false, StatusCode::UNAUTHORIZED);
         } catch (UserNotActivatedYet $e) {
-            $response->getBody()->write(json_encode(false));
-            $response = $response->withStatus(StatusCode::UNAUTHORIZED);
-            $response = $response->withHeader('Content-Type', 'application/json');
-            return $response;
+            return $response->withJson(false, StatusCode::UNAUTHORIZED);
         }
 
-        $response->getBody()->write(json_encode(true));
-        $response = $response->withHeader('Content-Type', 'application/json');
-        return $response;
+        return $response->withJson(true);
     }
 }
