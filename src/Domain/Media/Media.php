@@ -3,6 +3,7 @@
 namespace WouterDeSchuyter\Domain\Media;
 
 use JsonSerializable;
+use Mimey\MimeTypes;
 use WouterDeSchuyter\Domain\Users\UserId;
 
 class Media implements JsonSerializable
@@ -89,7 +90,9 @@ class Media implements JsonSerializable
      */
     public function getPath(): string
     {
-        return '/' . $this->getId();
+        $mimes = new MimeTypes();
+
+        return '/' . $this->getId() . '.' . $mimes->getExtension($this->getContentType());
     }
 
     /**
