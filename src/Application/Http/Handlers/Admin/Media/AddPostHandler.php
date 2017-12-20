@@ -2,33 +2,25 @@
 
 namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Media;
 
+use League\Tactician\CommandBus;
 use Psr\Http\Message\UploadedFileInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use WouterDeSchuyter\Domain\Media\Media;
-use WouterDeSchuyter\Domain\Users\AuthenticatedUser;
-use WouterDeSchuyter\Infrastructure\Filesystem\Filesystem;
+use WouterDeSchuyter\Domain\Commands\Media\AddMedia;
 
 class AddPostHandler
 {
     /**
-     * @var AuthenticatedUser
+     * @var CommandBus
      */
-    private $authenticatedUser;
+    private $commandBus;
 
     /**
-     * @var Filesystem
+     * @param CommandBus $commandBus
      */
-    private $filesystem;
-
-    /**
-     * @param AuthenticatedUser $authenticatedUser
-     * @param Filesystem $filesystem
-     */
-    public function __construct(AuthenticatedUser $authenticatedUser, Filesystem $filesystem)
+    public function __construct(CommandBus $commandBus)
     {
-        $this->authenticatedUser = $authenticatedUser;
-        $this->filesystem = $filesystem;
+        $this->commandBus = $commandBus;
     }
 
     /**
@@ -38,26 +30,11 @@ class AddPostHandler
      */
     public function __invoke(Request $request, Response $response): Response
     {
-        $label = $request->getParam('label');
+        $this->commandBus->handle(new AddMedia(
+            $request->getParam('label'),
+            $request->getUploadedFiles()['file']
+        ));
 
-        /** @var UploadedFileInterface $uploadedFile */
-        $uploadedFile = $request->getUploadedFiles()['file'];
-
-        $media = new Media(
-            $this->authenticatedUser->getUser()->getId(),
-            $uploadedFile->getClientFilename(),
-            $uploadedFile->getClientMediaType(),
-            $uploadedFile->getSize()
-        );
-
-        if (!empty($label)) {
-            $media->setName($label);
-        }
-
-        if ($this->filesystem->store($media, $uploadedFile->getStream()) === false) {
-            return $response->withStatus(400);
-        }
-
-        return $response->withJson(['data' => $media]);
+        return $response->withJson(true);
     }
 }
