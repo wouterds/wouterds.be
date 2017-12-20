@@ -3,6 +3,7 @@
 use WouterDeSchuyter\Application\Http\Handlers\AboutHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Media\AddHandler as AdminMediaAddHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Media\AddPostHandler as AdminMediaAddPostHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\Media\DeleteHandler as AdminMediaDeleteHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Media\IndexHandler as AdminMediaIndexHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\OverviewHandler as AdminOverviewHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\ActivateHandler as AdminUsersActivateHandler;
@@ -45,6 +46,7 @@ $app->group(null, function () use ($app) {
             $app->get('', AdminMediaIndexHandler::class)->setName('admin.media');
             $app->get('/add', AdminMediaAddHandler::class)->setName('admin.media.add');
             $app->post('/add.json', AdminMediaAddPostHandler::class)->setName('admin.media.add_post');
+            $app->get('/{id}/delete', AdminMediaDeleteHandler::class)->setName('admin.media.delete');
         });
 
         $app->group('/users', function () use ($app) {
