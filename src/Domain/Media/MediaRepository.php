@@ -19,4 +19,9 @@ interface MediaRepository
      * @return Media|null
      */
     public function find(MediaId $id): ?Media;
+
+    /**
+     * @param MediaId $id
+     */
+    public function delete(MediaId $id);
 }

@@ -85,4 +85,17 @@ class DbalMediaRepository implements MediaRepository
 
         return Media::fromArray($result);
     }
+
+    /**
+     * @param MediaId $id
+     */
+    public function delete(MediaId $id)
+    {
+        $query = $this->connection->createQueryBuilder();
+        $query->update(self::TABLE);
+        $query->set('updated_at', 'NOW()');
+        $query->set('deleted_at', 'NOW()');
+        $query->where('id = ' . $query->createNamedParameter($id));
+        $query->execute();
+    }
 }
