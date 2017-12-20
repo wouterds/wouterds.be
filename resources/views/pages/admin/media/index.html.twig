@@ -21,7 +21,7 @@
                     <td>{{ mediaItem.id }}</td>
                     <td>{{ mediaItem.name }}</td>
                     <td>{{ mediaItem.contentType }}</td>
-                    <td>{{ mediaItem.size }}</td>
+                    <td>{{ mediaItem.size|readable_filesize }}</td>
                     <td>{{ mediaItem.md5 }}</td>
                     <td>{% if attribute(users, mediaItem.userId.value).name %}{{ attribute(users, mediaItem.userId.value).name }}{% else %}--{% endif %}</td>
                     <td title="{{ mediaItem.createdAt }}">{{ mediaItem.createdAt|date('d.m.Y, H:i') }}</td>
