@@ -80,7 +80,7 @@ class AuthenticatedUserMiddleware
 
         // Not logged in?
         if ($this->authenticatedUser->isLoggedIn() === false) {
-            setcookie('user_session_id', false, -1, '/');
+            $this->deleteCookie();
             return $response->withRedirect($this->router->pathFor('admin.users.sign-in'));
         }
 
@@ -88,5 +88,10 @@ class AuthenticatedUserMiddleware
         setcookie('user_session_id', $userSession->getId(), time() + strtotime('1 month'), '/');
 
         return $next($request, $response);
+    }
+
+    private function deleteCookie()
+    {
+        setcookie('user_session_id', false, -1, '/');
     }
 }
