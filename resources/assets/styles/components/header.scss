@@ -12,6 +12,11 @@ $scope: 'header';
     float: left;
     display: inline-block;
     margin: -7px 0 0;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
   }
 
   &__navigation {
