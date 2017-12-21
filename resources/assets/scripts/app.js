@@ -3,6 +3,7 @@ import PageContact from './pages/contact';
 import PageAdminUsersSignIn from './pages/admin/users/sign-in';
 import PageAdminUsersSignUp from './pages/admin/users/sign-up';
 import PageAdminMediaAdd from './pages/admin/media/add';
+import PageAdminBlogAdd from './pages/admin/blog/add';
 
 class App {
   constructor() {
@@ -19,6 +20,7 @@ class App {
     new PageAdminUsersSignIn();
     new PageAdminUsersSignUp();
     new PageAdminMediaAdd();
+    new PageAdminBlogAdd();
   }
 }
 
