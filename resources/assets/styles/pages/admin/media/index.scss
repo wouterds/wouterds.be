@@ -16,8 +16,8 @@ $scope: 'page--admin--media--index';
   }
 
   .actions {
-    a:not(.hidden) + a {
-      margin-left: 5px;
+    a:not(.hidden) {
+      margin-right: 5px;
     }
   }
 }
