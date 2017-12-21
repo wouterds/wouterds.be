@@ -48,14 +48,16 @@ class Media implements JsonSerializable
      * @param string $name
      * @param string $contentType
      * @param int $size
+     * @param string $md5
      */
-    public function __construct(UserId $userId, string $name, string $contentType, int $size)
+    public function __construct(UserId $userId, string $name, string $contentType, int $size, string $md5 = null)
     {
         $this->id = new MediaId();
         $this->userId = $userId;
         $this->name = $name;
         $this->contentType = $contentType;
         $this->size = $size;
+        $this->md5 = $md5;
     }
 
     /**
@@ -68,10 +70,10 @@ class Media implements JsonSerializable
             new UserId($data['user_id']),
             $data['name'],
             $data['content_type'],
-            $data['size']
+            $data['size'],
+            $data['md5']
         );
         $file->id = new MediaId(!empty($data['id']) ? $data['id'] : null);
-        $file->md5 = !empty($data['md5']) ? $data['md5'] : null;
         $file->createdAt = !empty($data['created_at']) ? $data['created_at'] : null;
 
         return $file;
@@ -127,14 +129,6 @@ class Media implements JsonSerializable
     }
 
     /**
-     * @param string $name
-     */
-    public function setName(string $name)
-    {
-        $this->name = $name;
-    }
-
-    /**
      * @return string
      */
     public function getContentType(): string
@@ -161,7 +155,7 @@ class Media implements JsonSerializable
     /**
      * @param string $md5
      */
-    public function setMd5(string $md5)
+    public function setMd5(string $md5): void
     {
         $this->md5 = $md5;
     }

@@ -4,6 +4,7 @@ namespace WouterDeSchuyter\Application\Commands\Media;
 
 use WouterDeSchuyter\Domain\Commands\Media\AddMedia;
 use WouterDeSchuyter\Domain\Media\Media;
+use WouterDeSchuyter\Domain\Media\MediaBuilder;
 use WouterDeSchuyter\Domain\Media\MediaContentTypeNotAllowedException;
 use WouterDeSchuyter\Domain\Media\StoreMediaFailedException;
 use WouterDeSchuyter\Domain\Users\AuthenticatedUser;
@@ -42,20 +43,21 @@ class AddMediaHandler
      */
     public function handle(AddMedia $addMedia)
     {
-        $media = new Media(
-            $this->authenticatedUser->getUser()->getId(),
-            $addMedia->getUploadedFile()->getClientFilename(),
-            $addMedia->getUploadedFile()->getClientMediaType(),
-            $addMedia->getUploadedFile()->getSize()
-        );
-
-        if (!in_array($media->getContentType(), self::ALLOWED_CONTENT_TYPES)) {
+        if (!in_array($addMedia->getUploadedFile()->getClientMediaType(), self::ALLOWED_CONTENT_TYPES)) {
             throw new MediaContentTypeNotAllowedException();
         }
 
+        $builder = MediaBuilder::startWithDefault()
+            ->withUserId($this->authenticatedUser->getUser()->getId())
+            ->withName($addMedia->getUploadedFile()->getClientFilename())
+            ->withContentType($addMedia->getUploadedFile()->getClientMediaType())
+            ->withSize($addMedia->getUploadedFile()->getSize());
+
         if (!empty($addMedia->getLabel())) {
-            $media->setName($addMedia->getLabel());
+            $builder = $builder->withName($addMedia->getLabel());
         }
+
+        $media = $builder->build();
 
         if ($this->filesystem->store($media, $addMedia->getUploadedFile()->getStream()) === false) {
             throw new StoreMediaFailedException();
