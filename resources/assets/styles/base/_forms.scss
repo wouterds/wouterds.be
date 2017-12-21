@@ -47,6 +47,10 @@
 .input-select-wrapper {
   position: relative;
 
+  .input {
+    padding-right: 40px;
+  }
+
   &:after {
     font: normal normal normal 14px/1 FontAwesome;
     content: '\f078';
