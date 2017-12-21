@@ -10,7 +10,8 @@
     "bootstrap-sass": "^3.3.7",
     "flatpickr": "^4.1.4",
     "jquery": "^3.2.1",
-    "moment": "^2.19.4"
+    "moment": "^2.19.4",
+    "simplemde": "^1.11.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
