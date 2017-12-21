@@ -64,6 +64,8 @@ node {
       sh 'ssh wouterds@'+SERVER+' "docker exec internalwouterdeschuyterwebsiteprod_php-fpm_1 php composer.phar migrations:migrate"'
     }
   } catch (e) {
+    sh 'echo "Build failed!"'
+    sh 'exit 1'
   } finally {
     // Clean up
     cleanWorkspace()
