@@ -10,7 +10,7 @@
 }
 
 .input-wrapper {
-  padding: 15px 0;
+  padding: 15px 0 20px;
 
   &.error,
   &.success {
@@ -206,6 +206,10 @@ a.button {
   padding: 10px 20px;
   line-height: normal;
   cursor: pointer;
+
+  + .button {
+    margin-left: 10px;
+  }
 
   &[disabled] {
     background: rgba($color-blue-grey, 0.35);

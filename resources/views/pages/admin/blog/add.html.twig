@@ -1,0 +1,89 @@
+{% extends '_base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h2 class="h2">Blog - Add</h2>
+
+        <form class="container-fluid form" role="form" enctype="multipart/form-data" method="post" action="{{ app.router.pathFor('admin.media.add_post') }}">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="input-wrapper">
+                            <label for="title" class="label">Title</label>
+                            <input type="text" id="title" name="title" class="input">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="input-wrapper">
+                            <label for="slug" class="label">Slug</label>
+                            <input type="text" id="slug" name="slug" class="input">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="input-wrapper">
+                            <label for="excerpt" class="label">Excerpt</label>
+                            <textarea name="excerpt" id="excerpt" cols="30" rows="6" class="input"></textarea>
+                        </div>
+                        <div class="input-wrapper">
+                            <label for="body" class="label">Body</label>
+                            <textarea name="body" id="body" cols="30" rows="12" class="input"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="input-wrapper">
+                            <label for="userId" class="label">Author</label>
+                            <div class="input-select-wrapper">
+                                <select class="input" name="userId" id="userId">
+                                    <option value="">--</option>
+                                    {% for user in users %}
+                                        <option value="{{ user.id }}">{{ user.name }} ({{ user.id }})</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-wrapper">
+                            <label for="mediaId" class="label">Poster image</label>
+                            <div class="input-select-wrapper">
+                                <select class="input" name="mediaId" id="mediaId">
+                                    <option value="">--</option>
+                                    {% for mediaObject in media %}
+                                        <option value="{{ mediaObject.id }}">{{ mediaObject.name }} ({{ mediaObject.id }})</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-wrapper">
+                            <label for="publishedAt" class="label">Published at</label>
+                            <input type="text" id="publishedAt" name="publishedAt" class="input">
+                        </div>
+                        <div class="input-wrapper">
+                            <button type="submit" name="save" class="input button" disabled data-loader="true">
+                                <span class="button__text">Save</span>
+                            </button>
+
+                            <button type="submit" name="saveAndPublish" class="input button" disabled data-loader="true">
+                                <span class="button__text">Publish</span>
+                            </button>
+
+                            <button type="submit" name="preview" class="input button" disabled data-loader="true">
+                                <span class="button__text">Preview</span>
+                            </button>
+
+                            <button type="submit" name="delete" class="input button" disabled data-loader="true">
+                                <span class="button__text">Delete</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
