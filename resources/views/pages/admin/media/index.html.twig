@@ -27,7 +27,7 @@
                     <td title="{{ mediaItem.createdAt }}">{{ mediaItem.createdAt|date('d.m.Y, H:i') }}</td>
                     <td title="{{ mediaItem.updatedAt }}">{% if mediaItem.updatedAt %}{{ mediaItem.updatedAt|date('d.m.Y, H:i') }}{% else %}--{% endif %}</td>
                     <td class="actions">
-                        <a href="/static/media/{{ mediaItem.path }}">View</a>
+                        <a href="/static/media{{ mediaItem.path }}">View</a>
                         <a href="{{ app.router.pathFor('admin.media.delete', {'id': mediaItem.id}) }}">Delete</a>
                     </td>
                 </tr>
