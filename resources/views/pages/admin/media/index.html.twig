@@ -16,19 +16,19 @@
                 <th scope="col">Updated at</th>
                 <th scope="col">Actions</th>
             </tr>
-            {% for mediaItem in media %}
+            {% for mediaObject in media %}
                 <tr>
-                    <td>{{ mediaItem.id }}</td>
-                    <td>{{ mediaItem.name }}</td>
-                    <td>{{ mediaItem.contentType }}</td>
-                    <td>{{ mediaItem.size|readable_filesize }}</td>
-                    <td>{{ mediaItem.md5 }}</td>
-                    <td>{% if attribute(users, mediaItem.userId.value).name %}{{ attribute(users, mediaItem.userId.value).name }}{% else %}--{% endif %}</td>
-                    <td title="{{ mediaItem.createdAt }}">{{ mediaItem.createdAt|date('d.m.Y, H:i') }}</td>
-                    <td title="{{ mediaItem.updatedAt }}">{% if mediaItem.updatedAt %}{{ mediaItem.updatedAt|date('d.m.Y, H:i') }}{% else %}--{% endif %}</td>
+                    <td>{{ mediaObject.id }}</td>
+                    <td>{{ mediaObject.name }}</td>
+                    <td>{{ mediaObject.contentType }}</td>
+                    <td>{{ mediaObject.size|readable_filesize }}</td>
+                    <td>{{ mediaObject.md5 }}</td>
+                    <td>{% if attribute(users, mediaObject.userId.value).name %}{{ attribute(users, mediaObject.userId.value).name }}{% else %}--{% endif %}</td>
+                    <td title="{{ mediaObject.createdAt }}">{{ mediaObject.createdAt|date('d.m.Y, H:i') }}</td>
+                    <td title="{{ mediaObject.updatedAt }}">{% if mediaObject.updatedAt %}{{ mediaObject.updatedAt|date('d.m.Y, H:i') }}{% else %}--{% endif %}</td>
                     <td class="actions">
-                        <a href="/static/media{{ mediaItem.path }}">View</a>
-                        <a href="{{ app.router.pathFor('admin.media.delete', {'id': mediaItem.id}) }}">Delete</a>
+                        <a href="/static/media{{ mediaObject.path }}">View</a>
+                        <a href="{{ app.router.pathFor('admin.media.delete', {'id': mediaObject.id}) }}">Delete</a>
                     </td>
                 </tr>
             {% endfor %}
