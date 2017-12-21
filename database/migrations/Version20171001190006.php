@@ -29,6 +29,7 @@ class Version20171001190006 extends AbstractMigration
         $table->addColumn('deleted_at', 'datetime')->setNotnull(false);
         $table->setPrimaryKey(['id']);
         $table->addUniqueIndex(['email']);
+        $table->addIndex(['created_at']);
         $table->addIndex(['activated_at']);
         $table->addIndex(['deleted_at']);
     }
