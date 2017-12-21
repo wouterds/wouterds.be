@@ -90,9 +90,24 @@ class Media implements JsonSerializable
      */
     public function getPath(): string
     {
+        return '/' . $this->getId() . '.' . $this->getExtension();
+    }
+
+    /**
+     * @return string
+     */
+    public function getExtension(): string
+    {
         $mimes = new MimeTypes();
 
-        return '/' . $this->getId() . '.' . $mimes->getExtension($this->getContentType());
+        $extension = $mimes->getExtension($this->getContentType());
+
+        // No extension found?
+        if (empty($extension)) {
+            $extension = 'bin';
+        }
+
+        return $extension;
     }
 
     /**
