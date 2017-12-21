@@ -10,3 +10,8 @@
 <li class="header__navigation__item{% if page.info.dashedCase == 'contact' %} header__navigation__item--active{% endif %}">
     <a class="header__navigation__item-link" href="{{ app.router.pathFor('contact') }}">Contact</a>
 </li>
+{% if app.request.getCookieParam('user_session_id') %}
+    <li class="header__navigation__item">
+        <a class="header__navigation__item-link" href="{{ app.router.pathFor('admin') }}">Admin</a>
+    </li>
+{% endif %}
