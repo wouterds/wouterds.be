@@ -11,7 +11,7 @@ use WouterDeSchuyter\Infrastructure\Filesystem\Filesystem;
 
 class AddMediaHandler
 {
-    private const allowedContentTypes = [
+    private const ALLOWED_CONTENT_TYPES = [
         'image/jpeg',
     ];
 
@@ -49,7 +49,7 @@ class AddMediaHandler
             $addMedia->getUploadedFile()->getSize()
         );
 
-        if (!in_array($media->getContentType(), self::allowedContentTypes)) {
+        if (!in_array($media->getContentType(), self::ALLOWED_CONTENT_TYPES)) {
             throw new MediaContentTypeNotAllowedException();
         }
 
