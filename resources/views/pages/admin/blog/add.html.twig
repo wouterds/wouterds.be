@@ -27,10 +27,6 @@
                 <div class="col-lg-6">
                     <div class="row">
                         <div class="input-wrapper">
-                            <label for="excerpt" class="label">Excerpt</label>
-                            <textarea name="excerpt" id="excerpt" cols="30" rows="6" class="input"></textarea>
-                        </div>
-                        <div class="input-wrapper">
                             <label for="body" class="label">Body</label>
                             <textarea name="body" id="body" cols="30" rows="12" class="input"></textarea>
                         </div>
@@ -38,6 +34,10 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="row">
+                        <div class="input-wrapper">
+                            <label for="excerpt" class="label">Excerpt</label>
+                            <textarea name="excerpt" id="excerpt" cols="30" rows="6" class="input"></textarea>
+                        </div>
                         <div class="input-wrapper">
                             <label for="userId" class="label">Author</label>
                             <div class="input-select-wrapper">
@@ -67,10 +67,6 @@
                         <div class="input-wrapper">
                             <button type="submit" name="save" class="input button" disabled data-loader="true">
                                 <span class="button__text">Save</span>
-                            </button>
-
-                            <button type="submit" name="saveAndPublish" class="input button" disabled data-loader="true">
-                                <span class="button__text">Publish</span>
                             </button>
 
                             <button type="submit" name="preview" class="input button" disabled data-loader="true">

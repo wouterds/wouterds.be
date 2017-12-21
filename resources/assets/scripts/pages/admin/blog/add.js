@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import Base from '../../base';
 import FormService from '../../../services/form';
+import SimpleMDE from 'simplemde';
 
 class Add extends Base {
   get pageId() {
@@ -19,6 +20,7 @@ class Add extends Base {
   }
 
   initForm() {
+    new SimpleMDE({ element: this.$form.find('#body').get(0) });
     this.form = new FormService(this.$form);
   }
 

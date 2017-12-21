@@ -9,3 +9,8 @@ $scope: 'page--admin--media--add';
     max-width: $container;
   }
 }
+
+.CodeMirror,
+.CodeMirror-scroll {
+  min-height: 354px;
+}
