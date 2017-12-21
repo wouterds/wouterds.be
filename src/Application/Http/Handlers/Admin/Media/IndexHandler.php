@@ -30,7 +30,7 @@ class IndexHandler extends ViewHandler
      * @param Twig $twig
      * @param Config $config
      * @param Router $router
-     * @param RequestInterface $request
+     * @param Request $request
      * @param ApplicationMonitor $applicationMonitor
      * @param AuthenticatedUser $authenticatedUser
      * @param MediaRepository $mediaRepository

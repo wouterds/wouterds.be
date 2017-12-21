@@ -24,7 +24,7 @@ class IndexHandler extends ViewHandler
      * @param Twig $twig
      * @param Config $config
      * @param Router $router
-     * @param RequestInterface $request
+     * @param Request $request
      * @param ApplicationMonitor $applicationMonitor
      * @param AuthenticatedUser $authenticatedUser
      * @param UserRepository $userRepository
@@ -33,7 +33,7 @@ class IndexHandler extends ViewHandler
         Twig $twig,
         Config $config,
         Router $router,
-        RequestInterface $request,
+        Request $request,
         ApplicationMonitor $applicationMonitor,
         AuthenticatedUser $authenticatedUser,
         UserRepository $userRepository
