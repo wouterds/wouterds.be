@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import flatpickr from 'flatpickr';
 
 class Form {
   constructor($scope) {
@@ -12,6 +13,9 @@ class Form {
       throw new Error('$scope is not a form!');
     }
 
+    // Flatpickr
+    this.initFlatpickr();
+
     // Bind this
     this.onInputActiveClearError = this.onInputActiveClearError.bind(this);
 
@@ -24,6 +28,12 @@ class Form {
 
     // Enable form
     this.enableForm();
+  }
+
+  initFlatpickr() {
+    $('[data-plugin=flatpickr]').each((index, el) => {
+      flatpickr(el, { enableTime: true, enableSeconds: true, dateFormat: 'Y-m-d H:i:s' });
+    });
   }
 
   initObservers() {

@@ -303,6 +303,14 @@ a.button {
   }
 }
 
+.flatpickr-day.selected,
+.flatpickr-day.selected:active,
+.flatpickr-day.selected:focus,
+.flatpickr-day.selected:hover {
+  background: $color-red;
+  border-color: $color-red;
+}
+
 .label {
   font-size: 1.5em;
   display: block;
