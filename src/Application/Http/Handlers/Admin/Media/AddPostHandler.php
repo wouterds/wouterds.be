@@ -2,10 +2,11 @@
 
 namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Media;
 
+use Exception;
 use League\Tactician\CommandBus;
-use Psr\Http\Message\UploadedFileInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Teapot\StatusCode;
 use WouterDeSchuyter\Domain\Commands\Media\AddMedia;
 
 class AddPostHandler
@@ -30,10 +31,14 @@ class AddPostHandler
      */
     public function __invoke(Request $request, Response $response): Response
     {
-        $this->commandBus->handle(new AddMedia(
-            $request->getParam('label'),
-            $request->getUploadedFiles()['file']
-        ));
+        try {
+            $this->commandBus->handle(new AddMedia(
+                $request->getParam('label'),
+                $request->getUploadedFiles()['file']
+            ));
+        } catch (Exception $e) {
+            return $response->withJson(false, StatusCode::BAD_REQUEST);
+        }
 
         return $response->withJson(true);
     }
