@@ -4,12 +4,17 @@ namespace WouterDeSchuyter\Application\Commands\Media;
 
 use WouterDeSchuyter\Domain\Commands\Media\AddMedia;
 use WouterDeSchuyter\Domain\Media\Media;
+use WouterDeSchuyter\Domain\Media\MediaContentTypeNotAllowedException;
 use WouterDeSchuyter\Domain\Media\StoreMediaFailedException;
 use WouterDeSchuyter\Domain\Users\AuthenticatedUser;
 use WouterDeSchuyter\Infrastructure\Filesystem\Filesystem;
 
 class AddMediaHandler
 {
+    private const allowedContentTypes = [
+        'image/jpeg',
+    ];
+
     /**
      * @var AuthenticatedUser
      */
@@ -32,6 +37,7 @@ class AddMediaHandler
 
     /**
      * @param AddMedia $addMedia
+     * @throws MediaContentTypeNotAllowedException
      * @throws StoreMediaFailedException
      */
     public function handle(AddMedia $addMedia)
@@ -42,6 +48,10 @@ class AddMediaHandler
             $addMedia->getUploadedFile()->getClientMediaType(),
             $addMedia->getUploadedFile()->getSize()
         );
+
+        if (!in_array($media->getContentType(), self::allowedContentTypes)) {
+            throw new MediaContentTypeNotAllowedException();
+        }
 
         if (!empty($addMedia->getLabel())) {
             $media->setName($addMedia->getLabel());
