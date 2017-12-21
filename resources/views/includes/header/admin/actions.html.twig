@@ -8,6 +8,9 @@
     <li class="header__navigation__item{% if page.info.dashedCase == 'admin-media-index' %} header__navigation__item--active{% endif %}">
         <a class="header__navigation__item-link" href="{{ app.router.pathFor('admin.media') }}">Media</a>
     </li>
+    <li class="header__navigation__item{% if page.info.dashedCase == 'admin-blog-index' %} header__navigation__item--active{% endif %}">
+        <a class="header__navigation__item-link" href="{{ app.router.pathFor('admin.blog') }}">Blog</a>
+    </li>
     <li class="header__navigation__item{% if page.info.dashedCase == 'admin-sign-out' %} header__navigation__item--active{% endif %}">
         <a class="header__navigation__item-link" href="{{ app.router.pathFor('admin.sign-out') }}">Sign Out</a>
     </li>

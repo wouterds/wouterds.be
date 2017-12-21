@@ -1,0 +1,23 @@
+// Variables
+@import '../../../base/variables';
+
+// Scope
+$scope: 'page--admin--blog--index';
+
+.#{$scope} {
+  .h2 {
+    &__action {
+      font-size: 0.8em;
+
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .actions {
+    a:not(.hidden) + a {
+      margin-left: 5px;
+    }
+  }
+}
