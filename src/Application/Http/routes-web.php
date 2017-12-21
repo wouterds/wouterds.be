@@ -6,7 +6,7 @@ use WouterDeSchuyter\Application\Http\Handlers\Admin\Media\AddHandler as AdminMe
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Media\AddPostHandler as AdminMediaAddPostHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Media\DeleteHandler as AdminMediaDeleteHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Media\IndexHandler as AdminMediaIndexHandler;
-use WouterDeSchuyter\Application\Http\Handlers\Admin\OverviewHandler as AdminOverviewHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\IndexHandler as AdminIndexHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\ActivateHandler as AdminUsersActivateHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\DeactivateHandler as AdminUsersDeactivateHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\DeleteHandler as AdminUsersDeleteHandler;
@@ -41,7 +41,7 @@ $app->group(null, function () use ($app) {
 
     // Private admin routes
     $app->group('/admin', function () use ($app) {
-        $app->get('', AdminOverviewHandler::class)->setName('admin.overview');
+        $app->get('', AdminIndexHandler::class)->setName('admin');
 
         $app->group('/blog', function () use ($app) {
             $app->get('', AdminBlogIndexHandler::class)->setName('admin.blog');

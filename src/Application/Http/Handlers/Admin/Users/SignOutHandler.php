@@ -42,6 +42,6 @@ class SignOutHandler
 
         $this->commandBus->handle(new SignOutUser($userSessionId));
 
-        return $response->withRedirect($this->router->pathFor('admin.overview'));
+        return $response->withRedirect($this->router->pathFor('admin'));
     }
 }

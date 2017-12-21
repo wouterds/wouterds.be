@@ -1,6 +1,6 @@
 {% if user %}
-    <li class="header__navigation__item{% if page.info.dashedCase == 'admin-overview' %} header__navigation__item--active{% endif %}">
-        <a class="header__navigation__item-link" href="{{ app.router.pathFor('admin.overview') }}">Overview</a>
+    <li class="header__navigation__item{% if page.info.dashedCase == 'admin-index' %} header__navigation__item--active{% endif %}">
+        <a class="header__navigation__item-link" href="{{ app.router.pathFor('admin') }}">Overview</a>
     </li>
     <li class="header__navigation__item{% if page.info.dashedCase == 'admin-users-index' %} header__navigation__item--active{% endif %}">
         <a class="header__navigation__item-link" href="{{ app.router.pathFor('admin.users') }}">Users</a>

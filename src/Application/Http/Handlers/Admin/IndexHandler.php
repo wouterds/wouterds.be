@@ -5,14 +5,14 @@ namespace WouterDeSchuyter\Application\Http\Handlers\Admin;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class OverviewHandler extends ViewHandler
+class IndexHandler extends ViewHandler
 {
     /**
      * @return string
      */
     public function getTemplate(): string
     {
-        return 'pages/admin/overview.html.twig';
+        return 'pages/admin/index.html.twig';
     }
 
     /**
