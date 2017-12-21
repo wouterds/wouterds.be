@@ -2,7 +2,6 @@
 
 namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Users;
 
-use Psr\Http\Message\RequestInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Router;
