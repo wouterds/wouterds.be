@@ -2,7 +2,7 @@
 
 namespace WouterDeSchuyter\Infrastructure\Mail\Message;
 
-class Factory
+class MessageBuilder
 {
     /**
      * @var Participant
@@ -30,7 +30,7 @@ class Factory
     private $body;
 
     /**
-     * @return Factory
+     * @return MessageBuilder
      */
     public static function startWithDefault()
     {
@@ -55,7 +55,7 @@ class Factory
 
     /**
      * @param Participant $sender
-     * @return Factory
+     * @return MessageBuilder
      */
     public function withSender(Participant $sender)
     {
@@ -66,7 +66,7 @@ class Factory
 
     /**
      * @param Participant $replyTo
-     * @return Factory
+     * @return MessageBuilder
      */
     public function withReplyTo(Participant $replyTo)
     {
@@ -77,7 +77,7 @@ class Factory
 
     /**
      * @param Participant[] $receivers
-     * @return Factory
+     * @return MessageBuilder
      */
     public function withReceivers(array $receivers)
     {
@@ -88,7 +88,7 @@ class Factory
 
     /**
      * @param string $subject
-     * @return Factory
+     * @return MessageBuilder
      */
     public function withSubject(string $subject)
     {
@@ -99,7 +99,7 @@ class Factory
 
     /**
      * @param string $message
-     * @return Factory
+     * @return MessageBuilder
      */
     public function withBody(string $message)
     {

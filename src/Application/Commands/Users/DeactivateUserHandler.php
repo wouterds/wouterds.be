@@ -5,7 +5,7 @@ namespace WouterDeSchuyter\Application\Commands\Users;
 use WouterDeSchuyter\Domain\Commands\Users\DeactivateUser;
 use WouterDeSchuyter\Domain\Users\UserRepository;
 use WouterDeSchuyter\Infrastructure\Mail\Mailer;
-use WouterDeSchuyter\Infrastructure\Mail\Message\Factory as MessageFactory;
+use WouterDeSchuyter\Infrastructure\Mail\Message\MessageBuilder;
 use WouterDeSchuyter\Infrastructure\Mail\Message\Participant;
 
 class DeactivateUserHandler
@@ -47,7 +47,7 @@ class DeactivateUserHandler
         $message .= PHP_EOL;
         $message .= 'Cheers';
 
-        $message = MessageFactory::startWithDefault()
+        $message = MessageBuilder::startWithDefault()
             ->withSubject('Account deactivated')
             ->withReceivers([new Participant($user->getName(), $user->getEmail())])
             ->withBody($message)

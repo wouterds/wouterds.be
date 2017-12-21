@@ -5,7 +5,7 @@ namespace WouterDeSchuyter\Application\Commands\Users;
 use WouterDeSchuyter\Domain\Commands\Users\ActivateUser;
 use WouterDeSchuyter\Domain\Users\UserRepository;
 use WouterDeSchuyter\Infrastructure\Mail\Mailer;
-use WouterDeSchuyter\Infrastructure\Mail\Message\Factory as MessageFactory;
+use WouterDeSchuyter\Infrastructure\Mail\Message\MessageBuilder;
 use WouterDeSchuyter\Infrastructure\Mail\Message\Participant;
 use WouterDeSchuyter\Infrastructure\ValueObjects\DateTime;
 
@@ -49,7 +49,7 @@ class ActivateUserHandler
         $message .= PHP_EOL;
         $message .= 'Cheers';
 
-        $message = MessageFactory::startWithDefault()
+        $message = MessageBuilder::startWithDefault()
             ->withSubject('Account activated')
             ->withReceivers([new Participant($user->getName(), $user->getEmail())])
             ->withBody($message)

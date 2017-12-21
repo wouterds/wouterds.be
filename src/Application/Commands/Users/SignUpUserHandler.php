@@ -6,7 +6,7 @@ use WouterDeSchuyter\Domain\Commands\Users\SignUpUser;
 use WouterDeSchuyter\Domain\Users\User;
 use WouterDeSchuyter\Domain\Users\UserRepository;
 use WouterDeSchuyter\Infrastructure\Mail\Mailer;
-use WouterDeSchuyter\Infrastructure\Mail\Message\Factory as MessageFactory;
+use WouterDeSchuyter\Infrastructure\Mail\Message\MessageBuilder;
 use WouterDeSchuyter\Infrastructure\Mail\Message\Participant;
 
 class SignUpUserHandler
@@ -49,7 +49,7 @@ class SignUpUserHandler
         $message .= PHP_EOL;
         $message .= 'Cheers';
 
-        $message = MessageFactory::startWithDefault()
+        $message = MessageBuilder::startWithDefault()
             ->withSubject('New registration')
             ->withBody($message)
             ->build();
@@ -64,7 +64,7 @@ class SignUpUserHandler
         $message .= PHP_EOL;
         $message .= 'Cheers';
 
-        $message = MessageFactory::startWithDefault()
+        $message = MessageBuilder::startWithDefault()
             ->withSubject('Successfully registered')
             ->withBody($message)
             ->withReceivers([new Participant($user->getName(), $user->getEmail())])

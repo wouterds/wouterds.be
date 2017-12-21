@@ -4,7 +4,7 @@ namespace WouterDeSchuyter\Application\Commands;
 
 use WouterDeSchuyter\Domain\Commands\ContactEnquiry;
 use WouterDeSchuyter\Infrastructure\Mail\Mailer;
-use WouterDeSchuyter\Infrastructure\Mail\Message\Factory as MessageFactory;
+use WouterDeSchuyter\Infrastructure\Mail\Message\MessageBuilder;
 use WouterDeSchuyter\Infrastructure\Mail\Message\Participant;
 
 class ContactEnquiryHandler
@@ -27,7 +27,7 @@ class ContactEnquiryHandler
      */
     public function handle(ContactEnquiry $contactEnquiry)
     {
-        $message = MessageFactory::startWithDefault()
+        $message = MessageBuilder::startWithDefault()
             ->withReplyTo(new Participant($contactEnquiry->getName(), $contactEnquiry->getEmail()))
             ->withSubject($contactEnquiry->getSubject())
             ->withBody($contactEnquiry->getMessage())
