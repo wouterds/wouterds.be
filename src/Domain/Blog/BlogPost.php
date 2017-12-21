@@ -56,7 +56,7 @@ class BlogPost implements JsonSerializable
      * @param string $slug
      * @param string $excerpt
      * @param string $body
-     * @param DateTime $publishedAt
+     * @param DateTime|null $publishedAt
      */
     public function __construct(
         UserId $userId,
@@ -65,7 +65,7 @@ class BlogPost implements JsonSerializable
         string $slug,
         string $excerpt,
         string $body,
-        DateTime $publishedAt
+        DateTime $publishedAt = null
     ) {
         $this->id = new BlogPostId();
         $this->userId = $userId;
@@ -134,9 +134,9 @@ class BlogPost implements JsonSerializable
     }
 
     /**
-     * @return DateTime
+     * @return DateTime|null
      */
-    public function getPublishedAt(): DateTime
+    public function getPublishedAt(): ?DateTime
     {
         return $this->publishedAt;
     }
