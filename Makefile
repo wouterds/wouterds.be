@@ -57,7 +57,7 @@ new-migration: vendor
 setup-db:
 	docker exec -i internal-wouterdeschuyter-website-mysql mysql -uroot -proot < ./docker/mysql/setup.sql
 
-setup: setup-db
+setup: setup-db migrate .build-app
 
 .version:
 	-git describe --abbrev=0 --tags > ./.version
