@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="container-fluid">
-        <h2 class="h2">Blog <span class="h2__action">(<a href="#">Add</a>)</span></h2>
+        <h2 class="h2">Blog <span class="h2__action">(<a href="{{ app.router.pathFor('admin.blog.add') }}">Add</a>)</span></h2>
 
     </div>
 {% endblock %}
