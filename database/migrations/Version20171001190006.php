@@ -23,15 +23,15 @@ class Version20171001190006 extends AbstractMigration
         $table->addColumn('email', 'string')->setLength(64);
         $table->addColumn('salt', 'string')->setLength(64);
         $table->addColumn('password', 'string')->setLength(64);
-        $table->addColumn('created_at', 'datetime')->setDefault('CURRENT_TIMESTAMP');
-        $table->addColumn('updated_at', 'datetime')->setNotnull(false);
         $table->addColumn('activated_at', 'datetime')->setNotnull(false);
         $table->addColumn('deleted_at', 'datetime')->setNotnull(false);
+        $table->addColumn('created_at', 'datetime')->setDefault('CURRENT_TIMESTAMP');
+        $table->addColumn('updated_at', 'datetime')->setNotnull(false);
         $table->setPrimaryKey(['id']);
         $table->addUniqueIndex(['email']);
-        $table->addIndex(['created_at']);
         $table->addIndex(['activated_at']);
         $table->addIndex(['deleted_at']);
+        $table->addIndex(['created_at']);
     }
 
     /**

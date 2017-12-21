@@ -20,13 +20,13 @@ class Version20171216154807 extends AbstractMigration
         $table = $schema->createTable(self::TABLE);
         $table->addColumn('id', 'uuid');
         $table->addColumn('user_id', 'uuid');
+        $table->addColumn('deleted_at', 'datetime')->setNotnull(false);
         $table->addColumn('created_at', 'datetime')->setDefault('CURRENT_TIMESTAMP');
         $table->addColumn('updated_at', 'datetime')->setNotnull(false);
-        $table->addColumn('deleted_at', 'datetime')->setNotnull(false);
         $table->setPrimaryKey(['id']);
         $table->addIndex(['user_id']);
-        $table->addIndex(['created_at']);
         $table->addIndex(['deleted_at']);
+        $table->addIndex(['created_at']);
     }
 
     /**

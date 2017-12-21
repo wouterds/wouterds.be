@@ -24,13 +24,13 @@ class Version20171218212159 extends AbstractMigration
         $table->addColumn('content_type', 'string')->setLength(32);
         $table->addColumn('size', 'integer');
         $table->addColumn('md5', 'string')->setLength(32);
+        $table->addColumn('deleted_at', 'datetime')->setNotnull(false);
         $table->addColumn('created_at', 'datetime')->setDefault('CURRENT_TIMESTAMP');
         $table->addColumn('updated_at', 'datetime')->setNotnull(false);
-        $table->addColumn('deleted_at', 'datetime')->setNotnull(false);
         $table->setPrimaryKey(['id']);
         $table->addUniqueIndex(['user_id', 'md5']);
-        $table->addIndex(['created_at']);
         $table->addIndex(['deleted_at']);
+        $table->addIndex(['created_at']);
     }
 
     /**
