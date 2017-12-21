@@ -16,7 +16,7 @@ $scope: 'page--admin--media--index';
   }
 
   .actions {
-    a + a {
+    a:not(.hidden) + a {
       margin-left: 5px;
     }
   }

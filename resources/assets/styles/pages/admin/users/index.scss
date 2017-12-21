@@ -6,7 +6,7 @@ $scope: 'page--admin--users--index';
 
 .#{$scope} {
   .actions {
-    a + a {
+    a:not(.hidden) + a {
       margin-left: 5px;
     }
   }
