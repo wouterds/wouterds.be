@@ -36,7 +36,7 @@ class DbalBlogPostRepository implements BlogPostRepository
             'slug' => $blogPost->getSlug(),
             'excerpt' => $blogPost->getExcerpt(),
             'body' => $blogPost->getBody(),
-            'published_at' => $blogPost->getPublishedAt()
+            'published_at' => $blogPost->getPublishedAt(),
         ]);
     }
 }
