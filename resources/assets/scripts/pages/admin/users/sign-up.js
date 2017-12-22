@@ -44,12 +44,6 @@ class SignUp extends Base {
   onAjaxDone(response) {
     this.ajaxCall = null;
 
-    // Remove loading button
-    this.form.$buttonSubmit.removeClass('button--loading').blur();
-
-    // Clear inputs
-    this.$form.find('textarea,input').val('');
-
     window.location = '/'; // todo: make more dynamic
   }
 

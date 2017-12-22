@@ -70,12 +70,6 @@ class Add extends Base {
   onAjaxDone(response) {
     this.ajaxCall = null;
 
-    // Remove loading button
-    this.form.$buttonSubmit.removeClass('button--loading').blur();
-
-    // Clear inputs
-    this.$form.find('textarea,input').val('');
-
     // TODO: Make dynamic
     window.location = '/admin/media';
   }
