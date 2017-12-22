@@ -9,8 +9,10 @@ use Slim\Http\Request;
 use Slim\Router;
 use SPE\FilesizeExtensionBundle\Twig\FilesizeExtension;
 use Twig_Loader_Filesystem;
+use WouterDeSchuyter\Domain\Users\AuthenticatedUser;
 use WouterDeSchuyter\Infrastructure\ApplicationMonitor\ApplicationMonitor;
 use WouterDeSchuyter\Infrastructure\Config\Config;
+use WouterDeSchuyter\Infrastructure\View\Admin\ViewAwareInterface as AdminViewAwareInterface;
 
 class ServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface
 {
@@ -47,6 +49,10 @@ class ServiceProvider extends AbstractServiceProvider implements BootableService
             'setRouter' => [Router::class],
             'setRequest' => [Request::class],
             'setApplicationMonitor' => [ApplicationMonitor::class],
+        ]);
+
+        $this->container->inflector(AdminViewAwareInterface::class)->invokeMethods([
+            'setAuthenticatedUser' => [AuthenticatedUser::class],
         ]);
     }
 }
