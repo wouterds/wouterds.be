@@ -2,27 +2,18 @@
 
 namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Blog;
 
-use Slim\Http\Request;
-use Slim\Http\Response;
-use WouterDeSchuyter\Application\Http\Handlers\Admin\ViewHandler;
+use WouterDeSchuyter\Infrastructure\View\Admin\ViewAwareInterface;
+use WouterDeSchuyter\Infrastructure\View\Admin\ViewAwareTrait;
 
-class IndexHandler extends ViewHandler
+class IndexHandler implements ViewAwareInterface
 {
+    use ViewAwareTrait;
+
     /**
      * @return string
      */
     public function getTemplate(): string
     {
         return 'pages/admin/blog/index.html.twig';
-    }
-
-    /**
-     * @param Request $request
-     * @param Response $response
-     * @return Response
-     */
-    public function __invoke(Request $request, Response $response): Response
-    {
-        return $this->render($response);
     }
 }

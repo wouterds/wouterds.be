@@ -5,9 +5,13 @@ namespace WouterDeSchuyter\Application\Http\Handlers;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Teapot\StatusCode;
+use WouterDeSchuyter\Infrastructure\View\ViewAwareInterface;
+use WouterDeSchuyter\Infrastructure\View\ViewAwareTrait;
 
-class NotAllowedHandler extends ViewHandler
+class NotAllowedHandler implements ViewAwareInterface
 {
+    use ViewAwareTrait;
+
     /**
      * @return string
      */

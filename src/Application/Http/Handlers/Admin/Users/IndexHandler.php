@@ -4,40 +4,24 @@ namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Users;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Slim\Router;
-use WouterDeSchuyter\Application\Http\Handlers\Admin\ViewHandler;
-use WouterDeSchuyter\Domain\Users\AuthenticatedUser;
 use WouterDeSchuyter\Domain\Users\UserRepository;
-use WouterDeSchuyter\Infrastructure\ApplicationMonitor\ApplicationMonitor;
-use WouterDeSchuyter\Infrastructure\Config\Config;
-use WouterDeSchuyter\Infrastructure\View\Twig;
+use WouterDeSchuyter\Infrastructure\View\Admin\ViewAwareInterface;
+use WouterDeSchuyter\Infrastructure\View\Admin\ViewAwareTrait;
 
-class IndexHandler extends ViewHandler
+class IndexHandler implements ViewAwareInterface
 {
+    use ViewAwareTrait;
+
     /**
      * @var UserRepository
      */
     private $userRepository;
 
     /**
-     * @param Twig $twig
-     * @param Config $config
-     * @param Router $router
-     * @param Request $request
-     * @param ApplicationMonitor $applicationMonitor
-     * @param AuthenticatedUser $authenticatedUser
      * @param UserRepository $userRepository
      */
-    public function __construct(
-        Twig $twig,
-        Config $config,
-        Router $router,
-        Request $request,
-        ApplicationMonitor $applicationMonitor,
-        AuthenticatedUser $authenticatedUser,
-        UserRepository $userRepository
-    ) {
-        parent::__construct($twig, $config, $router, $request, $applicationMonitor, $authenticatedUser);
+    public function __construct(UserRepository $userRepository)
+    {
         $this->userRepository = $userRepository;
     }
 

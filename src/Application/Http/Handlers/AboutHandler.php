@@ -4,9 +4,13 @@ namespace WouterDeSchuyter\Application\Http\Handlers;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
+use WouterDeSchuyter\Infrastructure\View\ViewAwareInterface;
+use WouterDeSchuyter\Infrastructure\View\ViewAwareTrait;
 
-class AboutHandler extends ViewHandler
+class AboutHandler implements ViewAwareInterface
 {
+    use ViewAwareTrait;
+
     /**
      * @return string
      */

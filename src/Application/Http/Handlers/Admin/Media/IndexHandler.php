@@ -4,48 +4,32 @@ namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Media;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Slim\Router;
-use WouterDeSchuyter\Application\Http\Handlers\Admin\ViewHandler;
+use WouterDeSchuyter\Domain\Media\Media;
 use WouterDeSchuyter\Domain\Media\MediaRepository;
-use WouterDeSchuyter\Domain\Users\AuthenticatedUser;
 use WouterDeSchuyter\Domain\Users\UserRepository;
-use WouterDeSchuyter\Infrastructure\ApplicationMonitor\ApplicationMonitor;
-use WouterDeSchuyter\Infrastructure\Config\Config;
-use WouterDeSchuyter\Infrastructure\View\Twig;
+use WouterDeSchuyter\Infrastructure\View\Admin\ViewAwareInterface;
+use WouterDeSchuyter\Infrastructure\View\Admin\ViewAwareTrait;
 
-class IndexHandler extends ViewHandler
+class IndexHandler implements ViewAwareInterface
 {
+    use ViewAwareTrait;
+
     /**
      * @var MediaRepository
      */
     private $mediaRepository;
+
     /**
      * @var UserRepository
      */
     private $userRepository;
 
     /**
-     * MediaHandler constructor.
-     * @param Twig $twig
-     * @param Config $config
-     * @param Router $router
-     * @param Request $request
-     * @param ApplicationMonitor $applicationMonitor
-     * @param AuthenticatedUser $authenticatedUser
      * @param MediaRepository $mediaRepository
      * @param UserRepository $userRepository
      */
-    public function __construct(
-        Twig $twig,
-        Config $config,
-        Router $router,
-        Request $request,
-        ApplicationMonitor $applicationMonitor,
-        AuthenticatedUser $authenticatedUser,
-        MediaRepository $mediaRepository,
-        UserRepository $userRepository
-    ) {
-        parent::__construct($twig, $config, $router, $request, $applicationMonitor, $authenticatedUser);
+    public function __construct(MediaRepository $mediaRepository, UserRepository $userRepository)
+    {
         $this->mediaRepository = $mediaRepository;
         $this->userRepository = $userRepository;
     }
@@ -68,6 +52,7 @@ class IndexHandler extends ViewHandler
         $media = $this->mediaRepository->findAll();
 
         $userIds = array_map(function ($media) {
+            /** @var Media $media */
             return $media->getUserId();
         }, $media);
 
