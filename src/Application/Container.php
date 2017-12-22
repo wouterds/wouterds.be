@@ -4,9 +4,9 @@ namespace WouterDeSchuyter\Application;
 
 use League\Container\Container as LeagueContainer;
 use League\Container\ReflectionContainer;
+use WouterDeSchuyter\Application\Blog\ServiceProvider as BlogServiceProvider;
 use WouterDeSchuyter\Application\Commands\ServiceProvider as CommandsServiceProvider;
 use WouterDeSchuyter\Application\Http\ServiceProvider as HttpServiceProvider;
-use WouterDeSchuyter\Application\Blog\ServiceProvider as BlogServiceProvider;
 use WouterDeSchuyter\Application\Media\ServiceProvider as MediaServiceProvider;
 use WouterDeSchuyter\Application\Users\ServiceProvider as UsersServiceProvider;
 use WouterDeSchuyter\Infrastructure\ApplicationMonitor\ServiceProvider as ApplicationMonitorServiceProvider;

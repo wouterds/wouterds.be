@@ -3,7 +3,6 @@
 namespace WouterDeSchuyter\Application\Commands\Media;
 
 use WouterDeSchuyter\Domain\Commands\Media\AddMedia;
-use WouterDeSchuyter\Domain\Media\Media;
 use WouterDeSchuyter\Domain\Media\MediaBuilder;
 use WouterDeSchuyter\Domain\Media\MediaContentTypeNotAllowedException;
 use WouterDeSchuyter\Domain\Media\StoreMediaFailedException;
