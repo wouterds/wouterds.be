@@ -6,7 +6,7 @@ use League\Tactician\CommandBus;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Teapot\StatusCode;
-use WouterDeSchuyter\Application\Http\Validators\Admin\SignUpRequestValidator;
+use WouterDeSchuyter\Application\Http\Validators\Admin\Users\SignUpRequestValidator;
 use WouterDeSchuyter\Domain\Commands\Users\SignUpUser;
 
 class SignUpPostHandler

@@ -1,6 +1,6 @@
 <?php
 
-namespace WouterDeSchuyter\Application\Http\Validators\Admin;
+namespace WouterDeSchuyter\Application\Http\Validators\Admin\Users;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Valitron\Validator;

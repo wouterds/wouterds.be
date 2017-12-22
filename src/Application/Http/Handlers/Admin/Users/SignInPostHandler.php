@@ -6,7 +6,7 @@ use League\Tactician\CommandBus;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Teapot\StatusCode;
-use WouterDeSchuyter\Application\Http\Validators\Admin\SignInRequestValidator;
+use WouterDeSchuyter\Application\Http\Validators\Admin\Users\SignInRequestValidator;
 use WouterDeSchuyter\Domain\Commands\Users\SignInUser;
 use WouterDeSchuyter\Domain\Users\InvalidUserCredentials;
 use WouterDeSchuyter\Domain\Users\UserNotActivatedYet;
