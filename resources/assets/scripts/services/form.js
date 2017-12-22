@@ -32,7 +32,7 @@ class Form {
 
   initFlatpickr() {
     $('[data-plugin=flatpickr]').each((index, el) => {
-      flatpickr(el, { enableTime: true, enableSeconds: true, dateFormat: 'Y-m-d H:i:s' });
+      flatpickr(el, { enableTime: true, enableSeconds: true, dateFormat: 'Y-m-d H:i:S' });
     });
   }
 
