@@ -46,9 +46,11 @@
 
 .input-select-wrapper {
   position: relative;
+  cursor: pointer;
 
   .input {
     padding-right: 40px;
+    cursor: pointer;
   }
 
   &:after {
