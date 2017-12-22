@@ -37,10 +37,10 @@ class Add extends Base {
     }
 
     // Add loading state
-    this.form.$buttonSubmit.addClass('button--loading');
+    this.form.$buttonSubmit.first().addClass('button--loading');
 
     // Ajax call
-
+    this.ajaxCall = $.post(this.$form.attr('action'), this.$form.serialize()).done(::this.onAjaxDone).fail(::this.onAjaxFail);
   }
 
   onAjaxDone(response) {
