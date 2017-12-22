@@ -3,11 +3,16 @@
 namespace WouterDeSchuyter\Infrastructure\View;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use League\Container\ServiceProvider\BootableServiceProviderInterface;
 use nochso\HtmlCompressTwig\Extension as CompressHtmlExtension;
+use Slim\Http\Request;
+use Slim\Router;
 use SPE\FilesizeExtensionBundle\Twig\FilesizeExtension;
 use Twig_Loader_Filesystem;
+use WouterDeSchuyter\Infrastructure\ApplicationMonitor\ApplicationMonitor;
+use WouterDeSchuyter\Infrastructure\Config\Config;
 
-class ServiceProvider extends AbstractServiceProvider
+class ServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface
 {
     /**
      * @var array
@@ -29,5 +34,19 @@ class ServiceProvider extends AbstractServiceProvider
 
             return $twig;
         });
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function boot()
+    {
+        $this->container->inflector(ViewAwareInterface::class)->invokeMethods([
+            'setTwig' => [Twig::class],
+            'setConfig' => [Config::class],
+            'setRouter' => [Router::class],
+            'setRequest' => [Request::class],
+            'setApplicationMonitor' => [ApplicationMonitor::class],
+        ]);
     }
 }
