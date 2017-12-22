@@ -7,6 +7,7 @@ use League\Tactician\CommandBus;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Teapot\StatusCode;
+use WouterDeSchuyter\Application\Http\Validators\Admin\Media\AddRequestValidator;
 use WouterDeSchuyter\Domain\Commands\Media\AddMedia;
 
 class AddPostHandler
@@ -15,13 +16,19 @@ class AddPostHandler
      * @var CommandBus
      */
     private $commandBus;
+    /**
+     * @var AddRequestValidator
+     */
+    private $addRequestValidator;
 
     /**
+     * @param AddRequestValidator $addRequestValidator
      * @param CommandBus $commandBus
      */
-    public function __construct(CommandBus $commandBus)
+    public function __construct(AddRequestValidator $addRequestValidator, CommandBus $commandBus)
     {
         $this->commandBus = $commandBus;
+        $this->addRequestValidator = $addRequestValidator;
     }
 
     /**
@@ -31,6 +38,10 @@ class AddPostHandler
      */
     public function __invoke(Request $request, Response $response): Response
     {
+        if (!$this->addRequestValidator->validate($request)) {
+            return $response->withJson($this->addRequestValidator->getErrors(), StatusCode::BAD_REQUEST);
+        }
+
         try {
             $this->commandBus->handle(new AddMedia(
                 $request->getParam('label'),
