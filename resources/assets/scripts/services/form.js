@@ -93,7 +93,7 @@ class Form {
       $error.text(error);
 
       // Add error to dom
-      $input.after($error);
+      $inputWrapper.append($error);
     }
   }
 
