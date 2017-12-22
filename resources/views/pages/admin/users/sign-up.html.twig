@@ -7,7 +7,7 @@
             Before you can sign in and use your account it will be reviewed first and need to be activated.
         </p>
 
-        <form class="container-fluid form" role="form" method="post" action="{{ app.router.pathFor('admin.users.sign-up_post') }}">
+        <form class="container-fluid form" role="form" method="post" action="{{ app.router.pathFor('admin.users.sign-up_post') }}" data-redirect="{{ app.router.pathFor('admin') }}">
             <div class="row">
                 <div class="col-sm-6 input-wrapper">
                     <label for="name" class="label">Name</label>

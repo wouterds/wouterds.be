@@ -7,7 +7,7 @@
             To get access to the admin zone you need to be signed in.
         </p>
 
-        <form class="container-fluid form" role="form" method="post" action="{{ app.router.pathFor('admin.users.sign-in_post') }}">
+        <form class="container-fluid form" role="form" method="post" action="{{ app.router.pathFor('admin.users.sign-in_post') }}" data-redirect="{{ app.router.pathFor('admin') }}">
             <div class="row">
                 <div class="col-sm-6 input-wrapper">
                     <label for="email" class="label">Email address</label>

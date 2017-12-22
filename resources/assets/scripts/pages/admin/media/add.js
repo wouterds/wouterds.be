@@ -70,8 +70,7 @@ class Add extends Base {
   onAjaxDone(response) {
     this.ajaxCall = null;
 
-    // TODO: Make dynamic
-    window.location = '/admin/media';
+    window.location = this.$form.data('redirect');
   }
 
   onAjaxFail(response) {

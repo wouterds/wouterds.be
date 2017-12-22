@@ -44,7 +44,7 @@ class SignUp extends Base {
   onAjaxDone(response) {
     this.ajaxCall = null;
 
-    window.location = '/'; // todo: make more dynamic
+    window.location = this.$form.data('redirect');
   }
 
   onAjaxFail(response) {

@@ -51,9 +51,6 @@ class Add extends Base {
 
     // Clear inputs
     this.$form.find('textarea,input').val('');
-
-    // TODO: Make dynamic
-    window.location = '/admin/media';
   }
 
   onAjaxFail(response) {

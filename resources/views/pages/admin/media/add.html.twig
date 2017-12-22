@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <h2 class="h2">Media - Add</h2>
 
-        <form class="container-fluid form" role="form" enctype="multipart/form-data" method="post" action="{{ app.router.pathFor('admin.media.add_post') }}">
+        <form class="container-fluid form" role="form" enctype="multipart/form-data" method="post" action="{{ app.router.pathFor('admin.media.add_post') }}" data-redirect="{{ app.router.pathFor('admin.media') }}">
             <div class="row">
                 <div class="col-sm-6 input-wrapper">
                     <label for="label" class="label">Label (leave blank to use filename)</label>
