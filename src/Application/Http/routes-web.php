@@ -5,6 +5,7 @@ use WouterDeSchuyter\Application\Http\Handlers\Admin\Blog\AddHandler as AdminBlo
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Blog\AddPostHandler as AdminBlogAddPostHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Blog\IndexHandler as AdminBlogIndexHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\IndexHandler as AdminIndexHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\SlugifyHandler as AdminSlugifyHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Media\AddHandler as AdminMediaAddHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Media\AddPostHandler as AdminMediaAddPostHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Media\DeleteHandler as AdminMediaDeleteHandler;
@@ -44,6 +45,7 @@ $app->group(null, function () use ($app) {
     // Private admin routes
     $app->group('/admin', function () use ($app) {
         $app->get('', AdminIndexHandler::class)->setName('admin');
+        $app->post('/slugify.json', AdminSlugifyHandler::class)->setName('admin.slugify_post');
 
         $app->group('/blog', function () use ($app) {
             $app->get('', AdminBlogIndexHandler::class)->setName('admin.blog');
