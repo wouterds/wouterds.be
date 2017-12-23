@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import Base from '../../base';
 import FormService from '../../../services/form';
+import SlugifyService from '../../../services/slugify';
 import SimpleMDE from 'simplemde';
 
 class Add extends Base {
@@ -21,6 +22,7 @@ class Add extends Base {
 
   initForm() {
     new SimpleMDE({ element: this.$form.find('#body').get(0) });
+    new SlugifyService(this.$form.find('#title'), ::this.onSlugifyDone);
     this.form = new FormService(this.$form);
   }
 
@@ -28,12 +30,17 @@ class Add extends Base {
     this.form.$scope.on('submit', ::this.onFormSubmit);
   }
 
+  onSlugifyDone(slug) {
+    this.form.$scope.find('#slug').val(slug);
+  }
+
   onFormSubmit(e) {
     e.preventDefault();
 
     // Check if ajax call already is going
     if (this.ajaxCall) {
-      return;
+      this.ajaxCall.abort();
+      this.ajaxCall = null;
     }
 
     // Add loading state
