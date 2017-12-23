@@ -29,6 +29,7 @@
   },
   "require": {
     "cache/predis-adapter": "^1.0",
+    "cocur/slugify": "^3.0",
     "emgag/flysystem-hash": "^1.0",
     "jdrieghe/array-helpers": "^0.1.0",
     "jenssegers/lean": "^0.2.2",
