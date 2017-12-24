@@ -159,7 +159,7 @@ class BlogPostBuilder
             'body' => $this->body,
             'media_id' => $this->mediaId,
             'user_id' => $this->userId,
-            'published_at' => $this->publishedAt
+            'published_at' => $this->publishedAt,
         ]);
     }
 }

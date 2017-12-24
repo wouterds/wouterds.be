@@ -2,7 +2,6 @@
 
 namespace WouterDeSchuyter\Application\Http\Handlers\Admin;
 
-
 use Cocur\Slugify\Slugify;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -20,8 +19,8 @@ class SlugifyHandler
 
         return $response->withJson([
             'data' => [
-                'slug' => (new Slugify())->slugify($text)
-            ]
+                'slug' => (new Slugify())->slugify($text),
+            ],
         ]);
     }
 }
