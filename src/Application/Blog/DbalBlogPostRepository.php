@@ -87,6 +87,25 @@ class DbalBlogPostRepository implements BlogPostRepository
     }
 
     /**
+     * @param string $slug
+     * @return BlogPost|null
+     */
+    public function findBySlug(string $slug): ?BlogPost
+    {
+        $query = $this->connection->createQueryBuilder();
+        $query->select('*');
+        $query->from(self::TABLE);
+        $query->where('slug = ' . $query->createNamedParameter($slug));
+        $result = $query->execute()->fetch();
+
+        if (empty($result)) {
+            return null;
+        }
+
+        return BlogPost::fromArray($result);
+    }
+
+    /**
      * @param BlogPostId $id
      */
     public function delete(BlogPostId $id)

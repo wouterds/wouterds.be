@@ -23,4 +23,10 @@ interface BlogPostRepository
      * @param BlogPostId $id
      */
     public function delete(BlogPostId $id);
+
+    /**
+     * @param string $slug
+     * @return BlogPost|null
+     */
+    public function findBySlug(string $slug): ?BlogPost;
 }
