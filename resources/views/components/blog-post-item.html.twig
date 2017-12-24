@@ -1,0 +1,16 @@
+<article class="blog-post-item">
+    <header class="blog-post-item__header">
+        <h1 class="blog-post-item__title">{{ blogPost.title }}</h1>
+        <time class="blog-post-item__time" pubdate datetime="{{ blogPost.publishedAt|date('c') }}">{{ blogPost.publishedAt|date('M j, Y') }}</time>
+    </header>
+    <section class="blog-post-item__content">
+        {% if full %}
+            {{ blogPost.body }}
+        {% else %}
+            {{ blogPost.excerpt }}
+        {% endif %}
+    </section>
+    <footer class="blog-post-item__footer">
+        <address class="blog-post-item__author">{{ blogPost.userId }}</address>
+    </footer>
+</article>

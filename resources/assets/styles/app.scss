@@ -22,9 +22,11 @@
 // Components
 @import 'components/header';
 @import 'components/footer';
+@import 'components/blog-post-item';
 
 // Pages
 @import 'pages/about';
+@import 'pages/blog';
 @import 'pages/contact';
 @import 'pages/admin/base';
 @import 'pages/admin/blog/index';

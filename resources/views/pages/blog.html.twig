@@ -1,5 +1,9 @@
 {% extends '_base.html.twig' %}
 
 {% block body %}
-
+    <div class="container">
+        {% for blogPost in blogPosts %}
+            {% include 'components/blog-post-item.html.twig' %}
+        {% endfor %}
+    </div>
 {% endblock %}
