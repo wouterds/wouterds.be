@@ -39,4 +39,23 @@ class DbalBlogPostRepository implements BlogPostRepository
             'published_at' => $blogPost->getPublishedAt(),
         ]);
     }
+
+    /**
+     * @param BlogPost $blogPost
+     */
+    public function update(BlogPost $blogPost)
+    {
+        $query = $this->connection->createQueryBuilder();
+        $query->update(self::TABLE);
+        $query->setValue('user_id', $query->createNamedParameter($blogPost->getUserId()));
+        $query->setValue('media_id', $query->createNamedParameter($blogPost->getMediaId()));
+        $query->setValue('title', $query->createNamedParameter($blogPost->getTitle()));
+        $query->setValue('slug', $query->createNamedParameter($blogPost->getSlug()));
+        $query->setValue('excerpt', $query->createNamedParameter($blogPost->getExcerpt()));
+        $query->setValue('body', $query->createNamedParameter($blogPost->getBody()));
+        $query->setValue('published_at', $query->createNamedParameter($blogPost->getPublishedAt()));
+        $query->setValue('updated_at', 'NOW()');
+        $query->where('id', $blogPost->getId());
+        $query->execute();
+    }
 }
