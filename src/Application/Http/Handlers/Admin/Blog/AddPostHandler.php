@@ -2,7 +2,6 @@
 
 namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Blog;
 
-use DateTimeZone;
 use Exception;
 use League\Tactician\CommandBus;
 use Slim\Http\Request;
@@ -57,7 +56,7 @@ class AddPostHandler
                 $request->getParam('excerpt'),
                 new UserId($request->getParam('userId')),
                 new MediaId($request->getParam('mediaId')),
-                (new DateTime($request->getParam('publishedAt')))->setTimezone(new DateTimeZone('Europe/Brussels'))
+                new DateTime($request->getParam('publishedAt'))
             ));
         } catch (Exception $e) {
             return $response->withJson(false, StatusCode::BAD_REQUEST);
