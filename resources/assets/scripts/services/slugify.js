@@ -27,7 +27,7 @@ class Slugify {
     e.preventDefault();
 
     // Ajax call
-    this.cb(slugify(this.$scope.val(), { lower: true, remove: /[$*_+~.()'"!\-:@]/g }));
+    this.cb(slugify(this.$scope.val(), { lower: true, remove: /[$*_+~.(),'"!\-:@]/g }));
   }
 }
 
