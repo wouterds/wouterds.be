@@ -55,7 +55,6 @@ class DbalMediaRepository implements MediaRepository
             return [];
         }
 
-
         $data = [];
         foreach ($rows as $row) {
             $media = Media::fromArray($row);
