@@ -19,6 +19,7 @@ services:
     container_name: internal-wouterdeschuyter-website-php-fpm
     working_dir: /code
     volumes:
+      - ./php-fpm/php.ini:/usr/local/etc/php/conf.d/custom.ini
       - ./..:/code
       - ./../storage/logs:/code/storage/logs
       - ./../storage/media:/code/storage/media
