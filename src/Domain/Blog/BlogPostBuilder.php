@@ -9,6 +9,11 @@ use WouterDeSchuyter\Infrastructure\ValueObjects\DateTime;
 class BlogPostBuilder
 {
     /**
+     * @var BlogPostId
+     */
+    private $id;
+
+    /**
      * @var UserId
      */
     private $userId;
@@ -54,10 +59,21 @@ class BlogPostBuilder
     }
 
     /**
+     * @param BlogPostId $id
+     * @return BlogPostBuilder
+     */
+    public function withId(BlogPostId $id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * @param UserId $userId
      * @return BlogPostBuilder
      */
-    public function setUserId(UserId $userId): BlogPostBuilder
+    public function withUserId(UserId $userId): BlogPostBuilder
     {
         $this->userId = $userId;
 
@@ -68,7 +84,7 @@ class BlogPostBuilder
      * @param MediaId $mediaId
      * @return BlogPostBuilder
      */
-    public function setMediaId(MediaId $mediaId): BlogPostBuilder
+    public function withMediaId(MediaId $mediaId): BlogPostBuilder
     {
         $this->mediaId = $mediaId;
 
@@ -79,7 +95,7 @@ class BlogPostBuilder
      * @param string $title
      * @return BlogPostBuilder
      */
-    public function setTitle(string $title): BlogPostBuilder
+    public function withTitle(string $title): BlogPostBuilder
     {
         $this->title = $title;
 
@@ -90,7 +106,7 @@ class BlogPostBuilder
      * @param string $slug
      * @return BlogPostBuilder
      */
-    public function setSlug(string $slug): BlogPostBuilder
+    public function withSlug(string $slug): BlogPostBuilder
     {
         $this->slug = $slug;
 
@@ -101,7 +117,7 @@ class BlogPostBuilder
      * @param string $excerpt
      * @return BlogPostBuilder
      */
-    public function setExcerpt(string $excerpt): BlogPostBuilder
+    public function withExcerpt(string $excerpt): BlogPostBuilder
     {
         $this->excerpt = $excerpt;
 
@@ -112,7 +128,7 @@ class BlogPostBuilder
      * @param string $body
      * @return BlogPostBuilder
      */
-    public function setBody(string $body): BlogPostBuilder
+    public function withBody(string $body): BlogPostBuilder
     {
         $this->body = $body;
 
@@ -123,7 +139,7 @@ class BlogPostBuilder
      * @param DateTime $publishedAt
      * @return BlogPostBuilder
      */
-    public function setPublishedAt(DateTime $publishedAt): BlogPostBuilder
+    public function withPublishedAt(DateTime $publishedAt): BlogPostBuilder
     {
         $this->publishedAt = $publishedAt;
 
@@ -135,14 +151,15 @@ class BlogPostBuilder
      */
     public function build(): BlogPost
     {
-        return new BlogPost(
-            $this->userId,
-            $this->mediaId,
-            $this->title,
-            $this->slug,
-            $this->excerpt,
-            $this->body,
-            $this->publishedAt
-        );
+        return BlogPost::fromArray([
+            'id' => $this->id,
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'excerpt' => $this->excerpt,
+            'body' => $this->body,
+            'media_id' => $this->mediaId,
+            'user_id' => $this->userId,
+            'published_at' => $this->publishedAt
+        ]);
     }
 }
