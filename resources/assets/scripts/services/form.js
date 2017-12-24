@@ -37,7 +37,7 @@ class Form {
   }
 
   initObservers() {
-    this.$scope.on('keydown focus', 'input,textarea', this.onInputActiveClearError);
+    this.$scope.on('keydown focus', 'input,textarea,select', this.onInputActiveClearError);
   };
 
   enableForm() {
