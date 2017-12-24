@@ -1,4 +1,4 @@
-import $ from 'jquery';
+import slugify from 'slugify';
 
 class Slugify {
   constructor($scope, cb) {
@@ -20,33 +20,14 @@ class Slugify {
   }
 
   initObservers() {
-    this.$scope.on('change', ::this.onInputChange);
+    this.$scope.on('keyup change', ::this.onInputChange);
   };
 
   onInputChange(e) {
     e.preventDefault();
 
-    // Check if ajax call already is going
-    if (this.ajaxCall) {
-      return;
-    }
-
     // Ajax call
-    this.ajaxCall = $.post('/admin/slugify.json', {
-      text: this.$scope.val()
-    }).done(::this.onAjaxDone).fail(::this.onAjaxFail);
-  }
-
-  onAjaxDone(response) {
-    this.ajaxCall = null;
-
-    if (response && response.data) {
-      this.cb(response.data.slug);
-    }
-  }
-
-  onAjaxFail(response) {
-    this.ajaxCall = null;
+    this.cb(slugify(this.$scope.val(), { lower: true, remove: /[$*_+~.()'"!\-:@]/g }));
   }
 }
 
