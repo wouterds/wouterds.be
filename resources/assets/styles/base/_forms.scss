@@ -14,7 +14,8 @@
 
   &.error,
   &.success {
-    .input {
+    .input,
+    .CodeMirror {
       border-color: $color-orange;
     }
 
@@ -34,6 +35,10 @@
 
     .success {
       color: $color-green;
+    }
+
+    .editor-statusbar + .error-message {
+      margin-top: -20px;
     }
 
     .error-message {
