@@ -8,6 +8,7 @@ use League\Tactician\Container\ContainerLocator;
 use League\Tactician\Handler\CommandHandlerMiddleware;
 use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 use League\Tactician\Handler\MethodNameInflector\HandleInflector;
+use WouterDeSchuyter\Application\Commands\Blog\SaveBlogPostHandler;
 use WouterDeSchuyter\Application\Commands\Media\AddMediaHandler;
 use WouterDeSchuyter\Application\Commands\Media\DeleteMediaHandler;
 use WouterDeSchuyter\Application\Commands\Users\ActivateUserHandler;
@@ -16,6 +17,7 @@ use WouterDeSchuyter\Application\Commands\Users\DeleteUserHandler;
 use WouterDeSchuyter\Application\Commands\Users\SignInUserHandler;
 use WouterDeSchuyter\Application\Commands\Users\SignOutUserHandler;
 use WouterDeSchuyter\Application\Commands\Users\SignUpUserHandler;
+use WouterDeSchuyter\Domain\Commands\Blog\SaveBlogPost;
 use WouterDeSchuyter\Domain\Commands\ContactEnquiry;
 use WouterDeSchuyter\Domain\Commands\Media\AddMedia;
 use WouterDeSchuyter\Domain\Commands\Media\DeleteMedia;
@@ -51,6 +53,7 @@ class ServiceProvider extends AbstractServiceProvider
                 DeleteUser::class => DeleteUserHandler::class,
                 AddMedia::class => AddMediaHandler::class,
                 DeleteMedia::class => DeleteMediaHandler::class,
+                SaveBlogPost::class => SaveBlogPostHandler::class,
             ]);
 
             $handlerMiddleware = new CommandHandlerMiddleware(
