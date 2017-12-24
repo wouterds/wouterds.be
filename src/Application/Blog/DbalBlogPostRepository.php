@@ -58,4 +58,30 @@ class DbalBlogPostRepository implements BlogPostRepository
         $query->where('id', $blogPost->getId());
         $query->execute();
     }
+
+    /**
+     * @return BlogPost[]
+     */
+    public function findAll(): array
+    {
+        $query = $this->connection->createQueryBuilder();
+        $query->select('*');
+        $query->from(self::TABLE);
+        $query->where('deleted_at IS NULL');
+        $query->orderBy('created_at', 'DESC');
+        $rows = $query->execute()->fetchAll();
+
+        if (empty($rows)) {
+            return [];
+        }
+
+        $data = [];
+        foreach ($rows as $row) {
+            $blogPost = BlogPost::fromArray($row);
+
+            $data[$blogPost->getId()->getValue()] = $blogPost;
+        }
+
+        return $data;
+    }
 }
