@@ -9,38 +9,6 @@ $scope: 'blog-post-item';
     border-top: 1px solid rgba($color-blue-grey, 0.075);
   }
 
-  &__title {
-    display: inline-block;
-  }
-
-  &__time {
-    display: inline-block;
-  }
-
-  &__content {
-    color: rgba($color-blue-grey, 0.5);
-    font-size: 1.7em;
-    line-height: 1.5;
-    margin: 0;
-  }
-
-  &__author {
-    display: none;
-  }
-
-  &__link {
-    text-decoration: none;
-
-    &:hover {
-      .#{$scope} {
-        &__title,
-        &__date {
-          color: $color-red;
-        }
-      }
-    }
-  }
-
   &__header {
     position: relative;
     padding-bottom: 8px;
@@ -56,13 +24,15 @@ $scope: 'blog-post-item';
     padding-right: 110px;
     display: block;
     color: rgba($color-blue-grey, 0.9);
-
-    span {
-      display: block;
-    }
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
   }
 
   &__time {
+    display: inline-block;
     position: absolute;
     top: 0;
     right: 0;
@@ -72,15 +42,25 @@ $scope: 'blog-post-item';
     color: rgba($color-blue-grey, 0.4);
   }
 
-  &__content {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+  &__excerpt {
+    line-height: 1.5;
+    margin-top: -16px;
 
-    a {
-      color: inherit;
-      text-decoration: none;
+    &,
+    p {
+      color: rgba($color-blue-grey, 0.5);
     }
+
+    p {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      font-size: 1.7em;
+    }
+  }
+
+  &__author {
+    display: none;
   }
 }
