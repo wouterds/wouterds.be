@@ -28,6 +28,8 @@ class SaveBlogPostHandler
     {
         $blogPostBuilder = BlogPostBuilder::startWithDefault();
 
+        $blogPostBuilder->withUserId($saveBlogPost->getUserId());
+        $blogPostBuilder->withMediaId($saveBlogPost->getMediaId());
         $blogPostBuilder->withTitle($saveBlogPost->getTitle());
         $blogPostBuilder->withSlug($saveBlogPost->getSlug());
         $blogPostBuilder->withExcerpt($saveBlogPost->getExcerpt());
