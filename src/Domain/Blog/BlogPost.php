@@ -78,6 +78,26 @@ class BlogPost implements JsonSerializable
     }
 
     /**
+     * @param array $data
+     * @return BlogPost
+     */
+    public static function fromArray(array $data): BlogPost
+    {
+        $file = new BlogPost(
+            new UserId($data['user_id']),
+            new MediaId($data['media_id']),
+            $data['title'],
+            $data['slug'],
+            $data['excerpt'],
+            $data['body'],
+            $data['published_at']
+        );
+        $file->id = new BlogPostId(!empty($data['id']) ? $data['id'] : null);
+
+        return $file;
+    }
+
+    /**
      * @return BlogPostId
      */
     public function getId(): BlogPostId
