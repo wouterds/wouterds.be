@@ -87,6 +87,25 @@ class DbalBlogPostRepository implements BlogPostRepository
     }
 
     /**
+     * @param BlogPostId $id
+     * @return BlogPost|null
+     */
+    public function find(BlogPostId $id): ?BlogPost
+    {
+        $query = $this->connection->createQueryBuilder();
+        $query->select('*');
+        $query->from(self::TABLE);
+        $query->where('id = ' . $query->createNamedParameter($id));
+        $result = $query->execute()->fetch();
+
+        if (empty($result)) {
+            return null;
+        }
+
+        return BlogPost::fromArray($result);
+    }
+
+    /**
      * @param string $slug
      * @return BlogPost|null
      */

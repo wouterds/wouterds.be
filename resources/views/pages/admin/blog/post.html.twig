@@ -2,15 +2,24 @@
 
 {% block body %}
     <div class="container-fluid">
-        <h2 class="h2">Blog - Add</h2>
+        <h2 class="h2">
+            Blog -
+            {% if blogPost %}
+                Edit
+            {% else %}
+                Add
+            {% endif %}
+        </h2>
 
         <form class="container-fluid form" role="form" method="post" action="{{ app.router.pathFor('admin.blog.save_post') }}">
+            <input type="hidden" name="id" value="{{ blogPost.id }}">
+
             <div class="row">
                 <div class="col-lg-6">
                     <div class="row">
                         <div class="input-wrapper">
                             <label for="title" class="label">Title</label>
-                            <input type="text" id="title" name="title" class="input">
+                            <input type="text" id="title" name="title" class="input" value="{{ blogPost.title }}">
                         </div>
                     </div>
                 </div>
@@ -18,7 +27,7 @@
                     <div class="row">
                         <div class="input-wrapper">
                             <label for="slug" class="label">Slug</label>
-                            <input type="text" id="slug" name="slug" class="input">
+                            <input type="text" id="slug" name="slug" class="input" value="{{ blogPost.slug }}">
                         </div>
                     </div>
                 </div>
@@ -28,7 +37,7 @@
                     <div class="row">
                         <div class="input-wrapper">
                             <label for="body" class="label">Body</label>
-                            <textarea name="body" id="body" cols="30" rows="12" class="input"></textarea>
+                            <textarea name="body" id="body" cols="30" rows="12" class="input">{{ blogPost.body }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -36,7 +45,7 @@
                     <div class="row">
                         <div class="input-wrapper">
                             <label for="excerpt" class="label">Excerpt</label>
-                            <textarea name="excerpt" id="excerpt" cols="30" rows="6" class="input"></textarea>
+                            <textarea name="excerpt" id="excerpt" cols="30" rows="6" class="input">{{ blogPost.excerpt }}</textarea>
                         </div>
                         <div class="input-wrapper">
                             <label for="userId" class="label">Author</label>
@@ -44,7 +53,7 @@
                                 <select class="input" name="userId" id="userId">
                                     <option value="">--</option>
                                     {% for user in users %}
-                                        <option value="{{ user.id }}">{{ user.name }} ({{ user.id }})</option>
+                                        <option value="{{ user.id }}"{% if blogPost.userId == user.id %} selected{% endif %}>{{ user.name }} ({{ user.id }})</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -54,15 +63,15 @@
                             <div class="input-select-wrapper">
                                 <select class="input" name="mediaId" id="mediaId">
                                     <option value="">--</option>
-                                    {% for mediaObject in media %}
-                                        <option value="{{ mediaObject.id }}">{{ mediaObject.name }} ({{ mediaObject.id }})</option>
+                                    {% for media in media %}
+                                        <option value="{{ media.id }}"{% if blogPost.mediaId == media.id %} selected{% endif %}>{{ media.name }} ({{ media.id }})</option>
                                     {% endfor %}
                                 </select>
                             </div>
                         </div>
                         <div class="input-wrapper">
                             <label for="publishedAt" class="label">Published at</label>
-                            <input type="text" id="publishedAt" name="publishedAt" class="input" data-plugin="flatpickr">
+                            <input type="text" id="publishedAt" name="publishedAt" class="input" data-plugin="flatpickr" value="{{ blogPost.publishedAt }}">
                         </div>
                         <div class="input-wrapper">
                             <button type="submit" name="save" class="input button" disabled data-loader="true">

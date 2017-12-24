@@ -2,6 +2,7 @@
 
 use WouterDeSchuyter\Application\Http\Handlers\AboutHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Blog\AddHandler as AdminBlogAddHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\Blog\EditHandler as AdminBlogEditHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Blog\SavePostHandler as AdminBlogSavePostHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Blog\IndexHandler as AdminBlogIndexHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Blog\DeleteHandler as AdminBlogDeleteHandler;
@@ -51,6 +52,7 @@ $app->group(null, function () use ($app) {
         $app->group('/blog', function () use ($app) {
             $app->get('', AdminBlogIndexHandler::class)->setName('admin.blog');
             $app->get('/add', AdminBlogAddHandler::class)->setName('admin.blog.add');
+            $app->get('/{id}/edit', AdminBlogEditHandler::class)->setName('admin.blog.edit');
             $app->post('/save.json', AdminBlogSavePostHandler::class)->setName('admin.blog.save_post');
             $app->get('/{id}/delete', AdminBlogDeleteHandler::class)->setName('admin.blog.delete');
         });
