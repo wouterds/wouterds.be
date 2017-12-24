@@ -2,12 +2,10 @@
 
 namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Blog;
 
-use DateTimeZone;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use WouterDeSchuyter\Domain\Media\MediaRepository;
 use WouterDeSchuyter\Domain\Users\UserRepository;
-use WouterDeSchuyter\Infrastructure\ValueObjects\DateTime;
 use WouterDeSchuyter\Infrastructure\View\Admin\ViewAwareInterface;
 use WouterDeSchuyter\Infrastructure\View\Admin\ViewAwareTrait;
 

@@ -4,7 +4,6 @@ namespace WouterDeSchuyter\Application\Http\Validators\Admin\Media;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Http\UploadedFile;
-use Valitron\Validator;
 
 class AddRequestValidator
 {
