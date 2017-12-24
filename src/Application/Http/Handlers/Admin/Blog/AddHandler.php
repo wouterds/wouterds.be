@@ -38,7 +38,7 @@ class AddHandler implements ViewAwareInterface
      */
     public function getTemplate(): string
     {
-        return 'pages/admin/blog/add.html.twig';
+        return 'pages/admin/blog/post.html.twig';
     }
 
     /**

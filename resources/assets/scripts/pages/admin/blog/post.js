@@ -4,9 +4,9 @@ import FormService from '../../../services/form';
 import SlugifyService from '../../../services/slugify';
 import SimpleMDE from 'simplemde';
 
-class Add extends Base {
+class Post extends Base {
   get pageId() {
-    return '#pageAdminBlogAdd';
+    return '#pageAdminBlogPost';
   }
 
   init() {
@@ -43,7 +43,7 @@ class Add extends Base {
       this.ajaxCall = null;
     }
 
-    // Add loading state
+    // Post loading state
     this.form.$buttonSubmit.first().addClass('button--loading');
 
     // Ajax call
@@ -73,4 +73,4 @@ class Add extends Base {
   }
 }
 
-export default Add;
+export default Post;

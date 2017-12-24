@@ -5,7 +5,7 @@ namespace WouterDeSchuyter\Application\Http\Validators\Admin\Blog;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Valitron\Validator;
 
-class AddRequestValidator
+class PostRequestValidator
 {
     /**
      * @var Validator

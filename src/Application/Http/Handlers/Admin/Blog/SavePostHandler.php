@@ -7,19 +7,19 @@ use League\Tactician\CommandBus;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Teapot\StatusCode;
-use WouterDeSchuyter\Application\Http\Validators\Admin\Blog\AddRequestValidator;
+use WouterDeSchuyter\Application\Http\Validators\Admin\Blog\PostRequestValidator;
 use WouterDeSchuyter\Domain\Blog\BlogPostId;
 use WouterDeSchuyter\Domain\Commands\Blog\SaveBlogPost;
 use WouterDeSchuyter\Domain\Media\MediaId;
 use WouterDeSchuyter\Domain\Users\UserId;
 use WouterDeSchuyter\Infrastructure\ValueObjects\DateTime;
 
-class AddPostHandler
+class SavePostHandler
 {
     /**
-     * @var AddRequestValidator
+     * @var PostRequestValidator
      */
-    private $addRequestValidator;
+    private $postRequestValidator;
 
     /**
      * @var CommandBus
@@ -27,12 +27,12 @@ class AddPostHandler
     private $commandBus;
 
     /**
-     * @param AddRequestValidator $addRequestValidator
+     * @param PostRequestValidator $addRequestValidator
      * @param CommandBus $commandBus
      */
-    public function __construct(AddRequestValidator $addRequestValidator, CommandBus $commandBus)
+    public function __construct(PostRequestValidator $addRequestValidator, CommandBus $commandBus)
     {
-        $this->addRequestValidator = $addRequestValidator;
+        $this->postRequestValidator = $addRequestValidator;
         $this->commandBus = $commandBus;
     }
 
@@ -43,8 +43,8 @@ class AddPostHandler
      */
     public function __invoke(Request $request, Response $response): Response
     {
-        if (!$this->addRequestValidator->validate($request)) {
-            return $response->withJson($this->addRequestValidator->getErrors(), StatusCode::BAD_REQUEST);
+        if (!$this->postRequestValidator->validate($request)) {
+            return $response->withJson($this->postRequestValidator->getErrors(), StatusCode::BAD_REQUEST);
         }
 
         try {
