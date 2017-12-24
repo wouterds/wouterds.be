@@ -4,6 +4,7 @@ namespace WouterDeSchuyter\Application\Blog;
 
 use Doctrine\DBAL\Connection;
 use WouterDeSchuyter\Domain\Blog\BlogPost;
+use WouterDeSchuyter\Domain\Blog\BlogPostId;
 use WouterDeSchuyter\Domain\Blog\BlogPostRepository;
 
 class DbalBlogPostRepository implements BlogPostRepository
@@ -83,5 +84,18 @@ class DbalBlogPostRepository implements BlogPostRepository
         }
 
         return $data;
+    }
+
+    /**
+     * @param BlogPostId $id
+     */
+    public function delete(BlogPostId $id)
+    {
+        $query = $this->connection->createQueryBuilder();
+        $query->update(self::TABLE);
+        $query->set('updated_at', 'NOW()');
+        $query->set('deleted_at', 'NOW()');
+        $query->where('id = ' . $query->createNamedParameter($id));
+        $query->execute();
     }
 }

@@ -18,4 +18,9 @@ interface BlogPostRepository
      * @return BlogPost[]
      */
     public function findAll(): array;
+
+    /**
+     * @param BlogPostId $id
+     */
+    public function delete(BlogPostId $id);
 }
