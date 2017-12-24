@@ -18,11 +18,4 @@ interface ViewAwareInterface
      * @return Response
      */
     public function render(Response $response, array $data = []): Response;
-
-    /**
-     * @param Request $request
-     * @param Response $response
-     * @return Response
-     */
-    public function __invoke(Request $request, Response $response): Response;
 }
