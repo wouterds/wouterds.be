@@ -50,6 +50,16 @@ class BlogPost implements JsonSerializable
     private $publishedAt;
 
     /**
+     * @var DateTime
+     */
+    private $createdAt;
+
+    /**
+     * @var DateTime
+     */
+    private $updatedAt;
+
+    /**
      * @param UserId $userId
      * @param MediaId $mediaId
      * @param string $title
@@ -90,9 +100,11 @@ class BlogPost implements JsonSerializable
             $data['slug'],
             $data['excerpt'],
             $data['body'],
-            $data['published_at']
+            !empty($data['published_at']) ? new DateTime($data['published_at']) : null
         );
         $file->id = new BlogPostId(!empty($data['id']) ? $data['id'] : null);
+        $file->createdAt = !empty($data['created_at']) ? new DateTime($data['created_at']) : null;
+        $file->updatedAt = !empty($data['updated_at']) ? new DateTime($data['updated_at']) : null;
 
         return $file;
     }
@@ -159,6 +171,22 @@ class BlogPost implements JsonSerializable
     public function getPublishedAt(): ?DateTime
     {
         return $this->publishedAt;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getCreatedAt(): ?DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getUpdatedAt(): ?DateTime
+    {
+        return $this->updatedAt;
     }
 
     /**
