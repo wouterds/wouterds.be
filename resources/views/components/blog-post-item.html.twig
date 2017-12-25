@@ -2,7 +2,7 @@
     <a class="blog-post-item__link" title="{{ blogPost.title }}" href="">
         <header class="blog-post-item__header">
             <h1 class="blog-post-item__title">{{ blogPost.title }}</h1>
-            <time class="blog-post-item__time" pubdate datetime="{{ blogPost.publishedAt|date('c') }}">{{ blogPost.publishedAt|date('M j, Y') }}</time>
+            <time class="blog-post-item__time" pubdate datetime="{{ blogPost.publishedAt|date('c') }}" title="{{ blogPost.publishedAt|date('M j, Y') }} around {{ blogPost.publishedAt|date('h:i a') }}">{{ blogPost.publishedAt|date('M j, Y') }}</time>
         </header>
 
         <section class="blog-post-item__excerpt">
