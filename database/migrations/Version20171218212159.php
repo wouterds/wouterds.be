@@ -23,6 +23,8 @@ class Version20171218212159 extends AbstractMigration
         $table->addColumn('name', 'string')->setLength(64);
         $table->addColumn('content_type', 'string')->setLength(32);
         $table->addColumn('size', 'integer');
+        $table->addColumn('width', 'integer')->setNotnull(false);
+        $table->addColumn('height', 'integer')->setNotnull(false);
         $table->addColumn('md5', 'string')->setLength(32);
         $table->addColumn('deleted_at', 'datetime')->setNotnull(false);
         $table->addColumn('created_at', 'datetime')->setDefault('CURRENT_TIMESTAMP');
