@@ -5,6 +5,8 @@ namespace WouterDeSchuyter\Application\Http\Handlers\Blog;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use WouterDeSchuyter\Domain\Blog\BlogPostRepository;
+use WouterDeSchuyter\Domain\Media\MediaRepository;
+use WouterDeSchuyter\Domain\Users\UserRepository;
 use WouterDeSchuyter\Infrastructure\View\ViewAwareInterface;
 use WouterDeSchuyter\Infrastructure\View\ViewAwareTrait;
 
@@ -13,15 +15,32 @@ class DetailHandler implements ViewAwareInterface
     use ViewAwareTrait;
 
     /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
+    /**
+     * @var MediaRepository
+     */
+    private $mediaRepository;
+
+    /**
      * @var BlogPostRepository
      */
     private $blogPostRepository;
 
     /**
      * @param BlogPostRepository $blogPostRepository
+     * @param UserRepository $userRepository
+     * @param MediaRepository $mediaRepository
      */
-    public function __construct(BlogPostRepository $blogPostRepository)
-    {
+    public function __construct(
+        BlogPostRepository $blogPostRepository,
+        UserRepository $userRepository,
+        MediaRepository $mediaRepository
+    ) {
+        $this->userRepository = $userRepository;
+        $this->mediaRepository = $mediaRepository;
         $this->blogPostRepository = $blogPostRepository;
     }
 
@@ -47,8 +66,13 @@ class DetailHandler implements ViewAwareInterface
             return $response->withRedirect('/404');
         }
 
+        $user = $this->userRepository->find($blogPost->getUserId());
+        $media = $this->mediaRepository->find($blogPost->getMediaId());
+
         $data = [];
         $data['blogPost'] = $blogPost;
+        $data['user'] = $user;
+        $data['media'] = $media;
 
         return $this->render($response, $data);
     }
