@@ -2,6 +2,7 @@ import $ from 'jquery';
 import Twemoji from 'twemoji';
 import PageAbout from './pages/about';
 import PageContact from './pages/contact';
+import PageBlogDetail from './pages/blog/detail';
 import PageAdminUsersSignIn from './pages/admin/users/sign-in';
 import PageAdminUsersSignUp from './pages/admin/users/sign-up';
 import PageAdminMediaAdd from './pages/admin/media/add';
@@ -20,6 +21,7 @@ class App {
   initPages() {
     new PageAbout();
     new PageContact();
+    new PageBlogDetail();
     new PageAdminUsersSignIn();
     new PageAdminUsersSignUp();
     new PageAdminMediaAdd();
