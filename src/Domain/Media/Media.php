@@ -169,6 +169,14 @@ class Media implements JsonSerializable
     }
 
     /**
+     * @return bool
+     */
+    public function isImage(): bool
+    {
+        return stripos($this->getContentType(), 'image/') !== false;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize(): array
