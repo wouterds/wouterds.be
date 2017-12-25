@@ -1,8 +1,8 @@
 // Variables
-@import '../base/variables';
+@import '../../base/variables';
 
 // Scope
-$scope: 'page--blog';
+$scope: 'page--blog--index';
 
 .#{$scope} {
   .content-wrapper {

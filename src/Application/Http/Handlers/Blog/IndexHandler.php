@@ -1,6 +1,6 @@
 <?php
 
-namespace WouterDeSchuyter\Application\Http\Handlers;
+namespace WouterDeSchuyter\Application\Http\Handlers\Blog;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -8,7 +8,7 @@ use WouterDeSchuyter\Domain\Blog\BlogPostRepository;
 use WouterDeSchuyter\Infrastructure\View\ViewAwareInterface;
 use WouterDeSchuyter\Infrastructure\View\ViewAwareTrait;
 
-class BlogHandler implements ViewAwareInterface
+class IndexHandler implements ViewAwareInterface
 {
     use ViewAwareTrait;
 
@@ -30,7 +30,7 @@ class BlogHandler implements ViewAwareInterface
      */
     public function getTemplate(): string
     {
-        return 'pages/blog.html.twig';
+        return 'pages/blog/index.html.twig';
     }
 
     /**
