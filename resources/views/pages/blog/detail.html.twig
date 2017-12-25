@@ -4,8 +4,9 @@
     <div class="container">
         <article class="page--blog--detail">
             <header class="page--blog--detail__header">
-                <img class="page--blog--detail__cover-image" src="/static/media{{ media.path }}" alt="{{ media.name }}">
-                <div class="page--blog--detail__cover-image-overlay"></div>
+                <div class="page--blog--detail__cover-image" style="background-image: url('/static/media{{ media.path }}')">
+                    <img src="/static/media{{ media.path }}" alt="{{ media.name }}">
+                </div>
                 <a class="page--blog--detail__link" title="{{ blogPost.title }}" href="{{ app.router.pathFor('blog.detail', {slug: blogPost.slug}) }}">
                     <h1 class="page--blog--detail__title">{{ blogPost.title }}</h1>
                 </a>

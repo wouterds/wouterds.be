@@ -47,8 +47,14 @@ body {
   color: $color-text;
 }
 
+::selection {
+  color: $color-white;
+  background: $color-black;
+}
+
 a {
   color: $color-red;
+  text-decoration: none;
 
   &:hover {
     color: $color-blue-grey;
