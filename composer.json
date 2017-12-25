@@ -33,6 +33,7 @@
     "emgag/flysystem-hash": "^1.0",
     "jdrieghe/array-helpers": "^0.1.0",
     "jenssegers/lean": "^0.2.2",
+    "league/commonmark": "^0.16.0",
     "league/container": "^2.4",
     "league/flysystem": "^1.0",
     "league/tactician": "^1.0",
