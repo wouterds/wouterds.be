@@ -1,0 +1,22 @@
+{% extends '_base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <article class="blog-post">
+            <header class="blog-post__header">
+                <a class="blog-post__link" title="{{ blogPost.title }}" href="{{ app.router.pathFor('blog.detail', {slug: blogPost.slug}) }}">
+                    <h1 class="blog-post__title">{{ blogPost.title }}</h1>
+                </a>
+                <time class="blog-post__time" pubdate datetime="{{ blogPost.publishedAt|date('c') }}" title="{{ blogPost.publishedAt|date('M j, Y') }} around {{ blogPost.publishedAt|date('h:i a') }}">{{ blogPost.publishedAt|date('M j, Y') }}</time>
+            </header>
+
+            <section class="blog-post__body">
+                {% markdown %}{{ blogPost.body|raw }}{% endmarkdown %}
+            </section>
+
+            <footer class="blog-post__footer">
+                <address class="blog-post__author">{{ blogPost.userId }}</address>
+            </footer>
+        </article>
+    </div>
+{% endblock %}
