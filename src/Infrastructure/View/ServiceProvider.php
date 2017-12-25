@@ -2,7 +2,7 @@
 
 namespace WouterDeSchuyter\Infrastructure\View;
 
-use Aptoma\Twig\Extension\MarkdownEngine\MichelfMarkdownEngine;
+use Aptoma\Twig\Extension\MarkdownEngine\PHPLeagueCommonMarkEngine;
 use Aptoma\Twig\Extension\MarkdownExtension;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
@@ -33,9 +33,10 @@ class ServiceProvider extends AbstractServiceProvider implements BootableService
         $this->container->share(Twig::class, function () {
             $loader = new Twig_Loader_Filesystem(APP_DIR . '/' . getenv('TEMPLATES_DIR'));
             $twig = new Twig($loader);
+
             $twig->addExtension(new FilesizeExtension());
             $twig->addExtension(new CompressHtmlExtension());
-            $twig->addExtension(new MarkdownExtension(new MichelfMarkdownEngine()));
+            $twig->addExtension(new MarkdownExtension(new PHPLeagueCommonMarkEngine()));
 
             return $twig;
         });
