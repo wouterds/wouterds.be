@@ -67,24 +67,48 @@ class DbalMediaRepository implements MediaRepository
         return $data;
     }
 
+
     /**
-     * @param MediaId $id
-     * @return Media|null
+     * @param MediaId[] $ids
+     * @return Media[]
      */
-    public function find(MediaId $id): ?Media
+    public function findMultiple(array $ids): array
     {
         $query = $this->connection->createQueryBuilder();
         $query->select('*');
         $query->from(self::TABLE);
-        $query->where('id = ' . $query->createNamedParameter($id));
+        $query->where('id IN (' . $query->createNamedParameter($ids, Connection::PARAM_STR_ARRAY) . ')');
         $query->andWhere('deleted_at IS NULL');
-        $result = $query->execute()->fetch();
+        $query->orderBy('created_at', 'DESC');
+        $rows = $query->execute()->fetchAll();
 
-        if (empty($result)) {
+        if (empty($rows)) {
+            return [];
+        }
+
+        $data = [];
+        foreach ($rows as $row) {
+            $media = Media::fromArray($row);
+
+            $data[$media->getId()->getValue()] = $media;
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param MediaId $id
+     * @return null|Media
+     */
+    public function find(MediaId $id): ?Media
+    {
+        $media = $this->findMultiple([$id]);
+
+        if (empty($media)) {
             return null;
         }
 
-        return Media::fromArray($result);
+        return reset($media);
     }
 
     /**

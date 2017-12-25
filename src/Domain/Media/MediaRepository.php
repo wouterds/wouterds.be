@@ -21,6 +21,12 @@ interface MediaRepository
     public function find(MediaId $id): ?Media;
 
     /**
+     * @param MediaId[] $mediaIds
+     * @return Media[]
+     */
+    public function findMultiple(array $mediaIds): array;
+
+    /**
      * @param MediaId $id
      */
     public function delete(MediaId $id);
