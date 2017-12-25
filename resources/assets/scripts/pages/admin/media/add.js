@@ -30,6 +30,10 @@ class Add extends Base {
       $input.on('change', (e) => {
         let fileName = e.target.value.split('\\').pop();
 
+        if (this.files && this.files.length > 1) {
+          fileName = this.files.length + ' files selected';
+        }
+
         if (fileName) {
           $label.find('[data-id=placeholder]').text(fileName);
           return;
@@ -60,8 +64,8 @@ class Add extends Base {
       method: this.$form.attr('method'),
       url: this.$form.attr('action'),
       enctype: this.$form.attr('enctype'),
-      processData: false,
       data: new FormData(this.$form.get(0)),
+      processData: false,
       contentType: false,
       cache: false,
     }).done(::this.onAjaxDone).fail(::this.onAjaxFail);

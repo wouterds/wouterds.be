@@ -42,13 +42,12 @@ class AddPostHandler
             return $response->withJson($this->addRequestValidator->getErrors(), StatusCode::BAD_REQUEST);
         }
 
-        try {
-            $this->commandBus->handle(new AddMedia(
-                $request->getParam('label'),
-                $request->getUploadedFiles()['file']
-            ));
-        } catch (Exception $e) {
-            return $response->withJson(false, StatusCode::BAD_REQUEST);
+        foreach ($request->getUploadedFiles()['file'] as $file) {
+            try {
+                $this->commandBus->handle(new AddMedia($request->getParam('label'), $file));
+            } catch (Exception $e) {
+                return $response->withJson(false, StatusCode::BAD_REQUEST);
+            }
         }
 
         return $response->withJson(true);

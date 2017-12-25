@@ -13,10 +13,9 @@ class AddRequestValidator
      */
     public function validate(Request $request)
     {
-        /** @var UploadedFile $file */
         $file = $request->getUploadedFiles()['file'];
 
-        return !empty($file->getSize());
+        return !empty($file);
     }
 
     /**
