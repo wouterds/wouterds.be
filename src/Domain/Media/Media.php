@@ -193,6 +193,18 @@ class Media implements JsonSerializable
     }
 
     /**
+     * @return float|null
+     */
+    public function getRatio(): ?float
+    {
+        if (!$this->isImage()) {
+            return null;
+        }
+
+        return ($this->getHeight() / $this->getWidth()) * 100;
+    }
+
+    /**
      * @return int
      */
     public function getWidth(): ?int

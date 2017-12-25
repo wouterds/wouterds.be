@@ -1,0 +1,17 @@
+@import '../base/variables';
+
+// Scope
+$scope: 'media';
+
+.#{$scope} {
+  position: relative;
+  display: block;
+  background: #fafafa;
+
+  &__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+}

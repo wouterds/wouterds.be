@@ -58,5 +58,9 @@ class ServiceProvider extends AbstractServiceProvider implements BootableService
         $this->container->inflector(AdminViewAwareInterface::class)->invokeMethods([
             'setAuthenticatedUser' => [AuthenticatedUser::class],
         ]);
+
+        $this->container->inflector(Twig::class)->invokeMethods([
+            'setMediaRenderer' => [MediaRenderer::class],
+        ]);
     }
 }
