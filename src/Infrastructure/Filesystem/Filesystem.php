@@ -44,6 +44,13 @@ class Filesystem
 
         $media->setMd5($this->filesystem->hash($media->getPath(), 'md5'));
 
+        if ($media->isImage()) {
+            $fullPath = APP_DIR . getenv('FILESYSTEM_DIR') . $media->getPath();
+            $size = getimagesize($fullPath);
+            $media->setWidth($size[0]);
+            $media->setHeight($size[1]);
+        }
+
         try {
             $this->mediaRepository->add($media);
         } catch (Exception $e) {

@@ -39,6 +39,16 @@ class Media implements JsonSerializable
     private $md5;
 
     /**
+     * @var int
+     */
+    private $width;
+
+    /**
+     * @var int
+     */
+    private $height;
+
+    /**
      * @var string
      */
     private $createdAt;
@@ -48,9 +58,11 @@ class Media implements JsonSerializable
      * @param string $name
      * @param string $contentType
      * @param int $size
-     * @param string $md5
+     * @param string|null $md5
+     * @param int|null $width
+     * @param int|null $height
      */
-    public function __construct(UserId $userId, string $name, string $contentType, int $size, string $md5 = null)
+    public function __construct(UserId $userId, string $name, string $contentType, int $size, string $md5 = null, int $width = null, int $height = null)
     {
         $this->id = new MediaId();
         $this->userId = $userId;
@@ -58,6 +70,8 @@ class Media implements JsonSerializable
         $this->contentType = $contentType;
         $this->size = $size;
         $this->md5 = $md5;
+        $this->width = $width;
+        $this->height = $height;
     }
 
     /**
@@ -71,7 +85,9 @@ class Media implements JsonSerializable
             $data['name'],
             $data['content_type'],
             $data['size'],
-            $data['md5']
+            $data['md5'],
+            !empty($data['width']) ? $data['width'] : null,
+            !empty($data['height']) ? $data['height'] : null
         );
         $file->id = new MediaId(!empty($data['id']) ? $data['id'] : null);
         $file->createdAt = !empty($data['created_at']) ? $data['created_at'] : null;
@@ -174,6 +190,38 @@ class Media implements JsonSerializable
     public function isImage(): bool
     {
         return stripos($this->getContentType(), 'image/') !== false;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWidth(): ?int
+    {
+        return $this->width;
+    }
+
+    /**
+     * @param int $width
+     */
+    public function setWidth(int $width): void
+    {
+        $this->width = $width;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHeight(): ?int
+    {
+        return $this->height;
+    }
+
+    /**
+     * @param int $height
+     */
+    public function setHeight(int $height): void
+    {
+        $this->height = $height;
     }
 
     /**

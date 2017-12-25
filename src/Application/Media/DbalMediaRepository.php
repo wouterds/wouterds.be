@@ -35,6 +35,8 @@ class DbalMediaRepository implements MediaRepository
             'name' => $media->getName(),
             'content_type' => $media->getContentType(),
             'size' => $media->getSize(),
+            'width' => $media->getWidth(),
+            'height' => $media->getHeight(),
             'md5' => $media->getMd5(),
         ]);
     }
