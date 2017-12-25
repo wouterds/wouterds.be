@@ -67,6 +67,10 @@ $scope: 'page--blog--detail';
     margin-bottom: 50px;
   }
 
+  &__author {
+    display: none;
+  }
+
   h2,
   h3,
   h4 {
