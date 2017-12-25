@@ -34,8 +34,8 @@ node {
     }
 
     stage('Deploy') {
-      if (!env.BRANCH_NAME.equals('master')) {
-        sh 'echo Not master branch, skip deploy.'
+      if (!env.BRANCH_NAME.equals('master') && !env.BRANCH_NAME.equals('develop')) {
+        sh 'echo Not master or develop branch, skip deploy.'
         return
       }
 
@@ -43,25 +43,15 @@ node {
       sh 'echo Pushing version'
       sh 'make push-latest'
 
-      // Deploy production
-      sh 'echo Deploying production'
+      if (env.BRANCH_NAME.equals('master')) {
+        sh 'echo Deploying production'
+        deployProduction();
+      }
 
-      // Separate folder per environment
-      def folder = DOCKER_FOLDER + '-prod';
-
-      // Make directory, in case it doesn't exist
-      sh 'ssh wouterds@'+SERVER+' "mkdir -p '+folder+'"'
-
-      // Copy our docker-compose file to the server, in case it has changed
-      sh 'scp docker/docker-compose-prod.yml wouterds@'+SERVER+':'+folder+'/docker-compose-prod.yml'
-      sh 'scp docker/docker-prod.env wouterds@'+SERVER+':'+folder+'/docker-prod.env'
-
-      // Deploy on production
-      sh 'ssh wouterds@'+SERVER+' "cd '+folder+'; docker-compose -f docker-compose-prod.yml pull"'
-      sh 'ssh wouterds@'+SERVER+' "cd '+folder+'; docker-compose -f docker-compose-prod.yml up -d"'
-
-      // Run migrations
-      sh 'ssh wouterds@'+SERVER+' "docker exec internalwouterdeschuyterwebsiteprod_php-fpm_1 php composer.phar migrations:migrate"'
+      if (env.BRANCH_NAME.equals('develop')) {
+        sh 'echo Deploying staging'
+        deployStaging();
+      }
     }
   } catch (e) {
     sh 'echo "Build failed!"'
@@ -70,6 +60,26 @@ node {
     // Clean up
     cleanWorkspace()
   }
+}
+
+def deployProduction() {
+}
+
+def deployStaging() {
+  def folder = DOCKER_FOLDER + '-stag';
+
+  sh 'ssh wouterds@'+SERVER+' "mkdir -p '+folder+'"'
+  sh 'ssh wouterds@'+SERVER+' "mkdir -p '+folder+'/logs && chmod 777 '+folder+'/logs"'
+  sh 'ssh wouterds@'+SERVER+' "mkdir -p '+folder+'/media && chmod 777 '+folder+'/media"'
+
+  sh 'scp docker/docker-compose.yml wouterds@'+SERVER+':'+folder+'/docker-compose.yml'
+  sh 'scp docker/docker-compose-stag.yml wouterds@'+SERVER+':'+folder+'/docker-compose-stag.yml'
+  sh 'scp docker/docker.env wouterds@'+SERVER+':'+folder+'/docker.env'
+
+  sh 'ssh wouterds@'+SERVER+' "cd '+folder+'; docker-compose -f docker-compose.yml -f docker-compose-stag.yml pull"'
+  sh 'ssh wouterds@'+SERVER+' "cd '+folder+'; docker-compose -f docker-compose.yml -f docker-compose-stag.yml up -d"'
+
+  sh 'ssh wouterds@'+SERVER+' "docker exec internalwouterdeschuyterwebsitestag_php-fpm_1 php composer.phar migrations:migrate"'
 }
 
 def cleanWorkspace() {

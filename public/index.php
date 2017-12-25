@@ -15,18 +15,16 @@ define('APP_DIR', dirname(__DIR__));
 require_once APP_DIR . '/vendor/autoload.php';
 
 // Debugger mode
-$debuggerMode = getenv('APP_ENV') === 'production' ? Debugger::PRODUCTION : Debugger::DEVELOPMENT;
+$debuggerMode = in_array(getenv('APP_ENV'), ['production', 'staging']) ? Debugger::PRODUCTION : Debugger::DEVELOPMENT;
 
 // Debugger
 Debugger::$showBar = $debuggerMode === Debugger::DEVELOPMENT;
 Debugger::$strictMode = $debuggerMode === Debugger::DEVELOPMENT;
 Debugger::enable($debuggerMode, APP_DIR . '/storage/logs');
 
-// Init dotenv
-$dotenv = new Dotenv(APP_DIR);
-
-// Load env variables at runtime
-$dotenv->overload();
+if (file_exists(APP_DIR . '/.env')) {
+    (new Dotenv(APP_DIR))->overload();
+}
 
 // Init http app
 $app = new Application();

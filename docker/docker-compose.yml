@@ -1,13 +1,12 @@
 version: '2'
 
 services:
-  nginx-web:
-    image: docker.wouterdeschuyter.be/internal-wouterdeschuyter-website-nginx-web
+  nginx:
+    image: docker.wouterdeschuyter.be/internal-wouterdeschuyter-website-nginx
     restart: unless-stopped
-    env_file: docker-prod.env
+    env_file:
+      - docker.env
     environment:
-      - VIRTUAL_HOST=wouterdeschuyter.be
-      - LETSENCRYPT_HOST=wouterdeschuyter.be
       - LETSENCRYPT_EMAIL=wouter@wouterdeschuyter.be
     volumes:
       - ./media:/code/storage/media
@@ -18,11 +17,12 @@ services:
   php-fpm:
     image: docker.wouterdeschuyter.be/internal-wouterdeschuyter-website-php-fpm
     restart: unless-stopped
-    env_file: docker-prod.env
+    env_file:
+      - docker.env
+    volumes_from:
+      - nginx
     volumes:
-      - ./docker-prod.env:/code/.env:ro
       - ./logs:/code/storage/logs
-      - ./media:/code/storage/media
     external_links:
       - mariadb
     networks:

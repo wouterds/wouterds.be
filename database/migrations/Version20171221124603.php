@@ -21,8 +21,8 @@ class Version20171221124603 extends AbstractMigration
         $table->addColumn('id', 'uuid');
         $table->addColumn('user_id', 'uuid');
         $table->addColumn('media_id', 'uuid');
-        $table->addColumn('title', 'string')->setLength(256);
-        $table->addColumn('slug', 'string')->setLength(256);
+        $table->addColumn('title', 'string')->setLength(191);
+        $table->addColumn('slug', 'string')->setLength(191);
         $table->addColumn('excerpt', 'text');
         $table->addColumn('body', 'text');
         $table->addColumn('published_at', 'datetime')->setNotnull(false);

@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  nginx:
+    env_file:
+      - docker.env
+      - docker-stag.env
+    environment:
+      - VIRTUAL_HOST=staging.wouterdeschuyter.be
+      - LETSENCRYPT_HOST=staging.wouterdeschuyter.be
+
+  php-fpm:
+    env_file:
+      - docker.env
+      - docker-stag.env

@@ -6,10 +6,10 @@ PWD = $(shell pwd)
 DOCKER_REPO  = docker.wouterdeschuyter.be
 PROJECT_NAME = internal-wouterdeschuyter-website
 
-TAG_NGINX_WEB = $(DOCKER_REPO)/$(PROJECT_NAME)-nginx-web
+TAG_NGINX = $(DOCKER_REPO)/$(PROJECT_NAME)-nginx
 TAG_PHP_FPM = $(DOCKER_REPO)/$(PROJECT_NAME)-php-fpm
 
-DOCKERFILE_NGINX_WEB = ./docker/nginx-web/Dockerfile
+DOCKERFILE_NGINX = ./docker/nginx/Dockerfile
 DOCKERFILE_PHP_FPM = ./docker/php-fpm/Dockerfile
 
 clean:
@@ -70,24 +70,24 @@ dev: dependencies
 	docker run --rm --volume=$(PWD):/code -w=/code node:8-slim npm run build
 	touch .build-app
 
-.build-nginx-web: $(DOCKERFILE_NGINX_WEB)
-	docker build $(BUILD_NO_CACHE) -f $(DOCKERFILE_NGINX_WEB) -t $(TAG_NGINX_WEB) .
-	touch .build-nginx-web
+.build-nginx: $(DOCKERFILE_NGINX)
+	docker build $(BUILD_NO_CACHE) -f $(DOCKERFILE_NGINX) -t $(TAG_NGINX) .
+	touch .build-nginx
 
 .build-php-fpm: $(DOCKERFILE_PHP_FPM)
 	docker build $(BUILD_NO_CACHE) -f $(DOCKERFILE_PHP_FPM) -t $(TAG_PHP_FPM) .
 	touch .build-php-fpm
 
-build: .version .build-app .build-nginx-web .build-php-fpm
+build: .version .build-app .build-nginx .build-php-fpm
 
 tag: build
-	docker tag $(TAG_NGINX_WEB) $(TAG_NGINX_WEB):$(VERSION)
+	docker tag $(TAG_NGINX) $(TAG_NGINX):$(VERSION)
 	docker tag $(TAG_PHP_FPM) $(TAG_PHP_FPM):$(VERSION)
 
 push: tag
-	docker push $(TAG_NGINX_WEB):$(VERSION)
+	docker push $(TAG_NGINX):$(VERSION)
 	docker push $(TAG_PHP_FPM):$(VERSION)
 
 push-latest: push
-	docker push $(TAG_NGINX_WEB):latest
+	docker push $(TAG_NGINX):latest
 	docker push $(TAG_PHP_FPM):latest
