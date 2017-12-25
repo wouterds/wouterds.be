@@ -21,7 +21,7 @@ use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\SignUpHandler as Admi
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\SignUpPostHandler as AdminUsersSignUpPostHandler;
 use WouterDeSchuyter\Application\Http\Middlewares\Admin\AuthenticatedUserMiddleware as AdminAuthenticatedUserMiddleware;
 
-// Public
+// Public routes
 $app->group('/admin', function () use ($app) {
     $app->group('/users', function () use ($app) {
         $app->get('/sign-in', AdminUsersSignInHandler::class)->setName('admin.users.sign-in');
@@ -31,7 +31,7 @@ $app->group('/admin', function () use ($app) {
     });
 });
 
-// Protected
+// Protected routes
 $app->group('/admin', function () use ($app) {
     $app->get('', AdminIndexHandler::class)->setName('admin');
 

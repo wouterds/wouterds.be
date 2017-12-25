@@ -35,8 +35,11 @@ class EditHandler implements ViewAwareInterface
      * @param MediaRepository $mediaRepository
      * @param UserRepository $userRepository
      */
-    public function __construct(BlogPostRepository $blogPostRepository, MediaRepository $mediaRepository, UserRepository $userRepository)
-    {
+    public function __construct(
+        BlogPostRepository $blogPostRepository,
+        MediaRepository $mediaRepository,
+        UserRepository $userRepository
+    ) {
         $this->blogPostRepository = $blogPostRepository;
         $this->mediaRepository = $mediaRepository;
         $this->userRepository = $userRepository;

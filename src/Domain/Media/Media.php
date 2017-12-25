@@ -62,8 +62,15 @@ class Media implements JsonSerializable
      * @param int|null $width
      * @param int|null $height
      */
-    public function __construct(UserId $userId, string $name, string $contentType, int $size, string $md5 = null, int $width = null, int $height = null)
-    {
+    public function __construct(
+        UserId $userId,
+        string $name,
+        string $contentType,
+        int $size,
+        string $md5 = null,
+        int $width = null,
+        int $height = null
+    ) {
         $this->id = new MediaId();
         $this->userId = $userId;
         $this->name = $name;

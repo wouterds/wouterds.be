@@ -45,8 +45,21 @@ class MediaRenderer
 
             $replacement = '';
             if ($mediaItem->isImage()) {
-                $replacement = '<span class="media media--image" style="padding-bottom: ' . $mediaItem->getRatio() .'%">';
-                $replacement .= '<img class="media__image" src="/static/media' . $mediaItem->getPath() . '" alt="' . htmlentities($mediaItem->getName()) . '" title="' . htmlentities($mediaItem->getName()) . '">';
+                // Span wrapper - start
+                $replacement = '<span ';
+                $replacement .= 'class="media media--image" ';
+                $replacement .= 'style="padding-bottom: ' . $mediaItem->getRatio() .'%"';
+                $replacement .= '>';
+
+                // Image
+                $replacement .= '<img ';
+                $replacement .= 'class="media__image" ';
+                $replacement .= 'src="/static/media' . $mediaItem->getPath() . '" ';
+                $replacement .= 'alt="' . htmlentities($mediaItem->getName()) . '" ';
+                $replacement .= 'title="' . htmlentities($mediaItem->getName()) . '"';
+                $replacement .= '>';
+
+                // Span wrapper - end
                 $replacement .= '</span>';
             }
 
