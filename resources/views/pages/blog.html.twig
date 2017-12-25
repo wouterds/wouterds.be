@@ -2,8 +2,6 @@
 
 {% block body %}
     <div class="container">
-        {% for blogPost in blogPosts %}
-            {% include 'components/blog-post-item.html.twig' %}
-        {% endfor %}
+        {% include 'components/blog-post-item-list.html.twig' %}
     </div>
 {% endblock %}
