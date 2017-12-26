@@ -18,7 +18,7 @@
             </tr>
             {% for media in media %}
                 <tr>
-                    <td>{{ media.id }}</td>
+                    <td data-clipboard-text="{{ media.id }}">{{ media.id }}</td>
                     <td>{{ media.name }}</td>
                     <td>{{ media.contentType }}</td>
                     <td>{{ media.size|readable_filesize }}</td>

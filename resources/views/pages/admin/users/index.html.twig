@@ -16,7 +16,7 @@
             </tr>
             {% for user in users %}
                 <tr>
-                    <td>{{ user.id }}</td>
+                    <td data-clipboard-text="{{ user.id }}">{{ user.id }}</td>
                     <td>{{ user.name }}</td>
                     <td>{{ user.email }}</td>
                     <td title="{{ user.activatedAt }}">{% if user.activatedAt %}{{ user.activatedAt|date('d.m.Y, H:i') }}{% else %}--{% endif %}</td>

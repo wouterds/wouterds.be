@@ -16,7 +16,7 @@
             </tr>
             {% for blogPost in blogPosts %}
                 <tr>
-                    <td>{{ blogPost.id }}</td>
+                    <td data-clipboard-text="{{ blogPost.id }}">{{ blogPost.id }}</td>
                     <td>{{ blogPost.title }}</td>
                     <td>{% if attribute(users, blogPost.userId.value).name %}{{ attribute(users, blogPost.userId.value).name }}{% else %}--{% endif %}</td>
                     <td title="{{ blogPost.publishedAt }}">{% if blogPost.publishedAt %}{{ blogPost.publishedAt|date('d.m.Y, H:i') }}{% else %}--{% endif %}</td>

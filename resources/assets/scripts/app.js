@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import Twemoji from 'twemoji';
+import Clipboard from 'clipboard';
 import PageAbout from './pages/about';
 import PageContact from './pages/contact';
 import PageBlogDetail from './pages/blog/detail';
@@ -16,6 +17,7 @@ class App {
   init() {
     this.initPages();
     this.initTwemoji();
+    this.initClipboard();
   }
 
   initPages() {
@@ -42,6 +44,13 @@ class App {
 
         return ''.concat(options.base, options.size, '/', icon, options.ext);
       }
+    });
+  }
+
+  initClipboard() {
+    $('[data-clipboard-text]').each((index, el) => {
+      $(el).css('cursor', 'pointer');
+      new Clipboard(el);
     });
   }
 }
