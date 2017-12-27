@@ -2,8 +2,10 @@
 
 namespace WouterDeSchuyter\Infrastructure\View;
 
-use Aptoma\Twig\Extension\MarkdownEngine\PHPLeagueCommonMarkEngine;
+use Aptoma\Twig\Extension\MarkdownEngine\PHPLeagueCommonMarkEngine as CommonMarkEngine;
 use Aptoma\Twig\Extension\MarkdownExtension;
+use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Environment as CommonMarkEnvironment;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
 use nochso\HtmlCompressTwig\Extension as CompressHtmlExtension;
@@ -15,6 +17,7 @@ use WouterDeSchuyter\Domain\Users\AuthenticatedUser;
 use WouterDeSchuyter\Infrastructure\ApplicationMonitor\ApplicationMonitor;
 use WouterDeSchuyter\Infrastructure\Config\Config;
 use WouterDeSchuyter\Infrastructure\View\Admin\ViewAwareInterface as AdminViewAwareInterface;
+use WouterDeSchuyter\Infrastructure\View\Markdown\Extensions\MediaInlineExtension;
 
 class ServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface
 {
@@ -36,7 +39,11 @@ class ServiceProvider extends AbstractServiceProvider implements BootableService
 
             $twig->addExtension(new FilesizeExtension());
             $twig->addExtension(new CompressHtmlExtension());
-            $twig->addExtension(new MarkdownExtension(new PHPLeagueCommonMarkEngine()));
+
+            $commonMarkEnvironment = CommonMarkEnvironment::createCommonMarkEnvironment();
+            $commonMarkEnvironment->addExtension($this->container->get(MediaInlineExtension::class));
+            $commonMarkConverter = new CommonMarkConverter([], $commonMarkEnvironment);
+            $twig->addExtension(new MarkdownExtension(new CommonMarkEngine($commonMarkConverter)));
 
             return $twig;
         });
@@ -57,10 +64,6 @@ class ServiceProvider extends AbstractServiceProvider implements BootableService
 
         $this->container->inflector(AdminViewAwareInterface::class)->invokeMethods([
             'setAuthenticatedUser' => [AuthenticatedUser::class],
-        ]);
-
-        $this->container->inflector(Twig::class)->invokeMethods([
-            'setMediaRenderer' => [MediaRenderer::class],
         ]);
     }
 }
