@@ -1,8 +1,8 @@
 <?php
 
 use WouterDeSchuyter\Application\Http\Handlers\AboutHandler;
-use WouterDeSchuyter\Application\Http\Handlers\Blog\IndexHandler as BlogIndexHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Blog\DetailHandler as BlogDetailHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Blog\IndexHandler as BlogIndexHandler;
 use WouterDeSchuyter\Application\Http\Handlers\ContactHandler;
 use WouterDeSchuyter\Application\Http\Handlers\ContactPostHandler;
 use WouterDeSchuyter\Application\Http\Handlers\HomeHandler;

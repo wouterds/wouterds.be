@@ -2,8 +2,8 @@
 
 namespace WouterDeSchuyter\Application\Commands\Blog;
 
-use WouterDeSchuyter\Domain\Commands\Blog\DeleteBlogPost;
 use WouterDeSchuyter\Domain\Blog\BlogPostRepository;
+use WouterDeSchuyter\Domain\Commands\Blog\DeleteBlogPost;
 
 class DeleteBlogPostHandler
 {

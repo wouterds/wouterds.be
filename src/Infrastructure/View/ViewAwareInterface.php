@@ -2,7 +2,6 @@
 
 namespace WouterDeSchuyter\Infrastructure\View;
 
-use Slim\Http\Request;
 use Slim\Http\Response;
 
 interface ViewAwareInterface

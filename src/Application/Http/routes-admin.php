@@ -1,10 +1,10 @@
 <?php
 
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Blog\AddHandler as AdminBlogAddHandler;
-use WouterDeSchuyter\Application\Http\Handlers\Admin\Blog\EditHandler as AdminBlogEditHandler;
-use WouterDeSchuyter\Application\Http\Handlers\Admin\Blog\SavePostHandler as AdminBlogSavePostHandler;
-use WouterDeSchuyter\Application\Http\Handlers\Admin\Blog\IndexHandler as AdminBlogIndexHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Blog\DeleteHandler as AdminBlogDeleteHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\Blog\EditHandler as AdminBlogEditHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\Blog\IndexHandler as AdminBlogIndexHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Admin\Blog\SavePostHandler as AdminBlogSavePostHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\IndexHandler as AdminIndexHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Media\AddHandler as AdminMediaAddHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Media\AddPostHandler as AdminMediaAddPostHandler;
