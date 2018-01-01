@@ -40,7 +40,7 @@ class HomeHandler implements ViewAwareInterface
      */
     public function __invoke(Request $request, Response $response): Response
     {
-        $blogPosts = $this->blogPostRepository->findAll();
+        $blogPosts = $this->blogPostRepository->findPublished();
 
         $data = [];
         $data['blogPosts'] = $blogPosts;
