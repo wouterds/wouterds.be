@@ -20,4 +20,16 @@ $scope: 'page--admin--media--index';
       margin-right: 5px;
     }
   }
+
+  .image-preview-container {
+    position: relative;
+  }
+
+  .image-preview {
+    position: absolute;
+    top: 0;
+    right: -320px;
+    width: 320px;
+    z-index: 1;
+  }
 }
