@@ -1,5 +1,6 @@
 import Base from '../base';
 import Highlight from 'highlight.js';
+import MediumZoom from 'medium-zoom';
 
 class BlogDetail extends Base {
   get pageId() {
@@ -8,6 +9,7 @@ class BlogDetail extends Base {
 
   init() {
     this.initHighlightJs();
+    this.initMediumZoom();
   }
 
   initHighlightJs() {
@@ -20,6 +22,10 @@ class BlogDetail extends Base {
     $code.each(function(i, block) {
       Highlight.highlightBlock(block);
     });
+  }
+
+  initMediumZoom() {
+    MediumZoom('.media__image');
   }
 }
 
