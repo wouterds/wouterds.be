@@ -1,19 +1,32 @@
-{% htmlcompress %}
 <!doctype html>
+<!--
+                         _               _                _                 _            _
+                        | |             | |              | |               | |          | |
+    __      _____  _   _| |_ ___ _ __ __| | ___  ___  ___| |__  _   _ _   _| |_ ___ _ __| |__   ___
+    \ \ /\ / / _ \| | | | __/ _ \ '__/ _` |/ _ \/ __|/ __| '_ \| | | | | | | __/ _ \ '__| '_ \ / _ \
+     \ V  V / (_) | |_| | ||  __/ | | (_| |  __/\__ \ (__| | | | |_| | |_| | ||  __/ | _| |_) |  __/
+      \_/\_/ \___/ \__,_|\__\___|_|  \__,_|\___||___/\___|_| |_|\__,_|\__, |\__\___|_|(_)_.__/ \___|
+                                                                       __/ |
+                                                                      |___/
+
+    v{{ app.config.get('APP_VERSION_NUMBER') }}, commit {{ app.config.get('APP_VERSION_COMMIT') }}
+
+-->
 <html lang="en">
 <head>
-    {% block head %}
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        {% block extra_meta %}{% endblock %}
-        <title>{% block title %}{{ app.config.get('APP_NAME') }}{% endblock %}</title>
-        <link rel="stylesheet" href="/static/css/app.css?v={{ app.config.get('APP_VERSION_NUMBER') }}">
-        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:100,300,400,500,700">
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font/build/web/hack-subset.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    {% endblock %}
+{% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% block extra_meta %}{% endblock %}
+<title>{% block title %}{{ app.config.get('APP_NAME') }}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/app.css?v={{ app.config.get('APP_VERSION_NUMBER') }}">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:100,300,400,500,700">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font/build/web/hack-subset.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
 </head>
+{% htmlcompress %}
 <body id="page{{ page.info.pascalCase }}" class="{{ page.info.className }}">
     {% include 'components/header.html.twig' %}
 
@@ -27,5 +40,6 @@
 
     <script src="/static/js/app.js?v={{ app.config.get('APP_VERSION_NUMBER') }}"></script>
 </body>
-</html>
 {% endhtmlcompress %}
+
+</html>
