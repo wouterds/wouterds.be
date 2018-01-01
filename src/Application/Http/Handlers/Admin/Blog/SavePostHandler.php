@@ -56,7 +56,7 @@ class SavePostHandler
                 $request->getParam('excerpt'),
                 new UserId($request->getParam('userId')),
                 new MediaId($request->getParam('mediaId')),
-                new DateTime($request->getParam('publishedAt'))
+                !empty($request->getParam('publishedAt')) ? new DateTime($request->getParam('publishedAt')) : null
             ));
         } catch (Exception $e) {
             return $response->withJson(false, StatusCode::BAD_REQUEST);

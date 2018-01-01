@@ -34,7 +34,10 @@ class SaveBlogPostHandler
         $blogPostBuilder->withSlug($saveBlogPost->getSlug());
         $blogPostBuilder->withExcerpt($saveBlogPost->getExcerpt());
         $blogPostBuilder->withBody($saveBlogPost->getBody());
-        $blogPostBuilder->withPublishedAt($saveBlogPost->getPublishedAt());
+
+        if ($saveBlogPost->getPublishedAt()) {
+            $blogPostBuilder->withPublishedAt($saveBlogPost->getPublishedAt());
+        }
 
         if ($saveBlogPost->getBlogPostId()) {
             $blogPostBuilder->withId($saveBlogPost->getBlogPostId());

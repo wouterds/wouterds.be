@@ -57,7 +57,7 @@ class SaveBlogPost
      * @param string $excerpt
      * @param UserId $userId
      * @param MediaId $mediaId
-     * @param DateTime $dateTime
+     * @param DateTime|null $dateTime
      */
     public function __construct(
         BlogPostId $blogPostId = null,
@@ -67,7 +67,7 @@ class SaveBlogPost
         string $excerpt,
         UserId $userId,
         MediaId $mediaId,
-        DateTime $dateTime
+        DateTime $dateTime = null
     ) {
         $this->blogPostId = $blogPostId;
         $this->title = $title;
@@ -136,9 +136,9 @@ class SaveBlogPost
     }
 
     /**
-     * @return DateTime
+     * @return DateTime|null
      */
-    public function getPublishedAt(): DateTime
+    public function getPublishedAt(): ?DateTime
     {
         return $this->publishedAt;
     }
