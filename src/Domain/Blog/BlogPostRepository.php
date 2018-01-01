@@ -20,6 +20,11 @@ interface BlogPostRepository
     public function findAll(): array;
 
     /**
+     * @return BlogPost[]
+     */
+    public function findPublished(): array;
+
+    /**
      * @param BlogPostId $id
      * @return BlogPost|null
      */

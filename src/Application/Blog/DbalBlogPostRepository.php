@@ -106,6 +106,33 @@ class DbalBlogPostRepository implements BlogPostRepository
     }
 
     /**
+     * @return BlogPost[]
+     */
+    public function findPublished(): array
+    {
+        $query = $this->connection->createQueryBuilder();
+        $query->select('*');
+        $query->from(self::TABLE);
+        $query->where('published_at IS NOT NULL');
+        $query->andWhere('deleted_at IS NULL');
+        $query->orderBy('created_at', 'DESC');
+        $rows = $query->execute()->fetchAll();
+
+        if (empty($rows)) {
+            return [];
+        }
+
+        $data = [];
+        foreach ($rows as $row) {
+            $blogPost = BlogPost::fromArray($row);
+
+            $data[$blogPost->getId()->getValue()] = $blogPost;
+        }
+
+        return $data;
+    }
+
+    /**
      * @param string $slug
      * @return BlogPost|null
      */
