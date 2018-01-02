@@ -2304,16 +2304,16 @@
         },
         {
             "name": "wyrihaximus/html-compress",
-            "version": "1.2.1",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WyriHaximus/HtmlCompress.git",
-                "reference": "b51fb7593cde54f364782d13c731b711be7f77b9"
+                "reference": "53deb4477dc6eac56b5f76b7ca6ea20c04305c5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WyriHaximus/HtmlCompress/zipball/b51fb7593cde54f364782d13c731b711be7f77b9",
-                "reference": "b51fb7593cde54f364782d13c731b711be7f77b9",
+                "url": "https://api.github.com/repos/WyriHaximus/HtmlCompress/zipball/53deb4477dc6eac56b5f76b7ca6ea20c04305c5d",
+                "reference": "53deb4477dc6eac56b5f76b7ca6ea20c04305c5d",
                 "shasum": ""
             },
             "require": {
@@ -2352,7 +2352,7 @@
                 "compress",
                 "html"
             ],
-            "time": "2016-07-26T21:15:52+00:00"
+            "time": "2017-12-30T21:54:41+00:00"
         }
     ],
     "packages-dev": [
