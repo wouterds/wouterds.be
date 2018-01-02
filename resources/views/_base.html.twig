@@ -15,19 +15,32 @@
 <html lang="en">
 <head>
 {% block head %}
+    <!-- meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    {% block extra_meta %}{% endblock %}
-<title>{% block title %}{{ app.config.get('APP_NAME') }}{% endblock %}</title>
+    <meta name="robots" content="index, follow">
+{% block extra_meta %}{% endblock %}
+
+    <!-- title -->
+    <title>{% block title %}{{ app.config.get('APP_NAME') }}{% endblock %}</title>
+
+    <!-- css-->
     <link rel="stylesheet" href="/static/css/app.css?v={{ app.config.get('APP_VERSION_NUMBER') }}">
+
+    <!-- webfonts -->
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:100,300,400,500,700">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font/build/web/hack-subset.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 {% endblock %}
 </head>
-{% htmlcompress %}
 <body id="page{{ page.info.pascalCase }}" class="{{ page.info.className }}">
+{% htmlcompress %}
     {% include 'components/header.html.twig' %}
 
     <main role="main" class="main">
@@ -37,9 +50,10 @@
     </main>
 
     {% include 'components/footer.html.twig' %}
-
-    <script src="/static/js/app.js?v={{ app.config.get('APP_VERSION_NUMBER') }}"></script>
-</body>
 {% endhtmlcompress %}
 
+
+<!-- javascript -->
+<script src="/static/js/app.js?v={{ app.config.get('APP_VERSION_NUMBER') }}"></script>
+</body>
 </html>
