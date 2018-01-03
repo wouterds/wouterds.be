@@ -76,6 +76,11 @@ class Form {
       let error = errors[index][0];
 
       let $input = this.$scope.find('[name=' + index + ']');
+
+      if ($input.length === 0) {
+        $input = this.$scope.find('[name="' + index + '[]"]');
+      }
+
       let $inputWrapper = $input.closest('.input-wrapper');
 
       // Find existing error
