@@ -50,12 +50,14 @@ class AddPostHandler
                     return $response->withJson(false, StatusCode::BAD_REQUEST);
                 }
             }
-        } else {
-            try {
-                $this->commandBus->handle(new AddMedia($request->getParam('label'), $request->getParam('url')));
-            } catch (Exception $e) {
-                return $response->withJson(false, StatusCode::BAD_REQUEST);
-            }
+
+            return $response->withJson(true);
+        }
+
+        try {
+            $this->commandBus->handle(new AddMedia($request->getParam('label'), $request->getParam('url')));
+        } catch (Exception $e) {
+            return $response->withJson(false, StatusCode::BAD_REQUEST);
         }
 
         return $response->withJson(true);
