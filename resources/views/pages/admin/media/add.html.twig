@@ -4,6 +4,8 @@
     <div class="container-fluid">
         <h2 class="h2">Media - Add</h2>
 
+        <p>When the label is left blank we will use title of the video link or the filename of the file.</p>
+
         <form class="container-fluid form" role="form" enctype="multipart/form-data" method="post" action="{{ app.router.pathFor('admin.media.add_post') }}" data-redirect="{{ app.router.pathFor('admin.media') }}">
             <div class="row">
                 <div class="col-sm-6 input-wrapper">
