@@ -4,6 +4,6 @@ namespace WouterDeSchuyter\Domain\Media;
 
 use Exception;
 
-class MediaContentTypeNotAllowedException extends Exception
+class UnsupportedMediaException extends Exception
 {
 }

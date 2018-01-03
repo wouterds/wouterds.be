@@ -5,7 +5,7 @@ namespace WouterDeSchuyter\Application\Commands\Media;
 use Exception;
 use WouterDeSchuyter\Domain\Commands\Media\AddMedia;
 use WouterDeSchuyter\Domain\Media\MediaBuilder;
-use WouterDeSchuyter\Domain\Media\MediaContentTypeNotAllowedException;
+use WouterDeSchuyter\Domain\Media\UnsupportedMediaException;
 use WouterDeSchuyter\Domain\Media\MediaRepository;
 use WouterDeSchuyter\Domain\Media\StoreMediaFailedException;
 use WouterDeSchuyter\Domain\Users\AuthenticatedUser;
@@ -46,7 +46,7 @@ class AddMediaHandler
 
     /**
      * @param AddMedia $addMedia
-     * @throws MediaContentTypeNotAllowedException
+     * @throws UnsupportedMediaException
      * @throws StoreMediaFailedException
      */
     public function handle(AddMedia $addMedia)
@@ -61,13 +61,13 @@ class AddMediaHandler
 
     /**
      * @param AddMedia $addMedia
-     * @throws MediaContentTypeNotAllowedException
+     * @throws UnsupportedMediaException
      * @throws StoreMediaFailedException
      */
     private function handleFileMedia(AddMedia $addMedia)
     {
         if (!in_array($addMedia->getUploadedFile()->getClientMediaType(), self::ALLOWED_CONTENT_TYPES)) {
-            throw new MediaContentTypeNotAllowedException();
+            throw new UnsupportedMediaException();
         }
 
         $builder = MediaBuilder::startWithDefault()
