@@ -21,11 +21,12 @@ class Version20171218212159 extends AbstractMigration
         $table->addColumn('id', 'uuid');
         $table->addColumn('user_id', 'uuid');
         $table->addColumn('name', 'string')->setLength(64);
-        $table->addColumn('content_type', 'string')->setLength(32);
-        $table->addColumn('size', 'integer');
+        $table->addColumn('url', 'string')->setLength(64)->setNotnull(false);
+        $table->addColumn('content_type', 'string')->setLength(32)->setNotnull(false);
+        $table->addColumn('size', 'integer')->setNotnull(false);
         $table->addColumn('width', 'integer')->setNotnull(false);
         $table->addColumn('height', 'integer')->setNotnull(false);
-        $table->addColumn('md5', 'string')->setLength(32);
+        $table->addColumn('md5', 'string')->setLength(32)->setNotnull(false);
         $table->addColumn('deleted_at', 'datetime')->setNotnull(false);
         $table->addColumn('created_at', 'datetime')->setDefault('CURRENT_TIMESTAMP');
         $table->addColumn('updated_at', 'datetime')->setNotnull(false);
