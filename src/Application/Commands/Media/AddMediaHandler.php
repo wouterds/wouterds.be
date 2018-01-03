@@ -61,13 +61,6 @@ class AddMediaHandler
 
     /**
      * @param AddMedia $addMedia
-     */
-    private function handleUrlMedia(AddMedia $addMedia)
-    {
-    }
-
-    /**
-     * @param AddMedia $addMedia
      * @throws MediaContentTypeNotAllowedException
      * @throws StoreMediaFailedException
      */
@@ -99,5 +92,31 @@ class AddMediaHandler
             $this->filesystem->remove($media);
             throw new StoreMediaFailedException();
         }
+    }
+
+    /**
+     * @param AddMedia $addMedia
+     */
+    private function handleUrlMedia(AddMedia $addMedia)
+    {
+        $host = strtolower(parse_url($addMedia->getUrl(), PHP_URL_HOST));
+
+        if (in_array($host, ['youtube.com', 'youtu.be'])) {
+            $this->handleYouTubeUrlMedia($addMedia);
+        }
+
+        // throw
+    }
+
+    /**
+     * @param AddMedia $addMedia
+     */
+    private function handleYouTubeUrlMedia(AddMedia $addMedia)
+    {
+        // $meta = $this->getYouTubeMetaData
+    }
+
+    private function getYouTubeMetaData()
+    {
     }
 }
