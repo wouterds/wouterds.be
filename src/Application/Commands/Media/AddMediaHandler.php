@@ -42,6 +42,28 @@ class AddMediaHandler
      */
     public function handle(AddMedia $addMedia)
     {
+        if (!empty($addMedia->getUrl())) {
+            $this->handleUrlMedia($addMedia);
+            return;
+        }
+
+        $this->handleFileMedia($addMedia);
+    }
+
+    /**
+     * @param AddMedia $addMedia
+     */
+    private function handleUrlMedia(AddMedia $addMedia)
+    {
+    }
+
+    /**
+     * @param AddMedia $addMedia
+     * @throws MediaContentTypeNotAllowedException
+     * @throws StoreMediaFailedException
+     */
+    private function handleFileMedia(AddMedia $addMedia)
+    {
         if (!in_array($addMedia->getUploadedFile()->getClientMediaType(), self::ALLOWED_CONTENT_TYPES)) {
             throw new MediaContentTypeNotAllowedException();
         }
