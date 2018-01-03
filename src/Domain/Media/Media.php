@@ -26,6 +26,11 @@ class Media implements JsonSerializable
     /**
      * @var string
      */
+    private $url;
+
+    /**
+     * @var string
+     */
     private $contentType;
 
     /**
@@ -56,8 +61,9 @@ class Media implements JsonSerializable
     /**
      * @param UserId $userId
      * @param string $name
-     * @param string $contentType
-     * @param int $size
+     * @param string|null $url
+     * @param string|null $contentType
+     * @param int|null $size
      * @param string|null $md5
      * @param int|null $width
      * @param int|null $height
@@ -65,8 +71,9 @@ class Media implements JsonSerializable
     public function __construct(
         UserId $userId,
         string $name,
-        string $contentType,
-        int $size,
+        string $url = null,
+        string $contentType = null,
+        int $size = null,
         string $md5 = null,
         int $width = null,
         int $height = null
@@ -74,6 +81,7 @@ class Media implements JsonSerializable
         $this->id = new MediaId();
         $this->userId = $userId;
         $this->name = $name;
+        $this->url = $url;
         $this->contentType = $contentType;
         $this->size = $size;
         $this->md5 = $md5;
@@ -90,9 +98,10 @@ class Media implements JsonSerializable
         $file = new Media(
             new UserId($data['user_id']),
             $data['name'],
-            $data['content_type'],
-            $data['size'],
-            $data['md5'],
+            !empty($data['url']) ? $data['url'] : null,
+            !empty($data['content_type']) ? $data['content_type'] : null,
+            !empty($data['size']) ? $data['size'] : null,
+            !empty($data['md5']) ? $data['md5'] : null,
             !empty($data['width']) ? $data['width'] : null,
             !empty($data['height']) ? $data['height'] : null
         );
@@ -152,25 +161,33 @@ class Media implements JsonSerializable
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getContentType(): string
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getContentType(): ?string
     {
         return $this->contentType;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getSize(): int
+    public function getSize(): ?int
     {
         return $this->size;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMd5(): string
+    public function getMd5(): ?string
     {
         return $this->md5;
     }
