@@ -19,6 +19,11 @@ class MediaBuilder
     /**
      * @var string
      */
+    private $url;
+
+    /**
+     * @var string
+     */
     private $contentType;
 
     /**
@@ -58,6 +63,17 @@ class MediaBuilder
     public function withName(string $name): MediaBuilder
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @param string $url
+     * @return MediaBuilder
+     */
+    public function withUrl(string $url): MediaBuilder
+    {
+        $this->url = $url;
 
         return $this;
     }
@@ -103,6 +119,7 @@ class MediaBuilder
         return new Media(
             $this->userId,
             $this->name,
+            $this->url,
             $this->contentType,
             $this->size,
             $this->md5
