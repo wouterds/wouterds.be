@@ -124,6 +124,10 @@ class Media implements JsonSerializable
      */
     public function getPath(): string
     {
+        if ($this->isYouTubeVideo()) {
+            return null;
+        }
+
         return '/' . $this->getId() . '.' . $this->getExtension();
     }
 
@@ -132,6 +136,10 @@ class Media implements JsonSerializable
      */
     public function getExtension(): string
     {
+        if ($this->isYouTubeVideo()) {
+            return null;
+        }
+
         $mimes = new MimeTypes();
 
         $extension = $mimes->getExtension($this->getContentType());
@@ -217,11 +225,19 @@ class Media implements JsonSerializable
     }
 
     /**
+     * @return bool
+     */
+    public function isYouTubeVideo(): bool
+    {
+        return stripos($this->getUrl(), 'youtu.be') !== false;
+    }
+
+    /**
      * @return float|null
      */
     public function getRatio(): ?float
     {
-        if (!$this->isImage()) {
+        if (!$this->isImage() && !$this->isYouTubeVideo()) {
             return null;
         }
 
