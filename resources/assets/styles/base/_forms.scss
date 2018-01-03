@@ -15,6 +15,7 @@
   &.error,
   &.success {
     .input,
+    .input-file-placeholder,
     .CodeMirror {
       border-color: $color-orange;
     }
