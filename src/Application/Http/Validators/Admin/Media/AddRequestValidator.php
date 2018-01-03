@@ -2,19 +2,40 @@
 
 namespace WouterDeSchuyter\Application\Http\Validators\Admin\Media;
 
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Http\Request;
 
 class AddRequestValidator
 {
+    /**
+     * @var array
+     */
+    private $errors = [];
+
     /**
      * @param Request $request
      * @return bool
      */
     public function validate(Request $request)
     {
+        $validFile = $this->validateFile($request);
+
+        return $validFile;
+    }
+
+    /**
+     * @param Request $request
+     * @return bool
+     */
+    private function validateFile(Request $request)
+    {
         $file = $request->getUploadedFiles()['file'];
 
-        return !empty($file);
+        if (empty($file)) {
+            $this->errors['file'] = ['You can not leave this field empty.'];
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -22,6 +43,6 @@ class AddRequestValidator
      */
     public function getErrors()
     {
-        return ['file' => ['You can not leave this field empty.']];
+        return $this->errors;
     }
 }
