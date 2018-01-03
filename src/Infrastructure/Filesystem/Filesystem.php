@@ -2,20 +2,13 @@
 
 namespace WouterDeSchuyter\Infrastructure\Filesystem;
 
-use Exception;
 use League\Flysystem\Filesystem as LeagueFilesystem;
 use Psr\Http\Message\StreamInterface;
 use Slim\Http\Stream;
 use WouterDeSchuyter\Domain\Media\Media;
-use WouterDeSchuyter\Domain\Media\MediaRepository;
 
 class Filesystem
 {
-    /**
-     * @var MediaRepository
-     */
-    private $mediaRepository;
-
     /**
      * @var LeagueFilesystem
      */
@@ -23,23 +16,21 @@ class Filesystem
 
     /**
      * @param LeagueFilesystem $filesystem
-     * @param MediaRepository $mediaRepository
      */
-    public function __construct(LeagueFilesystem $filesystem, MediaRepository $mediaRepository)
+    public function __construct(LeagueFilesystem $filesystem)
     {
         $this->filesystem = $filesystem;
-        $this->mediaRepository = $mediaRepository;
     }
 
     /**
      * @param Media $media
      * @param StreamInterface $stream
-     * @return bool
+     * @return Media|null
      */
-    public function store(Media $media, StreamInterface $stream): bool
+    public function store(Media $media, StreamInterface $stream): ?Media
     {
         if ($this->filesystem->putStream($media->getPath(), $stream->detach()) === false) {
-            return false;
+            return null;
         }
 
         $media->setMd5($this->filesystem->hash($media->getPath(), 'md5'));
@@ -51,12 +42,16 @@ class Filesystem
             $media->setHeight($size[1]);
         }
 
-        try {
-            $this->mediaRepository->add($media);
-        } catch (Exception $e) {
-            $this->filesystem->delete($media->getPath());
-            return false;
-        }
+        return $media;
+    }
+
+    /**
+     * @param Media $media
+     * @return bool
+     */
+    public function remove(Media $media): bool
+    {
+        $this->filesystem->delete($media->getPath());
 
         return true;
     }

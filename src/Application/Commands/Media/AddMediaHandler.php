@@ -2,9 +2,11 @@
 
 namespace WouterDeSchuyter\Application\Commands\Media;
 
+use Exception;
 use WouterDeSchuyter\Domain\Commands\Media\AddMedia;
 use WouterDeSchuyter\Domain\Media\MediaBuilder;
 use WouterDeSchuyter\Domain\Media\MediaContentTypeNotAllowedException;
+use WouterDeSchuyter\Domain\Media\MediaRepository;
 use WouterDeSchuyter\Domain\Media\StoreMediaFailedException;
 use WouterDeSchuyter\Domain\Users\AuthenticatedUser;
 use WouterDeSchuyter\Infrastructure\Filesystem\Filesystem;
@@ -26,13 +28,20 @@ class AddMediaHandler
     private $filesystem;
 
     /**
+     * @var MediaRepository
+     */
+    private $mediaRepository;
+
+    /**
      * @param AuthenticatedUser $authenticatedUser
      * @param Filesystem $filesystem
+     * @param MediaRepository $mediaRepository
      */
-    public function __construct(AuthenticatedUser $authenticatedUser, Filesystem $filesystem)
+    public function __construct(AuthenticatedUser $authenticatedUser, Filesystem $filesystem, MediaRepository $mediaRepository)
     {
         $this->authenticatedUser = $authenticatedUser;
         $this->filesystem = $filesystem;
+        $this->mediaRepository = $mediaRepository;
     }
 
     /**
@@ -78,9 +87,16 @@ class AddMediaHandler
             $builder = $builder->withName($addMedia->getLabel());
         }
 
-        $media = $builder->build();
+        $media = $this->filesystem->store($builder->build(), $addMedia->getUploadedFile()->getStream());
 
-        if ($this->filesystem->store($media, $addMedia->getUploadedFile()->getStream()) === false) {
+        if (empty($media)) {
+            throw new StoreMediaFailedException();
+        }
+
+        try {
+            $this->mediaRepository->add($media);
+        } catch (Exception $e) {
+            $this->filesystem->remove($media);
             throw new StoreMediaFailedException();
         }
     }
