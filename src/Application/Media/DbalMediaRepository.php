@@ -33,6 +33,7 @@ class DbalMediaRepository implements MediaRepository
             'id' => $media->getId(),
             'user_id' => $media->getUserId(),
             'name' => $media->getName(),
+            'url' => $media->getUrl(),
             'content_type' => $media->getContentType(),
             'size' => $media->getSize(),
             'width' => $media->getWidth(),
