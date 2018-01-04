@@ -41,6 +41,10 @@ class MediaInlineRenderer implements InlineRendererInterface
             return $this->renderImage($media);
         }
 
+        if ($media->isYouTubeVideo()) {
+            return $this->renderYouTubeVideo($media);
+        }
+
         return '';
     }
 
@@ -65,6 +69,37 @@ class MediaInlineRenderer implements InlineRendererInterface
         $html .= 'alt="' . htmlentities($image->getName()) . '" ';
         $html .= 'title="' . htmlentities($image->getName()) . '"';
         $html .= '>';
+
+        // Span wrapper - end
+        $html .= '</span>';
+
+        return $html;
+    }
+
+    /**
+     * @param Media $youTubeVideo
+     * @return string
+     */
+    private function renderYouTubeVideo(Media $youTubeVideo)
+    {
+        $embedUrl = explode('.be/', $youTubeVideo->getUrl());
+        $embedUrl = 'https://youtube.com/embed/' . end($embedUrl);
+
+        $html = '';
+        // Span wrapper - start
+        $html .= '<span ';
+        $html .= 'class="media media--youtube-video" ';
+        $html .= 'style="padding-bottom: ' . $youTubeVideo->getRatio() .'%"';
+        $html .= '>';
+
+        // Image
+        $html .= '<iframe ';
+        $html .= 'class="media__video" ';
+        $html .= 'src="' . $embedUrl . '" ';
+        $html .= 'frameborder="0" ';
+        $html .= 'allowfullscreen>';
+        $html .= $youTubeVideo->getUrl();
+        $html .= '</iframe>';
 
         // Span wrapper - end
         $html .= '</span>';

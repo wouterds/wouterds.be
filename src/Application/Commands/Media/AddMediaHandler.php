@@ -10,6 +10,7 @@ use WouterDeSchuyter\Domain\Media\MediaRepository;
 use WouterDeSchuyter\Domain\Media\StoreMediaFailedException;
 use WouterDeSchuyter\Domain\Users\AuthenticatedUser;
 use WouterDeSchuyter\Infrastructure\Filesystem\Filesystem;
+use WouterDeSchuyter\Infrastructure\YouTube\Api as YouTubeApi;
 
 class AddMediaHandler
 {
@@ -33,15 +34,22 @@ class AddMediaHandler
     private $mediaRepository;
 
     /**
+     * @var YouTubeApi
+     */
+    private $youTubeApi;
+
+    /**
      * @param AuthenticatedUser $authenticatedUser
      * @param Filesystem $filesystem
      * @param MediaRepository $mediaRepository
+     * @param YouTubeApi $youTubeApi
      */
-    public function __construct(AuthenticatedUser $authenticatedUser, Filesystem $filesystem, MediaRepository $mediaRepository)
+    public function __construct(AuthenticatedUser $authenticatedUser, Filesystem $filesystem, MediaRepository $mediaRepository, YouTubeApi $youTubeApi)
     {
         $this->authenticatedUser = $authenticatedUser;
         $this->filesystem = $filesystem;
         $this->mediaRepository = $mediaRepository;
+        $this->youTubeApi = $youTubeApi;
     }
 
     /**
@@ -96,27 +104,87 @@ class AddMediaHandler
 
     /**
      * @param AddMedia $addMedia
+     * @throws UnsupportedMediaException
      */
     private function handleUrlMedia(AddMedia $addMedia)
     {
-        $host = strtolower(parse_url($addMedia->getUrl(), PHP_URL_HOST));
-
-        if (in_array($host, ['youtube.com', 'youtu.be'])) {
-            $this->handleYouTubeUrlMedia($addMedia);
+        if ($this->isYouTubeMedia($addMedia)) {
+            $this->handleYouTubeMedia($addMedia);
+            return;
         }
 
-        // throw
+         throw new UnsupportedMediaException();
     }
 
     /**
      * @param AddMedia $addMedia
+     * @return bool
      */
-    private function handleYouTubeUrlMedia(AddMedia $addMedia)
+    private function isYouTubeMedia(AddMedia $addMedia): bool
     {
-        // $meta = $this->getYouTubeMetaData
+        $url = strtolower($addMedia->getUrl());
+        $host = parse_url($url, PHP_URL_HOST);
+        $host = str_replace('www.', null, $host);
+
+        return in_array($host, ['youtube.com', 'youtu.be']);
     }
 
-    private function getYouTubeMetaData()
+    /**
+     * @param AddMedia $addMedia
+     * @throws UnsupportedMediaException
+     */
+    private function handleYouTubeMedia(AddMedia $addMedia)
     {
+        $id = $this->parseYouTubeIdFromUrl($addMedia->getUrl());
+        $meta = $this->youTubeApi->getVideoMeta($id);
+
+        if (empty($meta)) {
+            throw new UnsupportedMediaException();
+        }
+
+        $builder = MediaBuilder::startWithDefault()
+            ->withUserId($this->authenticatedUser->getUser()->getId())
+            ->withName($meta['snippet']['title'])
+            ->withWidth(1280)
+            ->withHeight(720)
+            ->withUrl('https://youtu.be/' . $meta['id']);
+
+        if (!empty($addMedia->getLabel())) {
+            $builder = $builder->withName($addMedia->getLabel());
+        }
+
+        $media = $builder->build();
+
+        $this->mediaRepository->add($media);
+    }
+
+    /**
+     * @param string $url
+     * @return null|string
+     */
+    private function parseYouTubeIdFromUrl(string $url): ?string
+    {
+        $host = strtolower(parse_url($url, PHP_URL_HOST));
+        $host = str_replace('www.', null, $host);
+
+        $id = null;
+        switch ($host) {
+            case 'youtube.com':
+                $queryParams = parse_url($url, PHP_URL_QUERY);
+                $matches = [];
+                preg_match('/v=([^&]+)&?/', $queryParams, $matches);
+
+                if (!empty($matches[1])) {
+                    $id = $matches[1];
+                }
+                break;
+
+            case 'youtu.be':
+                $parts = explode('/', $url);
+                $id = end($parts);
+                break;
+        }
+
+        return $id;
     }
 }
