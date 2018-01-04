@@ -15,6 +15,7 @@ use WouterDeSchuyter\Infrastructure\Database\ServiceProvider as DatabaseServiceP
 use WouterDeSchuyter\Infrastructure\Filesystem\ServiceProvider as FilesystemServiceProvider;
 use WouterDeSchuyter\Infrastructure\Mail\ServiceProvider as MailServiceProvider;
 use WouterDeSchuyter\Infrastructure\View\ServiceProvider as ViewServiceProvider;
+use WouterDeSchuyter\Infrastructure\YouTube\ServiceProvider as YouTubeServiceProvider;
 
 class Container extends LeagueContainer
 {
@@ -37,6 +38,7 @@ class Container extends LeagueContainer
         $container->addServiceProvider(FilesystemServiceProvider::class);
         $container->addServiceProvider(MailServiceProvider::class);
         $container->addServiceProvider(ViewServiceProvider::class);
+        $container->addServiceProvider(YouTubeServiceProvider::class);
 
         return $container;
     }
