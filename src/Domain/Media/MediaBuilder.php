@@ -32,6 +32,16 @@ class MediaBuilder
     private $size;
 
     /**
+     * @var int
+     */
+    private $width;
+
+    /**
+     * @var int
+     */
+    private $height;
+
+    /**
      * @var string
      */
     private $md5;
@@ -101,6 +111,28 @@ class MediaBuilder
     }
 
     /**
+     * @param int $width
+     * @return MediaBuilder
+     */
+    public function withWidth(int $width): MediaBuilder
+    {
+        $this->width = $width;
+
+        return $this;
+    }
+
+    /**
+     * @param int $height
+     * @return MediaBuilder
+     */
+    public function withHeight(int $height): MediaBuilder
+    {
+        $this->height = $height;
+
+        return $this;
+    }
+
+    /**
      * @param string $md5
      * @return MediaBuilder
      */
@@ -122,7 +154,9 @@ class MediaBuilder
             $this->url,
             $this->contentType,
             $this->size,
-            $this->md5
+            $this->md5,
+            $this->width,
+            $this->height
         );
     }
 }
