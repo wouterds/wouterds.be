@@ -5,6 +5,13 @@ body {
   font-family: $font-family;
 }
 
+.default-text {
+  font-size: 1.6em;
+  line-height: 1.7;
+  color: rgba($color-blue-grey, 0.7);
+  margin: 16px 0 20px;
+}
+
 h1,
 .h1 {
   font-size: 2.3em;
@@ -22,8 +29,5 @@ h2,
 }
 
 p {
-  font-size: 1.6em;
-  line-height: 1.7;
-  color: rgba($color-blue-grey, 0.7);
-  margin: 16px 0 20px;
+  @extend .default-text;
 }

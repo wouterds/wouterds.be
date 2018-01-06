@@ -17,6 +17,16 @@ $scope: 'page--blog--detail';
     padding-top: 65vh;
   }
 
+  &__body {
+    ul {
+      @extend .default-text;
+
+      li {
+        list-style: disc inside;
+      }
+    }
+  }
+
   &__cover-image {
     z-index: -1;
     position: absolute;
