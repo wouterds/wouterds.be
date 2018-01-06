@@ -19,7 +19,7 @@ class ServiceProvider extends AbstractServiceProvider
     public function register()
     {
         $this->container->share(Api::class, function () {
-            return new Api(getenv('YT_API_KEY'));
+            return new Api(getenv('YOUTUBE_API_KEY'));
         });
     }
 }
