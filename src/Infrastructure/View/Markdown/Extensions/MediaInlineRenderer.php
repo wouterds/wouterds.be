@@ -45,6 +45,10 @@ class MediaInlineRenderer implements InlineRendererInterface
             return $this->renderYouTubeVideo($media);
         }
 
+        if ($media->isVimeoVideo()) {
+            return $this->renderVimeoVideo($media);
+        }
+
         return '';
     }
 
@@ -99,6 +103,37 @@ class MediaInlineRenderer implements InlineRendererInterface
         $html .= 'frameborder="0" ';
         $html .= 'allowfullscreen>';
         $html .= $youTubeVideo->getUrl();
+        $html .= '</iframe>';
+
+        // Span wrapper - end
+        $html .= '</span>';
+
+        return $html;
+    }
+
+    /**
+     * @param Media $vimeoVideo
+     * @return string
+     */
+    private function renderVimeoVideo(Media $vimeoVideo)
+    {
+        $embedUrl = explode('.com/', $vimeoVideo->getUrl());
+        $embedUrl = 'https://player.vimeo.com/video/' . end($embedUrl);
+
+        $html = '';
+        // Span wrapper - start
+        $html .= '<span ';
+        $html .= 'class="media media--vimeo-video" ';
+        $html .= 'style="padding-bottom: ' . $vimeoVideo->getRatio() .'%"';
+        $html .= '>';
+
+        // Image
+        $html .= '<iframe ';
+        $html .= 'class="media__video" ';
+        $html .= 'src="' . $embedUrl . '" ';
+        $html .= 'frameborder="0" ';
+        $html .= 'allowfullscreen>';
+        $html .= $vimeoVideo->getUrl();
         $html .= '</iframe>';
 
         // Span wrapper - end
