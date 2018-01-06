@@ -10,6 +10,7 @@ use WouterDeSchuyter\Domain\Media\MediaRepository;
 use WouterDeSchuyter\Domain\Media\StoreMediaFailedException;
 use WouterDeSchuyter\Domain\Users\AuthenticatedUser;
 use WouterDeSchuyter\Infrastructure\Filesystem\Filesystem;
+use WouterDeSchuyter\Infrastructure\Vimeo\Api as VimeoApi;
 use WouterDeSchuyter\Infrastructure\YouTube\Api as YouTubeApi;
 
 class AddMediaHandler
@@ -39,17 +40,24 @@ class AddMediaHandler
     private $youTubeApi;
 
     /**
+     * @var VimeoApi
+     */
+    private $vimeoApi;
+
+    /**
      * @param AuthenticatedUser $authenticatedUser
      * @param Filesystem $filesystem
      * @param MediaRepository $mediaRepository
      * @param YouTubeApi $youTubeApi
+     * @param VimeoApi $vimeoApi
      */
-    public function __construct(AuthenticatedUser $authenticatedUser, Filesystem $filesystem, MediaRepository $mediaRepository, YouTubeApi $youTubeApi)
+    public function __construct(AuthenticatedUser $authenticatedUser, Filesystem $filesystem, MediaRepository $mediaRepository, YouTubeApi $youTubeApi, VimeoApi $vimeoApi)
     {
         $this->authenticatedUser = $authenticatedUser;
         $this->filesystem = $filesystem;
         $this->mediaRepository = $mediaRepository;
         $this->youTubeApi = $youTubeApi;
+        $this->vimeoApi = $vimeoApi;
     }
 
     /**
@@ -113,6 +121,11 @@ class AddMediaHandler
             return;
         }
 
+        if ($this->isVimeoMedia($addMedia)) {
+            $this->handleVimeoMedia($addMedia);
+            return;
+        }
+
          throw new UnsupportedMediaException();
     }
 
@@ -127,6 +140,19 @@ class AddMediaHandler
         $host = str_replace('www.', null, $host);
 
         return in_array($host, ['youtube.com', 'youtu.be']);
+    }
+
+    /**
+     * @param AddMedia $addMedia
+     * @return bool
+     */
+    private function isVimeoMedia(AddMedia $addMedia): bool
+    {
+        $url = strtolower($addMedia->getUrl());
+        $host = parse_url($url, PHP_URL_HOST);
+        $host = str_replace('www.', null, $host);
+
+        return in_array($host, ['vimeo.com']);
     }
 
     /**
@@ -159,6 +185,35 @@ class AddMediaHandler
     }
 
     /**
+     * @param AddMedia $addMedia
+     * @throws UnsupportedMediaException
+     */
+    private function handleVimeoMedia(AddMedia $addMedia)
+    {
+        $id = $this->parseVimeoIdFromUrl($addMedia->getUrl());
+        $meta = $this->vimeoApi->getVideoMeta($id);
+
+        if (empty($meta)) {
+            throw new UnsupportedMediaException();
+        }
+
+        $builder = MediaBuilder::startWithDefault()
+            ->withUserId($this->authenticatedUser->getUser()->getId())
+            ->withName($meta['name'])
+            ->withWidth($meta['width'])
+            ->withHeight($meta['height'])
+            ->withUrl('https://vimeo.com' . $meta['uri']);
+
+        if (!empty($addMedia->getLabel())) {
+            $builder = $builder->withName($addMedia->getLabel());
+        }
+
+        $media = $builder->build();
+
+        $this->mediaRepository->add($media);
+    }
+
+    /**
      * @param string $url
      * @return null|string
      */
@@ -180,6 +235,26 @@ class AddMediaHandler
                 break;
 
             case 'youtu.be':
+                $parts = explode('/', $url);
+                $id = end($parts);
+                break;
+        }
+
+        return $id;
+    }
+
+    /**
+     * @param string $url
+     * @return null|string
+     */
+    private function parseVimeoIdFromUrl(string $url): ?string
+    {
+        $host = strtolower(parse_url($url, PHP_URL_HOST));
+        $host = str_replace('www.', null, $host);
+
+        $id = null;
+        switch ($host) {
+            case 'vimeo.com':
                 $parts = explode('/', $url);
                 $id = end($parts);
                 break;
