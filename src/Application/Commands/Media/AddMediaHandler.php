@@ -11,7 +11,7 @@ use WouterDeSchuyter\Domain\Media\StoreMediaFailedException;
 use WouterDeSchuyter\Domain\Users\AuthenticatedUser;
 use WouterDeSchuyter\Infrastructure\Filesystem\Filesystem;
 use WouterDeSchuyter\Infrastructure\Vimeo\Api as VimeoApi;
-use WouterDeSchuyter\Infrastructure\YouTube\Api as YouTubeApi;
+use WouterDeSchuyter\Infrastructure\Youtube\Api as YoutubeApi;
 
 class AddMediaHandler
 {
@@ -35,9 +35,9 @@ class AddMediaHandler
     private $mediaRepository;
 
     /**
-     * @var YouTubeApi
+     * @var YoutubeApi
      */
-    private $youTubeApi;
+    private $youtubeApi;
 
     /**
      * @var VimeoApi
@@ -48,15 +48,15 @@ class AddMediaHandler
      * @param AuthenticatedUser $authenticatedUser
      * @param Filesystem $filesystem
      * @param MediaRepository $mediaRepository
-     * @param YouTubeApi $youTubeApi
+     * @param YoutubeApi $youtubeApi
      * @param VimeoApi $vimeoApi
      */
-    public function __construct(AuthenticatedUser $authenticatedUser, Filesystem $filesystem, MediaRepository $mediaRepository, YouTubeApi $youTubeApi, VimeoApi $vimeoApi)
+    public function __construct(AuthenticatedUser $authenticatedUser, Filesystem $filesystem, MediaRepository $mediaRepository, YoutubeApi $youtubeApi, VimeoApi $vimeoApi)
     {
         $this->authenticatedUser = $authenticatedUser;
         $this->filesystem = $filesystem;
         $this->mediaRepository = $mediaRepository;
-        $this->youTubeApi = $youTubeApi;
+        $this->youtubeApi = $youtubeApi;
         $this->vimeoApi = $vimeoApi;
     }
 
@@ -116,8 +116,8 @@ class AddMediaHandler
      */
     private function handleUrlMedia(AddMedia $addMedia)
     {
-        if ($this->isYouTubeMedia($addMedia)) {
-            $this->handleYouTubeMedia($addMedia);
+        if ($this->isYoutubeMedia($addMedia)) {
+            $this->handleYoutubeMedia($addMedia);
             return;
         }
 
@@ -133,7 +133,7 @@ class AddMediaHandler
      * @param AddMedia $addMedia
      * @return bool
      */
-    private function isYouTubeMedia(AddMedia $addMedia): bool
+    private function isYoutubeMedia(AddMedia $addMedia): bool
     {
         $url = strtolower($addMedia->getUrl());
         $host = parse_url($url, PHP_URL_HOST);
@@ -159,10 +159,10 @@ class AddMediaHandler
      * @param AddMedia $addMedia
      * @throws UnsupportedMediaException
      */
-    private function handleYouTubeMedia(AddMedia $addMedia)
+    private function handleYoutubeMedia(AddMedia $addMedia)
     {
-        $id = $this->parseYouTubeIdFromUrl($addMedia->getUrl());
-        $meta = $this->youTubeApi->getVideoMeta($id);
+        $id = $this->parseYoutubeIdFromUrl($addMedia->getUrl());
+        $meta = $this->youtubeApi->getVideoMeta($id);
 
         if (empty($meta)) {
             throw new UnsupportedMediaException();
@@ -217,7 +217,7 @@ class AddMediaHandler
      * @param string $url
      * @return null|string
      */
-    private function parseYouTubeIdFromUrl(string $url): ?string
+    private function parseYoutubeIdFromUrl(string $url): ?string
     {
         $host = strtolower(parse_url($url, PHP_URL_HOST));
         $host = str_replace('www.', null, $host);

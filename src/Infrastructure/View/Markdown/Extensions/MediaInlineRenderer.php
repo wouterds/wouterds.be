@@ -41,8 +41,8 @@ class MediaInlineRenderer implements InlineRendererInterface
             return $this->renderImage($media);
         }
 
-        if ($media->isYouTubeVideo()) {
-            return $this->renderYouTubeVideo($media);
+        if ($media->isYoutubeVideo()) {
+            return $this->renderYoutubeVideo($media);
         }
 
         if ($media->isVimeoVideo()) {
@@ -81,19 +81,19 @@ class MediaInlineRenderer implements InlineRendererInterface
     }
 
     /**
-     * @param Media $youTubeVideo
+     * @param Media $youtubeVideo
      * @return string
      */
-    private function renderYouTubeVideo(Media $youTubeVideo)
+    private function renderYoutubeVideo(Media $youtubeVideo)
     {
-        $embedUrl = explode('.be/', $youTubeVideo->getUrl());
+        $embedUrl = explode('.be/', $youtubeVideo->getUrl());
         $embedUrl = 'https://youtube.com/embed/' . end($embedUrl);
 
         $html = '';
         // Span wrapper - start
         $html .= '<span ';
         $html .= 'class="media media--youtube-video" ';
-        $html .= 'style="padding-bottom: ' . $youTubeVideo->getRatio() .'%"';
+        $html .= 'style="padding-bottom: ' . $youtubeVideo->getRatio() .'%"';
         $html .= '>';
 
         // Image
@@ -102,7 +102,7 @@ class MediaInlineRenderer implements InlineRendererInterface
         $html .= 'src="' . $embedUrl . '" ';
         $html .= 'frameborder="0" ';
         $html .= 'allowfullscreen>';
-        $html .= $youTubeVideo->getUrl();
+        $html .= $youtubeVideo->getUrl();
         $html .= '</iframe>';
 
         // Span wrapper - end

@@ -16,7 +16,7 @@ use WouterDeSchuyter\Infrastructure\Filesystem\ServiceProvider as FilesystemServ
 use WouterDeSchuyter\Infrastructure\Mail\ServiceProvider as MailServiceProvider;
 use WouterDeSchuyter\Infrastructure\View\ServiceProvider as ViewServiceProvider;
 use WouterDeSchuyter\Infrastructure\Vimeo\ServiceProvider as VimeoServiceProvider;
-use WouterDeSchuyter\Infrastructure\YouTube\ServiceProvider as YouTubeServiceProvider;
+use WouterDeSchuyter\Infrastructure\Youtube\ServiceProvider as YoutubeServiceProvider;
 
 class Container extends LeagueContainer
 {
@@ -40,7 +40,7 @@ class Container extends LeagueContainer
         $container->addServiceProvider(MailServiceProvider::class);
         $container->addServiceProvider(ViewServiceProvider::class);
         $container->addServiceProvider(VimeoServiceProvider::class);
-        $container->addServiceProvider(YouTubeServiceProvider::class);
+        $container->addServiceProvider(YoutubeServiceProvider::class);
 
         return $container;
     }

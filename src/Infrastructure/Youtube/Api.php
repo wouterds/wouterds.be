@@ -1,6 +1,6 @@
 <?php
 
-namespace WouterDeSchuyter\Infrastructure\YouTube;
+namespace WouterDeSchuyter\Infrastructure\Youtube;
 
 use GuzzleHttp\Client as GuzzleClient;
 
