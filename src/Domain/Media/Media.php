@@ -233,11 +233,19 @@ class Media implements JsonSerializable
     }
 
     /**
+     * @return bool
+     */
+    public function isVimeoVideo(): bool
+    {
+        return stripos($this->getUrl(), 'vimeo.com') !== false;
+    }
+
+    /**
      * @return float|null
      */
     public function getRatio(): ?float
     {
-        if (!$this->isImage() && !$this->isYouTubeVideo()) {
+        if (!$this->isImage() && !$this->isYouTubeVideo() && !$this->isVimeoVideo()) {
             return null;
         }
 
