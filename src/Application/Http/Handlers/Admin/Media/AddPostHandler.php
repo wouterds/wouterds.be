@@ -43,11 +43,11 @@ class AddPostHandler
         }
 
         if (!empty($request->getParam('url'))) {
-//            try {
+            try {
                 $this->commandBus->handle(new AddMedia($request->getParam('label'), $request->getParam('url')));
-//            } catch (Exception $e) {
-//                return $response->withJson(false, StatusCode::BAD_REQUEST);
-//            }
+            } catch (Exception $e) {
+                return $response->withJson(false, StatusCode::BAD_REQUEST);
+            }
 
             return $response->withJson(true);
         }

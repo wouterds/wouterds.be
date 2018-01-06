@@ -51,8 +51,13 @@ class AddMediaHandler
      * @param YoutubeApi $youtubeApi
      * @param VimeoApi $vimeoApi
      */
-    public function __construct(AuthenticatedUser $authenticatedUser, Filesystem $filesystem, MediaRepository $mediaRepository, YoutubeApi $youtubeApi, VimeoApi $vimeoApi)
-    {
+    public function __construct(
+        AuthenticatedUser $authenticatedUser,
+        Filesystem $filesystem,
+        MediaRepository $mediaRepository,
+        YoutubeApi $youtubeApi,
+        VimeoApi $vimeoApi
+    ) {
         $this->authenticatedUser = $authenticatedUser;
         $this->filesystem = $filesystem;
         $this->mediaRepository = $mediaRepository;

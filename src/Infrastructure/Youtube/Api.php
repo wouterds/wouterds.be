@@ -41,7 +41,7 @@ class Api
                 'part' => 'snippet',
                 'id' => $id,
                 'key' => $this->key,
-            ]
+            ],
         ]);
 
         $response = json_decode($response->getBody()->getContents(), true);
