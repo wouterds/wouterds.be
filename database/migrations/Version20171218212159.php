@@ -20,7 +20,7 @@ class Version20171218212159 extends AbstractMigration
         $table = $schema->createTable(self::TABLE);
         $table->addColumn('id', 'uuid');
         $table->addColumn('user_id', 'uuid');
-        $table->addColumn('name', 'string')->setLength(64);
+        $table->addColumn('name', 'string')->setLength(128);
         $table->addColumn('url', 'string')->setLength(64)->setNotnull(false);
         $table->addColumn('content_type', 'string')->setLength(32)->setNotnull(false);
         $table->addColumn('size', 'integer')->setNotnull(false);
