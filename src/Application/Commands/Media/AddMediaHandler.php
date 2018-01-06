@@ -202,7 +202,7 @@ class AddMediaHandler
             ->withName($meta['name'])
             ->withWidth($meta['width'])
             ->withHeight($meta['height'])
-            ->withUrl('https://vimeo.com' . $meta['uri']);
+            ->withUrl('https://vimeo.com/' . $id);
 
         if (!empty($addMedia->getLabel())) {
             $builder = $builder->withName($addMedia->getLabel());
