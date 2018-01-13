@@ -2,6 +2,17 @@
 
 {% block body %}
     <div class="container">
+        <section class="sub-header">
+            <a href="{{ app.router.pathFor('about') }}" title="About">
+                <img src="/static/images/wouterds.jpg" alt="wouterds.jpg">
+
+                <h1>Wouter De Schuyter</h1>
+                <h2>An ambitious, passionate Full Stack Developer</h2>
+            </a>
+
+            <hr>
+        </section>
+
         {% include 'components/blog-post-item-list.html.twig' %}
     </div>
 {% endblock %}

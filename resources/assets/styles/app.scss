@@ -62,6 +62,12 @@ a {
   }
 }
 
+hr {
+  background: rgba($color-blue-grey, 0.12);
+  height: 1px;
+  border: 0;
+}
+
 .emoji {
   height: 1em !important;
   width: 1em !important;
