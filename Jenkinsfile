@@ -54,8 +54,7 @@ node {
       }
     }
   } catch (e) {
-    sh 'echo "Build failed!"'
-    sh 'exit 1'
+    throw e
   } finally {
     // Clean up
     cleanWorkspace()
