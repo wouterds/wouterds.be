@@ -68,7 +68,6 @@ $scope: 'header';
   }
 }
 
-
 @media only screen and (max-width: 580px) {
   .#{$scope} {
     &__title {
