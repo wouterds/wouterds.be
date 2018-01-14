@@ -1,11 +1,7 @@
 import { LoaderOptionsPlugin } from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
-
-// Paths
-const paths = {
-  base: __dirname,
-};
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 
 const config = {
   entry: [
@@ -35,6 +31,12 @@ const config = {
     new ExtractTextPlugin({
       filename: './public/static/css/app.css',
     }),
+    new CopyWebpackPlugin([
+      {
+        from: './resources/assets/images',
+        to: './public/static/images'
+      },
+    ]),
   ],
   devtool: 'source-map',
 };
