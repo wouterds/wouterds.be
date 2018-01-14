@@ -62,6 +62,20 @@ node {
 }
 
 def deployProduction() {
+  def folder = DOCKER_FOLDER + '-prod';
+
+  sh 'ssh wouterds@'+SERVER+' "mkdir -p '+folder+'"'
+  sh 'ssh wouterds@'+SERVER+' "mkdir -p '+folder+'/logs && chmod 777 '+folder+'/logs"'
+  sh 'ssh wouterds@'+SERVER+' "mkdir -p '+folder+'/media && chmod 777 '+folder+'/media"'
+
+  sh 'scp docker/docker-compose.yml wouterds@'+SERVER+':'+folder+'/docker-compose.yml'
+  sh 'scp docker/docker-compose-prod.yml wouterds@'+SERVER+':'+folder+'/docker-compose-prod.yml'
+  sh 'scp docker/docker.env wouterds@'+SERVER+':'+folder+'/docker.env'
+
+  sh 'ssh wouterds@'+SERVER+' "cd '+folder+'; docker-compose -f docker-compose.yml -f docker-compose-prod.yml pull"'
+  sh 'ssh wouterds@'+SERVER+' "cd '+folder+'; docker-compose -f docker-compose.yml -f docker-compose-prod.yml up -d"'
+
+  sh 'ssh wouterds@'+SERVER+' "docker exec internalwouterdeschuyterwebsiteprod_php-fpm_1 php composer.phar migrations:migrate"'
 }
 
 def deployStaging() {
