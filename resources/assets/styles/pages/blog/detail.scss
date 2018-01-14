@@ -102,3 +102,16 @@ $scope: 'page--blog--detail';
     font-weight: 500;
   }
 }
+
+@media only screen and (max-width: 580px) {
+  .#{$scope} {
+
+    &__header {
+      padding-top: 25vh;
+    }
+
+    &__cover-image {
+      height: 35vh;
+    }
+  }
+}
