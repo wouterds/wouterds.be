@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  nginx:
+    env_file:
+      - docker.env
+      - docker-prod.env
+    environment:
+      - VIRTUAL_HOST=wouterdeschuyter.be
+      - LETSENCRYPT_HOST=wouterdeschuyter.be
+
+  php-fpm:
+    env_file:
+      - docker.env
+      - docker-prod.env
