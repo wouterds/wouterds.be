@@ -5,10 +5,6 @@
 $scope: 'page--about';
 
 .#{$scope} {
-  .content-wrapper {
-    margin-top: $page-margin-top;
-  }
-
   section + section {
     margin-top: 35px;
   }

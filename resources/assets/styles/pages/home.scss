@@ -5,10 +5,6 @@
 $scope: 'page--home';
 
 .#{$scope} {
-  .content-wrapper {
-    margin-top: $page-margin-top;
-  }
-
   .header__title {
     display: none;
   }

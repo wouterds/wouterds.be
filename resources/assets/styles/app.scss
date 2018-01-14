@@ -29,11 +29,10 @@
 @import 'components/blog-post-item-list';
 
 // Pages
+@import 'pages/base';
 @import 'pages/home';
 @import 'pages/about';
-@import 'pages/blog/index';
 @import 'pages/blog/detail';
-@import 'pages/contact';
 @import 'pages/admin/base';
 @import 'pages/admin/blog/index';
 @import 'pages/admin/blog/post';

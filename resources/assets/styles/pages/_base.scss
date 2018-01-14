@@ -1,0 +1,19 @@
+// Variables
+@import '../base/variables';
+
+// Scope
+$scope: 'page';
+
+.#{$scope} {
+  .content-wrapper {
+    margin-top: 75px;
+  }
+}
+
+@media only screen and (max-width: 580px) {
+  .#{$scope} {
+    .content-wrapper {
+      margin-top: 15px;
+    }
+  }
+}
