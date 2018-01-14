@@ -13,3 +13,11 @@ $scope: 'footer';
     margin-left: 2px;
   }
 }
+
+@media only screen and (max-width: 580px) {
+  .#{$scope} {
+    padding: 25px 0 25px;
+    background: rgba($color-blue-grey, 0.02);
+    border-top: 1px solid rgba($color-blue-grey, 0.05);
+  }
+}
