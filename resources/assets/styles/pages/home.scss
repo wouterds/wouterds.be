@@ -46,3 +46,11 @@ $scope: 'page--home';
     }
   }
 }
+
+@media only screen and (max-width: 580px) {
+  .#{$scope} {
+    .sub-header {
+      padding-bottom: 25px;
+    }
+  }
+}
