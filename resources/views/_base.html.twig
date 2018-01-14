@@ -64,5 +64,14 @@
 
 <!-- javascript -->
 <script src="/static/js/app.js?v={{ app.config.get('APP_VERSION_NUMBER') }}"></script>
+
+<!-- Google Analytics -->
+<script async src="//googletagmanager.com/gtag/js?id=UA-57637936-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-57637936-2');
+</script>
 </body>
 </html>
