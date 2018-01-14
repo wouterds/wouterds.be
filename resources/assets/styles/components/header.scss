@@ -67,3 +67,18 @@ $scope: 'header';
     }
   }
 }
+
+
+@media only screen and (max-width: 580px) {
+  .#{$scope} {
+    &__title {
+      display: none;
+    }
+
+    &__navigation {
+      text-align: center;
+      display: block;
+      float: none;
+    }
+  }
+}
