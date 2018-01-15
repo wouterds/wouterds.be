@@ -10,6 +10,7 @@ use WouterDeSchuyter\Domain\Media\MediaRepository;
 use WouterDeSchuyter\Domain\Users\UserRepository;
 use WouterDeSchuyter\Infrastructure\View\ViewAwareInterface;
 use WouterDeSchuyter\Infrastructure\View\ViewAwareTrait;
+use Teapot\StatusCode;
 
 class DetailHandler implements ViewAwareInterface
 {
@@ -82,7 +83,10 @@ class DetailHandler implements ViewAwareInterface
             }
 
             if ($blogPost) {
-                return $response->withRedirect($this->router->pathFor('blog.detail', ['slug' => $slug]));
+                return $response->withRedirect(
+                    $this->router->pathFor('blog.detail', ['slug' => $slug]),
+                    StatusCode::PERMANENT_REDIRECT
+                );
             }
         }
 
