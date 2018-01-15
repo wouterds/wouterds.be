@@ -4,6 +4,7 @@ namespace WouterDeSchuyter\Application\Http\Handlers\Blog;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Slim\Router;
 use WouterDeSchuyter\Domain\Blog\BlogPostRepository;
 use WouterDeSchuyter\Domain\Media\MediaRepository;
 use WouterDeSchuyter\Domain\Users\UserRepository;
@@ -13,6 +14,11 @@ use WouterDeSchuyter\Infrastructure\View\ViewAwareTrait;
 class DetailHandler implements ViewAwareInterface
 {
     use ViewAwareTrait;
+
+    /**
+     * @var Router
+     */
+    private $router;
 
     /**
      * @var UserRepository
@@ -30,15 +36,18 @@ class DetailHandler implements ViewAwareInterface
     private $blogPostRepository;
 
     /**
+     * @param Router $router
      * @param BlogPostRepository $blogPostRepository
      * @param UserRepository $userRepository
      * @param MediaRepository $mediaRepository
      */
     public function __construct(
+        Router $router,
         BlogPostRepository $blogPostRepository,
         UserRepository $userRepository,
         MediaRepository $mediaRepository
     ) {
+        $this->router = $router;
         $this->userRepository = $userRepository;
         $this->mediaRepository = $mediaRepository;
         $this->blogPostRepository = $blogPostRepository;
@@ -61,6 +70,21 @@ class DetailHandler implements ViewAwareInterface
     public function __invoke(Request $request, Response $response, string $slug): Response
     {
         $blogPost = $this->blogPostRepository->findBySlug($slug);
+
+        // Temp hack for backwards compatibility
+        if (empty($blogPost)) {
+            $lastPart = explode('-', $slug);
+            $lastPart = end($lastPart);
+
+            if (is_numeric($lastPart)) {
+                $slug = str_replace('-' . $lastPart, null, $slug);
+                $blogPost = $this->blogPostRepository->findBySlug($slug);
+            }
+
+            if ($blogPost) {
+                return $response->withRedirect($this->router->pathFor('blog.detail', ['slug' => $slug]));
+            }
+        }
 
         if (empty($blogPost)) {
             return $response->withRedirect('/404');
