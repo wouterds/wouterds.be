@@ -3,6 +3,7 @@
 
 use Dotenv\Dotenv;
 use Tracy\Debugger;
+use WouterDeSchuyter\Application\Console\Application;
 
 // Application directory
 define('APP_DIR', dirname(__DIR__));
@@ -21,3 +22,6 @@ Debugger::enable($debuggerMode, APP_DIR . '/storage/logs');
 if (file_exists(APP_DIR . '/.env')) {
     (new Dotenv(APP_DIR))->overload();
 }
+
+$app = new Application();
+$app->run();
