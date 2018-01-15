@@ -1,5 +1,16 @@
 {% extends '_base.html.twig' %}
 
+{% block title %}Blog - {{ app.config.get('APP_NAME') }}{% endblock %}
+{% block opengraph %}
+
+    <!-- opengraph -->
+    <meta property="og:title" content="Blog - {{ app.config.get('APP_NAME') }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ app.config.get('APP_URL') }}{{ app.request.uri.path }}">
+    <meta property="fb:pages" content="{{ app.config.get('FB_PAGE_ID') }}" />
+    <meta property="og:site_name" content="{{ app.config.get('APP_NAME') }}">
+{% endblock %}
+
 {% block body %}
     <div class="container">
         {% include 'components/blog-post-item-list.html.twig' %}
