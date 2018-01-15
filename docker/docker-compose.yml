@@ -29,6 +29,14 @@ services:
       - default
       - databaseserver_default
 
+  php-cron:
+    image: docker.wouterdeschuyter.be/internal-wouterdeschuyter-website-php-cron
+    restart: unless-stopped
+    volumes_from:
+      - php-fpm
+    env_file:
+      - ./../.env
+
 networks:
   databaseserver_default:
     external: true
