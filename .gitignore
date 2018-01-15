@@ -9,5 +9,6 @@
 /node_modules
 /docker/data
 /public/static
+/public/sitemap.xml
 /storage/logs
 /storage/media
