@@ -8,9 +8,11 @@ PROJECT_NAME = internal-wouterdeschuyter-website
 
 TAG_NGINX = $(DOCKER_REPO)/$(PROJECT_NAME)-nginx
 TAG_PHP_FPM = $(DOCKER_REPO)/$(PROJECT_NAME)-php-fpm
+TAG_PHP_CRON = $(DOCKER_REPO)/$(PROJECT_NAME)-php-cron
 
 DOCKERFILE_NGINX = ./docker/nginx/Dockerfile
 DOCKERFILE_PHP_FPM = ./docker/php-fpm/Dockerfile
+DOCKERFILE_PHP_CRON = ./docker/php-cron/Dockerfile
 
 clean:
 	-rm -rf ./.version
@@ -78,16 +80,23 @@ dev: dependencies
 	docker build $(BUILD_NO_CACHE) -f $(DOCKERFILE_PHP_FPM) -t $(TAG_PHP_FPM) .
 	touch .build-php-fpm
 
-build: .version .build-app .build-nginx .build-php-fpm
+.build-php-cron: $(DOCKERFILE_PHP_CRON)
+	docker build $(BUILD_NO_CACHE) -f $(DOCKERFILE_PHP_CRON) -t $(TAG_PHP_CRON) .
+	touch .build-php-cron
+
+build: .version .build-app .build-nginx .build-php-fpm .build-php-cron
 
 tag: build
 	docker tag $(TAG_NGINX) $(TAG_NGINX):$(VERSION)
 	docker tag $(TAG_PHP_FPM) $(TAG_PHP_FPM):$(VERSION)
+	docker tag $(TAG_PHP_CRON) $(TAG_PHP_CRON):$(VERSION)
 
 push: tag
 	docker push $(TAG_NGINX):$(VERSION)
 	docker push $(TAG_PHP_FPM):$(VERSION)
+	docker push $(TAG_PHP_CRON):$(VERSION)
 
 push-latest: push
 	docker push $(TAG_NGINX):latest
 	docker push $(TAG_PHP_FPM):latest
+	docker push $(TAG_PHP_CRON):latest
