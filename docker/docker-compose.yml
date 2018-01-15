@@ -36,6 +36,11 @@ services:
       - php-fpm
     env_file:
       - docker.env
+    external_links:
+      - mariadb
+    networks:
+      - default
+      - databaseserver_default
 
 networks:
   databaseserver_default:
