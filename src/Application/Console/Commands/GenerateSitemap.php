@@ -85,7 +85,7 @@ class GenerateSitemap extends Command
 
             $sitemap->addItem(
                 $this->config->get('APP_URL') . $this->router->pathFor('blog.detail', [
-                    'slug' => $blogPost->getSlug()
+                    'slug' => $blogPost->getSlug(),
                 ]),
                 (int) $blogPost->getPublishedAt()->format('U'),
                 Sitemap::WEEKLY,
