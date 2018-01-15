@@ -39,10 +39,6 @@ node {
         return
       }
 
-      // Push images to registry
-      sh 'echo Pushing version'
-      sh 'make push-latest'
-
       if (env.BRANCH_NAME.equals('master')) {
         sh 'echo Deploying production'
         deployProduction();
@@ -62,6 +58,8 @@ node {
 }
 
 def deployProduction() {
+  sh 'make push-latest'
+
   def folder = DOCKER_FOLDER + '-prod';
 
   sh 'ssh wouterds@'+SERVER+' "mkdir -p '+folder+'"'
@@ -79,6 +77,8 @@ def deployProduction() {
 }
 
 def deployStaging() {
+  sh 'make push-latest'
+
   def folder = DOCKER_FOLDER + '-stag';
 
   sh 'ssh wouterds@'+SERVER+' "mkdir -p '+folder+'"'
