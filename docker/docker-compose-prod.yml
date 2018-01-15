@@ -13,3 +13,8 @@ services:
     env_file:
       - docker.env
       - docker-prod.env
+
+  php-cron:
+    env_file:
+      - docker.env
+      - docker-prod.env
