@@ -16,4 +16,4 @@ Disallow: /admin
 Disallow: /admin/*
 Disallow: /404
 
-Sitemap: sitemap.xml
+Sitemap: https://wouterdeschuyer.be/sitemap.xml
