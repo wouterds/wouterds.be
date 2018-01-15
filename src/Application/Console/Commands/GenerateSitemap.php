@@ -88,7 +88,7 @@ class GenerateSitemap extends Command
                     'slug' => $blogPost->getSlug()
                 ]),
                 (int) $blogPost->getPublishedAt()->format('U'),
-                Sitemap::DAILY,
+                Sitemap::WEEKLY,
                 0.7
             );
         }
