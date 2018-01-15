@@ -6,6 +6,7 @@ use Symfony\Component\Console\Application as SymfonyApplication;
 use Symfony\Component\Console\Command\Command;
 use WouterDeSchuyter\Application\Console\Commands\GenerateSitemap;
 use WouterDeSchuyter\Application\Container;
+use WouterDeSchuyter\Application\Http\Application as HttpApplication;
 
 class Application extends SymfonyApplication
 {
@@ -22,7 +23,9 @@ class Application extends SymfonyApplication
     {
         parent::__construct($name, $version);
 
-        $this->container = Container::load();
+        // Load Http application so we have Router context etc
+        $httpApplication = new HttpApplication();
+        $this->container = $httpApplication->getContainer();
 
         $this->addCommand('generate:sitemap', GenerateSitemap::class);
     }
