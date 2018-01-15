@@ -73,7 +73,8 @@ def deployProduction() {
   sh 'ssh wouterds@'+SERVER+' "cd '+folder+'; docker-compose -f docker-compose.yml -f docker-compose-prod.yml pull"'
   sh 'ssh wouterds@'+SERVER+' "cd '+folder+'; docker-compose -f docker-compose.yml -f docker-compose-prod.yml up -d"'
 
-  sh 'ssh wouterds@'+SERVER+' "docker exec internalwouterdeschuyterwebsiteprod_php-fpm_1 php composer.phar migrations:migrate"'
+  sh 'ssh wouterds@'+SERVER+' "docker exec internalwouterdeschuyterwebsiteprod_php-fpm_1 php ./composer.phar migrations:migrate"'
+  sh 'ssh wouterds@'+SERVER+' "docker exec internalwouterdeschuyterwebsiteprod_php-fpm_1 php ./console/app generate:sitemap"'
 }
 
 def deployStaging() {
@@ -92,7 +93,8 @@ def deployStaging() {
   sh 'ssh wouterds@'+SERVER+' "cd '+folder+'; docker-compose -f docker-compose.yml -f docker-compose-stag.yml pull"'
   sh 'ssh wouterds@'+SERVER+' "cd '+folder+'; docker-compose -f docker-compose.yml -f docker-compose-stag.yml up -d"'
 
-  sh 'ssh wouterds@'+SERVER+' "docker exec internalwouterdeschuyterwebsitestag_php-fpm_1 php composer.phar migrations:migrate"'
+  sh 'ssh wouterds@'+SERVER+' "docker exec internalwouterdeschuyterwebsitestag_php-fpm_1 php ./composer.phar migrations:migrate"'
+  sh 'ssh wouterds@'+SERVER+' "docker exec internalwouterdeschuyterwebsitestag_php-fpm_1 php ./console/app generate:sitemap"'
 }
 
 def cleanWorkspace() {
