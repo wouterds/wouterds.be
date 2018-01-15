@@ -4,6 +4,7 @@ namespace WouterDeSchuyter\Application\Console;
 
 use Symfony\Component\Console\Application as SymfonyApplication;
 use Symfony\Component\Console\Command\Command;
+use WouterDeSchuyter\Application\Console\Commands\GenerateSitemap;
 use WouterDeSchuyter\Application\Container;
 
 class Application extends SymfonyApplication
@@ -22,6 +23,8 @@ class Application extends SymfonyApplication
         parent::__construct($name, $version);
 
         $this->container = Container::load();
+
+        $this->addCommand('generate:sitemap', GenerateSitemap::class);
     }
 
     /**
