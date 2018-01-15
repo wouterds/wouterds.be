@@ -42,6 +42,7 @@
     "nochso/html-compress-twig": "^2.0",
     "ralouphie/mimey": "^1.0",
     "ramsey/uuid": "^3.7",
+    "samdark/sitemap": "^2.1",
     "shrikeh/teapot": "^2.3",
     "slim/slim": "^3.8",
     "spe/filesize-extension-bundle": "^1.0",
