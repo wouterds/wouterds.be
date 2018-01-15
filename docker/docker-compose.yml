@@ -9,6 +9,7 @@ services:
     environment:
       - LETSENCRYPT_EMAIL=wouter@wouterdeschuyter.be
     volumes:
+      - /code/public
       - ./media:/code/storage/media
     networks:
       - default
