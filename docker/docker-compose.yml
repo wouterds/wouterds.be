@@ -35,7 +35,7 @@ services:
     volumes_from:
       - php-fpm
     env_file:
-      - ./../.env
+      - docker.env
 
 networks:
   databaseserver_default:
