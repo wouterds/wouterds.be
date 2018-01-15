@@ -48,10 +48,10 @@ node {
         deployProduction();
       }
 
-      if (env.BRANCH_NAME.equals('develop')) {
-        sh 'echo Deploying staging'
-        deployStaging();
-      }
+      // if (env.BRANCH_NAME.equals('develop')) {
+      //   sh 'echo Deploying staging'
+      //   deployStaging();
+      // }
     }
   } catch (e) {
     throw e
