@@ -110,6 +110,10 @@ $scope: 'page--blog--detail';
       padding-top: 25vh;
     }
 
+    &__title {
+      font-size: 3.2em;
+    }
+
     &__cover-image {
       height: 35vh;
     }
