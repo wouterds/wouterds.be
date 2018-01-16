@@ -21,6 +21,7 @@ clean:
 	-rm -rf ./vendor
 	-rm -f ./composer.phar
 	-rm -f ./composer-setup.php
+	-rm -f ./.build-*
 
 composer.phar:
 	docker run --rm --volume=$(PWD):/code -w=/code php:7.1-alpine php -r 'copy("https://getcomposer.org/installer", "./composer-setup.php");'
