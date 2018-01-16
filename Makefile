@@ -69,7 +69,7 @@ setup: setup-db migrate .build-app
 dev: dependencies
 	docker run --rm --volume=$(PWD):/code -w=/code node:8-slim npm start
 
-.build-app: dependencies
+.build-app: node_modules
 	docker run --rm --volume=$(PWD):/code -w=/code node:8-slim npm run build
 	touch .build-app
 
@@ -85,7 +85,7 @@ dev: dependencies
 	docker build $(BUILD_NO_CACHE) -f $(DOCKERFILE_PHP_CRON) -t $(TAG_PHP_CRON) .
 	touch .build-php-cron
 
-build: .version .build-app .build-nginx .build-php-fpm .build-php-cron
+build: dependencies .version .build-app .build-nginx .build-php-fpm .build-php-cron
 
 tag: build
 	docker tag $(TAG_NGINX) $(TAG_NGINX):$(VERSION)
