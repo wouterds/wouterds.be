@@ -2,6 +2,10 @@
 
 {% block title %}{{ blogPost.title }} - {{ app.config.get('APP_NAME') }}{% endblock %}
 
+{% block extra_meta %}
+    <meta name="description" content="{{ blogPost.excerpt }}">
+{% endblock %}
+
 {% block opengraph %}
 
     <!-- opengraph -->

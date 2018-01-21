@@ -1,6 +1,11 @@
 {% extends '_base.html.twig' %}
 
 {% block title %}About - {{ app.config.get('APP_NAME') }}{% endblock %}
+
+{% block extra_meta %}
+    <meta name="description" content="Hi there, I am Wouter! I'm {{ age }} years old and passionate about all things digital really. I studied Digital Design & Development at Howest University College and am currently working as a full stack developer at Teamleader. Before that I used to work as web & mobile developer at a real estate startup, Realo and in between also a few months as a full stack dev at In The Pocket agency.">
+{% endblock %}
+
 {% block opengraph %}
 
     <!-- opengraph -->
