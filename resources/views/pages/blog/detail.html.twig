@@ -63,8 +63,12 @@
                 "name": "{{ user.name }}"
             },
             "publisher": {
-                "@type": "Person",
-                "name": "{{ user.name }}"
+                "@type": "Organization",
+                "name": "{{ user.name }}",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "{{ app.config.get('APP_URL') }}/static/images/wouterds.jpg"
+                }
             },
             "description": "{{ blogPost.excerpt }}"
         }
