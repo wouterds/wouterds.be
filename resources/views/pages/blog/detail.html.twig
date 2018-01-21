@@ -43,4 +43,29 @@
             </footer>
         </article>
     </div>
+
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "NewsArticle",
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "https://google.com/article"
+            },
+            "headline": "{{ blogPost.title }} - {{ app.config.get('APP_NAME') }}",
+            "image": [
+                "{{ app.config.get('APP_URL') }}/static/media{{ media.path }}"
+            ],
+            "datePublished": "{{ blogPost.publishedAt|date('c') }}",
+            "author": {
+                "@type": "Person",
+                "name": "{{ user.name }}"
+            },
+            "publisher": {
+                "@type": "Person",
+                "name": "{{ user.name }}"
+            },
+            "description": "{{ blogPost.excerpt }}"
+        }
+    </script>
 {% endblock %}
