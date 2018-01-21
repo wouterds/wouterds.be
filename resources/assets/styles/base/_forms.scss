@@ -207,6 +207,10 @@ a.button {
   display: inline-block;
 }
 
+a.button:hover {
+  color: $color-white;
+}
+
 .button {
   vertical-align: top;
   color: $color-white;
