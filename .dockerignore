@@ -2,4 +2,4 @@
 docker/data
 storage
 node_modules
-resources
+resources/assets
