@@ -57,4 +57,18 @@
             </div>
         </form>
     </div>
+
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Person",
+        "url": "{{ app.config.get('APP_URL') }}",
+        "name": "Wouter De Schuyter",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+32479228210",
+            "contactType": "Customer Service"
+        }
+    }
+    </script>
 {% endblock %}
