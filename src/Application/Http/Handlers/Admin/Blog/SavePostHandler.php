@@ -87,8 +87,8 @@ class SavePostHandler
         return $response->withJson([
             'data' => [
                 'new' => empty($request->getParam('blogPostId')),
-                'redirect' => $this->router->pathFor('admin.blog.edit', ['id' => $blogPost->getId()])
-            ]
+                'redirect' => $this->router->pathFor('admin.blog.edit', ['id' => $blogPost->getId()]),
+            ],
         ]);
     }
 }
