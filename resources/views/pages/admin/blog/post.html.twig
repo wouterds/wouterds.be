@@ -78,9 +78,7 @@
                                 <span class="button__text">Save</span>
                             </button>
                             {% if blogPost %}
-                            <button type="submit" name="preview" class="input button" disabled data-loader="true">
-                                <span class="button__text">Preview</span>
-                            </button>
+                                <a href="{{ app.router.pathFor('blog.detail', {slug: blogPost.slug}) }}" class="input button">Preview</a>
 
                             <a href="{{ app.router.pathFor('admin.blog.delete', {id: blogPost.id}) }}" class="input button">Delete</a>
                             {% endif %}
