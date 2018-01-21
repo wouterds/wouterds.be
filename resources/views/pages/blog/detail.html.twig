@@ -43,34 +43,36 @@
             </footer>
         </article>
     </div>
+{% endblock %}
 
-    <script type="application/ld+json">
-        {
-            "@context": "http://schema.org",
-            "@type": "NewsArticle",
-            "mainEntityOfPage": {
-                "@type": "WebPage",
-                "@id": "{{ app.config.get('APP_URL') }}{{ app.request.uri.path }}"
-            },
-            "headline": "{{ blogPost.title }} - {{ app.config.get('APP_NAME') }}",
-            "image": [
-                "{{ app.config.get('APP_URL') }}/static/media{{ media.path }}"
-            ],
-            "datePublished": "{{ blogPost.publishedAt|date('c') }}",
-            "dateModified": "{{ blogPost.publishedAt|date('c') }}",
-            "author": {
-                "@type": "Person",
-                "name": "{{ user.name }}"
-            },
-            "publisher": {
-                "@type": "Organization",
-                "name": "{{ user.name }}",
-                "logo": {
-                    "@type": "ImageObject",
-                    "url": "{{ app.config.get('APP_URL') }}/static/images/wouterds.jpg"
-                }
-            },
-            "description": "{{ blogPost.excerpt }}"
-        }
-    </script>
+{% block extra_scripts %}
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "NewsArticle",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "{{ app.config.get('APP_URL') }}{{ app.request.uri.path }}"
+        },
+        "headline": "{{ blogPost.title }} - {{ app.config.get('APP_NAME') }}",
+        "image": [
+            "{{ app.config.get('APP_URL') }}/static/media{{ media.path }}"
+        ],
+        "datePublished": "{{ blogPost.publishedAt|date('c') }}",
+        "dateModified": "{{ blogPost.publishedAt|date('c') }}",
+        "author": {
+            "@type": "Person",
+            "name": "{{ user.name }}"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "{{ user.name }}",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "{{ app.config.get('APP_URL') }}/static/images/wouterds.jpg"
+            }
+        },
+        "description": "{{ blogPost.excerpt }}"
+    }
+</script>
 {% endblock %}
