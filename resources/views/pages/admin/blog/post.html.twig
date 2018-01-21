@@ -82,9 +82,7 @@
                                 <span class="button__text">Preview</span>
                             </button>
 
-                            <button type="submit" name="delete" class="input button" disabled data-loader="true">
-                                <span class="button__text">Delete</span>
-                            </button>
+                            <a href="{{ app.router.pathFor('admin.blog.delete', {id: blogPost.id}) }}" class="input button">Delete</a>
                             {% endif %}
                         </div>
                     </div>
