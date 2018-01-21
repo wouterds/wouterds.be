@@ -48,7 +48,7 @@ class GenerateRobots extends Command
     private function getSitemap(): string
     {
         $line = '';
-        $line .= 'Sitemap: ' . $this->config->get('APP_URL') . PHP_EOL;
+        $line .= 'Sitemap: ' . $this->config->get('APP_URL') . '/sitemap.xml' . PHP_EOL;
 
         return $line;
     }
