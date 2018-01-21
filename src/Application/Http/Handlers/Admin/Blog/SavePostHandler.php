@@ -6,9 +6,11 @@ use Exception;
 use League\Tactician\CommandBus;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Slim\Router;
 use Teapot\StatusCode;
 use WouterDeSchuyter\Application\Http\Validators\Admin\Blog\PostRequestValidator;
 use WouterDeSchuyter\Domain\Blog\BlogPostId;
+use WouterDeSchuyter\Domain\Blog\BlogPostRepository;
 use WouterDeSchuyter\Domain\Commands\Blog\SaveBlogPost;
 use WouterDeSchuyter\Domain\Media\MediaId;
 use WouterDeSchuyter\Domain\Users\UserId;
@@ -27,13 +29,31 @@ class SavePostHandler
     private $commandBus;
 
     /**
+     * @var BlogPostRepository
+     */
+    private $blogPostRepository;
+
+    /**
+     * @var Router
+     */
+    private $router;
+
+    /**
      * @param PostRequestValidator $addRequestValidator
      * @param CommandBus $commandBus
+     * @param BlogPostRepository $blogPostRepository
+     * @param Router $router
      */
-    public function __construct(PostRequestValidator $addRequestValidator, CommandBus $commandBus)
-    {
+    public function __construct(
+        PostRequestValidator $addRequestValidator,
+        CommandBus $commandBus,
+        BlogPostRepository $blogPostRepository,
+        Router $router
+    ) {
         $this->postRequestValidator = $addRequestValidator;
         $this->commandBus = $commandBus;
+        $this->blogPostRepository = $blogPostRepository;
+        $this->router = $router;
     }
 
     /**
@@ -62,6 +82,13 @@ class SavePostHandler
             return $response->withJson(false, StatusCode::BAD_REQUEST);
         }
 
-        return $response->withJson(true);
+        $blogPost = $this->blogPostRepository->findBySlug($request->getParam('slug'));
+
+        return $response->withJson([
+            'data' => [
+                'new' => empty($request->getParam('blogPostId')),
+                'redirect' => $this->router->pathFor('admin.blog.edit', ['id' => $blogPost->getId()])
+            ]
+        ]);
     }
 }

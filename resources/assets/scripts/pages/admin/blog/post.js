@@ -53,8 +53,11 @@ class Post extends Base {
   onAjaxDone(response) {
     this.ajaxCall = null;
 
-    // Remove loading button
-    this.form.$buttonSubmit.removeClass('button--loading').blur();
+    if (response.data.new === true) {
+      window.location = response.data.redirect;
+    } else {
+      this.form.$buttonSubmit.removeClass('button--loading').blur();
+    }
   }
 
   onAjaxFail(response) {
