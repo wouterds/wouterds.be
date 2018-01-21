@@ -77,7 +77,7 @@
                             <button type="submit" name="save" class="input button" disabled data-loader="true">
                                 <span class="button__text">Save</span>
                             </button>
-
+                            {% if blogPost %}
                             <button type="submit" name="preview" class="input button" disabled data-loader="true">
                                 <span class="button__text">Preview</span>
                             </button>
@@ -85,6 +85,7 @@
                             <button type="submit" name="delete" class="input button" disabled data-loader="true">
                                 <span class="button__text">Delete</span>
                             </button>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
