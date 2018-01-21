@@ -75,6 +75,7 @@ def deployProduction() {
 
   sh 'ssh wouterds@'+SERVER+' "docker exec internalwouterdeschuyterwebsiteprod_php-fpm_1 php ./composer.phar migrations:migrate"'
   sh 'ssh wouterds@'+SERVER+' "docker exec internalwouterdeschuyterwebsiteprod_php-fpm_1 php ./console/app generate:sitemap"'
+  sh 'ssh wouterds@'+SERVER+' "docker exec internalwouterdeschuyterwebsiteprod_php-fpm_1 php ./console/app generate:robots"'
 }
 
 def deployStaging() {
@@ -95,6 +96,7 @@ def deployStaging() {
 
   sh 'ssh wouterds@'+SERVER+' "docker exec internalwouterdeschuyterwebsitestag_php-fpm_1 php ./composer.phar migrations:migrate"'
   sh 'ssh wouterds@'+SERVER+' "docker exec internalwouterdeschuyterwebsitestag_php-fpm_1 php ./console/app generate:sitemap"'
+  sh 'ssh wouterds@'+SERVER+' "docker exec internalwouterdeschuyterwebsitestag_php-fpm_1 php ./console/app generate:robots"'
 }
 
 def cleanWorkspace() {
