@@ -57,6 +57,7 @@
                 "{{ app.config.get('APP_URL') }}/static/media{{ media.path }}"
             ],
             "datePublished": "{{ blogPost.publishedAt|date('c') }}",
+            "dateModified": "{{ blogPost.publishedAt|date('c') }}",
             "author": {
                 "@type": "Person",
                 "name": "{{ user.name }}"
