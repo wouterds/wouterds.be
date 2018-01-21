@@ -5,6 +5,7 @@ namespace WouterDeSchuyter\Application\Console;
 use Symfony\Component\Console\Application as SymfonyApplication;
 use Symfony\Component\Console\Command\Command;
 use WouterDeSchuyter\Application\Console\Commands\GenerateSitemap;
+use WouterDeSchuyter\Application\Console\Commands\GenerateRobots;
 use WouterDeSchuyter\Application\Container;
 use WouterDeSchuyter\Application\Http\Application as HttpApplication;
 
@@ -28,6 +29,7 @@ class Application extends SymfonyApplication
         $this->container = $httpApplication->getContainer();
 
         $this->addCommand('generate:sitemap', GenerateSitemap::class);
+        $this->addCommand('generate:robots', GenerateRobots::class);
     }
 
     /**
