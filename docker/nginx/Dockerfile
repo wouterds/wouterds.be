@@ -1,4 +1,4 @@
-FROM nginx:1.13-alpine
+FROM nginx:alpine
 MAINTAINER Wouter De Schuyter <wouter.de.schuyter@gmail.com>
 
 # Copy required files
