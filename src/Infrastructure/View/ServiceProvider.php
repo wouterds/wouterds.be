@@ -16,6 +16,7 @@ use Twig_Loader_Filesystem;
 use WouterDeSchuyter\Domain\Users\AuthenticatedUser;
 use WouterDeSchuyter\Infrastructure\ApplicationMonitor\ApplicationMonitor;
 use WouterDeSchuyter\Infrastructure\Config\Config;
+use WouterDeSchuyter\Infrastructure\Database\SQLLogger;
 use WouterDeSchuyter\Infrastructure\View\Admin\ViewAwareInterface as AdminViewAwareInterface;
 use WouterDeSchuyter\Infrastructure\View\Markdown\Extensions\MediaInlineExtension;
 
@@ -60,6 +61,7 @@ class ServiceProvider extends AbstractServiceProvider implements BootableService
             'setRouter' => [Router::class],
             'setRequest' => [Request::class],
             'setApplicationMonitor' => [ApplicationMonitor::class],
+            'setSqlLogger' => [SQLLogger::class],
         ]);
 
         $this->container->inflector(AdminViewAwareInterface::class)->invokeMethods([

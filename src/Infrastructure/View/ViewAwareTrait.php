@@ -7,6 +7,7 @@ use Slim\Http\Response;
 use Slim\Router;
 use WouterDeSchuyter\Infrastructure\ApplicationMonitor\ApplicationMonitor;
 use WouterDeSchuyter\Infrastructure\Config\Config;
+use WouterDeSchuyter\Infrastructure\Database\SQLLogger;
 
 trait ViewAwareTrait
 {
@@ -36,6 +37,11 @@ trait ViewAwareTrait
     private $applicationMonitor;
 
     /**
+     * @var SQLLogger
+     */
+    private $sqlLogger;
+
+    /**
      * @return string
      */
     public abstract function getTemplate(): string;
@@ -57,6 +63,8 @@ trait ViewAwareTrait
      */
     public function render(Response $response, array $data = []): Response
     {
+        $this->applicationMonitor->setQueryCount($this->sqlLogger->getQueryCount());
+
         if (empty($data['app'])) {
             $data['app'] = [];
         }
@@ -112,6 +120,14 @@ trait ViewAwareTrait
     public function setApplicationMonitor(ApplicationMonitor $applicationMonitor): void
     {
         $this->applicationMonitor = $applicationMonitor;
+    }
+
+    /**
+     * @param SQLLogger $sqlLogger
+     */
+    public function setSqlLogger(SQLLogger $sqlLogger)
+    {
+        $this->sqlLogger = $sqlLogger;
     }
 
     /**
