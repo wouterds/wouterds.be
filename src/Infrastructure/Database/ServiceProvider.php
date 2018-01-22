@@ -13,6 +13,7 @@ class ServiceProvider extends AbstractServiceProvider
      */
     protected $provides = [
         Connection::class,
+        SQLLogger::class,
     ];
 
     /**
@@ -20,6 +21,10 @@ class ServiceProvider extends AbstractServiceProvider
      */
     public function register()
     {
+        $this->container->share(SQLLogger::class, function () {
+            return new SQLLogger();
+        });
+
         $this->container->share(Connection::class, function () {
             $dbName = getenv('MYSQL_DATABASE');
             $user = getenv('MYSQL_USER');
@@ -33,7 +38,7 @@ class ServiceProvider extends AbstractServiceProvider
                 $dbName = getenv('MYSQL_TEST_DATABASE');
             }
 
-            return DriverManager::getConnection([
+            $connection = DriverManager::getConnection([
                 'dbname' => $dbName,
                 'user' => $user,
                 'password' => $password,
@@ -42,6 +47,10 @@ class ServiceProvider extends AbstractServiceProvider
                 'charset' => $charset,
                 'collate' => $collate,
             ]);
+
+            $connection->getConfiguration()->setSQLLogger($this->container->get(SQLLogger::class));
+
+            return $connection;
         });
     }
 }
