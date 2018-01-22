@@ -31,7 +31,7 @@
                 <a class="page--blog--detail__link" title="{{ blogPost.title }}" href="{{ app.router.pathFor('blog.detail', {slug: blogPost.slug}) }}">
                     <h1 class="page--blog--detail__title">{{ blogPost.title }}</h1>
                 </a>
-                <time class="page--blog--detail__time" pubdate datetime="{{ blogPost.publishedAt|date('c') }}" title="{{ blogPost.publishedAt|date('F j, Y') }} around {{ blogPost.publishedAt|date('h:i a') }}">{{ blogPost.publishedAt|date('M j, Y') }}</time>
+                <time class="page--blog--detail__time" title="{{ blogPost.publishedAt|date('F j, Y') }} around {{ blogPost.publishedAt|date('h:i a') }}" datetime="{{ blogPost.publishedAt|date('c') }}" pubdate>{{ blogPost.publishedAt|date('M j, Y') }}</time>
             </header>
 
             <section class="page--blog--detail__body">
