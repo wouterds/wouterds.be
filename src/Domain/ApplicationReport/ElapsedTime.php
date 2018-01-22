@@ -36,14 +36,6 @@ class ElapsedTime
     /**
      * @return string
      */
-    public function inMilliseconds(): string
-    {
-        return round($this->value, 0);
-    }
-
-    /**
-     * @return string
-     */
     public function inSeconds(): string
     {
         return round($this->value / 1000, 2);

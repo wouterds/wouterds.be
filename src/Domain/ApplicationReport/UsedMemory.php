@@ -32,4 +32,12 @@ class UsedMemory
     {
         return $this->value;
     }
+
+    /**
+     * @return string
+     */
+    public function inMegabyte(): string
+    {
+        return round($this->value / 1000 / 1000, 2);
+    }
 }

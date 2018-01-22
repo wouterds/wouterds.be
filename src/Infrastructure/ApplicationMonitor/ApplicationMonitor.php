@@ -22,7 +22,7 @@ class ApplicationMonitor
     public function getReport(): ApplicationReport
     {
         $elapsedTime = ceil((microtime(true) - $this->bootTime) * 1000);
-        $memoryUsed = memory_get_peak_usage(true);
+        $memoryUsed = memory_get_peak_usage();
 
         return new ApplicationReport($elapsedTime, $memoryUsed);
     }

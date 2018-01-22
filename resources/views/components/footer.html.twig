@@ -3,12 +3,8 @@
         &copy; Copyright {{ 'now'|date('Y') }} {{ app.config.get('APP_NAME') }}
         <br>
         Page generated in
-        {% if app.report.getElapsedTime().getValue() > 1000 %}
-            {{ app.report.getElapsedTime().inSeconds() }} s
-        {% else %}
-            {{ app.report.getElapsedTime().inMilliseconds() }} ms
-        {% endif %}
-        using {{ app.report.getUsedMemory().getValue()|readable_filesize }},
+        {{ app.report.getElapsedTime().inSeconds() }} seconds
+        using {{ app.report.getUsedMemory().inMegabyte() }} megabyte,
         running using Docker on a Raspberry Pi
         <i class="fa fa-heart" aria-hidden="true"></i>
     </div>
