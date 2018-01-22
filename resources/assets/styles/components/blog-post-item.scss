@@ -8,6 +8,13 @@ $scope: 'blog-post-item';
     text-decoration: none;
   }
 
+  &__link:hover & {
+    &__title,
+    &__time {
+      color: $color-red;
+    }
+  }
+
   &__header {
     position: relative;
     padding-bottom: 8px;
