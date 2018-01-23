@@ -160,10 +160,13 @@ trait ViewAwareTrait
             $className .= ' page--' . $page;
         }
 
+        $isAMP = substr_count($this->request->getUri()->getPath(), '/amp/') > 0;
+
         return [
             'pascalCase' => $pascalCaseName,
             'dashedCase' => $dashedCaseName,
             'className' => $className,
+            'amp' => $isAMP,
         ];
     }
 }
