@@ -6,15 +6,27 @@ use WouterDeSchuyter\Application\Http\Handlers\Blog\IndexHandler as BlogIndexHan
 use WouterDeSchuyter\Application\Http\Handlers\ContactHandler;
 use WouterDeSchuyter\Application\Http\Handlers\ContactPostHandler;
 use WouterDeSchuyter\Application\Http\Handlers\HomeHandler;
+use Slim\App;
+
+function AMPCompatibleRoutes(App $app, $amp = false)
+{
+    $suffix = $amp ? ':amp' : '';
+
+    $app->get('/', HomeHandler::class)->setName('home' . $suffix);
+    $app->get('/about', AboutHandler::class)->setName('about' . $suffix);
+    $app->group('/blog', function () use ($app, $suffix) {
+        $app->get('', BlogIndexHandler::class)->setName('blog' . $suffix);
+        $app->get('/{slug}', BlogDetailHandler::class)->setName('blog.detail' . $suffix);
+    });
+    $app->get('/contact', ContactHandler::class)->setName('contact' . $suffix);
+}
 
 $app->group(null, function () use ($app) {
-    $app->get('/', HomeHandler::class)->setName('home');
-    $app->get('/about', AboutHandler::class)->setName('about');
-    $app->group('/blog', function () use ($app) {
-        $app->get('', BlogIndexHandler::class)->setName('blog');
-        $app->get('/{slug}', BlogDetailHandler::class)->setName('blog.detail');
+    AMPCompatibleRoutes($app);
+    $app->group('/amp', function () use ($app) {
+        AMPCompatibleRoutes($app, true);
     });
-    $app->get('/contact', ContactHandler::class)->setName('contact');
+
     $app->post('/contact.json', ContactPostHandler::class)->setName('contact_post');
 
     // Admin routes
