@@ -27,7 +27,7 @@ class AboutHandler implements ViewAwareInterface
     public function __invoke(Request $request, Response $response): Response
     {
         $birthday = strtotime('1992-12-13');
-        $age = date('Y') - date('Y', $birthday);
+        $age = floor((strtotime('now') - $birthday) / 31556926);
 
         $data = [
             'birthday' => $birthday,
