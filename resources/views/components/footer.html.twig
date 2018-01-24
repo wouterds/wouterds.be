@@ -9,7 +9,12 @@
             queries
         {% endif %}
         in
-        {{ app.report.elapsedTime.inSeconds() }} seconds
+        {{ app.report.elapsedTime.inSeconds() }}
+        {% if app.report.elapsedTime.inSeconds() == 1 %}
+        second
+        {% else %}
+        seconds
+        {% endif %}
         using {{ app.report.usedMemory.inMegabyte() }} megabyte,
         running in Docker on a Raspberry Pi
         <i class="fa fa-heart" aria-hidden="true"></i>
