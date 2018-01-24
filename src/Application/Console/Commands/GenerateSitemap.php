@@ -83,11 +83,16 @@ class GenerateSitemap extends Command
                 continue;
             }
 
+            $lastModified = $blogPost->getPublishedAt();
+            if ($blogPost->getUpdatedAt()) {
+                $lastModified = $blogPost->getUpdatedAt();
+            }
+
             $sitemap->addItem(
                 $this->config->get('APP_URL') . $this->router->pathFor('blog.detail', [
                     'slug' => $blogPost->getSlug(),
                 ]),
-                (int) $blogPost->getPublishedAt()->format('U'),
+                (int) $lastModified->format('U'),
                 Sitemap::WEEKLY,
                 0.7
             );
