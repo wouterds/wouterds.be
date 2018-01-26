@@ -58,8 +58,8 @@
         "image": [
             "{{ app.config.get('APP_URL') }}/static/media{{ media.path }}"
         ],
+        "dateModified": "{% if blogPost.modifiedAt %}{{ blogPost.modifiedAt|date('c') }}{% else %}{{ blogPost.publishedAt|date('c') }}{% endif %}",
         "datePublished": "{{ blogPost.publishedAt|date('c') }}",
-        "dateModified": "{{ blogPost.publishedAt|date('c') }}",
         "author": {
             "@type": "Person",
             "name": "{{ user.name }}"
