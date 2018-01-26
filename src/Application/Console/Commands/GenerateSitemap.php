@@ -100,5 +100,36 @@ class GenerateSitemap extends Command
 
         // Write sitemap
         $sitemap->write();
+
+        // Ping search engines
+        $this->pingSearchEngines();
+    }
+
+    private function pingSearchEngines()
+    {
+        $sitemapUrl = urlencode($this->config->get('APP_URL') . '/sitemap.xml');
+
+        $searchEnginePingUrls = [
+            "http://www.google.com/webmasters/sitemaps/ping?sitemap={$sitemapUrl}",
+            "http://www.bing.com/ping?siteMap={$sitemapUrl}",
+            "http://submissions.ask.com/ping?sitemap={$sitemapUrl}",
+        ];
+
+        foreach ($searchEnginePingUrls as $searchEnginePingUrl) {
+            self::ping($searchEnginePingUrl);
+        }
+    }
+
+    private static function ping(string $url)
+    {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HEADER, true);
+        curl_setopt($ch, CURLOPT_NOBODY, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_exec($ch);
+        $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        return $statusCode;
     }
 }
