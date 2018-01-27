@@ -6,6 +6,7 @@ RUN NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
     && docker-php-ext-install -j${NPROC} pdo pdo_mysql mysqli
 
 # Copy required files
+COPY ./docker/php-cron/php.ini /usr/local/etc/php/conf.d/custom.ini
 COPY ./docker/php-cron/cronjobs /etc/cron.d/cronjobs
 COPY . /code
 
