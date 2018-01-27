@@ -12,6 +12,7 @@ use WouterDeSchuyter\Application\Commands\Blog\DeleteBlogPostHandler;
 use WouterDeSchuyter\Application\Commands\Blog\SaveBlogPostHandler;
 use WouterDeSchuyter\Application\Commands\Media\AddMediaHandler;
 use WouterDeSchuyter\Application\Commands\Media\DeleteMediaHandler;
+use WouterDeSchuyter\Application\Commands\Robots\GenerateRobotsHandler;
 use WouterDeSchuyter\Application\Commands\Sitemap\GenerateSitemapHandler;
 use WouterDeSchuyter\Application\Commands\Sitemap\PingSearchEnginesHandler;
 use WouterDeSchuyter\Application\Commands\Users\ActivateUserHandler;
@@ -25,6 +26,7 @@ use WouterDeSchuyter\Domain\Commands\Blog\SaveBlogPost;
 use WouterDeSchuyter\Domain\Commands\ContactEnquiry;
 use WouterDeSchuyter\Domain\Commands\Media\AddMedia;
 use WouterDeSchuyter\Domain\Commands\Media\DeleteMedia;
+use WouterDeSchuyter\Domain\Commands\Robots\GenerateRobots;
 use WouterDeSchuyter\Domain\Commands\Sitemap\GenerateSitemap;
 use WouterDeSchuyter\Domain\Commands\Sitemap\PingSearchEngines;
 use WouterDeSchuyter\Domain\Commands\Users\ActivateUser;
@@ -61,6 +63,7 @@ class ServiceProvider extends AbstractServiceProvider
                 DeleteMedia::class => DeleteMediaHandler::class,
                 SaveBlogPost::class => SaveBlogPostHandler::class,
                 DeleteBlogPost::class => DeleteBlogPostHandler::class,
+                GenerateRobots::class => GenerateRobotsHandler::class,
                 GenerateSitemap::class => GenerateSitemapHandler::class,
                 PingSearchEngines::class => PingSearchEnginesHandler::class,
             ]);
