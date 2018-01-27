@@ -21,4 +21,4 @@
 #
 # m h  dom mon dow   command
 
-00 */3 * * * /code/console/app generate:sitemap
+00 */6 * * * /code/console/app generate:sitemap --ping
