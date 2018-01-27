@@ -98,7 +98,7 @@ class BlogPost implements JsonSerializable
      */
     public static function fromArray(array $data): BlogPost
     {
-        $file = new BlogPost(
+        $blogPost = new BlogPost(
             new UserId($data['user_id']),
             new MediaId($data['media_id']),
             $data['title'],
@@ -107,12 +107,12 @@ class BlogPost implements JsonSerializable
             $data['body'],
             !empty($data['published_at']) ? new DateTime($data['published_at']) : null
         );
-        $file->id = new BlogPostId(!empty($data['id']) ? $data['id'] : null);
-        $file->views = (int) $data['views'];
-        $file->createdAt = !empty($data['created_at']) ? new DateTime($data['created_at']) : null;
-        $file->updatedAt = !empty($data['updated_at']) ? new DateTime($data['updated_at']) : null;
+        $blogPost->id = new BlogPostId(!empty($data['id']) ? $data['id'] : null);
+        $blogPost->views = (int) $data['views'];
+        $blogPost->createdAt = !empty($data['created_at']) ? new DateTime($data['created_at']) : null;
+        $blogPost->updatedAt = !empty($data['updated_at']) ? new DateTime($data['updated_at']) : null;
 
-        return $file;
+        return $blogPost;
     }
 
     /**
