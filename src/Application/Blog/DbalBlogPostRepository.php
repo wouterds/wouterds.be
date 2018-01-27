@@ -61,6 +61,18 @@ class DbalBlogPostRepository implements BlogPostRepository
     }
 
     /**
+     * @param BlogPost $blogPost
+     */
+    public function viewed(BlogPost $blogPost): void
+    {
+        $query = $this->connection->createQueryBuilder();
+        $query->update(self::TABLE);
+        $query->set('views', $query->createNamedParameter($blogPost->getViews() + 1));
+        $query->where('id = ' . $query->createNamedParameter((string) $blogPost->getId()));
+        $query->execute();
+    }
+
+    /**
      * @return BlogPost[]
      */
     public function findAll(): array

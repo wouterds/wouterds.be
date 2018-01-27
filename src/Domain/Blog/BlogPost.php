@@ -45,6 +45,11 @@ class BlogPost implements JsonSerializable
     private $body;
 
     /**
+     * @var int
+     */
+    private $views = 0;
+
+    /**
      * @var DateTime
      */
     private $publishedAt;
@@ -103,6 +108,7 @@ class BlogPost implements JsonSerializable
             !empty($data['published_at']) ? new DateTime($data['published_at']) : null
         );
         $file->id = new BlogPostId(!empty($data['id']) ? $data['id'] : null);
+        $file->views = (int) $data['views'];
         $file->createdAt = !empty($data['created_at']) ? new DateTime($data['created_at']) : null;
         $file->updatedAt = !empty($data['updated_at']) ? new DateTime($data['updated_at']) : null;
 
@@ -163,6 +169,14 @@ class BlogPost implements JsonSerializable
     public function getBody(): string
     {
         return $this->body;
+    }
+
+    /**
+     * @return int
+     */
+    public function getViews(): int
+    {
+        return $this->views;
     }
 
     /**

@@ -15,6 +15,11 @@ interface BlogPostRepository
     public function update(BlogPost $blogPost);
 
     /**
+     * @param BlogPost $blogPost
+     */
+    public function viewed(BlogPost $blogPost): void;
+
+    /**
      * @return BlogPost[]
      */
     public function findAll(): array;

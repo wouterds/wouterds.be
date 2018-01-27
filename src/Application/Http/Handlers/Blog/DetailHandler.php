@@ -102,6 +102,9 @@ class DetailHandler implements ViewAwareInterface
         $data['user'] = $user;
         $data['media'] = $media;
 
+        // Viewed blog post
+        $this->blogPostRepository->viewed($blogPost);
+
         return $this->render($response, $data);
     }
 }
