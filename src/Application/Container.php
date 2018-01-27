@@ -4,6 +4,7 @@ namespace WouterDeSchuyter\Application;
 
 use League\Container\Container as LeagueContainer;
 use League\Container\ReflectionContainer;
+use WouterDeSchuyter\Application\AccessLogs\ServiceProvider as AccessLogsServiceProvider;
 use WouterDeSchuyter\Application\Blog\ServiceProvider as BlogServiceProvider;
 use WouterDeSchuyter\Application\Commands\ServiceProvider as CommandsServiceProvider;
 use WouterDeSchuyter\Application\Http\ServiceProvider as HttpServiceProvider;
@@ -28,6 +29,7 @@ class Container extends LeagueContainer
         $container = new static();
         $container->delegate(new ReflectionContainer());
 
+        $container->addServiceProvider(AccessLogsServiceProvider::class);
         $container->addServiceProvider(CommandsServiceProvider::class);
         $container->addServiceProvider(HttpServiceProvider::class);
         $container->addServiceProvider(BlogServiceProvider::class);
