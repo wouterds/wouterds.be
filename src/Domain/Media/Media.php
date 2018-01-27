@@ -95,7 +95,7 @@ class Media implements JsonSerializable
      */
     public static function fromArray(array $data): Media
     {
-        $file = new Media(
+        $media = new Media(
             new UserId($data['user_id']),
             $data['name'],
             !empty($data['url']) ? $data['url'] : null,
@@ -105,10 +105,10 @@ class Media implements JsonSerializable
             !empty($data['width']) ? $data['width'] : null,
             !empty($data['height']) ? $data['height'] : null
         );
-        $file->id = new MediaId(!empty($data['id']) ? $data['id'] : null);
-        $file->createdAt = !empty($data['created_at']) ? $data['created_at'] : null;
+        $media->id = new MediaId(!empty($data['id']) ? $data['id'] : null);
+        $media->createdAt = !empty($data['created_at']) ? $data['created_at'] : null;
 
-        return $file;
+        return $media;
     }
 
     /**
