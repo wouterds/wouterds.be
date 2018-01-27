@@ -19,15 +19,16 @@ class Version20180127224037 extends AbstractMigration
     {
         $table = $schema->createTable(self::TABLE);
         $table->addColumn('id', 'uuid');
-        $table->addColumn('ip', 'string')->setLength(39);
         $table->addColumn('request_method', 'string')->setLength(4);
-        $table->addColumn('status', 'integer');
+        $table->addColumn('status_code', 'integer');
+        $table->addColumn('ip', 'string')->setLength(39);
         $table->addColumn('user_agent', 'string');
         $table->addColumn('timestamp', 'datetime');
         $table->addColumn('created_at', 'datetime')->setDefault('CURRENT_TIMESTAMP');
         $table->addColumn('updated_at', 'datetime')->setNotnull(false);
         $table->setPrimaryKey(['id']);
         $table->addIndex(['ip']);
+        $table->addIndex(['status_code']);
         $table->addIndex(['timestamp']);
         $table->addIndex(['created_at']);
     }
