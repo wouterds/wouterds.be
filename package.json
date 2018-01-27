@@ -9,7 +9,7 @@
   "dependencies": {
     "bootstrap-sass": "^3.3.7",
     "clipboard": "^1.7.1",
-    "flatpickr": "^4.2.1",
+    "flatpickr": "^4.2.4",
     "highlight.js": "^9.12.0",
     "jquery": "^3.3.1",
     "medium-zoom": "^0.3.0",
