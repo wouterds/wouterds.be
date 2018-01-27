@@ -5,12 +5,12 @@ namespace WouterDeSchuyter\Application\Http\Handlers\Blog;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Router;
+use Teapot\StatusCode;
 use WouterDeSchuyter\Domain\Blog\BlogPostRepository;
 use WouterDeSchuyter\Domain\Media\MediaRepository;
 use WouterDeSchuyter\Domain\Users\UserRepository;
 use WouterDeSchuyter\Infrastructure\View\ViewAwareInterface;
 use WouterDeSchuyter\Infrastructure\View\ViewAwareTrait;
-use Teapot\StatusCode;
 
 class DetailHandler implements ViewAwareInterface
 {

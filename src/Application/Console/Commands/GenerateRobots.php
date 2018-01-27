@@ -3,14 +3,10 @@
 namespace WouterDeSchuyter\Application\Console\Commands;
 
 use League\Tactician\CommandBus;
-use samdark\sitemap\Sitemap;
-use Slim\Router;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use WouterDeSchuyter\Domain\Blog\BlogPostRepository;
 use WouterDeSchuyter\Domain\Commands\Robots\GenerateRobots as GenerateRobotsCommand;
-use WouterDeSchuyter\Infrastructure\Config\Config;
 
 class GenerateRobots extends Command
 {
