@@ -8,6 +8,7 @@ services:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./../public:/code/public
       - ./../storage/media:/code/storage/media
+      - ./data/nginx/logs:/logs
     env_file:
       - ./../.env
     ports:
