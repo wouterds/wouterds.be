@@ -62,8 +62,8 @@ class ImportAccessLogsHandler
 
             $this->accessLogRepository->add(new AccessLog(
                 $requestMethod,
-                $requestPath,
                 $statusCode,
+                $requestPath,
                 $ip,
                 $userAgent,
                 $timestamp

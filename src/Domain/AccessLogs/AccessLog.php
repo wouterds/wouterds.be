@@ -25,6 +25,11 @@ class AccessLog implements JsonSerializable
     /**
      * @var string
      */
+    private $path;
+
+    /**
+     * @var string
+     */
     private $ip;
 
     /**
@@ -50,6 +55,7 @@ class AccessLog implements JsonSerializable
     /**
      * @param string $method
      * @param int $statusCode
+     * @param string $path
      * @param string $ip
      * @param string $userAgent
      * @param DateTime $timestamp
@@ -57,6 +63,7 @@ class AccessLog implements JsonSerializable
     public function __construct(
         string $method,
         int $statusCode,
+        string $path,
         string $ip,
         string $userAgent,
         DateTime $timestamp
@@ -64,6 +71,7 @@ class AccessLog implements JsonSerializable
         $this->id = new AccessLogId();
         $this->method = $method;
         $this->statusCode = $statusCode;
+        $this->path = $path;
         $this->ip = $ip;
         $this->userAgent = $userAgent;
         $this->timestamp = $timestamp;
@@ -93,6 +101,14 @@ class AccessLog implements JsonSerializable
     public function getStatusCode(): int
     {
         return $this->statusCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath(): string
+    {
+        return $this->path;
     }
 
     /**

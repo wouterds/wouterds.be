@@ -31,6 +31,7 @@ class DbalAccessLogRepository implements AccessLogRepository
         $this->connection->insert(self::TABLE, [
             'id' => $accessLog->getId(),
             'method' => $accessLog->getMethod(),
+            'path' => $accessLog->getPath(),
             'status_code' => $accessLog->getStatusCode(),
             'ip' => $accessLog->getIp(),
             'user_agent' => $accessLog->getUserAgent(),
