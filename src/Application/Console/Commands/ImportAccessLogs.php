@@ -32,6 +32,6 @@ class ImportAccessLogs extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->commandBus->handle(new ImportAccessLogsCommand());
+        $this->commandBus->handle(new ImportAccessLogsCommand(APP_DIR . '/storage/logs/nginx/access.log'));
     }
 }

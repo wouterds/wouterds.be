@@ -29,10 +29,8 @@ class ImportAccessLogsHandler
      */
     public function handle(ImportAccessLogs $importAccessLogs)
     {
-        $logFile = APP_DIR . '/storage/logs/nginx/access.log';
-
         // No logs yet?
-        if (!file_exists($logFile)) {
+        if (!file_exists($importAccessLogs->getLogFile())) {
             return;
         }
 
@@ -43,7 +41,7 @@ class ImportAccessLogsHandler
         $logParser->setFormat('%h %l %u %t "%r" %>s %O "%{Referer}i" \"%{User-Agent}i"');
 
         // Get data
-        $lines = file($logFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $lines = file($importAccessLogs->getLogFile(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
         // Save data to db
         foreach ($lines as $line) {
@@ -71,6 +69,6 @@ class ImportAccessLogsHandler
         }
 
         // Empty log
-        file_put_contents($logFile, '');
+        file_put_contents($importAccessLogs->getLogFile(), '');
     }
 }
