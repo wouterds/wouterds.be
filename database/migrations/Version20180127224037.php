@@ -19,7 +19,7 @@ class Version20180127224037 extends AbstractMigration
     {
         $table = $schema->createTable(self::TABLE);
         $table->addColumn('id', 'uuid');
-        $table->addColumn('request_method', 'string')->setLength(4);
+        $table->addColumn('method', 'string')->setLength(4);
         $table->addColumn('status_code', 'integer');
         $table->addColumn('path', 'string');
         $table->addColumn('ip', 'string')->setLength(39);
