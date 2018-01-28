@@ -29,6 +29,7 @@ class Version20180127224037 extends AbstractMigration
         $table->addColumn('updated_at', 'datetime')->setNotnull(false);
         $table->setPrimaryKey(['id']);
         $table->addIndex(['ip']);
+        $table->addIndex(['method']);
         $table->addIndex(['status_code']);
         $table->addIndex(['path']);
         $table->addIndex(['timestamp']);
