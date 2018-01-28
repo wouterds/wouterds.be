@@ -8,6 +8,7 @@ use League\Tactician\Container\ContainerLocator;
 use League\Tactician\Handler\CommandHandlerMiddleware;
 use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 use League\Tactician\Handler\MethodNameInflector\HandleInflector;
+use WouterDeSchuyter\Application\Commands\AccessLogs\EmptyAccessLogFileHandler;
 use WouterDeSchuyter\Application\Commands\AccessLogs\ImportAccessLogsHandler;
 use WouterDeSchuyter\Application\Commands\Blog\DeleteBlogPostHandler;
 use WouterDeSchuyter\Application\Commands\Blog\SaveBlogPostHandler;
@@ -22,6 +23,7 @@ use WouterDeSchuyter\Application\Commands\Users\DeleteUserHandler;
 use WouterDeSchuyter\Application\Commands\Users\SignInUserHandler;
 use WouterDeSchuyter\Application\Commands\Users\SignOutUserHandler;
 use WouterDeSchuyter\Application\Commands\Users\SignUpUserHandler;
+use WouterDeSchuyter\Domain\Commands\AccessLogs\EmptyAccessLogFile;
 use WouterDeSchuyter\Domain\Commands\AccessLogs\ImportAccessLogs;
 use WouterDeSchuyter\Domain\Commands\Blog\DeleteBlogPost;
 use WouterDeSchuyter\Domain\Commands\Blog\SaveBlogPost;
@@ -69,6 +71,7 @@ class ServiceProvider extends AbstractServiceProvider
                 GenerateSitemap::class => GenerateSitemapHandler::class,
                 PingSearchEngines::class => PingSearchEnginesHandler::class,
                 ImportAccessLogs::class => ImportAccessLogsHandler::class,
+                EmptyAccessLogFile::class => EmptyAccessLogFileHandler::class,
             ]);
 
             $handlerMiddleware = new CommandHandlerMiddleware(

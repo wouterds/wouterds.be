@@ -4,23 +4,32 @@ namespace WouterDeSchuyter\Application\Commands\AccessLogs;
 
 use Kassner\LogParser\FormatException;
 use Kassner\LogParser\LogParser;
+use League\Tactician\CommandBus;
 use WouterDeSchuyter\Domain\AccessLogs\AccessLog;
 use WouterDeSchuyter\Domain\AccessLogs\AccessLogRepository;
+use WouterDeSchuyter\Domain\Commands\AccessLogs\EmptyAccessLogFile;
 use WouterDeSchuyter\Domain\Commands\AccessLogs\ImportAccessLogs;
 use WouterDeSchuyter\Infrastructure\ValueObjects\DateTime;
 
 class ImportAccessLogsHandler
 {
     /**
+     * @var CommandBus
+     */
+    private $commandBus;
+
+    /**
      * @var AccessLogRepository
      */
     private $accessLogRepository;
 
     /**
+     * @param CommandBus $commandBus
      * @param AccessLogRepository $accessLogRepository
      */
-    public function __construct(AccessLogRepository $accessLogRepository)
+    public function __construct(CommandBus $commandBus, AccessLogRepository $accessLogRepository)
     {
+        $this->commandBus = $commandBus;
         $this->accessLogRepository = $accessLogRepository;
     }
 
@@ -66,9 +75,8 @@ class ImportAccessLogsHandler
                 $userAgent,
                 $timestamp
             ));
-        }
 
-        // Empty log
-        file_put_contents($importAccessLogs->getLogFile(), '');
+            $this->commandBus->handle(new EmptyAccessLogFile($importAccessLogs->getLogFile()));
+        }
     }
 }
