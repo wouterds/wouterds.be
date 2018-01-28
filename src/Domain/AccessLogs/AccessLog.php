@@ -15,7 +15,7 @@ class AccessLog implements JsonSerializable
     /**
      * @var string
      */
-    private $requestMethod;
+    private $method;
 
     /**
      * @var int
@@ -48,21 +48,21 @@ class AccessLog implements JsonSerializable
     private $updatedAt;
 
     /**
-     * @param string $requestMethod
+     * @param string $method
      * @param int $statusCode
      * @param string $ip
      * @param string $userAgent
      * @param DateTime $timestamp
      */
     public function __construct(
-        string $requestMethod,
+        string $method,
         int $statusCode,
         string $ip,
         string $userAgent,
         DateTime $timestamp
     ) {
         $this->id = new AccessLogId();
-        $this->requestMethod = $requestMethod;
+        $this->method = $method;
         $this->statusCode = $statusCode;
         $this->ip = $ip;
         $this->userAgent = $userAgent;
@@ -82,9 +82,9 @@ class AccessLog implements JsonSerializable
     /**
      * @return string
      */
-    public function getRequestMethod(): string
+    public function getMethod(): string
     {
-        return $this->requestMethod;
+        return $this->method;
     }
 
     /**
