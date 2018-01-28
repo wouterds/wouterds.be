@@ -12,7 +12,7 @@ class DateTime extends \DateTime
      */
     public static function fromTimestamp(int $timestamp): self
     {
-        return new self(date(DateTime::DATETIME, $timestamp));
+        return new self(date(self::DATETIME, $timestamp));
     }
 
     /**
