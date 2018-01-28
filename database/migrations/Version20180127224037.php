@@ -21,6 +21,7 @@ class Version20180127224037 extends AbstractMigration
         $table->addColumn('id', 'uuid');
         $table->addColumn('request_method', 'string')->setLength(4);
         $table->addColumn('status_code', 'integer');
+        $table->addColumn('path', 'string');
         $table->addColumn('ip', 'string')->setLength(39);
         $table->addColumn('user_agent', 'string');
         $table->addColumn('timestamp', 'datetime');
@@ -29,6 +30,7 @@ class Version20180127224037 extends AbstractMigration
         $table->setPrimaryKey(['id']);
         $table->addIndex(['ip']);
         $table->addIndex(['status_code']);
+        $table->addIndex(['path']);
         $table->addIndex(['timestamp']);
         $table->addIndex(['created_at']);
     }
