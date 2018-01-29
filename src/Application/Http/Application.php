@@ -9,15 +9,13 @@ class Application extends App
 {
     public function __construct()
     {
-        parent::__construct(Container::load());
+        // Load container
+        $container = Container::load();
 
-        $this->loadRoutes();
-    }
+        // Load parent constructor
+        parent::__construct($container);
 
-    private function loadRoutes()
-    {
-        $app = $this;
-
-        require_once __DIR__ . '/routes.php';
+        // Register routes
+        (new Routes($this))->register();
     }
 }
