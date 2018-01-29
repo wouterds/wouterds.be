@@ -51,7 +51,7 @@
 
     <!-- css -->
 {% if page.amp.active %}
-    <style amp-custom>{{ page.amp.css }}</style>
+    <style amp-custom>{% htmlcompress %}{{ page.amp.css }}{% endhtmlcompress %}</style>
 {% else %}
     <link rel="stylesheet" href="/static/css/main.css?v={{ app.config.get('APP_VERSION_NUMBER') }}">
 {% endif %}

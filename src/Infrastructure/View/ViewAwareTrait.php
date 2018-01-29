@@ -190,7 +190,7 @@ trait ViewAwareTrait
             $css = APP_DIR . '/public/static/css/amp.css';
 
             if (file_exists($css)) {
-                $data['amp']['css'] = file_get_contents(APP_DIR . '/public/static/css/app.amp.css');
+                $data['amp']['css'] = file_get_contents($css);
             }
         }
 
