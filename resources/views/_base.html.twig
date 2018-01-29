@@ -58,6 +58,15 @@
     <link rel="stylesheet" href="/static/css/main.css?v={{ app.config.get('APP_VERSION_NUMBER') }}">
 {% endif %}
 
+    <!-- favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v={{ app.config.get('APP_VERSION_NUMBER') }}">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png?v={{ app.config.get('APP_VERSION_NUMBER') }}" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png?v={{ app.config.get('APP_VERSION_NUMBER') }}" sizes="16x16">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v={{ app.config.get('APP_VERSION_NUMBER') }}">
+    <link rel="manifest" href="/manifest.json?v={{ app.config.get('APP_VERSION_NUMBER') }}">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg?v={{ app.config.get('APP_VERSION_NUMBER') }}" color="#5bbad5">
+    <meta name="theme-color" content="#ffffff">
+
     <!-- webfonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700">
 {% if not page.amp.active %}
