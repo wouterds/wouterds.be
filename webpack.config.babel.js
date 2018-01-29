@@ -4,12 +4,13 @@ import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 
 const config = {
-  entry: [
-    './resources/assets/scripts/app.js',
-    './resources/assets/styles/app.scss',
-  ],
+  entry: {
+    'app': './resources/assets/scripts/app.js',
+    'main': './resources/assets/styles/main.scss',
+    'amp': './resources/assets/styles/amp.scss',
+  },
   output: {
-    filename: './public/static/js/app.js',
+    filename: './public/static/js/[name].js',
   },
   module: {
     rules: [
@@ -29,7 +30,7 @@ const config = {
   },
   plugins: [
     new ExtractTextPlugin({
-      filename: './public/static/css/app.css',
+      filename: './public/static/css/[name].css',
     }),
     new CopyWebpackPlugin([
       {
