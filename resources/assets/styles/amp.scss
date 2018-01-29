@@ -8,19 +8,14 @@
 // Vendors
 @import '~bootstrap-sass/assets/stylesheets/bootstrap/mixins';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap/normalize';
-@import '~bootstrap-sass/assets/stylesheets/bootstrap/grid';
-@import '~bootstrap-sass/assets/stylesheets/bootstrap/responsive-utilities';
-@import '~bootstrap-sass/assets/stylesheets/bootstrap/tables';
 
 // Base styles
 @import 'base/utilities';
 @import 'base/fonts';
-@import 'base/forms';
 
 // Components
 @import 'components/header';
 @import 'components/footer';
-@import 'components/media';
 
 // Pages
 @import 'pages/base';
