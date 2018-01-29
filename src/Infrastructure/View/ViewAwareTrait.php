@@ -47,6 +47,14 @@ trait ViewAwareTrait
     public abstract function getTemplate(): string;
 
     /**
+     * @return bool
+     */
+    public function isAmpReady(): bool
+    {
+        return false;
+    }
+
+    /**
      * @param Request $request
      * @param Response $response
      * @return Response
@@ -73,11 +81,16 @@ trait ViewAwareTrait
             $data['page'] = [];
         }
 
-        $data['page']['info'] = $this->pageInfo();
+        $data['page'] = array_merge($this->pageInfo(), $data['page']);
         $data['app']['config'] = $this->config;
         $data['app']['router'] = $this->router;
         $data['app']['request'] = $this->request;
         $data['app']['report'] = $this->applicationMonitor->getReport();
+
+
+        if ($data['page']['amp']['active'] && !$data['page']['amp']['ready']) {
+            return $response->withRedirect($data['page']['path']);
+        }
 
         return $this->twig->renderWithResponse($response, $this->getTemplate(), $data);
     }
@@ -160,13 +173,27 @@ trait ViewAwareTrait
             $className .= ' page--' . $page;
         }
 
-        $isAMP = substr_count($this->request->getUri()->getPath(), '/amp/') > 0;
-
-        return [
+        $data = [
             'pascalCase' => $pascalCaseName,
             'dashedCase' => $dashedCaseName,
             'className' => $className,
-            'amp' => $isAMP,
+            'path' => str_replace('/amp/', '/', $this->request->getUri()->getPath()),
         ];
+
+        $data['amp'] = [
+            'ready' => $this->isAmpReady(),
+            'active' => substr_count($this->request->getUri()->getPath(), '/amp/') > 0,
+            'path' => '/amp' . $data['path'],
+        ];
+
+        if ($data['amp']['active']) {
+            $css = APP_DIR . '/public/static/css/app.amp.css';
+
+            if (file_exists($css)) {
+                $data['amp']['css'] = file_get_contents(APP_DIR . '/public/static/css/app.amp.css');
+            }
+        }
+
+        return $data;
     }
 }

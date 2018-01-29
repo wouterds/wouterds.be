@@ -12,6 +12,14 @@ class AboutHandler implements ViewAwareInterface
     use ViewAwareTrait;
 
     /**
+     * @return bool
+     */
+    public function isAmpReady(): bool
+    {
+        return true;
+    }
+
+    /**
      * @return string
      */
     public function getTemplate(): string

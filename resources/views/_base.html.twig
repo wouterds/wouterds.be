@@ -12,11 +12,14 @@
  v{{ app.config.get('APP_VERSION_NUMBER') }} - {{ app.config.get('APP_VERSION_COMMIT') }}
 
 -->
-<html lang="en">
+<html lang="en"{% if page.amp.active %} ⚡{% endif %}>
 <head>
 {% block head %}
     <!-- meta -->
     <meta charset="utf-8">
+{% if page.amp.active %}
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+{% endif %}
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="robots" content="index, follow">
@@ -30,26 +33,43 @@
     <meta property="fb:pages" content="{{ app.config.get('FB_PAGE_ID') }}" />
     <meta property="og:site_name" content="{{ app.config.get('APP_NAME') }}">
 {% endblock %}
+{% if page.amp.active %}
+
+    <!-- amp -->
+    <link rel="canonical" href="{{ app.config.get('APP_URL') }}{{ page.amp.path }}">
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style>
+    <noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+{% elseif page.amp.ready %}
+
+    <!-- amp -->
+    <link rel="amphtml" href="{{ app.config.get('APP_URL') }}{{ page.amp.path }}">
+{% endif %}
 
     <!-- title -->
     <title>{% block title %}{{ app.config.get('APP_NAME') }}{% endblock %}</title>
 
     <!-- css -->
+{% if page.amp.active %}
+    <style amp-custom>{{ page.amp.css }}</style>
+{% else %}
     <link rel="stylesheet" href="/static/css/app.css?v={{ app.config.get('APP_VERSION_NUMBER') }}">
+{% endif %}
 
     <!-- webfonts -->
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:100,300,400,500,700">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font/build/web/hack-subset.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700">
+{% if not page.amp.active %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack-subset.css">
+{% endif %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 {% endblock %}
 </head>
 {% htmlcompress %}
-<body id="page{{ page.info.pascalCase }}" class="{{ page.info.className }}">
+<body id="page{{ page.pascalCase }}" class="{{ page.className }}">
     {% include 'components/header.html.twig' %}
 
     <main role="main" class="main">
@@ -64,9 +84,11 @@
 
 <!-- javascript -->
 {% htmlcompress %}
+{% if not page.amp.active %}
 <script src="/static/js/app.js?v={{ app.config.get('APP_VERSION_NUMBER') }}"></script>
+{% endif %}
 {% block extra_scripts %}{% endblock %}
-<script async src="//googletagmanager.com/gtag/js?id=UA-57637936-2"></script>
+<script async src="https://googletagmanager.com/gtag/js?id=UA-57637936-2"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); };

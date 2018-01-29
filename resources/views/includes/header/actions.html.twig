@@ -1,13 +1,13 @@
-<li class="header__navigation__item{% if 'home' in page.info.dashedCase %} header__navigation__item--active{% endif %}">
+<li class="header__navigation__item{% if 'home' in page.dashedCase %} header__navigation__item--active{% endif %}">
     <a class="header__navigation__item-link" href="{{ app.router.pathFor('home') }}">Home</a>
 </li>
-<li class="header__navigation__item{% if 'about' in page.info.dashedCase %} header__navigation__item--active{% endif %}">
+<li class="header__navigation__item{% if 'about' in page.dashedCase %} header__navigation__item--active{% endif %}">
     <a class="header__navigation__item-link" href="{{ app.router.pathFor('about') }}">About</a>
 </li>
-<li class="header__navigation__item{% if 'blog-index' in page.info.dashedCase %} header__navigation__item--active{% endif %}">
+<li class="header__navigation__item{% if 'blog-index' in page.dashedCase %} header__navigation__item--active{% endif %}">
     <a class="header__navigation__item-link" href="{{ app.router.pathFor('blog') }}">Blog</a>
 </li>
-<li class="header__navigation__item{% if 'contact' in page.info.dashedCase %} header__navigation__item--active{% endif %}">
+<li class="header__navigation__item{% if 'contact' in page.dashedCase %} header__navigation__item--active{% endif %}">
     <a class="header__navigation__item-link" href="{{ app.router.pathFor('contact') }}">Contact</a>
 </li>
 {% if app.request.getCookieParam('user_session_id') %}
