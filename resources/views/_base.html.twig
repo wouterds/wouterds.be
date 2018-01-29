@@ -18,6 +18,7 @@
     <!-- meta -->
     <meta charset="utf-8">
 {% if page.amp.active %}
+    <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
     <script async src="https://cdn.ampproject.org/v0.js"></script>
 {% endif %}
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
@@ -84,9 +85,22 @@
 
 <!-- javascript -->
 {% htmlcompress %}
-{% if not page.amp.active %}
+{% if page.amp.active %}
+<amp-analytics type="googleanalytics">
+<script type="application/json">{% htmlcompress %}{
+    "vars": {
+        "account": "UA-57637936-2"
+    },
+    "triggers": {
+        "trackPageview": {
+            "on": "visible",
+            "request": "pageview"
+        }
+    }
+}{% endhtmlcompress %}</script>
+</amp-analytics>
+{% else %}
 <script src="/static/js/app.js?v={{ app.config.get('APP_VERSION_NUMBER') }}"></script>
-{% endif %}
 {% block extra_scripts %}{% endblock %}
 <script async src="https://googletagmanager.com/gtag/js?id=UA-57637936-2"></script>
 <script>
@@ -105,6 +119,7 @@
         a.appendChild(r);
     })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 </script>
+{% endif %}
 {% endhtmlcompress %}
 
 </body>
