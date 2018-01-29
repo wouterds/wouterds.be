@@ -15,12 +15,14 @@
 <html lang="en"{% if page.amp.active %} ⚡{% endif %}>
 <head>
 {% block head %}
+{% if page.amp.active %}
+    <!-- amp libs -->
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
+
+{% endif %}
     <!-- meta -->
     <meta charset="utf-8">
-{% if page.amp.active %}
-    <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
-    <script async src="https://cdn.ampproject.org/v0.js"></script>
-{% endif %}
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="robots" content="index, follow">
@@ -62,11 +64,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack-subset.css">
 {% endif %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+{% if not page.amp.active %}
 
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+{% endif %}
 {% endblock %}
 </head>
 {% htmlcompress %}
