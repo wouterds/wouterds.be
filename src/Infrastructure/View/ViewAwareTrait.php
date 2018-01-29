@@ -191,6 +191,9 @@ trait ViewAwareTrait
 
             if (file_exists($css)) {
                 $data['amp']['css'] = file_get_contents($css);
+
+                // Dirty AF, hopefully no one will ever notice
+                $data['amp']['css'] = str_replace('!important', null, $data['amp']['css']);
             }
         }
 
