@@ -12,6 +12,11 @@ interface ViewAwareInterface
     public function isAmpReady(): bool;
 
     /**
+     * @return string|null
+     */
+    public function getAmpStylesheet(): ?string;
+
+    /**
      * @return string
      */
     public function getTemplate(): string;

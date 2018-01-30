@@ -47,11 +47,19 @@ trait ViewAwareTrait
     public abstract function getTemplate(): string;
 
     /**
+     * @return string|null
+     */
+    public function getAmpStylesheet(): ?string
+    {
+        return null;
+    }
+
+    /**
      * @return bool
      */
     public function isAmpReady(): bool
     {
-        return false;
+        return !empty($this->getAmpStylesheet());
     }
 
     /**
@@ -187,7 +195,7 @@ trait ViewAwareTrait
         ];
 
         if ($data['amp']['active']) {
-            $css = APP_DIR . '/public/static/css/amp.css';
+            $css = APP_DIR . '/public/static/css/amp.' . $this->getAmpStylesheet();
 
             if (file_exists($css)) {
                 $data['amp']['css'] = file_get_contents($css);

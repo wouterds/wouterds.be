@@ -12,11 +12,11 @@ class AboutHandler implements ViewAwareInterface
     use ViewAwareTrait;
 
     /**
-     * @return bool
+     * @return null|string
      */
-    public function isAmpReady(): bool
+    public function getAmpStylesheet(): ?string
     {
-        return true;
+        return 'about.css';
     }
 
     /**

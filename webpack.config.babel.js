@@ -7,7 +7,7 @@ const config = {
   entry: {
     'app': './resources/assets/scripts/app.js',
     'main': './resources/assets/styles/main.scss',
-    'amp': './resources/assets/styles/amp.scss',
+    'amp.about': './resources/assets/styles/amp/about.scss',
   },
   output: {
     filename: './public/static/js/[name].js',
