@@ -8,6 +8,7 @@ const config = {
     'app': './resources/assets/scripts/app.js',
     'main': './resources/assets/styles/main.scss',
     'amp.about': './resources/assets/styles/amp/about.scss',
+    'amp.home': './resources/assets/styles/amp/home.scss',
   },
   output: {
     filename: './public/static/js/[name].js',

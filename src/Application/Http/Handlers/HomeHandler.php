@@ -26,6 +26,14 @@ class HomeHandler implements ViewAwareInterface
     }
 
     /**
+     * @return null|string
+     */
+    public function getAmpStylesheet(): ?string
+    {
+        return 'home.css';
+    }
+
+    /**
      * @return string
      */
     public function getTemplate(): string
