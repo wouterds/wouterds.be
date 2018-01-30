@@ -8,7 +8,13 @@
     <div class="container">
         <section class="sub-header">
             <a href="{{ app.router.pathFor('about') }}" title="About">
-                <img src="/static/images/wouterds.jpg" alt="wouterds.jpg">
+                {% if page.amp.active %}
+                    <div class="sub-header__image">
+                        <amp-img src="/static/images/wouterds.jpg" alt="wouterds.jpg" layout="fixed" height="110px" width="110px"></amp-img>
+                    </div>
+                {% else %}
+                    <img class="sub-header__image" src="/static/images/wouterds.jpg" alt="wouterds.jpg">
+                {% endif %}
 
                 <h1>Wouter De Schuyter</h1>
                 <h2>An ambitious, passionate Full Stack Developer</h2>

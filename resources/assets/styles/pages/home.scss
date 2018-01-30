@@ -13,16 +13,22 @@ $scope: 'page--home';
     text-align: center;
     padding-bottom: 75px;
 
-    a {
-      text-decoration: none;
-      display: inline;
-    }
-
-    img {
+    &__image,
+    &__image img {
+      display: inline-block;
       height: 110px;
       width: 110px;
       border-radius: 50%;
       margin: 20px 0;
+    }
+
+    &__image img {
+      margin: 0;
+    }
+
+    a {
+      text-decoration: none;
+      display: inline;
     }
 
     h1,
