@@ -47,7 +47,7 @@ class ImportAccessLogsHandler
         $logParser = new LogParser();
 
         // Nginx log format
-        $logParser->setFormat('%h %l %u %t "%r" %>s %O "%{Referer}i" \"%{User-Agent}i"');
+        $logParser->setFormat('%h %l %u %t "%r" %>s %O "%{Referer}i" "%{User-Agent}i" %{CFRayId}i %{CFConnectingIp}i %{CFIPCountry}i');
 
         // Get data
         $lines = file($importAccessLogs->getLogFile(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
@@ -65,13 +65,19 @@ class ImportAccessLogsHandler
             $statusCode = (int) $entry->status;
             list($requestMethod, $requestPath) = explode(' ', $entry->request);
             $userAgent = $entry->HeaderUserAgent;
+            $cfRayId = $entry->HeaderCFRayId;
+            $connectingIp = $entry->HeaderCFConnectingIp;
+            $connectingCountry = $entry->HeaderCFIPCountry;
             $timestamp = DateTime::fromTimestamp($entry->stamp);
 
             $this->accessLogRepository->add(new AccessLog(
                 $requestMethod,
                 $statusCode,
                 $requestPath,
+                $cfRayId,
                 $ip,
+                $connectingIp,
+                $connectingCountry,
                 $userAgent,
                 $timestamp
             ));

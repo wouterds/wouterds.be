@@ -30,7 +30,22 @@ class AccessLog implements JsonSerializable
     /**
      * @var string
      */
+    private $cfRayId;
+
+    /**
+     * @var string
+     */
     private $ip;
+
+    /**
+     * @var string
+     */
+    private $connectingIp;
+
+    /**
+     * @var string
+     */
+    private $connectingCountry;
 
     /**
      * @var string
@@ -56,7 +71,10 @@ class AccessLog implements JsonSerializable
      * @param string $method
      * @param int $statusCode
      * @param string $path
+     * @param string $cfRayId
      * @param string $ip
+     * @param string $connectingIp
+     * @param string $connectingCountry
      * @param string $userAgent
      * @param DateTime $timestamp
      */
@@ -64,7 +82,10 @@ class AccessLog implements JsonSerializable
         string $method,
         int $statusCode,
         string $path,
+        string $cfRayId,
         string $ip,
+        string $connectingIp,
+        string $connectingCountry,
         string $userAgent,
         DateTime $timestamp
     ) {
@@ -72,7 +93,10 @@ class AccessLog implements JsonSerializable
         $this->method = $method;
         $this->statusCode = $statusCode;
         $this->path = $path;
+        $this->cfRayId = $cfRayId;
         $this->ip = $ip;
+        $this->connectingIp = $connectingIp;
+        $this->connectingCountry = $connectingCountry;
         $this->userAgent = $userAgent;
         $this->timestamp = $timestamp;
         $this->createdAt = new DateTime();
@@ -114,9 +138,33 @@ class AccessLog implements JsonSerializable
     /**
      * @return string
      */
+    public function getCfRayId(): string
+    {
+        return $this->cfRayId;
+    }
+
+    /**
+     * @return string
+     */
     public function getIp(): string
     {
         return $this->ip;
+    }
+
+    /**
+     * @return string
+     */
+    public function getConnectingIp(): string
+    {
+        return $this->connectingIp;
+    }
+
+    /**
+     * @return string
+     */
+    public function getConnectingCountry(): string
+    {
+        return $this->connectingCountry;
     }
 
     /**
