@@ -60,4 +60,5 @@
 
   <rule ref="WordPress.Arrays.CommaAfterArrayItem"/>
   <rule ref="WordPress.CodeAnalysis.EmptyStatement"/>
+  <rule ref="WordPress.CodeAnalysis.AssignmentInCondition.Found"/>
 </ruleset>
