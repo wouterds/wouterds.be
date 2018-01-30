@@ -9,6 +9,7 @@ const config = {
     'main': './resources/assets/styles/main.scss',
     'amp.about': './resources/assets/styles/amp/about.scss',
     'amp.home': './resources/assets/styles/amp/home.scss',
+    'amp.blog.index': './resources/assets/styles/amp/blog/index.scss',
   },
   output: {
     filename: './public/static/js/[name].js',

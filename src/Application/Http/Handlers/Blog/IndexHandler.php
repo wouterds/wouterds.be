@@ -26,6 +26,14 @@ class IndexHandler implements ViewAwareInterface
     }
 
     /**
+     * @return null|string
+     */
+    public function getAmpStylesheet(): ?string
+    {
+        return 'blog.index.css';
+    }
+
+    /**
      * @return string
      */
     public function getTemplate(): string
