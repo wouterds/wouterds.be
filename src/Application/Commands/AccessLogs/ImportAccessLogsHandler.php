@@ -47,7 +47,9 @@ class ImportAccessLogsHandler
         $logParser = new LogParser();
 
         // Nginx log format
-        $logParser->setFormat('%h %l %u %t "%r" %>s %O "%{Referer}i" "%{User-Agent}i" %{CFRayId}i %{CFConnectingIp}i %{CFIPCountry}i');
+        $logParser->setFormat(
+            '%h %l %u %t "%r" %>s %O "%{Referer}i" "%{User-Agent}i" %{CFRayId}i %{CFConnectingIp}i %{CFIPCountry}i'
+        );
 
         // Get data
         $lines = file($importAccessLogs->getLogFile(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
