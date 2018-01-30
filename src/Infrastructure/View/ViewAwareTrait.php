@@ -185,12 +185,16 @@ trait ViewAwareTrait
             'pascalCase' => $pascalCaseName,
             'dashedCase' => $dashedCaseName,
             'className' => $className,
-            'path' => str_replace('/amp/', '/', $this->request->getUri()->getPath()),
+            'path' => str_replace('/amp', null, $this->request->getUri()->getPath()),
         ];
+
+        if ($data['path'] === '/') {
+            $data['path'] = '';
+        }
 
         $data['amp'] = [
             'ready' => $this->isAmpReady(),
-            'active' => substr_count($this->request->getUri()->getPath(), '/amp/') > 0,
+            'active' => substr_count($this->request->getUri()->getPath(), '/amp') > 0,
             'path' => '/amp' . $data['path'],
         ];
 
