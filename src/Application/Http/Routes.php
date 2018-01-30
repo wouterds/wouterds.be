@@ -51,7 +51,7 @@ class Routes
         $self->registerRoutes($self->app);
         $self->registerAmpCompatibleRoutes($self->app);
         $self->app->group('/amp', function () use ($self) {
-            $self->registerAmpCompatibleRoutes($self->app, ':amp');
+            $self->registerAmpCompatibleRoutes($self->app, true);
         });
         $self->registerAdminRoutes($self->app);
     }
@@ -66,11 +66,13 @@ class Routes
 
     /**
      * @param App $app
-     * @param string $suffix
+     * @param bool $amp
      */
-    private function registerAmpCompatibleRoutes(App $app, string $suffix = '')
+    private function registerAmpCompatibleRoutes(App $app, bool $amp = false)
     {
-        $app->get('/', HomeHandler::class)->setName('home' . $suffix);
+        $suffix = $amp ? ':amp' : '';
+
+        $app->get($amp ? '' : '/', HomeHandler::class)->setName('home' . $suffix);
         $app->get('/about', AboutHandler::class)->setName('about' . $suffix);
         $app->group('/blog', function () use ($app, $suffix) {
             $app->get('', BlogIndexHandler::class)->setName('blog' . $suffix);
