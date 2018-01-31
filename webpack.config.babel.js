@@ -10,6 +10,7 @@ const config = {
     'amp.about': './resources/assets/styles/amp/about.scss',
     'amp.home': './resources/assets/styles/amp/home.scss',
     'amp.blog.index': './resources/assets/styles/amp/blog/index.scss',
+    'amp.blog.detail': './resources/assets/styles/amp/blog/detail.scss',
   },
   output: {
     filename: './public/static/js/[name].js',

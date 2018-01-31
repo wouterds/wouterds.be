@@ -55,6 +55,14 @@ class DetailHandler implements ViewAwareInterface
     }
 
     /**
+     * @return null|string
+     */
+    public function getAmpStylesheet(): ?string
+    {
+        return 'blog.detail.css';
+    }
+
+    /**
      * @return string
      */
     public function getTemplate(): string
