@@ -63,6 +63,14 @@ class DetailHandler implements ViewAwareInterface
     }
 
     /**
+     * @return array
+     */
+    public function getAmpPlugins(): array
+    {
+        return ['youtube'];
+    }
+
+    /**
      * @return string
      */
     public function getTemplate(): string
