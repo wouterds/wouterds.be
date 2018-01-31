@@ -17,6 +17,11 @@ interface ViewAwareInterface
     public function getAmpStylesheet(): ?string;
 
     /**
+     * @return array
+     */
+    public function getAmpPlugins(): array;
+
+    /**
      * @return string
      */
     public function getTemplate(): string;

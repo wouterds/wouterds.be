@@ -55,6 +55,14 @@ trait ViewAwareTrait
     }
 
     /**
+     * @return array
+     */
+    public function getAmpPlugins(): array
+    {
+        return [];
+    }
+
+    /**
      * @return bool
      */
     public function isAmpReady(): bool
@@ -196,7 +204,12 @@ trait ViewAwareTrait
             'ready' => $this->isAmpReady(),
             'active' => substr_count($this->request->getUri()->getPath(), '/amp') > 0,
             'path' => '/amp' . $data['path'],
+            'plugins' => [],
         ];
+
+        foreach ($this->getAmpPlugins() as $plugin) {
+            $data['amp']['plugins'][$plugin] = true;
+        }
 
         if ($data['amp']['active']) {
             $css = APP_DIR . '/public/static/css/amp.' . $this->getAmpStylesheet();
