@@ -38,7 +38,7 @@ class MediaInlineRenderer implements InlineRendererInterface
         }
 
         if ($media->isImage()) {
-            return $this->renderImage($media);
+            return $this->renderImage($media, true);
         }
 
         if ($media->isYoutubeVideo()) {
@@ -54,24 +54,34 @@ class MediaInlineRenderer implements InlineRendererInterface
 
     /**
      * @param Media $image
+     * @param bool $ampEnabled
      * @return string
      */
-    private function renderImage(Media $image)
+    private function renderImage(Media $image, $ampEnabled = false)
     {
         $html = '';
 
         // Span wrapper - start
         $html .= '<span ';
-        $html .= 'class="media media--image" ';
-        $html .= 'style="padding-bottom: ' . $image->getRatio() .'%"';
+        $html .= 'class="media media--image' . ($ampEnabled ? ' media--amp' : '') . '" ';
+        if (!$ampEnabled) {
+            $html .= 'style="padding-bottom: ' . $image->getRatio() .'%"';
+        }
         $html .= '>';
 
         // Image
-        $html .= '<img ';
-        $html .= 'class="media__image" ';
-        $html .= 'src="/static/media' . $image->getPath() . '" ';
-        $html .= 'alt="' . htmlentities($image->getName()) . '" ';
-        $html .= 'title="' . htmlentities($image->getName()) . '"';
+        $html .= $ampEnabled ? '<amp-img' : '<img';
+        if (!$ampEnabled) {
+            $html .= ' class="media__image"';
+        }
+        $html .= ' src="/static/media' . $image->getPath() . '"';
+        $html .= ' alt="' . htmlentities($image->getName()) . '"';
+        $html .= ' title="' . htmlentities($image->getName()) . '"';
+        if ($ampEnabled) {
+            $html .= ' width="' . $image->getWidth() . '"';
+            $html .= ' height="' . $image->getHeight() . '"';
+            $html .= ' layout="responsive"';
+        }
         $html .= '>';
 
         // Span wrapper - end
