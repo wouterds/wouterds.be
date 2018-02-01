@@ -46,7 +46,7 @@ class MediaInlineRenderer implements InlineRendererInterface
         }
 
         if ($media->isVimeoVideo()) {
-            return $this->renderVimeoVideo($media);
+            return $this->renderVimeoVideo($media, $inline->isAmpEnabled());
         }
 
         return '';
@@ -126,28 +126,41 @@ class MediaInlineRenderer implements InlineRendererInterface
 
     /**
      * @param Media $vimeoVideo
+     * @param bool $ampEnabled
      * @return string
      */
-    private function renderVimeoVideo(Media $vimeoVideo)
+    private function renderVimeoVideo(Media $vimeoVideo, $ampEnabled = false)
     {
-        $embedUrl = explode('.com/', $vimeoVideo->getUrl());
-        $embedUrl = 'https://player.vimeo.com/video/' . end($embedUrl);
+        $vimeoVideoId = explode('.com/', $vimeoVideo->getUrl())[1];
+        $embedUrl = 'https://player.vimeo.com/video/' . $vimeoVideoId;
 
         $html = '';
         // Span wrapper - start
-        $html .= '<span ';
-        $html .= 'class="media media--vimeo-video" ';
-        $html .= 'style="padding-bottom: ' . $vimeoVideo->getRatio() .'%"';
+        $html .= '<span';
+        $html .= ' class="media media--vimeo-video' . ($ampEnabled ? ' media--amp' : '') . '"';
+        if (!$ampEnabled) {
+            $html .= ' style="padding-bottom: ' . $vimeoVideo->getRatio() . '%"';
+        }
         $html .= '>';
 
-        // Image
-        $html .= '<iframe ';
-        $html .= 'class="media__video" ';
-        $html .= 'src="' . $embedUrl . '" ';
-        $html .= 'frameborder="0" ';
-        $html .= 'allowfullscreen>';
-        $html .= $vimeoVideo->getUrl();
-        $html .= '</iframe>';
+        // Video
+        if (!$ampEnabled) {
+            $html .= '<iframe ';
+            $html .= 'class="media__video" ';
+            $html .= 'src="' . $embedUrl . '" ';
+            $html .= 'frameborder="0" ';
+            $html .= 'allowfullscreen>';
+            $html .= $vimeoVideo->getUrl();
+            $html .= '</iframe>';
+        } else {
+            $html .= '<amp-vimeo';
+            $html .= ' data-videoid="' . $vimeoVideoId . '"';
+            $html .= ' layout="responsive"';
+            $html .= ' width="' . $vimeoVideo->getWidth() . '"';
+            $html .= ' height="' . $vimeoVideo->getHeight() . '"';
+            $html .= '>';
+            $html .= '</amp-vimeo>';
+        }
 
         // Span wrapper - end
         $html .= '</span>';
