@@ -42,7 +42,7 @@ class MediaInlineRenderer implements InlineRendererInterface
         }
 
         if ($media->isYoutubeVideo()) {
-            return $this->renderYoutubeVideo($media);
+            return $this->renderYoutubeVideo($media, $inline->isAmpEnabled());
         }
 
         if ($media->isVimeoVideo()) {
@@ -97,26 +97,38 @@ class MediaInlineRenderer implements InlineRendererInterface
      * @param Media $youtubeVideo
      * @return string
      */
-    private function renderYoutubeVideo(Media $youtubeVideo)
+    private function renderYoutubeVideo(Media $youtubeVideo, $ampEnabled)
     {
-        $embedUrl = explode('.be/', $youtubeVideo->getUrl());
-        $embedUrl = 'https://youtube.com/embed/' . end($embedUrl);
+        $youtubeVideoId = explode('.be/', $youtubeVideo->getUrl())[1];
+        $embedUrl = 'https://youtube.com/embed/' . $youtubeVideoId;
 
         $html = '';
         // Span wrapper - start
         $html .= '<span ';
         $html .= 'class="media media--youtube-video" ';
-        $html .= 'style="padding-bottom: ' . $youtubeVideo->getRatio() .'%"';
+        if (!$ampEnabled) {
+            $html .= 'style="padding-bottom: ' . $youtubeVideo->getRatio() .'%"';
+        }
         $html .= '>';
 
-        // Image
-        $html .= '<iframe ';
-        $html .= 'class="media__video" ';
-        $html .= 'src="' . $embedUrl . '" ';
-        $html .= 'frameborder="0" ';
-        $html .= 'allowfullscreen>';
-        $html .= $youtubeVideo->getUrl();
-        $html .= '</iframe>';
+        // Video
+        if (!$ampEnabled) {
+            $html .= '<iframe ';
+            $html .= 'class="media__video" ';
+            $html .= 'src="' . $embedUrl . '" ';
+            $html .= 'frameborder="0" ';
+            $html .= 'allowfullscreen>';
+            $html .= $youtubeVideo->getUrl();
+            $html .= '</iframe>';
+        } else {
+            $html .= '<amp-youtube';
+            $html .= ' data-videoid="' . $youtubeVideoId . '"';
+            $html .= ' layout="responsive"';
+            $html .= ' width="' . $youtubeVideo->getWidth() . '"';
+            $html .= ' height="' . $youtubeVideo->getHeight() . '"';
+            $html .= '>';
+            $html .= '</amp-youtube>';
+        }
 
         // Span wrapper - end
         $html .= '</span>';
