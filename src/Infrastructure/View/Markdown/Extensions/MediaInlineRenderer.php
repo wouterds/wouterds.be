@@ -83,6 +83,9 @@ class MediaInlineRenderer implements InlineRendererInterface
             $html .= ' layout="responsive"';
         }
         $html .= '>';
+        if ($ampEnabled) {
+            $html .= '</amp-img>';
+        }
 
         // Span wrapper - end
         $html .= '</span>';
