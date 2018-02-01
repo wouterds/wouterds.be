@@ -42,7 +42,10 @@ class ServiceProvider extends AbstractServiceProvider implements BootableService
             $twig->addExtension(new CompressHtmlExtension());
 
             $commonMarkEnvironment = CommonMarkEnvironment::createCommonMarkEnvironment();
-            $commonMarkEnvironment->addExtension($this->container->get(MediaInlineExtension::class));
+            $markdownMediaExtension = $this->container->get(MediaInlineExtension::class);
+            $request = $this->container->get(Request::class);
+            $markdownMediaExtension->setAmpEnabled(substr_count($request->getUri()->getPath(), '/amp') > 0);
+            $commonMarkEnvironment->addExtension($markdownMediaExtension);
             $commonMarkConverter = new CommonMarkConverter([], $commonMarkEnvironment);
             $twig->addExtension(new MarkdownExtension(new CommonMarkEngine($commonMarkConverter)));
 

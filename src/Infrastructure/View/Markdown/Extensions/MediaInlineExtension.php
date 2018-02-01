@@ -45,4 +45,12 @@ class MediaInlineExtension extends Extension
             MediaInline::class => $this->mediaInlineRenderer,
         ];
     }
+
+    /**
+     * @param bool $enabled
+     */
+    public function setAmpEnabled(bool $enabled)
+    {
+        $this->mediaInlineParser->ampEnabled($enabled);
+    }
 }

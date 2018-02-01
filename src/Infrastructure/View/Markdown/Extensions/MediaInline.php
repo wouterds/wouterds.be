@@ -13,6 +13,11 @@ class MediaInline extends HtmlInline
     private $mediaId;
 
     /**
+     * @var bool
+     */
+    private $ampEnabled;
+
+    /**
      * @param MediaId $mediaId
      */
     public function setMediaId(MediaId $mediaId): void
@@ -26,5 +31,21 @@ class MediaInline extends HtmlInline
     public function getMediaId(): MediaId
     {
         return $this->mediaId;
+    }
+
+    /**
+     * @param bool $ampEnabled
+     */
+    public function setAmpEnabled(bool $ampEnabled)
+    {
+        $this->ampEnabled = $ampEnabled;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAmpEnabled(): bool
+    {
+        return $this->ampEnabled;
     }
 }

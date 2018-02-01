@@ -10,6 +10,11 @@ use WouterDeSchuyter\Domain\Media\MediaId;
 class MediaInlineParser extends AbstractInlineParser
 {
     /**
+     * @var bool
+     */
+    private $ampEnabled = false;
+
+    /**
      * @return string[]
      */
     public function getCharacters()
@@ -46,8 +51,17 @@ class MediaInlineParser extends AbstractInlineParser
 
         $mediaInlineBlock = new MediaInline();
         $mediaInlineBlock->setMediaId($mediaId);
+        $mediaInlineBlock->setAmpEnabled($this->ampEnabled);
         $inlineContext->getContainer()->appendChild($mediaInlineBlock);
 
         return true;
+    }
+
+    /**
+     * @param bool $enabled
+     */
+    public function ampEnabled(bool $enabled)
+    {
+        $this->ampEnabled = $enabled;
     }
 }
