@@ -25,7 +25,7 @@
     <div class="container">
         <article class="page--blog--detail">
             <header class="page--blog--detail__header">
-                <div class="page--blog--detail__cover-image"{% if not page.amp.active %} style="background-image: url('/static/media{{ media.path }}')"{% endif %}>
+                <div class="page--blog--detail__cover-image{% if page.amp.active %} page--blog--detail__cover-image--amp{% endif %}"{% if not page.amp.active %} style="background-image: url('/static/media{{ media.path }}')"{% endif %}>
                     {% if page.amp.active %}
                         <amp-img src="/static/media{{ media.path }}" alt="{{ media.name }}" width="{{ media.width }}" height="{{ media.height }}" layout="fill"></amp-img>
                     {% else %}
