@@ -25,8 +25,12 @@
     <div class="container">
         <article class="page--blog--detail">
             <header class="page--blog--detail__header">
-                <div class="page--blog--detail__cover-image" style="background-image: url('/static/media{{ media.path }}')">
-                    <img src="/static/media{{ media.path }}" alt="{{ media.name }}">
+                <div class="page--blog--detail__cover-image"{% if not page.amp.active %} style="background-image: url('/static/media{{ media.path }}')"{% endif %}>
+                    {% if page.amp.active %}
+                        <amp-img src="/static/media{{ media.path }}" alt="{{ media.name }}" width="{{ media.width }}" height="{{ media.height }}" layout="fill"></amp-img>
+                    {% else %}
+                        <img src="/static/media{{ media.path }}" alt="{{ media.name }}">
+                    {% endif %}
                 </div>
                 <a class="page--blog--detail__link" title="{{ blogPost.title }}" href="{{ app.router.pathFor('blog.detail', {slug: blogPost.slug}) }}">
                     <h1 class="page--blog--detail__title">{{ blogPost.title }}</h1>
