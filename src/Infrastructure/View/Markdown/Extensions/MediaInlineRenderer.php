@@ -38,7 +38,7 @@ class MediaInlineRenderer implements InlineRendererInterface
         }
 
         if ($media->isImage()) {
-            return $this->renderImage($media, true);
+            return $this->renderImage($media, $inline->isAmpEnabled());
         }
 
         if ($media->isYoutubeVideo()) {
