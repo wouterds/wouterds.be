@@ -3,6 +3,7 @@
 namespace WouterDeSchuyter\Infrastructure\ApplicationMonitor;
 
 use WouterDeSchuyter\Domain\ApplicationReport\ApplicationReport;
+use WouterDeSchuyter\Infrastructure\Database\SQLLogger;
 
 class ApplicationMonitor
 {
@@ -12,9 +13,9 @@ class ApplicationMonitor
     private $bootTime;
 
     /**
-     * @var int
+     * @var SQLLogger
      */
-    private $queryCount;
+    private $sqlLogger;
 
     public function __construct()
     {
@@ -26,10 +27,7 @@ class ApplicationMonitor
      */
     public function getReport(): ApplicationReport
     {
-        $elapsedTime = ceil((microtime(true) - $this->bootTime) * 1000);
-        $memoryUsed = memory_get_peak_usage();
-
-        return new ApplicationReport($elapsedTime, $memoryUsed, $this->queryCount);
+        return new ApplicationReport($this->bootTime, $this->sqlLogger);
     }
 
     /**
@@ -41,10 +39,10 @@ class ApplicationMonitor
     }
 
     /**
-     * @param int $queryCount
+     * @param SQLLogger $sqlLogger
      */
-    public function setQueryCount(int $queryCount)
+    public function setSqlLogger(SQLLogger $sqlLogger)
     {
-        $this->queryCount = $queryCount;
+        $this->sqlLogger = $sqlLogger;
     }
 }

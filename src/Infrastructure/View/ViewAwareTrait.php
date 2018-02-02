@@ -87,7 +87,7 @@ trait ViewAwareTrait
      */
     public function render(Response $response, array $data = []): Response
     {
-        $this->applicationMonitor->setQueryCount($this->sqlLogger->getQueryCount());
+        $this->applicationMonitor->setSqlLogger($this->sqlLogger);
 
         if (empty($data['app'])) {
             $data['app'] = [];

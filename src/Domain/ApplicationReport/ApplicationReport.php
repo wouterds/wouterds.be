@@ -2,33 +2,28 @@
 
 namespace WouterDeSchuyter\Domain\ApplicationReport;
 
+use WouterDeSchuyter\Infrastructure\Database\SQLLogger;
+
 class ApplicationReport
 {
     /**
-     * @var ElapsedTime
-     */
-    private $elapsedTime;
-
-    /**
-     * @var UsedMemory
-     */
-    private $usedMemory;
-
-    /**
      * @var int
      */
-    private $queryCount;
+    private $bootTime;
 
     /**
-     * @param int $elapsedTime
-     * @param int $usedMemory
-     * @param int $queryCount
+     * @var SQLLogger
      */
-    public function __construct(int $elapsedTime, int $usedMemory, int $queryCount)
+    private $sqlLogger;
+
+    /**
+     * @param int $bootTime
+     * @param SQLLogger $sqlLogger
+     */
+    public function __construct(int $bootTime, SQLLogger $sqlLogger)
     {
-        $this->elapsedTime = new ElapsedTime($elapsedTime);
-        $this->usedMemory = new UsedMemory($usedMemory);
-        $this->queryCount = $queryCount;
+        $this->bootTime = $bootTime;
+        $this->sqlLogger = $sqlLogger;
     }
 
     /**
@@ -36,7 +31,7 @@ class ApplicationReport
      */
     public function getElapsedTime(): ElapsedTime
     {
-        return $this->elapsedTime;
+        return new ElapsedTime(ceil((microtime(true) - $this->bootTime) * 1000));
     }
 
     /**
@@ -44,7 +39,7 @@ class ApplicationReport
      */
     public function getUsedMemory(): UsedMemory
     {
-        return $this->usedMemory;
+        return new UsedMemory(memory_get_peak_usage());
     }
 
     /**
@@ -52,6 +47,6 @@ class ApplicationReport
      */
     public function getQueryCount(): int
     {
-        return $this->queryCount;
+        return $this->sqlLogger->getQueryCount();
     }
 }
