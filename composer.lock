@@ -2585,16 +2585,16 @@
         },
         {
             "name": "tracy/tracy",
-            "version": "v2.4.10",
+            "version": "v2.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/tracy.git",
-                "reference": "5b302790edd71924dfe4ec44f499ef61df3f53a2"
+                "reference": "bcb93a9d4347be8779c83b200b64ea6f52d6f9ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/tracy/zipball/5b302790edd71924dfe4ec44f499ef61df3f53a2",
-                "reference": "5b302790edd71924dfe4ec44f499ef61df3f53a2",
+                "url": "https://api.github.com/repos/nette/tracy/zipball/bcb93a9d4347be8779c83b200b64ea6f52d6f9ed",
+                "reference": "bcb93a9d4347be8779c83b200b64ea6f52d6f9ed",
                 "shasum": ""
             },
             "require": {
@@ -2625,9 +2625,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD-3-Clause",
-                "GPL-2.0",
-                "GPL-3.0"
+                "BSD-3-Clause"
             ],
             "authors": [
                 {
@@ -2648,7 +2646,7 @@
                 "nette",
                 "profiler"
             ],
-            "time": "2017-10-04T18:43:42+00:00"
+            "time": "2018-02-01T18:11:38+00:00"
         },
         {
             "name": "twig/twig",
