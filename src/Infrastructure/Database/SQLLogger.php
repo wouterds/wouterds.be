@@ -3,6 +3,7 @@
 namespace WouterDeSchuyter\Infrastructure\Database;
 
 use Doctrine\DBAL\Logging\SQLLogger as SQLLoggerInterface;
+use Exception;
 
 class SQLLogger implements SQLLoggerInterface
 {
@@ -17,12 +18,9 @@ class SQLLogger implements SQLLoggerInterface
     private $queries = [];
 
     /**
-     * Logs a SQL statement somewhere.
-     *
      * @param string $sql The SQL to be executed.
      * @param array|null $params The SQL parameters.
      * @param array|null $types The SQL parameter types.
-     *
      * @return void
      */
     public function startQuery($sql, array $params = null, array $types = null)
@@ -31,9 +29,8 @@ class SQLLogger implements SQLLoggerInterface
     }
 
     /**
-     * Marks the last started query as stopped. This can be used for timing of queries.
-     *
      * @return void
+     * @throws Exception
      */
     public function stopQuery()
     {
