@@ -1,6 +1,6 @@
 {
   "name": "internal-wouterdeschuyter-website",
-  "version": "6.4.8",
+  "version": "6.4.9",
   "author": "Wouter De Schuyter <wouter.de.schuyter@gmail.com>",
   "scripts": {
     "start": "./node_modules/.bin/webpack -w",
