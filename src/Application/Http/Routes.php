@@ -28,6 +28,7 @@ use WouterDeSchuyter\Application\Http\Handlers\Blog\IndexHandler as BlogIndexHan
 use WouterDeSchuyter\Application\Http\Handlers\ContactHandler;
 use WouterDeSchuyter\Application\Http\Handlers\ContactPostHandler;
 use WouterDeSchuyter\Application\Http\Handlers\HomeHandler;
+use WouterDeSchuyter\Application\Http\Handlers\StatsHandler;
 use WouterDeSchuyter\Application\Http\Middlewares\Admin\AuthenticatedUserMiddleware as AdminAuthenticatedUserMiddleware;
 
 class Routes
@@ -79,6 +80,7 @@ class Routes
             $app->get('/{slug}', BlogDetailHandler::class)->setName('blog.detail' . $suffix);
         });
         $app->get('/contact', ContactHandler::class)->setName('contact' . $suffix);
+        $app->get('/stats', StatsHandler::class)->setName('stats' . $suffix);
     }
 
     /**

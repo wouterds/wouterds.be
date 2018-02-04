@@ -1,0 +1,25 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}Stats - {{ app.config.get('APP_NAME') }}{% endblock %}
+
+{% block extra_meta %}
+    <meta name="description" content="The geek page! No, I don't know, some stats/logging and things I keep track of.">
+{% endblock %}
+
+{% block opengraph %}
+
+    <!-- opengraph -->
+    <meta property="og:title" content="About - {{ app.config.get('APP_NAME') }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ app.config.get('APP_URL') }}{{ app.request.uri.path }}">
+    <meta property="fb:pages" content="{{ app.config.get('FB_PAGE_ID') }}" />
+    <meta property="og:site_name" content="{{ app.config.get('APP_NAME') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <section>
+            <h1>Stats</h1>
+        </section>
+    </div>
+{% endblock %}
