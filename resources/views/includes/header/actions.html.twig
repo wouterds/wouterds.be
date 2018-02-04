@@ -10,6 +10,11 @@
 <li class="header__navigation__item{% if 'contact' in page.dashedCase %} header__navigation__item--active{% endif %}">
     <a class="header__navigation__item-link" href="{{ app.router.pathFor('contact') }}">Contact</a>
 </li>
+{% if 'stats' in page.dashedCase %}
+    <li class="header__navigation__item header__navigation__item--active">
+        <a class="header__navigation__item-link" href="{{ app.router.pathFor('stats') }}">Stats</a>
+    </li>
+{% endif %}
 {% if app.request.getCookieParam('user_session_id') %}
     <li class="header__navigation__item">
         <a class="header__navigation__item-link" href="{{ app.router.pathFor('admin') }}">Admin</a>
