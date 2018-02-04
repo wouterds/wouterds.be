@@ -57,4 +57,18 @@ class DbalAccessLogRepository implements AccessLogRepository
 
         return $query->execute()->fetchAll();
     }
+
+    /**
+     * @return array
+     */
+    public function responseCountPerHourLast7Days(): array
+    {
+        $query = $this->connection->createQueryBuilder();
+        $query->from(self::TABLE);
+        $query->select('COUNT(1) AS `count`, DATE_FORMAT(`timestamp`, "%y-%m-%d %H") as `interval`');
+        $query->where('`timestamp` > DATE_SUB(NOW(), INTERVAL 7 DAY)');
+        $query->groupBy('`interval`');
+
+        return $query->execute()->fetchAll();
+    }
 }

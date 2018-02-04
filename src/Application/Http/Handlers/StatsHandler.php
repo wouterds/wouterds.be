@@ -41,9 +41,11 @@ class StatsHandler implements ViewAwareInterface
     public function __invoke(Request $request, Response $response): Response
     {
         $responseCodesPerHourLastDay = $this->responseCodesPerHourLastDay();
+        $responseCountLast7Days = $this->responseCountLast7Days();
 
         $data = [];
         $data['responseCodesPerHourLastDay'] = $responseCodesPerHourLastDay;
+        $data['responseCountLast7Days'] = $responseCountLast7Days;
 
         return $this->render($response, $data);
     }
@@ -112,5 +114,39 @@ class StatsHandler implements ViewAwareInterface
         }
 
         return array_reverse($responseCodesPerHourLastDayTmp);
+    }
+
+    /**
+     * @return array
+     */
+    private function responseCountLast7Days(): array
+    {
+        $responseCountPerHourLast7Days = $this->accessLogRepository->responseCountPerHourLast7Days();
+
+        $responseCountLast7Days = [];
+        $avg = [];
+        $avgPer = 6;
+
+        foreach ($responseCountPerHourLast7Days as $responseCountPerHour) {
+            $day = explode(' ', $responseCountPerHour['interval'])[0];
+            $hour = explode(' ', $responseCountPerHour['interval'])[1];
+
+            if ((int) $hour % $avgPer === 0) {
+                $value = 0;
+                if (count($avg) > 0) {
+                    $value = array_sum($avg);
+                }
+
+                $avg = [];
+                $responseCountLast7Days[] = [
+                    'count' => $value,
+                    'interval' => $day . ' ' . $hour . ':00',
+                ];
+            }
+
+            $avg[] = $responseCountPerHour['count'];
+        }
+
+        return $responseCountLast7Days;
     }
 }

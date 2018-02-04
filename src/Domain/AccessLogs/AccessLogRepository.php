@@ -13,4 +13,9 @@ interface AccessLogRepository
      * @return array
      */
     public function responseCodesPerHourLastDay(): array;
+
+    /**
+     * @return array
+     */
+    public function responseCountPerHourLast7Days(): array;
 }

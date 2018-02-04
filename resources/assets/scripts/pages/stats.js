@@ -8,6 +8,7 @@ class Stats extends Base {
 
   init() {
     this.initResponseCodesPerHourLastDay();
+    this.initResponseCountLast7Days();
   }
 
   initResponseCodesPerHourLastDay() {
@@ -29,8 +30,6 @@ class Stats extends Base {
       dataValues400401403404.push(value['400401403404']);
       dataValues50x.push(value['50x']);
     }
-
-    console.log(data, dataLabels, dataValues200304);
 
     data = {
       labels: dataLabels,
@@ -89,6 +88,60 @@ class Stats extends Base {
 
     // Init chart
     new ChartJS($chart, { type: 'bar', data: data, options: options });
+  }
+
+  initResponseCountLast7Days() {
+    let $chart = this.$scope.find('[data-id=responseCountLast7DaysChart]');
+
+    let dataLabels = [];
+    let dataValues = [];
+
+    let data = $chart.data('data');
+    for (let index in data) {
+      let value = data[index];
+      dataLabels.push(value.interval);
+      dataValues.push(value.count);
+    }
+
+    data = {
+      labels: dataLabels,
+      datasets: [
+        {
+          label: 'Response Count',
+          backgroundColor: 'rgba(54, 162, 235, 0.25)',
+          borderColor: 'rgba(54, 162, 235, 0.9)',
+          pointBackgroundColor: 'rgba(54, 162, 235, 0.9)',
+          hoverBackgroundColor: false,
+          data: dataValues
+        },
+      ]
+    };
+
+    let options = {
+      maintainAspectRatio: false,
+      responsive: true,
+      legend: {
+        display: false
+      },
+      scales: {
+        xAxes: [{
+          display: false,
+          scaleLabel: {
+            display: true,
+            labelString: 'Time'
+          }
+        }],
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Response Count'
+          }
+        }]
+      }
+    };
+
+    // Init chart
+    new ChartJS($chart, { type: 'line', data: data, options: options });
   }
 }
 

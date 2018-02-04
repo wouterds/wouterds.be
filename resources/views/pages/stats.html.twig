@@ -3,7 +3,7 @@
 {% block title %}Stats - {{ app.config.get('APP_NAME') }}{% endblock %}
 
 {% block extra_meta %}
-    <meta name="description" content="The geek page! No, I don't know, some stats/logging and things I keep track of.">
+    <meta name="description" content="The ultimate geek page! No, I don't know, just some stats &amp; logging and other things I track.">
 {% endblock %}
 
 {% block opengraph %}
@@ -21,12 +21,19 @@
         <section>
             <h2>Stats</h2>
 
-            <p>The geek page! No, I don't know, some stats/logging and things I keep track of.</p>
+            <p>The ultimate geek page! No, I don't know, just some stats &amp; logging and other things I track.</p>
 
-            <h3>Responses (last 24 hours)</h3>
+            <h3>Responses status codes (last 24 hours)</h3>
 
             <div class="bar-chart-container">
                 <canvas class="bar-chart" data-id="responseCodesPerHourLastDayChart" data-data="{{ responseCodesPerHourLastDay|json_encode }}" width="600px" height="300px"></canvas>
+            </div>
+
+            <h3>Response count (last 7 days)</h3>
+            <br>
+            <br>
+            <div class="bar-chart-container">
+                <canvas class="bar-chart" data-id="responseCountLast7DaysChart" data-data="{{ responseCountLast7Days|json_encode }}" width="600px" height="250px"></canvas>
             </div>
         </section>
     </div>
