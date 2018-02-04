@@ -41,4 +41,20 @@ class DbalAccessLogRepository implements AccessLogRepository
             'timestamp' => $accessLog->getTimestamp(),
         ]);
     }
+
+    /**
+     * Get counts grouped per day
+     *
+     * @return array
+     */
+    public function responseCodesPerHourLastDay(): array
+    {
+        $query = $this->connection->createQueryBuilder();
+        $query->from(self::TABLE);
+        $query->select('`status_code`, COUNT(1) AS `count`, DATE_FORMAT(`timestamp`, "%H") as `hour`');
+        $query->where('`timestamp` > DATE_SUB(NOW(), INTERVAL 24 HOUR)');
+        $query->groupBy('`status_code`', '`hour`');
+
+        return $query->execute()->fetchAll();
+    }
 }
