@@ -23,15 +23,18 @@
 
             <p>The ultimate geek page! No, I don't know, just some stats &amp; logging and other things I track.</p>
 
-            <h3>Responses status codes (last 24 hours)</h3>
+            <h3>Responses Status Codes</h3>
             <br>
+
             <div class="bar-chart-container">
                 <canvas class="bar-chart" data-id="responseCodesPerHourLastDayChart" data-data="{{ responseCodesPerHourLastDay|json_encode }}" width="600px" height="300px"></canvas>
             </div>
 
-            <h3>Response count (last 7 days)</h3>
             <br>
-            <br>
+
+            <h3>Response Count</h3>
+            <br><br>
+
             <div class="bar-chart-container">
                 <canvas class="bar-chart" data-id="responseCountLast7DaysChart" data-data="{{ responseCountLast7Days|json_encode }}" width="600px" height="250px"></canvas>
             </div>
