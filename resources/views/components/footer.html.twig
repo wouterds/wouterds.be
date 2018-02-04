@@ -2,21 +2,22 @@
     <div class="container{% if footer.admin %}-fluid{% endif %}">
         &copy; Copyright {{ 'now'|date('Y') }} {{ app.config.get('APP_NAME') }}
         <br>
-        Executed {{ app.report.queryCount }}
-        {% if app.report.queryCount == 1 %}
-            query
-        {% else %}
-            queries
-        {% endif %}
-        in
-        {{ app.report.elapsedTime.inSeconds() }}
-        {% if app.report.elapsedTime.inSeconds() == 1 %}
-        second
-        {% else %}
-        seconds
-        {% endif %}
-        using {{ app.report.usedMemory.inMegabyte() }} megabyte,
-        running in Docker on a Raspberry Pi
-        <i class="fa fa-heart" aria-hidden="true"></i>
+        <a href="{{ app.router.pathFor('stats') }}">
+            Executed {{ app.report.queryCount }}
+            {% if app.report.queryCount == 1 %}
+                query
+            {% else %}
+                queries
+            {% endif %}
+            in {{ app.report.elapsedTime.inSeconds() }}
+            {% if app.report.elapsedTime.inSeconds() == 1 %}
+                second
+            {% else %}
+                seconds
+            {% endif %}
+            using {{ app.report.usedMemory.inMegabyte() }} megabyte,
+            running in Docker on a Raspberry Pi
+            <i class="fa fa-heart" aria-hidden="true"></i>
+        </a>
     </div>
 </footer>
