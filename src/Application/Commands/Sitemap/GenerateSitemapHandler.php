@@ -83,6 +83,12 @@ class GenerateSitemapHandler
             Sitemap::WEEKLY,
             0.9
         );
+        $sitemap->addItem(
+            $this->config->get('APP_URL') . $this->router->pathFor('stats'),
+            time(),
+            Sitemap::WEEKLY,
+            0.9
+        );
 
         // Add blog urls
         foreach ($this->blogPostRepository->findAll() as $blogPost) {
