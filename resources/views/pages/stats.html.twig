@@ -19,7 +19,15 @@
 {% block body %}
     <div class="container">
         <section>
-            <h1>Stats</h1>
+            <h2>Stats</h2>
+
+            <p>The geek page! No, I don't know, some stats/logging and things I keep track of.</p>
+
+            <h3>Responses (last 24 hours)</h3>
+
+            <div class="bar-chart-container">
+                <canvas class="bar-chart" data-id="responseCodesPerHourLastDayChart" data-data="{{ responseCodesPerHourLastDay|json_encode }}" width="600px" height="300px"></canvas>
+            </div>
         </section>
     </div>
 {% endblock %}

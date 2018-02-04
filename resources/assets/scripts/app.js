@@ -4,6 +4,7 @@ import Clipboard from 'clipboard';
 import PageAbout from './pages/about';
 import PageContact from './pages/contact';
 import PageBlogDetail from './pages/blog/detail';
+import PageStats from './pages/stats';
 import PageAdminUsersSignIn from './pages/admin/users/sign-in';
 import PageAdminUsersSignUp from './pages/admin/users/sign-up';
 import PageAdminMediaAdd from './pages/admin/media/add';
@@ -25,6 +26,7 @@ class App {
     new PageAbout();
     new PageContact();
     new PageBlogDetail();
+    new PageStats();
     new PageAdminUsersSignIn();
     new PageAdminUsersSignUp();
     new PageAdminMediaAdd();
