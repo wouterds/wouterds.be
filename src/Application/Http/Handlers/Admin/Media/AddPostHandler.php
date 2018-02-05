@@ -16,6 +16,7 @@ class AddPostHandler
      * @var CommandBus
      */
     private $commandBus;
+
     /**
      * @var AddRequestValidator
      */
