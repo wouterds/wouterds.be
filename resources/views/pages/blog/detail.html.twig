@@ -21,6 +21,16 @@
     <meta property="fb:pages" content="{{ app.config.get('FB_PAGE_ID') }}">
 {% endblock %}
 
+{% block twitter %}
+
+    <!-- twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@wouterds">
+    <meta name="twitter:title" content="{{ blogPost.title }}">
+    <meta name="twitter:description" content="{{ blogPost.excerpt }}">
+    <meta name="twitter:image" content="{{ app.config.get('APP_URL') }}/static/media{{ media.path }}">
+{% endblock %}
+
 {% block body %}
     <div class="container">
         <article class="page--blog--detail">
