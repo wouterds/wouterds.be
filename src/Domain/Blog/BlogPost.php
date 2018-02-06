@@ -172,6 +172,24 @@ class BlogPost implements JsonSerializable
     }
 
     /**
+     * @return string
+     */
+    public function getBodyPlainText(): string
+    {
+        return trim(strip_tags($this->getBody()));
+    }
+
+    /**
+     * @return int
+     */
+    public function getWordCount(): int
+    {
+        $body = $this->getBodyPlainText();
+
+        return str_word_count($body);
+    }
+
+    /**
      * @return int
      */
     public function getViews(): int

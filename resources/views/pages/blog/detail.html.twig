@@ -63,27 +63,29 @@
 <script type="application/ld+json">
     {
         "@context": "http://schema.org",
-        "@type": "NewsArticle",
+        "@type": "BlogPosting",
+        "headline": "{{ blogPost.title }}",
+        "image": "{{ app.config.get('APP_URL') }}/static/media{{ media.path }}",
+        "wordCount": "{{ blogPost.wordCount }}",
+        "url": "{{ app.config.get('APP_URL') }}{{ app.request.uri.path }}",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "{{ app.config.get('APP_URL') }}{{ app.request.uri.path }}"
         },
-        "headline": "{{ blogPost.title }} - {{ app.config.get('APP_NAME') }}",
-        "image": [
-            "{{ app.config.get('APP_URL') }}/static/media{{ media.path }}"
-        ],
+        "dateCreated": "{{ blogPost.createdAt|date('c') }}",
         "dateModified": "{% if blogPost.modifiedAt %}{{ blogPost.modifiedAt|date('c') }}{% else %}{{ blogPost.publishedAt|date('c') }}{% endif %}",
         "datePublished": "{{ blogPost.publishedAt|date('c') }}",
+        "editor": "{{ user.name }}",
         "author": {
             "@type": "Person",
             "name": "{{ user.name }}"
         },
         "publisher": {
             "@type": "Organization",
-            "name": "{{ user.name }}",
+            "name": "wouterdeschuyter.be",
             "logo": {
                 "@type": "ImageObject",
-                "url": "{{ app.config.get('APP_URL') }}/static/images/wouterds.jpg"
+                "url": "{{ app.config.get('APP_URL') }}/static/images/wouterdeschuyter.be.jpg"
             }
         },
         "description": "{{ blogPost.excerpt }}"
