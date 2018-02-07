@@ -81,7 +81,7 @@ class DbalBlogPostRepository implements BlogPostRepository
         $query->select('*');
         $query->from(self::TABLE);
         $query->where('deleted_at IS NULL');
-        $query->orderBy('published_at', 'DESC');
+        $query->orderBy('created_at', 'DESC');
         $rows = $query->execute()->fetchAll();
 
         if (empty($rows)) {
