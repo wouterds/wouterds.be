@@ -47,4 +47,9 @@ interface BlogPostRepository
      * @param BlogPostId $id
      */
     public function delete(BlogPostId $id);
+
+    /**
+     * @return int
+     */
+    public function getPublishedCount(): int;
 }

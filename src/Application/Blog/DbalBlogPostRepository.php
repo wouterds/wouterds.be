@@ -183,4 +183,18 @@ class DbalBlogPostRepository implements BlogPostRepository
         $query->where('id = ' . $query->createNamedParameter($id));
         $query->execute();
     }
+
+    /**
+     * @return int
+     */
+    public function getPublishedCount(): int
+    {
+        $query = $this->connection->createQueryBuilder();
+        $query->select('COUNT(1)');
+        $query->from(self::TABLE);
+        $query->where('published_at IS NOT NULL');
+        $query->andWhere('deleted_at IS NULL');
+
+        return $query->execute()->fetchColumn();
+    }
 }
