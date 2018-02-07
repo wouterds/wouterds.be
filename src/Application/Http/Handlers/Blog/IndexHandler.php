@@ -68,6 +68,10 @@ class IndexHandler implements ViewAwareInterface
         $data = [];
         $data['blogPosts'] = $blogPosts;
 
+        if ($page > 0) {
+            $data['page']['path'] = $this->router->pathFor('blog');
+        }
+
         return $this->render($response, $data);
     }
 }
