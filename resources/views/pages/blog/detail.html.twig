@@ -10,7 +10,7 @@
 
     <!-- opengraph -->
     <meta property="og:title" content="{{ blogPost.title }}">
-    <meta property="og:url" content="{{ app.config.get('APP_URL') }}{{ app.request.uri.path }}">
+    <meta property="og:url" content="{{ app.config.get('APP_URL') }}{{ page.path }}">
     <meta property="og:site_name" content="{{ app.config.get('APP_NAME') }}">
     <meta property="article:published_time" content="{{ blogPost.publishedAt|date('c') }}">
     <meta property="og:description" content="{{ blogPost.excerpt }}">
@@ -67,10 +67,10 @@
         "headline": "{{ blogPost.title }}",
         "image": "{{ app.config.get('APP_URL') }}/static/media{{ media.path }}",
         "wordCount": "{{ blogPost.wordCount }}",
-        "url": "{{ app.config.get('APP_URL') }}{{ app.request.uri.path }}",
+        "url": "{{ app.config.get('APP_URL') }}{{ page.path }}",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "{{ app.config.get('APP_URL') }}{{ app.request.uri.path }}"
+            "@id": "{{ app.config.get('APP_URL') }}{{ page.path }}"
         },
         "dateCreated": "{{ blogPost.createdAt|date('c') }}",
         "dateModified": "{% if blogPost.modifiedAt %}{{ blogPost.modifiedAt|date('c') }}{% else %}{{ blogPost.publishedAt|date('c') }}{% endif %}",
