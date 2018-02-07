@@ -97,7 +97,7 @@ trait ViewAwareTrait
             $data['page'] = [];
         }
 
-        $data['page'] = array_merge($this->pageInfo(), $data['page']);
+        $data['page'] = array_replace_recursive($this->pageInfo(), $data['page']);
         $data['app']['config'] = $this->config;
         $data['app']['router'] = $this->router;
         $data['app']['request'] = $this->request;
