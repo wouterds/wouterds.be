@@ -12,6 +12,8 @@ class IndexHandler implements ViewAwareInterface
 {
     use ViewAwareTrait;
 
+    private const MAX_POSTS_PER_PAGE = 10;
+
     /**
      * @var BlogPostRepository
      */
@@ -44,11 +46,14 @@ class IndexHandler implements ViewAwareInterface
     /**
      * @param Request $request
      * @param Response $response
+     * @param int $page
      * @return Response
      */
-    public function __invoke(Request $request, Response $response): Response
+    public function __invoke(Request $request, Response $response, int $page = 0): Response
     {
-        $blogPosts = $this->blogPostRepository->findPublished();
+        $offset = $page * self::MAX_POSTS_PER_PAGE;
+
+        $blogPosts = $this->blogPostRepository->findPublished($offset, self::MAX_POSTS_PER_PAGE);
 
         $data = [];
         $data['blogPosts'] = $blogPosts;

@@ -77,6 +77,7 @@ class Routes
         $app->get('/about', AboutHandler::class)->setName('about' . $suffix);
         $app->group('/blog', function () use ($app, $suffix) {
             $app->get('', BlogIndexHandler::class)->setName('blog' . $suffix);
+            $app->get('/page/{page}', BlogIndexHandler::class)->setName('blog.page' . $suffix);
             $app->get('/{slug}', BlogDetailHandler::class)->setName('blog.detail' . $suffix);
         });
         $app->get('/contact', ContactHandler::class)->setName('contact' . $suffix);
