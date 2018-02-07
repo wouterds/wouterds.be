@@ -118,9 +118,11 @@ class DbalBlogPostRepository implements BlogPostRepository
     }
 
     /**
+     * @param int $offset
+     * @param int $limit
      * @return BlogPost[]
      */
-    public function findPublished(): array
+    public function findPublished(int $offset = 0, int $limit = 0): array
     {
         $query = $this->connection->createQueryBuilder();
         $query->select('*');
@@ -128,6 +130,12 @@ class DbalBlogPostRepository implements BlogPostRepository
         $query->where('published_at IS NOT NULL');
         $query->andWhere('deleted_at IS NULL');
         $query->orderBy('published_at', 'DESC');
+        $query->setFirstResult($offset);
+
+        if ($limit) {
+            $query->setMaxResults($limit);
+        }
+
         $rows = $query->execute()->fetchAll();
 
         if (empty($rows)) {

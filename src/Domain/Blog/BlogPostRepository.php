@@ -25,9 +25,11 @@ interface BlogPostRepository
     public function findAll(): array;
 
     /**
+     * @param int $offset
+     * @param int $limit
      * @return BlogPost[]
      */
-    public function findPublished(): array;
+    public function findPublished(int $offset = 0, int $limit = 0): array;
 
     /**
      * @param BlogPostId $id
