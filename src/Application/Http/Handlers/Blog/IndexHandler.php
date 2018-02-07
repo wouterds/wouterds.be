@@ -12,7 +12,7 @@ class IndexHandler implements ViewAwareInterface
 {
     use ViewAwareTrait;
 
-    private const MAX_POSTS_PER_PAGE = 10;
+    private const MAX_POSTS_PER_PAGE = 7;
 
     /**
      * @var BlogPostRepository
