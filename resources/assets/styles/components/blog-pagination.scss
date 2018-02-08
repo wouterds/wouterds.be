@@ -33,3 +33,14 @@ $scope: 'blog-pagination';
     float: right;
   }
 }
+
+@media only screen and (max-width: 380px) {
+  .#{$scope} {
+    &__newer-posts &,
+    &__older-posts & {
+      &__link-text {
+        display: none;
+      }
+    }
+  }
+}

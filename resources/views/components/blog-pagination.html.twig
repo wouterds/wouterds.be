@@ -1,13 +1,13 @@
 <nav class="blog-pagination" role="navigation">
     {% if blogPostPage > 2 %}
-        <a class="blog-pagination__newer-posts" href="{{ app.router.pathFor('blog.page', { page: (blogPostPage - 1) }) }}">&#x2190; Newer Posts</a>
+        <a class="blog-pagination__newer-posts" href="{{ app.router.pathFor('blog.page', { page: (blogPostPage - 1) }) }}">&#x2190;<span class="blog-pagination__link-text"> Newer Posts</span></a>
     {% elseif blogPostPage > 1 %}
-        <a class="blog-pagination__newer-posts" href="{{ app.router.pathFor('blog') }}">&#x2190; Newer Posts</a>
+        <a class="blog-pagination__newer-posts" href="{{ app.router.pathFor('blog') }}">&#x2190;<span class="blog-pagination__link-text"> Newer Posts</span></a>
     {% endif %}
 
     <span class="blog-pagination__page-number">Page {{ blogPostPage }} of {{ (blogPostCount / blogPostMaxPerPage)|round }}</span>
 
     {% if blogPostPage <= blogPostMaxPerPage %}
-        <a class="blog-pagination__older-posts" href="{{ app.router.pathFor('blog.page', { page: (blogPostPage + 1) }) }}">Older Posts &#x2192;</a>
+        <a class="blog-pagination__older-posts" href="{{ app.router.pathFor('blog.page', { page: (blogPostPage + 1) }) }}"><span class="blog-pagination__link-text">Older Posts </span>&#x2192;</a>
     {% endif %}
 </nav>
