@@ -1,5 +1,5 @@
-# :construction: wouterdeschuyter.be
+# :tada: wouterdeschuyter.be
 
-Source code of my personal website, [wouterdeschuyter.be](http://wouterdeschuyter.be). Open-source on Github, yolo.
+Source code of my personal website, [wouterdeschuyter.be](http://wouterdeschuyter.be). Open-source on Github, ¯\_(ツ)_/¯.
 
-Builds are auto deployed on push to [staging.wouterdeschuyter.be](http://staging.wouterdeschuyter.be).
+The `master` branch is auto deployed on push.
