@@ -2,8 +2,25 @@
 
 {% block title %}Stats - {{ app.config.get('APP_NAME') }}{% endblock %}
 
+{% set summary %}
+{% htmlcompress %}
+    The ultimate geek page! No, I don't know, just some stats &amp; logging and other things I track.
+    Because of this tracking I know that I had
+    <strong>{{ visitsLastDay }} visits</strong>
+    from <strong>{{ uniqueVisitsLastDay }} unique visitors</strong>
+    of <strong>{{ uniqueCountriesLastDay }} different countries</strong>
+    in the <strong>last 24 hours</strong>.
+
+    Or
+    <strong>{{ visitsLastWeek }} visits</strong>
+    from <strong>{{ uniqueVisitsLastWeek }} unique visitors</strong>
+    of <strong>{{ uniqueCountriesLastWeek }} different countries</strong>
+    in the <strong>last 7 days</strong>.
+{% endhtmlcompress %}
+{% endset %}
+
 {% block extra_meta %}
-    <meta name="description" content="The ultimate geek page! No, I don't know, just some stats &amp; logging and other things I track.">
+    <meta name="description" content="{{ summary|striptags|raw }}">
 {% endblock %}
 
 {% block opengraph %}
@@ -20,21 +37,7 @@
     <div class="container">
         <section>
             <h2>Stats</h2>
-
-            <p>
-                The ultimate geek page! No, I don't know, just some stats &amp; logging and other things I track.
-                Because of this tracking I know that I had
-                <strong>{{ visitsLastDay }} visits</strong>
-                from <strong>{{ uniqueVisitsLastDay }} unique visitors</strong>
-                of <strong>{{ uniqueCountriesLastDay }} different countries</strong>
-                in the <strong>last 24 hours</strong>.
-
-                Or
-                <strong>{{ visitsLastWeek }} visits</strong>
-                from <strong>{{ uniqueVisitsLastWeek }} unique visitors</strong>
-                of <strong>{{ uniqueCountriesLastWeek }} different countries</strong>
-                in the <strong>last 7 days</strong>.
-            </p>
+            <p>{{ summary|raw }}</p>
 
             <h3>Response Count</h3>
             <br>
