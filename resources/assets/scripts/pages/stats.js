@@ -109,6 +109,7 @@ class Stats extends Base {
         {
           label: 'Response Count',
           backgroundColor: 'rgba(54, 162, 235, 0.25)',
+          hoverBackgroundColor: false,
           borderWidth: 2,
           borderColor: 'rgba(54, 162, 235, 0.9)',
           pointRadius: 0,
