@@ -5,4 +5,14 @@ $scope: 'blog-pagination';
 
 .#{$scope} {
   font-size: 1.4em;
+  text-align: center;
+  overflow: hidden;
+
+  &__newer-posts {
+    float: left;
+  }
+
+  &__older-posts {
+    float: right;
+  }
 }
