@@ -7,6 +7,7 @@ $scope: 'blog-pagination';
   font-size: 1.4em;
   text-align: center;
   overflow: hidden;
+  color: rgba($color-blue-grey, 0.4);
 
   &__newer-posts {
     float: left;
