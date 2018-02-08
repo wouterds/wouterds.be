@@ -82,7 +82,11 @@ class DbalAccessLogRepository implements AccessLogRepository
         $query->from(self::TABLE);
         $query->select('COUNT(1)');
         $query->where('`timestamp` > DATE_SUB(NOW(), INTERVAL ' . $query->createNamedParameter($days) .' DAY)');
-        $query->andWhere('`status_code` = 200');
+        $query->andWhere('`method` = "GET"');
+        $query->andWhere('`path` NOT LIKE "/static/%"');
+        $query->andWhere('`path` NOT LIKE "/robots.txt%"');
+        $query->andWhere('`path` NOT LIKE "/favicon.ico%"');
+        $query->andWhere('`path` NOT LIKE "/apple-touch-icon%"');
 
         return $query->execute()->fetchColumn();
     }
@@ -97,7 +101,11 @@ class DbalAccessLogRepository implements AccessLogRepository
         $query->from(self::TABLE);
         $query->select('COUNT(DISTINCT(`connecting_ip`))');
         $query->where('`timestamp` > DATE_SUB(NOW(), INTERVAL ' . $query->createNamedParameter($days) .' DAY)');
-        $query->andWhere('`status_code` = 200');
+        $query->andWhere('`method` = "GET"');
+        $query->andWhere('`path` NOT LIKE "/static/%"');
+        $query->andWhere('`path` NOT LIKE "/robots.txt%"');
+        $query->andWhere('`path` NOT LIKE "/favicon.ico%"');
+        $query->andWhere('`path` NOT LIKE "/apple-touch-icon%"');
 
         return $query->execute()->fetchColumn();
     }
@@ -112,7 +120,11 @@ class DbalAccessLogRepository implements AccessLogRepository
         $query->from(self::TABLE);
         $query->select('COUNT(DISTINCT(`connecting_country`))');
         $query->where('`timestamp` > DATE_SUB(NOW(), INTERVAL ' . $query->createNamedParameter($days) .' DAY)');
-        $query->andWhere('`status_code` = 200');
+        $query->andWhere('`method` = "GET"');
+        $query->andWhere('`path` NOT LIKE "/static/%"');
+        $query->andWhere('`path` NOT LIKE "/robots.txt%"');
+        $query->andWhere('`path` NOT LIKE "/favicon.ico%"');
+        $query->andWhere('`path` NOT LIKE "/apple-touch-icon%"');
 
         return $query->execute()->fetchColumn();
     }
