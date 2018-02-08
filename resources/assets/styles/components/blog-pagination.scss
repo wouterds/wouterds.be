@@ -38,8 +38,23 @@ $scope: 'blog-pagination';
   .#{$scope} {
     &__newer-posts &,
     &__older-posts & {
+      &__link-icon {
+        display: none;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .#{$scope} {
+    &__newer-posts &,
+    &__older-posts & {
       &__link-text {
         display: none;
+      }
+
+      &__link-icon {
+        display: inline-block;
       }
     }
   }
