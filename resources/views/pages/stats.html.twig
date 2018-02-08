@@ -34,6 +34,15 @@
     <meta property="og:site_name" content="{{ app.config.get('APP_NAME') }}">
 {% endblock %}
 
+{% block twitter %}
+
+    <!-- twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:creator" content="@wouterds">
+    <meta name="twitter:title" content="Stats - {{ app.config.get('APP_NAME') }}">
+    <meta name="twitter:description" content="{{ summary|striptags|raw }}">
+{% endblock %}
+
 {% block body %}
     <div class="container">
         <section>
