@@ -55,7 +55,7 @@ class IndexHandler implements ViewAwareInterface
         $blogPostsCount = $this->blogPostRepository->getPublishedCount();
 
         // Invalid page?
-        if ($page < 0 || $page > $blogPostsCount / self::MAX_POSTS_PER_PAGE) {
+        if ($page < 0 || $page === 1 || $page > $blogPostsCount / self::MAX_POSTS_PER_PAGE) {
             return $response->withRedirect($this->router->pathFor('blog'));
         }
 
