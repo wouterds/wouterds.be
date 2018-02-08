@@ -18,6 +18,12 @@
 
 {% block body %}
     <div class="container">
-        {% include 'components/blog-post-item-list.html.twig' %}
+        <section>
+            {% include 'components/blog-post-item-list.html.twig' %}
+        </section>
+
+        <footer>
+            {% include 'components/blog-pagination.html.twig' %}
+        </footer>
     </div>
 {% endblock %}
