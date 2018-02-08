@@ -75,6 +75,20 @@ class DbalAccessLogRepository implements AccessLogRepository
     /**
      * @return int
      */
+    public function visitsLastDay(): int
+    {
+        $query = $this->connection->createQueryBuilder();
+        $query->from(self::TABLE);
+        $query->select('COUNT(1)');
+        $query->where('`timestamp` > DATE_SUB(NOW(), INTERVAL 1 DAY)');
+        $query->andWhere('`status_code` = 200');
+
+        return $query->execute()->fetchColumn();
+    }
+
+    /**
+     * @return int
+     */
     public function uniqueVisitsLastDay(): int
     {
         $query = $this->connection->createQueryBuilder();

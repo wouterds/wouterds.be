@@ -22,6 +22,11 @@ interface AccessLogRepository
     /**
      * @return int
      */
+    public function visitsLastDay(): int;
+
+    /**
+     * @return int
+     */
     public function uniqueVisitsLastDay(): int;
 
     /**
