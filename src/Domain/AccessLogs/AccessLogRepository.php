@@ -20,17 +20,20 @@ interface AccessLogRepository
     public function responseCountPerHourLast7Days(): array;
 
     /**
+     * @param int $days
      * @return int
      */
-    public function visitsLastDay(): int;
+    public function visitsLast(int $days): int;
 
     /**
+     * @param int $days
      * @return int
      */
-    public function uniqueVisitsLastDay(): int;
+    public function uniqueVisitsLast(int $days): int;
 
     /**
+     * @param int $days
      * @return int
      */
-    public function uniqueCountriesLastDay(): int;
+    public function uniqueCountriesLast(int $days): int;
 }

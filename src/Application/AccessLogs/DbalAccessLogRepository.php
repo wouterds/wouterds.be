@@ -73,42 +73,45 @@ class DbalAccessLogRepository implements AccessLogRepository
     }
 
     /**
+     * @param int $days
      * @return int
      */
-    public function visitsLastDay(): int
+    public function visitsLast(int $days): int
     {
         $query = $this->connection->createQueryBuilder();
         $query->from(self::TABLE);
         $query->select('COUNT(1)');
-        $query->where('`timestamp` > DATE_SUB(NOW(), INTERVAL 1 DAY)');
+        $query->where('`timestamp` > DATE_SUB(NOW(), INTERVAL ' . $query->createNamedParameter($days) .' DAY)');
         $query->andWhere('`status_code` = 200');
 
         return $query->execute()->fetchColumn();
     }
 
     /**
+     * @param int $days
      * @return int
      */
-    public function uniqueVisitsLastDay(): int
+    public function uniqueVisitsLast(int $days): int
     {
         $query = $this->connection->createQueryBuilder();
         $query->from(self::TABLE);
         $query->select('COUNT(DISTINCT(`connecting_ip`))');
-        $query->where('`timestamp` > DATE_SUB(NOW(), INTERVAL 1 DAY)');
+        $query->where('`timestamp` > DATE_SUB(NOW(), INTERVAL ' . $query->createNamedParameter($days) .' DAY)');
         $query->andWhere('`status_code` = 200');
 
         return $query->execute()->fetchColumn();
     }
 
     /**
+     * @param int $days
      * @return int
      */
-    public function uniqueCountriesLastDay(): int
+    public function uniqueCountriesLast(int $days): int
     {
         $query = $this->connection->createQueryBuilder();
         $query->from(self::TABLE);
         $query->select('COUNT(DISTINCT(`connecting_country`))');
-        $query->where('`timestamp` > DATE_SUB(NOW(), INTERVAL 1 DAY)');
+        $query->where('`timestamp` > DATE_SUB(NOW(), INTERVAL ' . $query->createNamedParameter($days) .' DAY)');
         $query->andWhere('`status_code` = 200');
 
         return $query->execute()->fetchColumn();
