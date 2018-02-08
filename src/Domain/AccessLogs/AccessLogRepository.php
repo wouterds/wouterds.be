@@ -18,4 +18,9 @@ interface AccessLogRepository
      * @return array
      */
     public function responseCountPerHourLast7Days(): array;
+
+    /**
+     * @return int
+     */
+    public function uniqueVisitsLastDay(): int;
 }
