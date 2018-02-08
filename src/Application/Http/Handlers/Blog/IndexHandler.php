@@ -65,6 +65,11 @@ class IndexHandler implements ViewAwareInterface
             self::MAX_POSTS_PER_PAGE
         );
 
+        // Page 0? Actually 1
+        if ($page === 0) {
+            $page = 1;
+        }
+
         $data = [];
         $data['blogPosts'] = $blogPosts;
         $data['blogPostPage'] = $page;
