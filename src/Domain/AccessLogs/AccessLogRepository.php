@@ -23,4 +23,9 @@ interface AccessLogRepository
      * @return int
      */
     public function uniqueVisitsLastDay(): int;
+
+    /**
+     * @return int
+     */
+    public function uniqueCountriesLastDay(): int;
 }
