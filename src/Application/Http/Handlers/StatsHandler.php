@@ -45,9 +45,9 @@ class StatsHandler implements ViewAwareInterface
         $visitsLastDay = $this->accessLogRepository->visitsLast(1);
         $uniqueVisitsLastDay = $this->accessLogRepository->uniqueVisitsLast(1);
         $uniqueCountriesLastDay = $this->accessLogRepository->uniqueCountriesLast(1);
-        $visitsLastWeek = $this->accessLogRepository->visitsLast(1);
-        $uniqueVisitsLastWeek = $this->accessLogRepository->uniqueVisitsLast(1);
-        $uniqueCountriesLastWeek = $this->accessLogRepository->uniqueCountriesLast(1);
+        $visitsLastWeek = $this->accessLogRepository->visitsLast(7);
+        $uniqueVisitsLastWeek = $this->accessLogRepository->uniqueVisitsLast(7);
+        $uniqueCountriesLastWeek = $this->accessLogRepository->uniqueCountriesLast(7);
 
         $data = [];
         $data['responseCodesPerHourLastDay'] = $responseCodesPerHourLastDay;
