@@ -4,6 +4,16 @@
 
 {% block extra_meta %}
     <meta name="description" content="This is my primary place on the internet where I collect things I made for myself, others or clients. I also write about things I like, things I experienced, guides and tutorials and more.">
+
+    <!-- SEO pagination -->
+{% if blogPostPage > 2 %}
+    <link rel="prev" href="{{ app.config.get('APP_URL') }}{{ app.router.pathFor('blog.page', { page: (blogPostPage - 1) }) }}">
+{% elseif blogPostPage > 1 %}
+    <link rel="prev" href="{{ app.config.get('APP_URL') }}{{ app.router.pathFor('blog') }}">
+{% endif %}
+{% if blogPostPage <= blogPostMaxPerPage %}
+    <link rel="next" href="{{ app.config.get('APP_URL') }}{{ app.router.pathFor('blog.page', { page: (blogPostPage + 1) }) }}">
+{% endif %}
 {% endblock %}
 
 {% block opengraph %}
