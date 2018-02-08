@@ -1,0 +1,8 @@
+@import '../base/variables';
+
+// Scope
+$scope: 'blog-pagination';
+
+.#{$scope} {
+  font-size: 1.4em;
+}
