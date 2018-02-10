@@ -10,7 +10,7 @@
     "bootstrap-sass": "^3.3.7",
     "chart.js": "^2.7.1",
     "clipboard": "^1.7.1",
-    "flatpickr": "^4.2.4",
+    "flatpickr": "^4.3.2",
     "highlight.js": "^9.12.0",
     "jquery": "^3.3.1",
     "medium-zoom": "^0.3.0",
@@ -31,6 +31,6 @@
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
     "uglifyjs-webpack-plugin": "^1.1.8",
-    "webpack": "^3.8.1"
+    "webpack": "^3.11.0"
   }
 }
