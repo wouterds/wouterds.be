@@ -2,6 +2,7 @@
 
 namespace WouterDeSchuyter\Application\Http\Handlers\Blog;
 
+use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Router;
@@ -107,7 +108,7 @@ class DetailHandler implements ViewAwareInterface
         }
 
         if (empty($blogPost)) {
-            return $response->withRedirect('/404');
+            throw new NotFoundException($request, $response);
         }
 
         $user = $this->userRepository->find($blogPost->getUserId());
