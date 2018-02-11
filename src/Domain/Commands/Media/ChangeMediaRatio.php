@@ -19,18 +19,18 @@ class ChangeMediaRatio
     /**
      * @var int
      */
-    private $maxWidth;
+    private $width;
 
     /**
      * @param MediaId $mediaId
      * @param float $ratio
-     * @param int $maxWidth
+     * @param int $width
      */
-    public function __construct(MediaId $mediaId, float $ratio, int $maxWidth)
+    public function __construct(MediaId $mediaId, float $ratio, int $width)
     {
         $this->mediaId = $mediaId;
         $this->ratio = $ratio;
-        $this->maxWidth = $maxWidth;
+        $this->width = $width;
     }
 
     /**
@@ -52,8 +52,8 @@ class ChangeMediaRatio
     /**
      * @return int
      */
-    public function getMaxWidth(): int
+    public function getWidth(): int
     {
-        return $this->maxWidth;
+        return $this->width;
     }
 }
