@@ -19,7 +19,6 @@ class ChangeMediaRatioHandler
     private $imageManager;
 
     /**
-     * ChangeRatioHandler constructor.
      * @param MediaRepository $mediaRepository
      * @param ImageManager $imageManager
      */
