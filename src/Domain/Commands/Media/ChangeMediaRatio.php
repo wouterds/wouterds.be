@@ -4,7 +4,7 @@ namespace WouterDeSchuyter\Domain\Commands\Media;
 
 use WouterDeSchuyter\Domain\Media\MediaId;
 
-class ChangeRatio
+class ChangeMediaRatio
 {
     /**
      * @var MediaId

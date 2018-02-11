@@ -3,10 +3,10 @@
 namespace WouterDeSchuyter\Application\Commands\Media;
 
 use Intervention\Image\ImageManager;
-use WouterDeSchuyter\Domain\Commands\Media\ChangeRatio;
+use WouterDeSchuyter\Domain\Commands\Media\ChangeMediaRatio;
 use WouterDeSchuyter\Domain\Media\MediaRepository;
 
-class ChangeRatioHandler
+class ChangeMediaRatioHandler
 {
     /**
      * @var MediaRepository
@@ -30,9 +30,9 @@ class ChangeRatioHandler
     }
 
     /**
-     * @param ChangeRatio $changeRatio
+     * @param ChangeMediaRatio $changeMediaRatio
      */
-    public function handle(ChangeRatio $changeRatio)
+    public function handle(ChangeMediaRatio $changeMediaRatio)
     {
         // TODO
     }
