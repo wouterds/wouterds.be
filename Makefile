@@ -77,15 +77,15 @@ dev: dependencies
 	docker build $(BUILD_NO_CACHE) -f $(DOCKERFILE_NGINX) -t $(TAG_NGINX) .
 	touch .build-nginx
 
-.build-php-fpm: $(DOCKERFILE_PHP_FPM)
-	docker build $(BUILD_NO_CACHE) -f $(DOCKERFILE_PHP_FPM) -t $(TAG_PHP_FPM) .
-	touch .build-php-fpm
-
 .build-php-cron: $(DOCKERFILE_PHP_CRON)
 	docker build $(BUILD_NO_CACHE) -f $(DOCKERFILE_PHP_CRON) -t $(TAG_PHP_CRON) .
 	touch .build-php-cron
 
-build: dependencies .version .build-app .build-nginx .build-php-fpm .build-php-cron
+.build-php-fpm: $(DOCKERFILE_PHP_FPM)
+	docker build $(BUILD_NO_CACHE) -f $(DOCKERFILE_PHP_FPM) -t $(TAG_PHP_FPM) .
+	touch .build-php-fpm
+
+build: dependencies .version .build-app .build-nginx .build-php-cron .build-php-fpm
 
 tag: build
 	docker tag $(TAG_NGINX) $(TAG_NGINX):$(VERSION)
