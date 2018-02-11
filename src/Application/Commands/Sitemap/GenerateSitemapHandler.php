@@ -91,11 +91,7 @@ class GenerateSitemapHandler
         );
 
         // Add blog urls
-        foreach ($this->blogPostRepository->findAll() as $blogPost) {
-            if (!$blogPost->getPublishedAt()) {
-                continue;
-            }
-
+        foreach ($this->blogPostRepository->findPublished() as $blogPost) {
             $lastModified = $blogPost->getPublishedAt();
             if ($blogPost->getUpdatedAt()) {
                 $lastModified = $blogPost->getUpdatedAt();
