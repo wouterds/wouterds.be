@@ -2,22 +2,31 @@
 
 namespace WouterDeSchuyter\Application\Commands\Blog;
 
+use League\Tactician\CommandBus;
 use WouterDeSchuyter\Domain\Blog\BlogPostBuilder;
 use WouterDeSchuyter\Domain\Blog\BlogPostRepository;
 use WouterDeSchuyter\Domain\Commands\Blog\SaveBlogPost;
+use WouterDeSchuyter\Domain\Commands\Media\GenerateStructuredDataMedia;
 
 class SaveBlogPostHandler
 {
+    /**
+     * @var CommandBus
+     */
+    private $commandBus;
+
     /**
      * @var BlogPostRepository
      */
     private $blogPostRepository;
 
     /**
+     * @param CommandBus $commandBus
      * @param BlogPostRepository $blogPostRepository
      */
-    public function __construct(BlogPostRepository $blogPostRepository)
+    public function __construct(CommandBus $commandBus, BlogPostRepository $blogPostRepository)
     {
+        $this->commandBus = $commandBus;
         $this->blogPostRepository = $blogPostRepository;
     }
 
@@ -39,12 +48,17 @@ class SaveBlogPostHandler
             $blogPostBuilder->withPublishedAt($saveBlogPost->getPublishedAt());
         }
 
+        $blogPost = $blogPostBuilder->build();
         if ($saveBlogPost->getBlogPostId()) {
             $blogPostBuilder->withId($saveBlogPost->getBlogPostId());
-            $this->blogPostRepository->update($blogPostBuilder->build());
-            return;
+            $blogPost = $blogPostBuilder->build();
+            $this->blogPostRepository->update($blogPost);
         }
 
-        $this->blogPostRepository->add($blogPostBuilder->build());
+        if (!$saveBlogPost->getBlogPostId()) {
+            $this->blogPostRepository->add($blogPost);
+        }
+
+        $this->commandBus->handle(new GenerateStructuredDataMedia($blogPost->getMediaId()));
     }
 }
