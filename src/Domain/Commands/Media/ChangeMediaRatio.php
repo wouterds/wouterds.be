@@ -2,6 +2,7 @@
 
 namespace WouterDeSchuyter\Domain\Commands\Media;
 
+use InvalidArgumentException;
 use WouterDeSchuyter\Domain\Media\MediaId;
 
 class ChangeMediaRatio
@@ -12,9 +13,9 @@ class ChangeMediaRatio
     private $mediaId;
 
     /**
-     * @var float
+     * @var string
      */
-    private $ratio;
+    private $ratioStringValue;
 
     /**
      * @var int
@@ -23,13 +24,23 @@ class ChangeMediaRatio
 
     /**
      * @param MediaId $mediaId
-     * @param float $ratio
+     * @param string $ratioStringValue
      * @param int $width
      */
-    public function __construct(MediaId $mediaId, float $ratio, int $width)
+    public function __construct(MediaId $mediaId, string $ratioStringValue, int $width)
     {
+        $ratio = explode(':', $ratioStringValue);
+
+        if (count($ratio) < 2) {
+            throw new InvalidArgumentException('Ratio should be of the format "x:y", eg: "16:9".');
+        }
+
+        if (!is_numeric($ratio[0]) || !is_numeric($ratio[1])) {
+            throw new InvalidArgumentException('Ratio should be of the format "x:y", eg: "16:9".');
+        }
+
         $this->mediaId = $mediaId;
-        $this->ratio = $ratio;
+        $this->ratioStringValue = $ratioStringValue;
         $this->width = $width;
     }
 
@@ -42,11 +53,22 @@ class ChangeMediaRatio
     }
 
     /**
+     * Eg: 16:9
+     * @return string
+     */
+    public function getRatioStringValue(): string
+    {
+        return $this->ratioStringValue;
+    }
+
+    /**
      * @return float
      */
     public function getRatio(): float
     {
-        return $this->ratio;
+        $ratio = explode(':', $this->ratioStringValue);
+
+        return $ratio[0] / $ratio[1];
     }
 
     /**
