@@ -15,6 +15,7 @@ use WouterDeSchuyter\Application\Commands\Blog\SaveBlogPostHandler;
 use WouterDeSchuyter\Application\Commands\Media\AddMediaHandler;
 use WouterDeSchuyter\Application\Commands\Media\ChangeMediaRatioHandler;
 use WouterDeSchuyter\Application\Commands\Media\DeleteMediaHandler;
+use WouterDeSchuyter\Application\Commands\Media\GenerateStructuredDataMediaHandler;
 use WouterDeSchuyter\Application\Commands\Robots\GenerateRobotsHandler;
 use WouterDeSchuyter\Application\Commands\Sitemap\GenerateSitemapHandler;
 use WouterDeSchuyter\Application\Commands\Sitemap\PingSearchEnginesHandler;
@@ -32,6 +33,7 @@ use WouterDeSchuyter\Domain\Commands\ContactEnquiry;
 use WouterDeSchuyter\Domain\Commands\Media\AddMedia;
 use WouterDeSchuyter\Domain\Commands\Media\ChangeMediaRatio;
 use WouterDeSchuyter\Domain\Commands\Media\DeleteMedia;
+use WouterDeSchuyter\Domain\Commands\Media\GenerateStructuredDataMedia;
 use WouterDeSchuyter\Domain\Commands\Robots\GenerateRobots;
 use WouterDeSchuyter\Domain\Commands\Sitemap\GenerateSitemap;
 use WouterDeSchuyter\Domain\Commands\Sitemap\PingSearchEngines;
@@ -68,6 +70,7 @@ class ServiceProvider extends AbstractServiceProvider
                 AddMedia::class => AddMediaHandler::class,
                 ChangeMediaRatio::class => ChangeMediaRatioHandler::class,
                 DeleteMedia::class => DeleteMediaHandler::class,
+                GenerateStructuredDataMedia::class => GenerateStructuredDataMediaHandler::class,
                 SaveBlogPost::class => SaveBlogPostHandler::class,
                 DeleteBlogPost::class => DeleteBlogPostHandler::class,
                 GenerateRobots::class => GenerateRobotsHandler::class,
