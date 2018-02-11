@@ -65,7 +65,7 @@ class MediaInlineRenderer implements InlineRendererInterface
         $html .= '<span ';
         $html .= 'class="media media--image' . ($ampEnabled ? ' media--amp' : '') . '" ';
         if (!$ampEnabled) {
-            $html .= 'style="padding-bottom: ' . $image->getRatio() .'%"';
+            $html .= 'style="padding-bottom: ' . $image->getRatio() * 100 .'%"';
         }
         $html .= '>';
 
@@ -107,7 +107,7 @@ class MediaInlineRenderer implements InlineRendererInterface
         $html .= '<span ';
         $html .= 'class="media media--youtube-video" ';
         if (!$ampEnabled) {
-            $html .= 'style="padding-bottom: ' . $youtubeVideo->getRatio() .'%"';
+            $html .= 'style="padding-bottom: ' . $youtubeVideo->getRatio() * 100 .'%"';
         }
         $html .= '>';
 
@@ -151,7 +151,7 @@ class MediaInlineRenderer implements InlineRendererInterface
         $html .= '<span';
         $html .= ' class="media media--vimeo-video' . ($ampEnabled ? ' media--amp' : '') . '"';
         if (!$ampEnabled) {
-            $html .= ' style="padding-bottom: ' . $vimeoVideo->getRatio() . '%"';
+            $html .= ' style="padding-bottom: ' . $vimeoVideo->getRatio() * 100 . '%"';
         }
         $html .= '>';
 

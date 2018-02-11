@@ -249,7 +249,7 @@ class Media implements JsonSerializable
             return null;
         }
 
-        return ($this->getHeight() / $this->getWidth()) * 100;
+        return ($this->getHeight() / $this->getWidth());
     }
 
     /**
