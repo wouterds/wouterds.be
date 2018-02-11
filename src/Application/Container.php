@@ -14,6 +14,7 @@ use WouterDeSchuyter\Infrastructure\ApplicationMonitor\ServiceProvider as Applic
 use WouterDeSchuyter\Infrastructure\Config\ServiceProvider as ConfigServiceProvider;
 use WouterDeSchuyter\Infrastructure\Database\ServiceProvider as DatabaseServiceProvider;
 use WouterDeSchuyter\Infrastructure\Filesystem\ServiceProvider as FilesystemServiceProvider;
+use WouterDeSchuyter\Infrastructure\ImageManager\ServiceProvider as ImagesServiceProvider;
 use WouterDeSchuyter\Infrastructure\Mail\ServiceProvider as MailServiceProvider;
 use WouterDeSchuyter\Infrastructure\View\ServiceProvider as ViewServiceProvider;
 use WouterDeSchuyter\Infrastructure\Vimeo\ServiceProvider as VimeoServiceProvider;
@@ -39,6 +40,7 @@ class Container extends LeagueContainer
         $container->addServiceProvider(ConfigServiceProvider::class);
         $container->addServiceProvider(DatabaseServiceProvider::class);
         $container->addServiceProvider(FilesystemServiceProvider::class);
+        $container->addServiceProvider(ImagesServiceProvider::class);
         $container->addServiceProvider(MailServiceProvider::class);
         $container->addServiceProvider(ViewServiceProvider::class);
         $container->addServiceProvider(VimeoServiceProvider::class);
