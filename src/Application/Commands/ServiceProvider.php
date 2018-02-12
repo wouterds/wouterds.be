@@ -11,6 +11,7 @@ use League\Tactician\Handler\MethodNameInflector\HandleInflector;
 use WouterDeSchuyter\Application\Commands\AccessLogs\EmptyAccessLogFileHandler;
 use WouterDeSchuyter\Application\Commands\AccessLogs\ImportAccessLogsHandler;
 use WouterDeSchuyter\Application\Commands\Blog\DeleteBlogPostHandler;
+use WouterDeSchuyter\Application\Commands\Blog\GenerateStructuredDataForBlogPostsHandler;
 use WouterDeSchuyter\Application\Commands\Blog\SaveBlogPostHandler;
 use WouterDeSchuyter\Application\Commands\Media\AddMediaHandler;
 use WouterDeSchuyter\Application\Commands\Media\ChangeMediaRatioHandler;
@@ -28,6 +29,7 @@ use WouterDeSchuyter\Application\Commands\Users\SignUpUserHandler;
 use WouterDeSchuyter\Domain\Commands\AccessLogs\EmptyAccessLogFile;
 use WouterDeSchuyter\Domain\Commands\AccessLogs\ImportAccessLogs;
 use WouterDeSchuyter\Domain\Commands\Blog\DeleteBlogPost;
+use WouterDeSchuyter\Domain\Commands\Blog\GenerateStructuredDataForBlogPosts;
 use WouterDeSchuyter\Domain\Commands\Blog\SaveBlogPost;
 use WouterDeSchuyter\Domain\Commands\ContactEnquiry;
 use WouterDeSchuyter\Domain\Commands\Media\AddMedia;
@@ -71,6 +73,7 @@ class ServiceProvider extends AbstractServiceProvider
                 ChangeMediaRatio::class => ChangeMediaRatioHandler::class,
                 DeleteMedia::class => DeleteMediaHandler::class,
                 GenerateStructuredDataMedia::class => GenerateStructuredDataMediaHandler::class,
+                GenerateStructuredDataForBlogPosts::class => GenerateStructuredDataForBlogPostsHandler::class,
                 SaveBlogPost::class => SaveBlogPostHandler::class,
                 DeleteBlogPost::class => DeleteBlogPostHandler::class,
                 GenerateRobots::class => GenerateRobotsHandler::class,

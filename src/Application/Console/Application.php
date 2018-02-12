@@ -7,6 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use WouterDeSchuyter\Application\Console\Commands\ChangeMediaRatio;
 use WouterDeSchuyter\Application\Console\Commands\GenerateRobots;
 use WouterDeSchuyter\Application\Console\Commands\GenerateSitemap;
+use WouterDeSchuyter\Application\Console\Commands\GenerateStructuredDataForBlogPosts;
 use WouterDeSchuyter\Application\Console\Commands\ImportAccessLogs;
 use WouterDeSchuyter\Application\Container;
 use WouterDeSchuyter\Application\Http\Application as HttpApplication;
@@ -34,6 +35,7 @@ class Application extends SymfonyApplication
         $this->addCommand('generate:robots', GenerateRobots::class);
         $this->addCommand('import:access-logs', ImportAccessLogs::class);
         $this->addCommand('media:change-ratio', ChangeMediaRatio::class);
+        $this->addCommand('blog:generate-structured-data', GenerateStructuredDataForBlogPosts::class);
     }
 
     /**
