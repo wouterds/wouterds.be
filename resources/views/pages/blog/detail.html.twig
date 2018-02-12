@@ -65,7 +65,12 @@
         "@context": "http://schema.org",
         "@type": "BlogPosting",
         "headline": "{{ blogPost.title }}",
-        "image": "{{ app.config.get('APP_URL') }}/static/media{{ media.path }}",
+        "image": [
+            {% for structuredDataImage in structuredDataImages %}
+                "{{ app.config.get('APP_URL') }}/static/media{{ structuredDataImage }}"
+                {% if not loop.last %},{% endif %}
+            {% endfor %}
+        ],
         "wordCount": "{{ blogPost.wordCount }}",
         "url": "{{ app.config.get('APP_URL') }}{{ page.path }}",
         "mainEntityOfPage": {

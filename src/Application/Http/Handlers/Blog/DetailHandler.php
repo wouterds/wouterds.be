@@ -113,11 +113,22 @@ class DetailHandler implements ViewAwareInterface
 
         $user = $this->userRepository->find($blogPost->getUserId());
         $media = $this->mediaRepository->find($blogPost->getMediaId());
+        $path = $media->getPath();
+        $extension = explode('.', $path);
+        $extension = end($extension);
+
+        $structuredDataImages = [
+            $path,
+            str_replace(".{$extension}", ".1x1.{$extension}", $path),
+            str_replace(".{$extension}", ".4x3.{$extension}", $path),
+            str_replace(".{$extension}", ".16x9.{$extension}", $path),
+        ];
 
         $data = [];
         $data['blogPost'] = $blogPost;
         $data['user'] = $user;
         $data['media'] = $media;
+        $data['structuredDataImages'] = $structuredDataImages;
 
         // Viewed blog post
         $this->blogPostRepository->viewed($blogPost);
