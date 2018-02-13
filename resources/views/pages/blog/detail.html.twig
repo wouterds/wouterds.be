@@ -2,7 +2,7 @@
 
 {% block title %}{{ blogPost.title }} - {{ app.config.get('APP_NAME') }}{% endblock %}
 
-{% block extra_meta %}
+{% block extraMeta %}
     <meta name="description" content="{{ blogPost.excerpt }}">
 {% endblock %}
 
@@ -65,7 +65,7 @@
     </div>
 {% endblock %}
 
-{% block structured_data %}
+{% block structuredData %}
 <script type="application/ld+json">
     {
         "@context": "http://schema.org",
