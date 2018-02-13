@@ -4,6 +4,10 @@
     <meta name="description" content="Hi, I'm Wouter! I'm an ambitious, passionate Full Stack Developer and I like all things digital really! Currently focussing a lot on crypto and blockchain.">
 {% endblock %}
 
+{% block ampUrl %}{{ app.config.get('APP_URL') }}{{ app.router.pathFor('index:amp') }}{% endblock %}
+
+{% block canonicalUrl %}{{ app.config.get('APP_URL') }}{{ app.router.pathFor('index') }}{% endblock %}
+
 {% block body %}
     <div class="container">
         <section class="sub-header">
