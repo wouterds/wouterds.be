@@ -8,6 +8,9 @@
     }
   ],
   "config": {
+    "platform": {
+      "php": "7.2"
+    },
     "sort-packages": true,
     "optimize-autoloader": true
   },
