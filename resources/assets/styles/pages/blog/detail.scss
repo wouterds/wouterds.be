@@ -44,12 +44,6 @@ $scope: 'page--blog--detail';
       opacity: 0;
     }
 
-    &--amp img {
-      opacity: 1;
-      height: auto;
-      width: auto;
-    }
-
     &:after {
       position: absolute;
       top: 0;

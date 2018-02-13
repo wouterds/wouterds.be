@@ -31,6 +31,12 @@
     <meta name="twitter:image" content="{{ app.config.get('APP_URL') }}/static/media{{ media.path }}">
 {% endblock %}
 
+{% block extraAmpCss %}
+.page--blog--detail__cover-image {
+    background-image: url('/static/media{{ media.path }}');
+}
+{% endblock %}
+
 {% block body %}
     <div class="container">
         <article class="page--blog--detail">
