@@ -57,11 +57,11 @@
 {% elseif page.amp.ready %}
 
     <!-- amp -->
-    <link rel="amphtml" href="{{ app.config.get('APP_URL') }}{{ page.amp.path }}">
+    <link rel="amphtml" href="{% block ampUrl %}{{ app.config.get('APP_URL') }}{{ page.amp.path }}{% endblock %}">
 {% endif %}
 
     <!-- canonical url -->
-    <link rel="canonical" href="{{ app.config.get('APP_URL') }}{{ page.path }}">
+    <link rel="canonical" href="{% block canonicalUrl %}{{ app.config.get('APP_URL') }}{{ page.path }}{% endblock %}">
 
     <!-- title -->
     <title>{% block title %}{{ app.config.get('APP_NAME') }}{% endblock %}</title>
