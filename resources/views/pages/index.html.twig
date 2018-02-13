@@ -6,7 +6,7 @@
 
 {% block ampUrl %}{{ app.config.get('APP_URL') }}{{ app.router.pathFor('index:amp') }}{% endblock %}
 
-{% block canonicalUrl %}{{ app.config.get('APP_URL') }}{{ app.router.pathFor('index') }}{% endblock %}
+{% block canonicalUrl %}{{ app.config.get('APP_URL') }}{% endblock %}
 
 {% block body %}
     <div class="container">
