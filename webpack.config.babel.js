@@ -8,7 +8,7 @@ const config = {
     'app': './resources/assets/scripts/app.js',
     'main': './resources/assets/styles/main.scss',
     'amp.about': './resources/assets/styles/amp/about.scss',
-    'amp.home': './resources/assets/styles/amp/home.scss',
+    'amp.index': './resources/assets/styles/amp/index.scss',
     'amp.blog.index': './resources/assets/styles/amp/blog/index.scss',
     'amp.blog.detail': './resources/assets/styles/amp/blog/detail.scss',
   },

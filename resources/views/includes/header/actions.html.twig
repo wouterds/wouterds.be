@@ -1,5 +1,5 @@
-<li class="header__navigation__item{% if 'home' in page.dashedCase %} header__navigation__item--active{% endif %}">
-    <a class="header__navigation__item-link" href="{{ app.router.pathFor('home') }}">Home</a>
+<li class="header__navigation__item{% if page.dashedCase == 'index' %} header__navigation__item--active{% endif %}">
+    <a class="header__navigation__item-link" href="{{ app.router.pathFor('index') }}">Home</a>
 </li>
 <li class="header__navigation__item{% if 'about' in page.dashedCase %} header__navigation__item--active{% endif %}">
     <a class="header__navigation__item-link" href="{{ app.router.pathFor('about') }}">About</a>

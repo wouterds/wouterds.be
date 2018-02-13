@@ -27,7 +27,7 @@ use WouterDeSchuyter\Application\Http\Handlers\Blog\DetailHandler as BlogDetailH
 use WouterDeSchuyter\Application\Http\Handlers\Blog\IndexHandler as BlogIndexHandler;
 use WouterDeSchuyter\Application\Http\Handlers\ContactHandler;
 use WouterDeSchuyter\Application\Http\Handlers\ContactPostHandler;
-use WouterDeSchuyter\Application\Http\Handlers\HomeHandler;
+use WouterDeSchuyter\Application\Http\Handlers\IndexHandler;
 use WouterDeSchuyter\Application\Http\Handlers\StatsHandler;
 use WouterDeSchuyter\Application\Http\Middlewares\Admin\AuthenticatedUserMiddleware as AdminAuthenticatedUserMiddleware;
 
@@ -73,7 +73,7 @@ class Routes
     {
         $suffix = $amp ? ':amp' : '';
 
-        $app->get($amp ? '' : '/', HomeHandler::class)->setName('home' . $suffix);
+        $app->get($amp ? '' : '/', IndexHandler::class)->setName('index' . $suffix);
         $app->get('/about', AboutHandler::class)->setName('about' . $suffix);
         $app->group('/blog', function () use ($app, $suffix) {
             $app->get('', BlogIndexHandler::class)->setName('blog' . $suffix);
