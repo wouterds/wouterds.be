@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import Clipboard from 'clipboard';
+import ServiceClipboard from './services/clipboard';
 import ServiceEmoji from './services/emoji';
 import PageAbout from './pages/about';
 import PageContact from './pages/contact';
@@ -19,11 +19,11 @@ class App {
   init() {
     this.initPages();
     this.initServices();
-    this.initClipboard();
   }
 
   initServices() {
     new ServiceEmoji();
+    new ServiceClipboard();
   }
 
   initPages() {
@@ -36,13 +36,6 @@ class App {
     new PageAdminMediaAdd();
     new PageAdminMediaIndex();
     new PageAdminBlogPost();
-  }
-
-  initClipboard() {
-    $('[data-clipboard-text]').each((index, el) => {
-      $(el).css('cursor', 'pointer');
-      new Clipboard(el);
-    });
   }
 }
 
