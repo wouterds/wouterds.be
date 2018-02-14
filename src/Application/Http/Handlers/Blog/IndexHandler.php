@@ -76,11 +76,6 @@ class IndexHandler implements ViewAwareInterface
         $data['blogPostCount'] = $blogPostsCount;
         $data['blogPostMaxPerPage'] = self::MAX_POSTS_PER_PAGE;
 
-        if ($page > 0) {
-            $data['page']['path'] = $this->router->pathFor('blog');
-            $data['page']['amp']['path'] = $this->router->pathFor('blog:amp');
-        }
-
         return $this->render($response, $data);
     }
 }
