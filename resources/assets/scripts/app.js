@@ -1,6 +1,6 @@
 import $ from 'jquery';
-import Twemoji from 'twemoji';
 import Clipboard from 'clipboard';
+import ServiceEmoji from './services/emoji';
 import PageAbout from './pages/about';
 import PageContact from './pages/contact';
 import PageBlogDetail from './pages/blog/detail';
@@ -18,8 +18,12 @@ class App {
 
   init() {
     this.initPages();
-    this.initTwemoji();
+    this.initServices();
     this.initClipboard();
+  }
+
+  initServices() {
+    new ServiceEmoji();
   }
 
   initPages() {
@@ -32,23 +36,6 @@ class App {
     new PageAdminMediaAdd();
     new PageAdminMediaIndex();
     new PageAdminBlogPost();
-  }
-
-  initTwemoji() {
-    Twemoji.parse($('main')[0], {
-      folder: 'svg',
-      ext: '.svg',
-      callback: function (icon, options) {
-        switch (icon) {
-          case 'a9': // © copyright
-          case 'ae': // ® registered trademark
-          case '2122': // ™ trademark
-            return false;
-        }
-
-        return ''.concat(options.base, options.size, '/', icon, options.ext);
-      }
-    });
   }
 
   initClipboard() {
