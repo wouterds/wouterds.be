@@ -15,6 +15,13 @@ class Emoji {
 
         return ''.concat(options.base, options.size, '/', icon, options.ext);
       },
+      attributes: (rawText, iconId) => {
+        return {
+          title: `Emoji: ${rawText}, emoji id: ${iconId}`,
+          width: 16,
+          height: 16,
+        };
+      },
     });
   }
 }
