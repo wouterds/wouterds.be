@@ -6,6 +6,7 @@ use Symfony\Component\Console\Application as SymfonyApplication;
 use Symfony\Component\Console\Command\Command;
 use WouterDeSchuyter\Application\Console\Commands\ChangeMediaRatio;
 use WouterDeSchuyter\Application\Console\Commands\GenerateRobots;
+use WouterDeSchuyter\Application\Console\Commands\GenerateRss;
 use WouterDeSchuyter\Application\Console\Commands\GenerateSitemap;
 use WouterDeSchuyter\Application\Console\Commands\GenerateStructuredDataForBlogPosts;
 use WouterDeSchuyter\Application\Console\Commands\ImportAccessLogs;
