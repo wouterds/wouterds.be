@@ -100,6 +100,8 @@ def deployStaging() {
   sh 'ssh wouterds@'+SERVER+' "docker exec internalwouterdeschuyterwebsitestag_php-fpm_1 php ./composer.phar migrations:migrate"'
   sh 'ssh wouterds@'+SERVER+' "docker exec internalwouterdeschuyterwebsitestag_php-fpm_1 php ./console/app generate:sitemap"'
   sh 'ssh wouterds@'+SERVER+' "docker exec internalwouterdeschuyterwebsitestag_php-fpm_1 php ./console/app generate:robots"'
+  sh 'ssh wouterds@'+SERVER+' "docker exec internalwouterdeschuyterwebsitestag_php-cron_1 php ./console/app generate:rss"'
+  sh 'ssh wouterds@'+SERVER+' "docker exec internalwouterdeschuyterwebsitestag_php-cron_1 php ./console/app blog:generate-structured-data"'
 }
 
 def cleanWorkspace() {
