@@ -33,6 +33,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="robots" content="index, follow">
 {% block extraMeta %}{% endblock %}
+
+    <!-- rss feed -->
+    <link rel="alternate" type="application/rss+xml" href="{{ app.config.get('APP_URL') }}/rss.xml">
 {% block opengraph %}
 
     <!-- opengraph -->
