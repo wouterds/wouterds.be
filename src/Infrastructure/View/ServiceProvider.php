@@ -27,6 +27,7 @@ class ServiceProvider extends AbstractServiceProvider implements BootableService
      */
     protected $provides = [
         Twig::class,
+        CommonMarkConverter::class,
     ];
 
     /**
@@ -34,20 +35,27 @@ class ServiceProvider extends AbstractServiceProvider implements BootableService
      */
     public function register()
     {
+        $this->container->share(CommonMarkConverter::class, function () {
+            $commonMarkEnvironment = CommonMarkEnvironment::createCommonMarkEnvironment();
+            $request = $this->container->get(Request::class);
+
+            $markdownMediaExtension = $this->container->get(MediaInlineExtension::class);
+            $markdownMediaExtension->setAmpEnabled(substr_count($request->getUri()->getPath(), '/amp') > 0);
+
+            $commonMarkEnvironment->addExtension($markdownMediaExtension);
+
+            return new CommonMarkConverter([], $commonMarkEnvironment);
+        });
+
         $this->container->share(Twig::class, function () {
             $loader = new Twig_Loader_Filesystem(APP_DIR . '/' . getenv('TEMPLATES_DIR'));
             $twig = new Twig($loader);
 
             $twig->addExtension(new FilesizeExtension());
             $twig->addExtension(new CompressHtmlExtension());
-
-            $commonMarkEnvironment = CommonMarkEnvironment::createCommonMarkEnvironment();
-            $markdownMediaExtension = $this->container->get(MediaInlineExtension::class);
-            $request = $this->container->get(Request::class);
-            $markdownMediaExtension->setAmpEnabled(substr_count($request->getUri()->getPath(), '/amp') > 0);
-            $commonMarkEnvironment->addExtension($markdownMediaExtension);
-            $commonMarkConverter = new CommonMarkConverter([], $commonMarkEnvironment);
-            $twig->addExtension(new MarkdownExtension(new CommonMarkEngine($commonMarkConverter)));
+            $twig->addExtension(new MarkdownExtension(
+                new CommonMarkEngine($this->container->get(CommonMarkConverter::class))
+            ));
 
             return $twig;
         });
