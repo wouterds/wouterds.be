@@ -18,6 +18,7 @@ use WouterDeSchuyter\Application\Commands\Media\ChangeMediaRatioHandler;
 use WouterDeSchuyter\Application\Commands\Media\DeleteMediaHandler;
 use WouterDeSchuyter\Application\Commands\Media\GenerateStructuredDataMediaHandler;
 use WouterDeSchuyter\Application\Commands\Robots\GenerateRobotsHandler;
+use WouterDeSchuyter\Application\Commands\Rss\GenerateRssHandler;
 use WouterDeSchuyter\Application\Commands\Sitemap\GenerateSitemapHandler;
 use WouterDeSchuyter\Application\Commands\Sitemap\PingSearchEnginesHandler;
 use WouterDeSchuyter\Application\Commands\Users\ActivateUserHandler;
@@ -37,6 +38,7 @@ use WouterDeSchuyter\Domain\Commands\Media\ChangeMediaRatio;
 use WouterDeSchuyter\Domain\Commands\Media\DeleteMedia;
 use WouterDeSchuyter\Domain\Commands\Media\GenerateStructuredDataMedia;
 use WouterDeSchuyter\Domain\Commands\Robots\GenerateRobots;
+use WouterDeSchuyter\Domain\Commands\Rss\GenerateRss;
 use WouterDeSchuyter\Domain\Commands\Sitemap\GenerateSitemap;
 use WouterDeSchuyter\Domain\Commands\Sitemap\PingSearchEngines;
 use WouterDeSchuyter\Domain\Commands\Users\ActivateUser;
@@ -77,6 +79,7 @@ class ServiceProvider extends AbstractServiceProvider
                 SaveBlogPost::class => SaveBlogPostHandler::class,
                 DeleteBlogPost::class => DeleteBlogPostHandler::class,
                 GenerateRobots::class => GenerateRobotsHandler::class,
+                GenerateRss::class => GenerateRssHandler::class,
                 GenerateSitemap::class => GenerateSitemapHandler::class,
                 PingSearchEngines::class => PingSearchEnginesHandler::class,
                 ImportAccessLogs::class => ImportAccessLogsHandler::class,
