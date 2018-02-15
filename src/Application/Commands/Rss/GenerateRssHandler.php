@@ -2,7 +2,6 @@
 
 namespace WouterDeSchuyter\Application\Commands\Rss;
 
-use League\CommonMark\CommonMarkConverter;
 use Slim\Router;
 use Suin\RSSWriter\Channel;
 use Suin\RSSWriter\Feed;
@@ -37,29 +36,21 @@ class GenerateRssHandler
     private $userRepository;
 
     /**
-     * @var CommonMarkConverter
-     */
-    private $commonMarkConverter;
-
-    /**
      * @param Config $config
      * @param Router $router
      * @param BlogPostRepository $blogPostRepository
      * @param UserRepository $userRepository
-     * @param CommonMarkConverter $commonMarkConverter
      */
     public function __construct(
         Config $config,
         Router $router,
         BlogPostRepository $blogPostRepository,
-        UserRepository $userRepository,
-        CommonMarkConverter $commonMarkConverter
+        UserRepository $userRepository
     ) {
         $this->config = $config;
         $this->router = $router;
         $this->blogPostRepository = $blogPostRepository;
         $this->userRepository = $userRepository;
-        $this->commonMarkConverter = $commonMarkConverter;
     }
 
     /**
@@ -109,13 +100,11 @@ class GenerateRssHandler
 
             $item = new Item();
             $item->title($blogPost->getTitle());
-            $item->description("<p>{$blogPost->getExcerpt()}</p>");
-            $item->contentEncoded($this->commonMarkConverter->convertToHtml($blogPost->getBody()));
+            $item->description($blogPost->getExcerpt());
             $item->url($url);
             $item->guid($url, true);
             $item->pubDate((int) $lastModified->format('U'));
             $item->author($user->getName());
-            $item->preferCdata(true);
             $item->appendTo($channel);
         }
 
