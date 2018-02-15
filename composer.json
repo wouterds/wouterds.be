@@ -51,6 +51,7 @@
     "shrikeh/teapot": "^2.3",
     "slim/slim": "^3.8",
     "spe/filesize-extension-bundle": "^1.0",
+    "suin/php-rss-writer": "^1.6",
     "swiftmailer/swiftmailer": "^6.0",
     "symfony/console": "^4.0",
     "tracy/tracy": "^2.4",
