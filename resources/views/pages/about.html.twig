@@ -47,3 +47,22 @@
         </section>
     </div>
 {% endblock %}
+
+{% block structuredData %}
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Person",
+    "name": "Wouter De Schuyter",
+    "url": "{{ app.config.get('APP_URL') }}",
+    "sameAs": [
+        "https://twitter.com/wouterds",
+        "https://facebook.com/wouterdeschuyter.be",
+        "https://instagram.com/wouterds",
+        "https://vimeo.com/wouterds",
+        "https://linkedin.com/in/wouterds",
+        "https://github.com/wouterds"
+    ]
+}
+</script>
+{% endblock %}
