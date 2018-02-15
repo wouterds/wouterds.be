@@ -33,6 +33,7 @@ class Application extends SymfonyApplication
 
         $this->addCommand('generate:sitemap', GenerateSitemap::class);
         $this->addCommand('generate:robots', GenerateRobots::class);
+        $this->addCommand('generate:rss', GenerateRss::class);
         $this->addCommand('import:access-logs', ImportAccessLogs::class);
         $this->addCommand('media:change-ratio', ChangeMediaRatio::class);
         $this->addCommand('blog:generate-structured-data', GenerateStructuredDataForBlogPosts::class);
