@@ -112,6 +112,7 @@ class Stats extends Base {
           hoverBackgroundColor: false,
           borderWidth: 2,
           borderColor: 'rgba(54, 162, 235, 0.9)',
+          pointRadius: 1,
           data: dataValues
         },
       ]
