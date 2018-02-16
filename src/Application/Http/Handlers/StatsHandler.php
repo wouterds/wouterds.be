@@ -137,7 +137,7 @@ class StatsHandler implements ViewAwareInterface
 
         $responseCountLast7Days = [];
         $avg = [];
-        $avgPer = 4;
+        $avgPer = 1;
 
         foreach ($responseCountPerHourLast7Days as $responseCountPerHour) {
             $day = explode(' ', $responseCountPerHour['interval'])[0];
