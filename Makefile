@@ -1,6 +1,6 @@
 all: tag
 
-VERSION = $(shell cat package.json | grep "version" | sed -e 's/^.*: "\(.*\)".*/\1/')
+VERSION = $(shell cat composer.json | grep "version" | sed -e 's/^.*: "\(.*\)".*/\1/')
 PWD = $(shell pwd)
 
 DOCKER_REPO  = docker.wouterdeschuyter.be
