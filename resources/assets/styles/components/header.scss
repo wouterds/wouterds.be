@@ -42,6 +42,10 @@ $scope: 'header';
       text-decoration: none;
       padding: 8px 14px;
       border-radius: 3px;
+
+      &--disabled {
+        cursor: not-allowed;
+      }
     }
   }
 
