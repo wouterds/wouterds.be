@@ -21,7 +21,7 @@
 #
 # m h  dom mon dow   command
 
+00 */12 * * * /code/console/app generate:robots
 00 */6 * * * /code/console/app generate:sitemap --ping
-00 */6 * * * /code/console/app generate:robots
 00 */6 * * * /code/console/app generate:rss
-*/15 * * * * /code/console/app import:access-logs
+00 * * * * /code/console/app import:access-logs
