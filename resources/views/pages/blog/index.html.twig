@@ -9,7 +9,7 @@
 {% if blogPostPage > 2 %}
     <link rel="prev" href="{{ app.config.get('APP_URL') }}{{ app.router.pathFor('blog.page', { page: (blogPostPage - 1) }) }}">
 {% elseif blogPostPage > 1 %}
-    <link rel="prev" href="{{ app.config.get('APP_URL') }}{{ app.router.pathFor('blog') }}">
+    <link rel="prev" href="{{ app.config.get('APP_URL') }}{{ app.router.pathFor('index') }}">
 {% endif %}
 {% if blogPostPage <= blogPostMaxPerPage %}
     <link rel="next" href="{{ app.config.get('APP_URL') }}{{ app.router.pathFor('blog.page', { page: (blogPostPage + 1) }) }}">

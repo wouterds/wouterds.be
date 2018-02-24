@@ -65,7 +65,7 @@ class GenerateRssHandler
         $channel = new Channel();
         $channel->title($this->config->get('APP_NAME'));
         $channel->description($this->config->get('BLOG_DESCRIPTION'));
-        $channel->url($this->config->get('APP_URL') . $this->router->pathFor('blog'));
+        $channel->url($this->config->get('APP_URL'));
         $channel->feedUrl($this->config->get('APP_URL') . '/rss.xml');
         $channel->pubDate(time());
         $channel->lastBuildDate(time());
