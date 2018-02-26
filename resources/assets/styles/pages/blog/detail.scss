@@ -97,6 +97,10 @@ $scope: 'page--blog--detail';
     font-size: 1.9em;
   }
 
+  h2 + h3 {
+    margin-top: 20px;
+  }
+
   h4 {
     font-size: 1.6em;
     font-weight: 500;
