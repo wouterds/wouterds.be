@@ -97,7 +97,8 @@ $scope: 'page--blog--detail';
     font-size: 1.9em;
   }
 
-  h2 + h3 {
+  h2 + h3,
+  h3 + h4 {
     margin-top: 20px;
   }
 
