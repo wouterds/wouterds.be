@@ -37,6 +37,22 @@
 }
 {% endblock %}
 
+{% block extraScripts %}
+<script>
+var disqus_config = function () {
+this.page.url = '{{ app.config.get('APP_URL') }}{{ page.path }}';
+this.page.identifier = 'wouterdeschuyter';
+};
+
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://wouterdeschuyter.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+{% endblock %}
+
 {% block body %}
     <div class="container">
         <article class="page--blog--detail">
