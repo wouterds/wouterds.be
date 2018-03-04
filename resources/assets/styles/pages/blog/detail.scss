@@ -27,6 +27,10 @@ $scope: 'page--blog--detail';
     }
   }
 
+  &__comments {
+    margin-top: 50px;
+  }
+
   &__cover-image {
     z-index: -1;
     position: absolute;
