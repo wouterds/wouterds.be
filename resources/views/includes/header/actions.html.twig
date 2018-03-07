@@ -4,9 +4,6 @@
 <li class="header__navigation__item{% if 'about' in page.dashedCase %} header__navigation__item--active{% endif %}">
     <a class="header__navigation__item-link" href="{{ app.router.pathFor('about') }}">About</a>
 </li>
-<li class="header__navigation__item{% if 'blog-index' in page.dashedCase %} header__navigation__item--active{% endif %}">
-    <a class="header__navigation__item-link" href="{{ app.router.pathFor('blog') }}">Blog</a>
-</li>
 <li class="header__navigation__item{% if 'projects' in page.dashedCase %} header__navigation__item--active{% endif %}">
     <a class="header__navigation__item-link header__navigation__item-link--disabled" href="">Projects</a>
 </li>
