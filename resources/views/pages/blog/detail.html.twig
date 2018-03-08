@@ -74,7 +74,9 @@ s.setAttribute('data-timestamp', +new Date());
                 {% markdown %}{{ blogPost.body|raw }}{% endmarkdown %}
             </section>
 
-            <section class="page--blog--detail__comments" id="disqus_thread"></section>
+            {% if not page.amp.active %}
+                <section class="page--blog--detail__comments" id="disqus_thread"></section>
+            {% endif %}
 
             <footer class="page--blog--detail__footer">
                 <address class="page--blog--detail__author">{{ user.name }}</address>
