@@ -39,16 +39,17 @@
 
 {% block extraScripts %}
 <script>
-var disqus_config = function () {
-this.page.url = '{{ app.config.get('APP_URL') }}{{ page.path }}';
-this.page.identifier = this.page.url;
+var disqus_config = function() {
+    this.page.url = '{{ app.config.get('APP_URL') }}{{ page.path }}';
+    this.page.identifier = this.page.url;
 };
 
 (function() {
-var d = document, s = d.createElement('script');
-s.src = 'https://wouterdeschuyter.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
+    var d = document;
+    var s = d.createElement('script');
+    s.src = 'https://wouterdeschuyter.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
 })();
 </script>
 {% endblock %}
