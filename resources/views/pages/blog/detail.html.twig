@@ -31,12 +31,6 @@
     <meta name="twitter:image" content="{{ app.config.get('APP_URL') }}/static/media{{ media.path }}">
 {% endblock %}
 
-{% block extraAmpCss %}
-.page--blog--detail__cover-image {
-    background-image: url('/static/media{{ media.path }}');
-}
-{% endblock %}
-
 {% block extraScripts %}
 <script>
 var disqus_config = function() {
@@ -60,7 +54,7 @@ var disqus_config = function() {
             <header class="page--blog--detail__header">
                 <div class="page--blog--detail__cover-image{% if page.amp.active %} page--blog--detail__cover-image--amp{% endif %}"{% if not page.amp.active %} style="background-image: url('/static/media{{ media.path }}')"{% endif %}>
                     {% if page.amp.active %}
-                        <amp-img src="/static/media{{ media.path }}" alt="{{ media.name }}" width="{{ media.width }}" height="{{ media.height }}" layout="fill"></amp-img>
+                        <amp-img src="/static/media{{ media.path }}" alt="{{ media.name }}" width="{{ media.width }}" height="{{ media.height }}" layout="responsive"></amp-img>
                     {% else %}
                         <img src="/static/media{{ media.path }}" alt="{{ media.name }}">
                     {% endif %}

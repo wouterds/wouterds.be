@@ -8,3 +8,13 @@
 
 // Pages
 @import '../../pages/blog/detail';
+
+.page--blog--detail {
+  &__cover-image {
+    overflow: hidden;
+
+    img {
+      opacity: 1;
+    }
+  }
+}
