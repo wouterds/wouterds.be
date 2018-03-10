@@ -114,8 +114,24 @@ $scope: 'page--blog--detail';
 
 @media only screen and (max-width: 580px) {
   .#{$scope} {
+    .header {
+      z-index: 2;
+      position: relative;
+      padding: 0;
+      height: 50px;
+      line-height: 50px;
+
+      &__title,
+      &__navigation__item-link {
+        &,
+        &:hover {
+          color: $color-blue-grey;
+        }
+      }
+    }
+
     &__header {
-      padding-top: 25vh;
+      padding-top: calc(25vh + 65px);
     }
 
     &__title {
@@ -124,6 +140,8 @@ $scope: 'page--blog--detail';
 
     &__cover-image {
       height: 35vh;
+      z-index: 1;
+      top: 50px;
     }
   }
 }

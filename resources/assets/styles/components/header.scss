@@ -75,7 +75,10 @@ $scope: 'header';
 @media only screen and (max-width: 580px) {
   .#{$scope} {
     background: rgba($color-blue-grey, 0.02);
-    border-bottom: 1px solid rgba($color-blue-grey, 0.05);
+
+    a {
+      color: $color-blue-grey;
+    }
 
     &__title {
       display: none;
@@ -85,6 +88,14 @@ $scope: 'header';
       text-align: center;
       display: block;
       float: none;
+
+      &__item {
+        &--active & {
+          &-link {
+            color: $color-blue-grey;
+          }
+        }
+      }
     }
   }
 }
