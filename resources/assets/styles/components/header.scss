@@ -76,10 +76,6 @@ $scope: 'header';
   .#{$scope} {
     background: rgba($color-blue-grey, 0.02);
 
-    a {
-      color: $color-blue-grey;
-    }
-
     &__title {
       display: none;
     }
@@ -92,7 +88,7 @@ $scope: 'header';
       &__item {
         &--active & {
           &-link {
-            color: $color-blue-grey;
+            color: $color-white;
           }
         }
       }

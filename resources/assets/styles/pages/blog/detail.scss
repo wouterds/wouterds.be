@@ -117,9 +117,8 @@ $scope: 'page--blog--detail';
     .header {
       z-index: 2;
       position: relative;
-      padding: 0;
-      height: 50px;
-      line-height: 50px;
+      padding-right: 0;
+      padding-left: 0;
 
       &__title,
       &__navigation__item-link {
@@ -131,7 +130,7 @@ $scope: 'page--blog--detail';
     }
 
     &__header {
-      padding-top: calc(25vh + 65px);
+      padding-top: calc(25vh + 75px);
     }
 
     &__title {
@@ -141,7 +140,7 @@ $scope: 'page--blog--detail';
     &__cover-image {
       height: 35vh;
       z-index: 1;
-      top: 50px;
+      top: 75px;
     }
   }
 }
