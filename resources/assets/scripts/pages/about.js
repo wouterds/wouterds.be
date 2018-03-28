@@ -15,7 +15,7 @@ class About extends Base {
 
   updateAge() {
     let age = moment().diff(moment.unix(this.birthday), 'years', true);
-    age = age.toFixed(8);
+    age = age.toFixed(9);
 
     this.$age.text(age);
   }
