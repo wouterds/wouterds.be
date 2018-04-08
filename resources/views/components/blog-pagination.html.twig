@@ -11,9 +11,9 @@
         </a>
     {% endif %}
 
-    <span class="blog-pagination__page-number">Page {{ blogPostPage }} of {{ (blogPostCount / blogPostMaxPerPage)|round }}</span>
+    <span class="blog-pagination__page-number">Page {{ blogPostPage }} of {{ maxBlogPostPage }}</span>
 
-    {% if blogPostPage <= blogPostMaxPerPage %}
+    {% if blogPostPage < maxBlogPostPage %}
         <a class="blog-pagination__older-posts" href="{{ app.router.pathFor('blog.page', { page: (blogPostPage + 1) }) }}">
             <span class="blog-pagination__link-text">Older Posts </span>
             <span class="blog-pagination__link-icon">&#x2192;</span>

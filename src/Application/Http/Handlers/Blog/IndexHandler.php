@@ -49,32 +49,30 @@ class IndexHandler implements ViewAwareInterface
      * @param int $page
      * @return Response
      */
-    public function __invoke(Request $request, Response $response, int $page = 0): Response
+    public function __invoke(Request $request, Response $response, int $page = 1): Response
     {
         // Get total blogpost count
         $blogPostsCount = $this->blogPostRepository->getPublishedCount();
 
+        // Calculate max page
+        $maxBlogPostPage = ceil($blogPostsCount / self::MAX_POSTS_PER_PAGE);
+
         // Invalid page?
-        if ($page < 0 || $page === 1 || $page > $blogPostsCount / self::MAX_POSTS_PER_PAGE) {
+        if ($page <= 0 || $page > $maxBlogPostPage) {
             return $response->withRedirect($this->router->pathFor('index'));
         }
 
         // Get blogposts
         $blogPosts = $this->blogPostRepository->findPublished(
-            $page * self::MAX_POSTS_PER_PAGE,
+            ($page > 1 ? $page - 1 : 0) * self::MAX_POSTS_PER_PAGE,
             self::MAX_POSTS_PER_PAGE
         );
-
-        // Page 0? Actually 1
-        if ($page === 0) {
-            $page = 1;
-        }
 
         $data = [];
         $data['blogPosts'] = $blogPosts;
         $data['blogPostPage'] = $page;
         $data['blogPostCount'] = $blogPostsCount;
-        $data['blogPostMaxPerPage'] = self::MAX_POSTS_PER_PAGE;
+        $data['maxBlogPostPage'] = $maxBlogPostPage;
 
         return $this->render($response, $data);
     }
