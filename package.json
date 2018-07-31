@@ -15,7 +15,7 @@
     "medium-zoom": "^0.3.0",
     "moment": "^2.21.0",
     "simplemde": "^1.11.2",
-    "slugify": "^1.2.9",
+    "slugify": "^1.3.0",
     "twemoji": "^2.5.1"
   },
   "devDependencies": {
