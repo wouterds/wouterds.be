@@ -14,7 +14,7 @@ services:
       - ./logs/nginx:/logs
     networks:
       - default
-      - nginxproxy_default
+      - webproxy
 
   php-fpm:
     image: docker.wouterdeschuyter.be/internal-wouterdeschuyter-website-php-fpm
@@ -25,11 +25,9 @@ services:
       - nginx
     volumes:
       - ./logs:/code/storage/logs
-    external_links:
-      - mariadb
     networks:
       - default
-      - databaseserver_default
+      - mariadb
 
   php-cron:
     image: docker.wouterdeschuyter.be/internal-wouterdeschuyter-website-php-cron
@@ -38,14 +36,12 @@ services:
       - php-fpm
     env_file:
       - docker.env
-    external_links:
-      - mariadb
     networks:
       - default
-      - databaseserver_default
+      - mariadb
 
 networks:
-  databaseserver_default:
+  mariadb:
     external: true
-  nginxproxy_default:
+  webproxy:
     external: true
