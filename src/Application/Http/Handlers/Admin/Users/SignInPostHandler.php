@@ -2,14 +2,14 @@
 
 namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Users;
 
-use League\Tactician\CommandBus;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Teapot\StatusCode;
 use WouterDeSchuyter\Application\Http\Validators\Admin\Users\SignInRequestValidator;
-use WouterDeSchuyter\Domain\Commands\Users\SignInUser;
-use WouterDeSchuyter\Domain\Users\InvalidUserCredentials;
-use WouterDeSchuyter\Domain\Users\UserNotActivatedYet;
+use WouterDeSchuyter\Domain\Users\User;
+use WouterDeSchuyter\Domain\Users\UserRepository;
+use WouterDeSchuyter\Domain\Users\UserSession;
+use WouterDeSchuyter\Domain\Users\UserSessionRepository;
 
 class SignInPostHandler
 {
@@ -19,18 +19,24 @@ class SignInPostHandler
     private $signInRequestValidator;
 
     /**
-     * @var CommandBus
+     * @var UserRepository
      */
-    private $commandBus;
+    private $userRepository;
+
+    /**
+     * @var UserSessionRepository
+     */
+    private $userSessionRepository;
 
     /**
      * @param SignInRequestValidator $signInRequestValidator
      * @param CommandBus $commandBus
      */
-    public function __construct(SignInRequestValidator $signInRequestValidator, CommandBus $commandBus)
+    public function __construct(SignInRequestValidator $signInRequestValidator, UserRepository $userRepository, UserSessionRepository $userSessionRepository)
     {
         $this->signInRequestValidator = $signInRequestValidator;
-        $this->commandBus = $commandBus;
+        $this->userRepository = $userRepository;
+        $this->userSessionRepository = $userSessionRepository;
     }
 
     /**
@@ -44,16 +50,31 @@ class SignInPostHandler
             return $response->withJson($this->signInRequestValidator->getErrors(), StatusCode::BAD_REQUEST);
         }
 
-        try {
-            $this->commandBus->handle(new SignInUser(
-                $request->getParam('email'),
-                $request->getParam('password')
-            ));
-        } catch (InvalidUserCredentials $e) {
-            return $response->withJson(false, StatusCode::UNAUTHORIZED);
-        } catch (UserNotActivatedYet $e) {
+        $user = $this->userRepository->findByEmail($request->getParam('email'));
+
+        // No user found?
+        if (empty($user)) {
             return $response->withJson(false, StatusCode::UNAUTHORIZED);
         }
+
+        // Invalid password?
+        if (User::hashPassword($user->getSalt(), $request->getParam('password')) !== $user->getPassword()) {
+            return $response->withJson(false, StatusCode::UNAUTHORIZED);
+        }
+
+        // Not activated?
+        if (empty($user->getActivatedAt())) {
+            return $response->withJson(false, StatusCode::UNAUTHORIZED);
+        }
+
+        // Delete old sessions, allow only 1 client to be signed in at the time
+        $this->userSessionRepository->deleteByUserId($user->getId());
+
+        // New user session
+        $userSession = new UserSession($user->getId());
+        $this->userSessionRepository->add($userSession);
+
+        setcookie('user_session_id', $userSession->getId(), time() + strtotime('1 month'), '/');
 
         return $response->withJson(true);
     }
