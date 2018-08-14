@@ -55,6 +55,7 @@
     "suin/php-rss-writer": "^1.6",
     "swiftmailer/swiftmailer": "^6.0",
     "symfony/console": "^4.0",
+    "symfony/yaml": "^4.1",
     "tracy/tracy": "^2.4",
     "twig/twig": "^2.4",
     "vlucas/phpdotenv": "^2.4",
