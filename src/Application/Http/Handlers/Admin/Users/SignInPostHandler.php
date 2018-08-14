@@ -5,6 +5,8 @@ namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Users;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Teapot\StatusCode;
+use Dflydev\FigCookies\SetCookie;
+use Dflydev\FigCookies\FigResponseCookies;
 use WouterDeSchuyter\Application\Http\Validators\Admin\Users\SignInRequestValidator;
 use WouterDeSchuyter\Domain\Users\User;
 use WouterDeSchuyter\Domain\Users\UserRepository;
@@ -74,7 +76,8 @@ class SignInPostHandler
         $userSession = new UserSession($user->getId());
         $this->userSessionRepository->add($userSession);
 
-        setcookie('user_session_id', $userSession->getId(), time() + strtotime('1 month'), '/');
+        $cookie = SetCookie::create('user_session_id', $userSession->getId())->withPath('/');
+        $response = FigResponseCookies::set($response, $cookie);
 
         return $response->withJson(true);
     }

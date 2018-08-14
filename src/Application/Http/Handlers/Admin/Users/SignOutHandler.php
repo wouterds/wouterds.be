@@ -5,6 +5,8 @@ namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Users;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Router;
+use Dflydev\FigCookies\FigRequestCookies;
+use Dflydev\FigCookies\FigResponseCookies;
 use WouterDeSchuyter\Domain\Users\UserSessionId;
 use WouterDeSchuyter\Domain\Users\UserSessionRepository;
 
@@ -37,9 +39,10 @@ class SignOutHandler
      */
     public function __invoke(Request $request, Response $response): Response
     {
-        $this->userSessionRepository->delete($request->getCookieParam('user_session_id'));
+        $cookie = FigRequestCookies::get($request, 'user_session_id');
+        $this->userSessionRepository->delete(new UserSessionId($cookie->getValue()));
 
-        setcookie('user_session_id', $request->getCookieParam('user_session_id'), -1, '/');
+        $response = FigResponseCookies::remove($response, $cookie->getName());
 
         return $response->withRedirect($this->router->pathFor('admin'));
     }

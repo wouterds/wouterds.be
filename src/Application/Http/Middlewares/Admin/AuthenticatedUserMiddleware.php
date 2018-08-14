@@ -5,6 +5,8 @@ namespace WouterDeSchuyter\Application\Http\Middlewares\Admin;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Router;
+use Dflydev\FigCookies\FigRequestCookies;
+use Dflydev\FigCookies\FigResponseCookies;
 use WouterDeSchuyter\Domain\Users\AuthenticatedUser;
 use WouterDeSchuyter\Domain\Users\UserRepository;
 use WouterDeSchuyter\Domain\Users\UserSessionId;
@@ -58,9 +60,11 @@ class AuthenticatedUserMiddleware
      */
     public function __invoke(Request $request, Response $response, $next): Response
     {
+        $cookie = FigRequestCookies::get($request, 'user_session_id');
+
         $userSession = null;
-        if (!empty($request->getCookieParam('user_session_id'))) {
-            $userSessionId = new UserSessionId($request->getCookieParam('user_session_id'));
+        if (!empty($cookie->getValue())) {
+            $userSessionId = new UserSessionId($cookie->getValue());
             $userSession = $this->userSessionRepository->find($userSessionId);
         }
 
@@ -80,18 +84,10 @@ class AuthenticatedUserMiddleware
 
         // Not logged in?
         if ($this->authenticatedUser->isLoggedIn() === false) {
-            $this->deleteCookie();
+            $response = FigResponseCookies::remove($response, 'user_session_id');
             return $response->withRedirect($this->router->pathFor('admin.users.sign-in'));
         }
 
-        // Prolong session cookie
-        setcookie('user_session_id', $userSession->getId(), time() + strtotime('1 month'), '/');
-
         return $next($request, $response);
-    }
-
-    private function deleteCookie()
-    {
-        setcookie('user_session_id', false, -1, '/');
     }
 }
