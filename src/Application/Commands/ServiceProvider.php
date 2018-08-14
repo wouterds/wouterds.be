@@ -24,7 +24,6 @@ use WouterDeSchuyter\Application\Commands\Sitemap\PingSearchEnginesHandler;
 use WouterDeSchuyter\Application\Commands\Users\ActivateUserHandler;
 use WouterDeSchuyter\Application\Commands\Users\DeactivateUserHandler;
 use WouterDeSchuyter\Application\Commands\Users\DeleteUserHandler;
-use WouterDeSchuyter\Application\Commands\Users\SignOutUserHandler;
 use WouterDeSchuyter\Application\Commands\Users\SignUpUserHandler;
 use WouterDeSchuyter\Domain\Commands\AccessLogs\EmptyAccessLogFile;
 use WouterDeSchuyter\Domain\Commands\AccessLogs\ImportAccessLogs;
@@ -43,7 +42,6 @@ use WouterDeSchuyter\Domain\Commands\Sitemap\PingSearchEngines;
 use WouterDeSchuyter\Domain\Commands\Users\ActivateUser;
 use WouterDeSchuyter\Domain\Commands\Users\DeactivateUser;
 use WouterDeSchuyter\Domain\Commands\Users\DeleteUser;
-use WouterDeSchuyter\Domain\Commands\Users\SignOutUser;
 use WouterDeSchuyter\Domain\Commands\Users\SignUpUser;
 
 class ServiceProvider extends AbstractServiceProvider
@@ -64,7 +62,6 @@ class ServiceProvider extends AbstractServiceProvider
             $locator = new ContainerLocator($this->container, [
                 ContactEnquiry::class => ContactEnquiryHandler::class,
                 SignUpUser::class => SignUpUserHandler::class,
-                SignOutUser::class => SignOutUserHandler::class,
                 ActivateUser::class => ActivateUserHandler::class,
                 DeactivateUser::class => DeactivateUserHandler::class,
                 DeleteUser::class => DeleteUserHandler::class,

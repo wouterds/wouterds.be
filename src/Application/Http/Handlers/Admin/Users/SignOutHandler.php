@@ -2,33 +2,32 @@
 
 namespace WouterDeSchuyter\Application\Http\Handlers\Admin\Users;
 
-use League\Tactician\CommandBus;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Router;
-use WouterDeSchuyter\Domain\Commands\Users\SignOutUser;
 use WouterDeSchuyter\Domain\Users\UserSessionId;
+use WouterDeSchuyter\Domain\Users\UserSessionRepository;
 
 class SignOutHandler
 {
-    /**
-     * @var CommandBus
-     */
-    private $commandBus;
-
     /**
      * @var Router
      */
     private $router;
 
     /**
+     * @var UserSessionRepository
+     */
+    private $userSessionRepository;
+
+    /**
      * @param Router $router
      * @param CommandBus $commandBus
      */
-    public function __construct(Router $router, CommandBus $commandBus)
+    public function __construct(Router $router, UserSessionRepository $userSessionRepository)
     {
-        $this->commandBus = $commandBus;
         $this->router = $router;
+        $this->userSessionRepository = $userSessionRepository;
     }
 
     /**
@@ -38,9 +37,9 @@ class SignOutHandler
      */
     public function __invoke(Request $request, Response $response): Response
     {
-        $userSessionId = new UserSessionId($request->getCookieParam('user_session_id'));
+        $this->userSessionRepository->delete($request->getCookieParam('user_session_id'));
 
-        $this->commandBus->handle(new SignOutUser($userSessionId));
+        setcookie('user_session_id', $request->getCookieParam('user_session_id'), -1, '/');
 
         return $response->withRedirect($this->router->pathFor('admin'));
     }
