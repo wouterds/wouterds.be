@@ -19,7 +19,7 @@ class ServiceProvider extends AbstractServiceProvider
     public function register()
     {
         $this->container->share(Mailer::class, function () {
-            return new SparkPostMailer(getenv('SPARKPOST_API_KEY'));
+            return new SparkPostMailer(getenv('API_KEY_SPARKPOST'));
         });
     }
 }
