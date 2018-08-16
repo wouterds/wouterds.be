@@ -52,6 +52,7 @@ class GenerateRobotsHandler
         $line = '';
         $line .= 'User-Agent: *' . PHP_EOL;
         $line .= 'Allow: /' . PHP_EOL;
+        $line .= 'Disallow: /index.php' . PHP_EOL;
         $line .= 'Disallow: /admin' . PHP_EOL;
         $line .= 'Disallow: /admin/*' . PHP_EOL;
         $line .= 'Disallow: /404' . PHP_EOL;
