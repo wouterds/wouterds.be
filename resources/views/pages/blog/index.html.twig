@@ -4,8 +4,10 @@
 
 {% block extraMeta %}
     <meta name="description" content="{{ app.config.get('BLOG_DESCRIPTION') }}">
+{% if blogPostPage > 1 or blogPostPage <= maxBlogPostPage %}
 
     <!-- SEO pagination -->
+{% endif %}
 {% if blogPostPage > 2 %}
     <link rel="prev" href="{{ app.config.get('APP_URL') }}{{ app.router.pathFor('blog.page', { page: (blogPostPage - 1) }) }}">
 {% elseif blogPostPage > 1 %}
