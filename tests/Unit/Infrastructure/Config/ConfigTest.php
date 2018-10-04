@@ -44,27 +44,27 @@ class ConfigTest extends TestCase
         return [
             [
                 [
-                    'color' => 'red',
+                    'color'    => 'red',
                     'location' => 'Belgium',
-                    'name' => 'Wouter',
+                    'name'     => 'Wouter',
                 ],
                 'color',
                 'red',
             ],
             [
                 [
-                    'color' => 'red',
+                    'color'    => 'red',
                     'location' => 'Belgium',
-                    'name' => 'Wouter',
+                    'name'     => 'Wouter',
                 ],
                 'location',
                 'Belgium',
             ],
             [
                 [
-                    'color' => 'red',
+                    'color'    => 'red',
                     'location' => 'Belgium',
-                    'name' => 'Wouter',
+                    'name'     => 'Wouter',
                 ],
                 'name',
                 'Wouter',
@@ -92,9 +92,9 @@ class ConfigTest extends TestCase
             ],
             [
                 [
-                    'name' => 'Wouter',
+                    'name'    => 'Wouter',
                     'website' => 'http://google.com',
-                    'color' => 'red',
+                    'color'   => 'red',
                 ],
                 [
                     'car',

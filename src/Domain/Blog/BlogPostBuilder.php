@@ -152,13 +152,13 @@ class BlogPostBuilder
     public function build(): BlogPost
     {
         return BlogPost::fromArray([
-            'id' => $this->id,
-            'title' => $this->title,
-            'slug' => $this->slug,
-            'excerpt' => $this->excerpt,
-            'body' => $this->body,
-            'media_id' => $this->mediaId,
-            'user_id' => $this->userId,
+            'id'           => $this->id,
+            'title'        => $this->title,
+            'slug'         => $this->slug,
+            'excerpt'      => $this->excerpt,
+            'body'         => $this->body,
+            'media_id'     => $this->mediaId,
+            'user_id'      => $this->userId,
             'published_at' => $this->publishedAt,
         ]);
     }

@@ -28,9 +28,9 @@ abstract class TestCase extends PHPUnitTestCase
     protected function randomUser()
     {
         return User::fromArray([
-            'email' => $this->faker->email,
+            'email'    => $this->faker->email,
             'password' => $this->faker->sha256,
-            'name' => $this->faker->name,
+            'name'     => $this->faker->name,
         ]);
     }
 }

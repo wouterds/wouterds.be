@@ -67,12 +67,12 @@ class ServiceProvider extends AbstractServiceProvider implements BootableService
     public function boot()
     {
         $this->container->inflector(ViewAwareInterface::class)->invokeMethods([
-            'setTwig' => [Twig::class],
-            'setConfig' => [Config::class],
-            'setRouter' => [Router::class],
-            'setRequest' => [Request::class],
+            'setTwig'               => [Twig::class],
+            'setConfig'             => [Config::class],
+            'setRouter'             => [Router::class],
+            'setRequest'            => [Request::class],
             'setApplicationMonitor' => [ApplicationMonitor::class],
-            'setSqlLogger' => [SQLLogger::class],
+            'setSqlLogger'          => [SQLLogger::class],
         ]);
 
         $this->container->inflector(AdminViewAwareInterface::class)->invokeMethods([

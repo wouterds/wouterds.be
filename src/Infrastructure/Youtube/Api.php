@@ -39,8 +39,8 @@ class Api
         $response = $this->client->get("{$this->baseUri}/videos", [
             'query' => [
                 'part' => 'snippet',
-                'id' => $id,
-                'key' => $this->key,
+                'id'   => $id,
+                'key'  => $this->key,
             ],
         ]);
 

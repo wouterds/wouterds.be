@@ -39,13 +39,13 @@ class ServiceProvider extends AbstractServiceProvider
             }
 
             $connection = DriverManager::getConnection([
-                'dbname' => $dbName,
-                'user' => $user,
+                'dbname'   => $dbName,
+                'user'     => $user,
                 'password' => $password,
-                'host' => $host,
-                'driver' => $driver,
-                'charset' => $charset,
-                'collate' => $collate,
+                'host'     => $host,
+                'driver'   => $driver,
+                'charset'  => $charset,
+                'collate'  => $collate,
             ]);
 
             $connection->getConfiguration()->setSQLLogger($this->container->get(SQLLogger::class));

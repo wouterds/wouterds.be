@@ -30,13 +30,13 @@ class DbalBlogPostRepository implements BlogPostRepository
     public function add(BlogPost $blogPost)
     {
         $this->connection->insert(self::TABLE, [
-            'id' => $blogPost->getId(),
-            'user_id' => $blogPost->getUserId(),
-            'media_id' => $blogPost->getMediaId(),
-            'title' => $blogPost->getTitle(),
-            'slug' => $blogPost->getSlug(),
-            'excerpt' => $blogPost->getExcerpt(),
-            'body' => $blogPost->getBody(),
+            'id'           => $blogPost->getId(),
+            'user_id'      => $blogPost->getUserId(),
+            'media_id'     => $blogPost->getMediaId(),
+            'title'        => $blogPost->getTitle(),
+            'slug'         => $blogPost->getSlug(),
+            'excerpt'      => $blogPost->getExcerpt(),
+            'body'         => $blogPost->getBody(),
             'published_at' => $blogPost->getPublishedAt(),
         ]);
     }

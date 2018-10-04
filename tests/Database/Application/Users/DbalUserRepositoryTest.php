@@ -29,8 +29,8 @@ class DbalUserRepositoryTest extends DatabaseTestCase
         $this->repository->add($user);
 
         $this->assertRowExists(DbalUserRepository::TABLE, [
-            'id' => $user->getId(),
-            'name' => $user->getName(),
+            'id'    => $user->getId(),
+            'name'  => $user->getName(),
             'email' => $user->getEmail(),
         ]);
     }

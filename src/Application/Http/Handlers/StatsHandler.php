@@ -77,7 +77,7 @@ class StatsHandler implements ViewAwareInterface
 
             $responseCodesPerHourLastDayTmp[$data['hour']][] = [
                 'status_code' => $data['status_code'],
-                'count' => $data['count'],
+                'count'       => $data['count'],
             ];
         }
 
@@ -151,7 +151,7 @@ class StatsHandler implements ViewAwareInterface
 
                 $avg = [];
                 $responseCountLast7Days[] = [
-                    'count' => $value,
+                    'count'    => $value,
                     'interval' => $day . ' ' . $hour . ':00',
                 ];
             }

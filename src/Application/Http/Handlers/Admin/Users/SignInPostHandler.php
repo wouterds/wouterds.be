@@ -34,8 +34,11 @@ class SignInPostHandler
      * @param SignInRequestValidator $signInRequestValidator
      * @param CommandBus $commandBus
      */
-    public function __construct(SignInRequestValidator $signInRequestValidator, UserRepository $userRepository, UserSessionRepository $userSessionRepository)
-    {
+    public function __construct(
+        SignInRequestValidator $signInRequestValidator,
+        UserRepository $userRepository,
+        UserSessionRepository $userSessionRepository
+    ) {
         $this->signInRequestValidator = $signInRequestValidator;
         $this->userRepository = $userRepository;
         $this->userSessionRepository = $userSessionRepository;

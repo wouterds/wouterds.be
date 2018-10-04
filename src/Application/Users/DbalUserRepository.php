@@ -30,10 +30,10 @@ class DbalUserRepository implements UserRepository
     public function add(User $user)
     {
         $this->connection->insert(self::TABLE, [
-            'id' => $user->getId(),
-            'name' => $user->getName(),
-            'email' => $user->getEmail(),
-            'salt' => $user->getSalt(),
+            'id'       => $user->getId(),
+            'name'     => $user->getName(),
+            'email'    => $user->getEmail(),
+            'salt'     => $user->getSalt(),
             'password' => $user->getPassword(),
         ]);
     }

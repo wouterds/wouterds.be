@@ -30,15 +30,15 @@ class DbalMediaRepository implements MediaRepository
     public function add(Media $media)
     {
         $this->connection->insert(self::TABLE, [
-            'id' => $media->getId(),
-            'user_id' => $media->getUserId(),
-            'name' => $media->getName(),
-            'url' => $media->getUrl(),
+            'id'           => $media->getId(),
+            'user_id'      => $media->getUserId(),
+            'name'         => $media->getName(),
+            'url'          => $media->getUrl(),
             'content_type' => $media->getContentType(),
-            'size' => $media->getSize(),
-            'width' => $media->getWidth(),
-            'height' => $media->getHeight(),
-            'md5' => $media->getMd5(),
+            'size'         => $media->getSize(),
+            'width'        => $media->getWidth(),
+            'height'       => $media->getHeight(),
+            'md5'          => $media->getMd5(),
         ]);
     }
 

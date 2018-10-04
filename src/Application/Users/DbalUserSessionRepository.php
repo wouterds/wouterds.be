@@ -31,7 +31,7 @@ class DbalUserSessionRepository implements UserSessionRepository
     public function add(UserSession $userSession)
     {
         $this->connection->insert(self::TABLE, [
-            'id' => $userSession->getId(),
+            'id'      => $userSession->getId(),
             'user_id' => $userSession->getUserId(),
         ]);
     }

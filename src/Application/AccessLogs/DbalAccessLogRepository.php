@@ -29,16 +29,16 @@ class DbalAccessLogRepository implements AccessLogRepository
     public function add(AccessLog $accessLog)
     {
         $this->connection->insert(self::TABLE, [
-            'id' => $accessLog->getId(),
-            'method' => $accessLog->getMethod(),
-            'path' => $accessLog->getPath(),
-            'status_code' => $accessLog->getStatusCode(),
-            'cf_ray_id' => $accessLog->getCfRayId(),
-            'ip' => $accessLog->getIp(),
-            'connecting_ip' => $accessLog->getConnectingIp(),
+            'id'                 => $accessLog->getId(),
+            'method'             => $accessLog->getMethod(),
+            'path'               => $accessLog->getPath(),
+            'status_code'        => $accessLog->getStatusCode(),
+            'cf_ray_id'          => $accessLog->getCfRayId(),
+            'ip'                 => $accessLog->getIp(),
+            'connecting_ip'      => $accessLog->getConnectingIp(),
             'connecting_country' => $accessLog->getConnectingCountry(),
-            'user_agent' => $accessLog->getUserAgent(),
-            'timestamp' => $accessLog->getTimestamp(),
+            'user_agent'         => $accessLog->getUserAgent(),
+            'timestamp'          => $accessLog->getTimestamp(),
         ]);
     }
 

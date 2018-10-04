@@ -46,8 +46,8 @@ trait ViewAwareTrait
 
         if ($this->authenticatedUser->isLoggedIn()) {
             $data['user'] = [
-                'id' => $this->authenticatedUser->getUser()->getId(),
-                'name' => $this->authenticatedUser->getUser()->getName(),
+                'id'    => $this->authenticatedUser->getUser()->getId(),
+                'name'  => $this->authenticatedUser->getUser()->getName(),
                 'email' => $this->authenticatedUser->getUser()->getEmail(),
             ];
         }

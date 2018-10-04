@@ -192,8 +192,8 @@ trait ViewAwareTrait
         $data = [
             'pascalCase' => $pascalCaseName,
             'dashedCase' => $dashedCaseName,
-            'className' => $className,
-            'path' => str_replace('/amp', null, $this->request->getUri()->getPath()),
+            'className'  => $className,
+            'path'       => str_replace('/amp', null, $this->request->getUri()->getPath()),
         ];
 
         if ($data['path'] === '/') {
@@ -201,9 +201,9 @@ trait ViewAwareTrait
         }
 
         $data['amp'] = [
-            'ready' => $this->isAmpReady(),
-            'active' => substr_count($this->request->getUri()->getPath(), '/amp') > 0,
-            'path' => '/amp' . $data['path'],
+            'ready'   => $this->isAmpReady(),
+            'active'  => substr_count($this->request->getUri()->getPath(), '/amp') > 0,
+            'path'    => '/amp' . $data['path'],
             'plugins' => [],
         ];
 

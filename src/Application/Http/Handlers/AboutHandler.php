@@ -39,7 +39,7 @@ class AboutHandler implements ViewAwareInterface
 
         $data = [
             'birthday' => $birthday,
-            'age' => $age,
+            'age'      => $age,
         ];
 
         return $this->render($response, $data);
