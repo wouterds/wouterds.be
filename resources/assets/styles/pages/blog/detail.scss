@@ -114,6 +114,10 @@ $scope: 'page--blog--detail';
 
 @media only screen and (max-width: 580px) {
   .#{$scope} {
+    .content-wrapper {
+      margin-top: 0 !important;
+    }
+
     .header {
       z-index: 2;
       position: absolute;
@@ -139,7 +143,7 @@ $scope: 'page--blog--detail';
     }
 
     &__header {
-      padding-top: calc(25vh + 75px);
+      padding-top: calc(25vh + 100px);
     }
 
     &__title {
