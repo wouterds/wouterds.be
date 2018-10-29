@@ -25,6 +25,7 @@ use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\SignUpHandler as Admi
 use WouterDeSchuyter\Application\Http\Handlers\Admin\Users\SignUpPostHandler as AdminUsersSignUpPostHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Blog\DetailHandler as BlogDetailHandler;
 use WouterDeSchuyter\Application\Http\Handlers\Blog\IndexHandler as BlogIndexHandler;
+use WouterDeSchuyter\Application\Http\Handlers\Projects\IndexHandler as ProjectsIndexHandler;
 use WouterDeSchuyter\Application\Http\Handlers\ContactHandler;
 use WouterDeSchuyter\Application\Http\Handlers\ContactPostHandler;
 use WouterDeSchuyter\Application\Http\Handlers\IndexHandler;
@@ -80,6 +81,7 @@ class Routes
             $app->get('/page/{page}', BlogIndexHandler::class)->setName('blog.page' . $suffix);
             $app->get('/{slug}', BlogDetailHandler::class)->setName('blog.detail' . $suffix);
         });
+        $app->get('/projects', ProjectsIndexHandler::class)->setName('projects' . $suffix);
         $app->get('/contact', ContactHandler::class)->setName('contact' . $suffix);
         $app->get('/stats', StatsHandler::class)->setName('stats' . $suffix);
     }

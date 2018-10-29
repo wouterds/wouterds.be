@@ -78,6 +78,12 @@ class GenerateSitemapHandler
             0.9
         );
         $sitemap->addItem(
+            $this->config->get('APP_URL') . $this->router->pathFor('projects'),
+            time(),
+            Sitemap::MONTHLY,
+            0.9
+        );
+        $sitemap->addItem(
             $this->config->get('APP_URL') . $this->router->pathFor('contact'),
             time(),
             Sitemap::WEEKLY,
