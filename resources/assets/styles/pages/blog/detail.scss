@@ -116,16 +116,25 @@ $scope: 'page--blog--detail';
   .#{$scope} {
     .header {
       z-index: 2;
-      position: relative;
-      padding-right: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
       padding-left: 0;
+      padding-right: 0;
+      background: linear-gradient(rgba($color-black, 0.5) 25%, transparent 100%);
 
       &__title,
       &__navigation__item-link {
         &,
         &:hover {
-          color: $color-blue-grey;
+          color: rgba($color-white, 0.65);
+          background: none;
         }
+      }
+
+      &__navigation__item--active .header__navigation__item-link {
+        color: $color-white;
       }
     }
 
@@ -140,7 +149,7 @@ $scope: 'page--blog--detail';
     &__cover-image {
       height: 35vh;
       z-index: 1;
-      top: 75px;
+      top: 0;
     }
   }
 }
