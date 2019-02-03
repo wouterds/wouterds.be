@@ -2,7 +2,7 @@ version: '2'
 
 services:
   nginx:
-    image: docker.wouterdeschuyter.be/internal-wouterdeschuyter-website-nginx
+    image: docker.wouterdeschuyter.be/wouterdeschuyter-website-nginx
     restart: unless-stopped
     env_file:
       - docker.env
@@ -21,7 +21,7 @@ services:
         max-file: '5'
 
   php-fpm:
-    image: docker.wouterdeschuyter.be/internal-wouterdeschuyter-website-php-fpm
+    image: docker.wouterdeschuyter.be/wouterdeschuyter-website-php-fpm
     restart: unless-stopped
     env_file:
       - docker.env
@@ -38,7 +38,7 @@ services:
         max-file: '5'
 
   php-cron:
-    image: docker.wouterdeschuyter.be/internal-wouterdeschuyter-website-php-cron
+    image: docker.wouterdeschuyter.be/wouterdeschuyter-website-php-cron
     restart: unless-stopped
     volumes_from:
       - php-fpm

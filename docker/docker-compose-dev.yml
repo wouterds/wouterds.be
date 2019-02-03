@@ -3,7 +3,7 @@ version: '2'
 services:
   nginx:
     image: nginx:alpine
-    container_name: internal-wouterdeschuyter-website-nginx
+    container_name: wouterdeschuyter-website-nginx
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./../public:/code/public
@@ -18,7 +18,7 @@ services:
     build:
       context: ./..
       dockerfile: ./docker/php-cron/Dockerfile
-    container_name: internal-wouterdeschuyter-website-php-cron
+    container_name: wouterdeschuyter-website-php-cron
     volumes_from:
       - nginx
     volumes:
@@ -32,7 +32,7 @@ services:
     build:
       context: ./..
       dockerfile: ./docker/php-fpm/Dockerfile
-    container_name: internal-wouterdeschuyter-website-php-fpm
+    container_name: wouterdeschuyter-website-php-fpm
     volumes:
       - ./php-fpm/php.ini:/usr/local/etc/php/conf.d/custom.ini
       - ./..:/code
@@ -43,7 +43,7 @@ services:
 
   mysql:
     image: mysql:5.7
-    container_name: internal-wouterdeschuyter-website-mysql
+    container_name: wouterdeschuyter-website-mysql
     volumes:
       - ./data/mysql:/var/lib/mysql
     env_file:

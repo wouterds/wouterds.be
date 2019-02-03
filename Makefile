@@ -4,7 +4,7 @@ PWD = $(shell pwd)
 
 VERSION = 7.0.9
 DOCKER_REPO  = docker.wouterdeschuyter.be
-PROJECT_NAME = internal-wouterdeschuyter-website
+PROJECT_NAME = wouterdeschuyter-website
 
 TAG_NGINX = $(DOCKER_REPO)/$(PROJECT_NAME)-nginx
 TAG_PHP_FPM = $(DOCKER_REPO)/$(PROJECT_NAME)-php-fpm
@@ -49,22 +49,22 @@ test-unit: vendor
 	docker run --rm --volume=$(PWD):/code -w=/code php:7.3-alpine php ./composer.phar test:unit
 
 test-database: vendor
-	docker exec -i internal-wouterdeschuyter-website-php-fpm php ./composer.phar test:database
+	docker exec -i wouterdeschuyter-website-php-fpm php ./composer.phar test:database
 
 test: vendor
-	docker exec -i internal-wouterdeschuyter-website-php-fpm php ./composer.phar test
+	docker exec -i wouterdeschuyter-website-php-fpm php ./composer.phar test
 
 migrate: vendor
-	docker exec -i internal-wouterdeschuyter-website-php-fpm php ./composer.phar migrations:migrate
+	docker exec -i wouterdeschuyter-website-php-fpm php ./composer.phar migrations:migrate
 
 migrate-test: vendor
-	docker exec -e MYSQL_DATABASE=wouterdeschuyter-tests -i internal-wouterdeschuyter-website-php-fpm php ./composer.phar migrations:migrate
+	docker exec -e MYSQL_DATABASE=wouterdeschuyter-tests -i wouterdeschuyter-website-php-fpm php ./composer.phar migrations:migrate
 
 new-migration: vendor
-	docker exec -i internal-wouterdeschuyter-website-php-fpm php ./composer.phar migrations:generate
+	docker exec -i wouterdeschuyter-website-php-fpm php ./composer.phar migrations:generate
 
 setup-db:
-	docker exec -i internal-wouterdeschuyter-website-mysql mysql -uroot -proot < ./docker/mysql/setup.sql
+	docker exec -i wouterdeschuyter-website-mysql mysql -uroot -proot < ./docker/mysql/setup.sql
 
 setup: setup-db migrate .build-app
 
