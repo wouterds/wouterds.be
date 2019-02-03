@@ -6,9 +6,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: QEMU
-          command: make qemu-support
-      - run:
           name: Clean
           command: make clean
       - run:
