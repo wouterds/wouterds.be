@@ -3,6 +3,7 @@
 /.build-*
 /.version
 /.vscode
+/qemu-arm-static
 /package-lock.json
 /composer.phar
 /composer-setup.php
