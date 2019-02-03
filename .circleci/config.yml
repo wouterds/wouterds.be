@@ -21,6 +21,9 @@ jobs:
           name: Unit tests
           command: make test-unit
       - run:
+          name: Build
+          command: make build
+      - run:
           name: Push
           command: |
             if [ "$CIRCLE_BRANCH" == "master" ]; then
