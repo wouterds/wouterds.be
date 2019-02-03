@@ -22,6 +22,7 @@ clean:
 	-rm -f ./composer.phar
 	-rm -f ./composer-setup.php
 	-rm -f ./.build-*
+	-rm -f ./qemu-arm-static
 
 qemu-support:
 	curl -OL https://github.com/multiarch/qemu-user-static/releases/download/v3.1.0-2/qemu-arm-static
