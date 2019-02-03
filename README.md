@@ -7,7 +7,21 @@
 
 Source code of my personal website, `master` branch is auto deployed by CI on push.
 
-## VSCode
+## Development
+
+### Dependencies
+
+```bash
+make dependencies
+```
+
+### Running locally
+
+```bash
+docker-compose -f docker/docker-compose-dev.yml up
+```
+
+### VSCode
 
 Add the following to VSCode for proper hinting
 
