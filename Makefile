@@ -23,6 +23,9 @@ clean:
 	-rm -f ./composer-setup.php
 	-rm -f ./.build-*
 
+qemu-support:
+	docker run --rm --privileged multiarch/qemu-user-static:register --reset
+
 composer.phar:
 	docker run --rm --volume=$(PWD):/code -w=/code php:7.3-alpine php -r 'copy("https://getcomposer.org/installer", "./composer-setup.php");'
 	docker run --rm --volume=$(PWD):/code -w=/code php:7.3-alpine php ./composer-setup.php

@@ -6,6 +6,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: QEMU
+          command: make qemu-support
+      - run:
           name: Clean
           command: make clean
       - run:
@@ -14,9 +17,6 @@ jobs:
       - run:
           name: Lint
           command: make lint
-      - run:
-          name: Build
-          command: make build
       - run:
           name: Unit tests
           command: make tests-unit
