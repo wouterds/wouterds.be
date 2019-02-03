@@ -44,7 +44,7 @@ trait ViewAwareTrait
     /**
      * @return string
      */
-    public abstract function getTemplate(): string;
+    abstract public function getTemplate(): string;
 
     /**
      * @return string|null
