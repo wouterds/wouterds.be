@@ -21,10 +21,12 @@ jobs:
           name: Build
           command: make build
       - run:
-          name: Push
+          name: Tag & push images
           command: |
             if [ "$CIRCLE_BRANCH" == "master" ]; then
-              echo "Todo"
+              make tag
+              make push
+              make push-latest
             else
               echo "Not master branch, skipping"
             fi
