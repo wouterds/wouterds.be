@@ -47,11 +47,11 @@ jobs:
               ssh $USER@$SERVER "cd $LOCATION; docker-compose -f docker-compose.yml -f docker-compose-prod.yml down --volume"
               ssh $USER@$SERVER "cd $LOCATION; docker-compose -f docker-compose.yml -f docker-compose-prod.yml up -d"
 
-              ssh $USER@$SERVER "docker exec $CONTAINER-cron_1 php ./composer.phar migrations:migrate"
-              ssh $USER@$SERVER "docker exec $CONTAINER-cron_1 php ./console/app generate:sitemap"
-              ssh $USER@$SERVER "docker exec $CONTAINER-cron_1 php ./console/app generate:robots"
-              ssh $USER@$SERVER "docker exec $CONTAINER-cron_1 php ./console/app generate:rss"
-              ssh $USER@$SERVER "docker exec $CONTAINER-cron_1 php ./console/app blog:generate-structured-data"
+              ssh $USER@$SERVER "docker exec $CONTAINER_php-cron_1 php ./composer.phar migrations:migrate"
+              ssh $USER@$SERVER "docker exec $CONTAINER_php-cron_1 php ./console/app generate:sitemap"
+              ssh $USER@$SERVER "docker exec $CONTAINER_php-cron_1 php ./console/app generate:robots"
+              ssh $USER@$SERVER "docker exec $CONTAINER_php-cron_1 php ./console/app generate:rss"
+              ssh $USER@$SERVER "docker exec $CONTAINER_php-cron_1 php ./console/app blog:generate-structured-data"
             else
               echo "Not master branch, skipping"
             fi
