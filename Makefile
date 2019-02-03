@@ -1,8 +1,8 @@
 all: tag
 
-VERSION = $(shell cat composer.json | grep "version" | sed -e 's/^.*: "\(.*\)".*/\1/')
 PWD = $(shell pwd)
 
+VERSION = 7.0.9
 DOCKER_REPO  = docker.wouterdeschuyter.be
 PROJECT_NAME = internal-wouterdeschuyter-website
 
