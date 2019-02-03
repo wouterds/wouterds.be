@@ -18,7 +18,7 @@ RUN apk add --no-cache \
     && apk del freetype-dev libpng-dev libjpeg-turbo-dev
 
 # Copy required files
-COPY ./docker/php-fpm/php.ini /usr/local/etc/php/conf.d/custom.ini
+COPY ./.docker/php-fpm/php.ini /usr/local/etc/php/conf.d/custom.ini
 COPY . /code
 
 # Remove qemu binary

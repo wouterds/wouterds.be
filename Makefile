@@ -10,9 +10,9 @@ TAG_NGINX = $(DOCKER_REPO)/$(PROJECT_NAME)-nginx
 TAG_PHP_FPM = $(DOCKER_REPO)/$(PROJECT_NAME)-php-fpm
 TAG_PHP_CRON = $(DOCKER_REPO)/$(PROJECT_NAME)-php-cron
 
-DOCKERFILE_NGINX = ./docker/nginx/Dockerfile
-DOCKERFILE_PHP_FPM = ./docker/php-fpm/Dockerfile
-DOCKERFILE_PHP_CRON = ./docker/php-cron/Dockerfile
+DOCKERFILE_NGINX = ./.docker/nginx/Dockerfile
+DOCKERFILE_PHP_FPM = ./.docker/php-fpm/Dockerfile
+DOCKERFILE_PHP_CRON = ./.docker/php-cron/Dockerfile
 
 clean:
 	-rm -rf ./.version
@@ -64,7 +64,7 @@ new-migration: vendor
 	docker exec -i wouterdeschuyter-website-php-fpm php ./composer.phar migrations:generate
 
 setup-db:
-	docker exec -i wouterdeschuyter-website-mysql mysql -uroot -proot < ./docker/mysql/setup.sql
+	docker exec -i wouterdeschuyter-website-mysql mysql -uroot -proot < ./.docker/mysql/setup.sql
 
 setup: setup-db migrate .build-app
 

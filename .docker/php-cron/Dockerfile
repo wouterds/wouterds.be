@@ -18,8 +18,8 @@ RUN apk add --no-cache \
     && apk del freetype-dev libpng-dev libjpeg-turbo-dev
 
 # Copy required files
-COPY ./docker/php-cron/php.ini /usr/local/etc/php/conf.d/custom.ini
-COPY ./docker/php-cron/cronjobs /etc/cron.d/cronjobs
+COPY ./.docker/php-cron/php.ini /usr/local/etc/php/conf.d/custom.ini
+COPY ./.docker/php-cron/cronjobs /etc/cron.d/cronjobs
 COPY . /code
 
 # Setup cronjobs

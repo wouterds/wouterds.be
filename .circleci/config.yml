@@ -39,9 +39,9 @@ jobs:
               ssh $USER@$SERVER "mkdir -p $LOCATION/logs && chmod 777 $LOCATION/logs"
               ssh $USER@$SERVER "mkdir -p $LOCATION/media && chmod 777 $LOCATION/media"
 
-              scp docker/docker-compose.yml $USER@$SERVER:$LOCATION/docker-compose.yml
-              scp docker/docker-compose-prod.yml $USER@$SERVER:$LOCATION/docker-compose-prod.yml
-              scp docker/docker.env $USER@$SERVER:$LOCATION/docker.env
+              scp ./.docker/docker-compose.yml $USER@$SERVER:$LOCATION/docker-compose.yml
+              scp ./.docker/docker-compose-prod.yml $USER@$SERVER:$LOCATION/docker-compose-prod.yml
+              scp ./.docker/docker.env $USER@$SERVER:$LOCATION/docker.env
 
               ssh $USER@$SERVER "cd $LOCATION; docker-compose -f docker-compose.yml -f docker-compose-prod.yml pull"
               ssh $USER@$SERVER "cd $LOCATION; docker-compose -f docker-compose.yml -f docker-compose-prod.yml down --volume"
