@@ -24,12 +24,12 @@ clean:
 	-rm -f ./.build-*
 
 composer.phar:
-	docker run --rm --volume=$(PWD):/code -w=/code php:7.2-alpine php -r 'copy("https://getcomposer.org/installer", "./composer-setup.php");'
-	docker run --rm --volume=$(PWD):/code -w=/code php:7.2-alpine php ./composer-setup.php
-	docker run --rm --volume=$(PWD):/code -w=/code php:7.2-alpine php -r 'unlink("./composer-setup.php");'
+	docker run --rm --volume=$(PWD):/code -w=/code php:7.3-alpine php -r 'copy("https://getcomposer.org/installer", "./composer-setup.php");'
+	docker run --rm --volume=$(PWD):/code -w=/code php:7.3-alpine php ./composer-setup.php
+	docker run --rm --volume=$(PWD):/code -w=/code php:7.3-alpine php -r 'unlink("./composer-setup.php");'
 
 vendor: composer.phar composer.json composer.lock
-	docker run --rm --volume=$(PWD):/code -w=/code php:7.2-alpine php ./composer.phar install --ignore-platform-reqs --prefer-dist --no-progress --optimize-autoloader
+	docker run --rm --volume=$(PWD):/code -w=/code php:7.3-alpine php ./composer.phar install --ignore-platform-reqs --prefer-dist --no-progress --optimize-autoloader
 
 node_modules: package.json
 	docker run --rm --volume=$(PWD):/code -w=/code node:8-slim npm install
@@ -37,10 +37,10 @@ node_modules: package.json
 dependencies: vendor node_modules
 
 lint: vendor
-	docker run --rm --volume=$(PWD):/code -w=/code php:7.2-alpine php ./composer.phar lint
+	docker run --rm --volume=$(PWD):/code -w=/code php:7.3-alpine php ./composer.phar lint
 
 test-unit: vendor
-	docker run --rm --volume=$(PWD):/code -w=/code php:7.2-alpine php ./composer.phar test:unit
+	docker run --rm --volume=$(PWD):/code -w=/code php:7.3-alpine php ./composer.phar test:unit
 
 test-database: vendor
 	docker exec -i internal-wouterdeschuyter-website-php-fpm php ./composer.phar test:database
