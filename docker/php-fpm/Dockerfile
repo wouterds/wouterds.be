@@ -1,6 +1,9 @@
 FROM arm32v6/php:7.3-fpm-alpine
 LABEL maintainer="Wouter De Schuyter <wouter.de.schuyter@gmail.com>"
 
+# Qemu support
+COPY ./qemu-arm-static /usr/bin/qemu-arm-static
+
 # Install extensions
 RUN apk add --no-cache \
       freetype-dev libpng-dev libjpeg-turbo-dev \
@@ -17,6 +20,9 @@ RUN apk add --no-cache \
 # Copy required files
 COPY ./docker/php-fpm/php.ini /usr/local/etc/php/conf.d/custom.ini
 COPY . /code
+
+# Remove qemu binary
+RUN rm /usr/bin/qemu-arm-static
 
 # Change working directory
 WORKDIR /code

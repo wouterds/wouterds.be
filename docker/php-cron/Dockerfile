@@ -1,6 +1,9 @@
 FROM arm32v6/php:7.3-fpm-alpine
 LABEL maintainer="Wouter De Schuyter <wouter.de.schuyter@gmail.com>"
 
+# Qemu support
+COPY ./qemu-arm-static /usr/bin/qemu-arm-static
+
 # Install extensions
 RUN apk add --no-cache \
       freetype-dev libpng-dev libjpeg-turbo-dev \
@@ -23,6 +26,9 @@ COPY . /code
 RUN touch /var/log/cron.log
 RUN chmod 644 /etc/cron.d/cronjobs
 RUN crontab /etc/cron.d/cronjobs
+
+# Remove qemu binary
+RUN rm /usr/bin/qemu-arm-static
 
 # Change working directory
 WORKDIR /code
