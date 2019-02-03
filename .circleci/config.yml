@@ -24,6 +24,7 @@ jobs:
           name: Tag & push images
           command: |
             if [ "$CIRCLE_BRANCH" == "master" ]; then
+              docker login docker.wouterdeschuyter.be -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
               make tag
               make push
               make push-latest
