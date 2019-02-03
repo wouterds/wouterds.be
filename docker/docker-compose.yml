@@ -15,6 +15,10 @@ services:
     networks:
       - default
       - webproxy
+    logging:
+      options:
+        max-size: 2m
+        max-file: '5'
 
   php-fpm:
     image: docker.wouterdeschuyter.be/internal-wouterdeschuyter-website-php-fpm
@@ -28,6 +32,10 @@ services:
     networks:
       - default
       - mariadb
+    logging:
+      options:
+        max-size: 2m
+        max-file: '5'
 
   php-cron:
     image: docker.wouterdeschuyter.be/internal-wouterdeschuyter-website-php-cron
@@ -39,6 +47,10 @@ services:
     networks:
       - default
       - mariadb
+    logging:
+      options:
+        max-size: 2m
+        max-file: '5'
 
 networks:
   mariadb:
