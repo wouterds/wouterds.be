@@ -1,5 +1,4 @@
 {
-  "name": "internal-wouterdeschuyter-website",
   "author": "Wouter De Schuyter <wouter.de.schuyter@gmail.com>",
   "scripts": {
     "start": "./node_modules/.bin/webpack -w",
