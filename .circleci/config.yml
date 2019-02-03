@@ -19,7 +19,7 @@ jobs:
           command: make lint
       - run:
           name: Unit tests
-          command: make tests-unit
+          command: make test-unit
       - run:
           name: Push
           command: |
