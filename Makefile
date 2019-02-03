@@ -2,7 +2,7 @@ all: tag
 
 PWD = $(shell pwd)
 
-VERSION = 7.0.9
+VERSION = 7.1.0
 DOCKER_REPO  = docker.wouterdeschuyter.be
 PROJECT_NAME = wouterdeschuyter-website
 
