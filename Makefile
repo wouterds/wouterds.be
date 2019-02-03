@@ -91,7 +91,7 @@ dev: dependencies
 	docker build $(BUILD_NO_CACHE) -f $(DOCKERFILE_PHP_FPM) -t $(TAG_PHP_FPM) .
 	touch .build-php-fpm
 
-build: dependencies .version .build-app .build-nginx .build-php-cron .build-php-fpm
+build: qemu-support dependencies .version .build-app .build-nginx .build-php-cron .build-php-fpm
 
 tag: build
 	docker tag $(TAG_NGINX) $(TAG_NGINX):$(VERSION)
