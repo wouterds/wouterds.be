@@ -107,3 +107,22 @@ push-latest: push
 	docker push $(TAG_NGINX):latest
 	docker push $(TAG_PHP_FPM):latest
 	docker push $(TAG_PHP_CRON):latest
+
+deploy:
+	ssh ${DEPLOY_USER}@${DEPLOY_SERVER} "mkdir -p ${DEPLOY_LOCATION}"
+	ssh ${DEPLOY_USER}@${DEPLOY_SERVER} "mkdir -p ${DEPLOY_LOCATION}/logs && chmod 777 ${DEPLOY_LOCATION}/logs"
+	ssh ${DEPLOY_USER}@${DEPLOY_SERVER} "mkdir -p ${DEPLOY_LOCATION}/media && chmod 777 ${DEPLOY_LOCATION}/media"
+
+	scp ./.docker/docker-compose.yml ${DEPLOY_USER}@${DEPLOY_SERVER}:${DEPLOY_LOCATION}/docker-compose.yml
+	scp ./.docker/docker-compose-prod.yml ${DEPLOY_USER}@${DEPLOY_SERVER}:${DEPLOY_LOCATION}/docker-compose-prod.yml
+	scp ./.docker/docker.env ${DEPLOY_USER}@${DEPLOY_SERVER}:${DEPLOY_LOCATION}/docker.env
+
+	ssh ${DEPLOY_USER}@${DEPLOY_SERVER} "cd ${DEPLOY_LOCATION}; docker-compose -f docker-compose.yml -f docker-compose-prod.yml pull"
+	ssh ${DEPLOY_USER}@${DEPLOY_SERVER} "cd ${DEPLOY_LOCATION}; docker-compose -f docker-compose.yml -f docker-compose-prod.yml down --volume"
+	ssh ${DEPLOY_USER}@${DEPLOY_SERVER} "cd ${DEPLOY_LOCATION}; docker-compose -f docker-compose.yml -f docker-compose-prod.yml up -d"
+
+	ssh ${DEPLOY_USER}@${DEPLOY_SERVER} "docker exec ${DEPLOY_CONTAINER}_php-cron_1 php ./composer.phar migrations:migrate"
+	ssh ${DEPLOY_USER}@${DEPLOY_SERVER} "docker exec ${DEPLOY_CONTAINER}_php-cron_1 php ./console/app generate:sitemap"
+	ssh ${DEPLOY_USER}@${DEPLOY_SERVER} "docker exec ${DEPLOY_CONTAINER}_php-cron_1 php ./console/app generate:robots"
+	ssh ${DEPLOY_USER}@${DEPLOY_SERVER} "docker exec ${DEPLOY_CONTAINER}_php-cron_1 php ./console/app generate:rss"
+	ssh ${DEPLOY_USER}@${DEPLOY_SERVER} "docker exec ${DEPLOY_CONTAINER}_php-cron_1 php ./console/app blog:generate-structured-data"
