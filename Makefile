@@ -3,12 +3,11 @@ all: tag
 PWD = $(shell pwd)
 
 VERSION = 7.1.0
-DOCKER_REPO  = docker.wouterdeschuyter.be
 PROJECT_NAME = wouterdeschuyter-website
 
-TAG_NGINX = $(DOCKER_REPO)/$(PROJECT_NAME)-nginx
-TAG_PHP_FPM = $(DOCKER_REPO)/$(PROJECT_NAME)-php-fpm
-TAG_PHP_CRON = $(DOCKER_REPO)/$(PROJECT_NAME)-php-cron
+TAG_NGINX = $(DOCKER_REGISTRY_HOST)/$(PROJECT_NAME)-nginx
+TAG_PHP_FPM = $(DOCKER_REGISTRY_HOST)/$(PROJECT_NAME)-php-fpm
+TAG_PHP_CRON = $(DOCKER_REGISTRY_HOST)/$(PROJECT_NAME)-php-cron
 
 DOCKERFILE_NGINX = ./.docker/nginx/Dockerfile
 DOCKERFILE_PHP_FPM = ./.docker/php-fpm/Dockerfile
