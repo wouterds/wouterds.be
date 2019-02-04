@@ -24,7 +24,7 @@ jobs:
           name: Tag & push images
           command: |
             if [ "$CIRCLE_BRANCH" == "master" ]; then
-              docker login docker.wouterdeschuyter.be -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
+              docker login docker.wouterdeschuyter.be -u $DOCKER_REGISTRY_LOGIN -p $DOCKER_REGISTRY_PASSWORD
               make push-latest
             else
               echo "Not master branch, skipping"
