@@ -81,7 +81,7 @@ class Routes
             $app->get('/page/{page}', BlogIndexHandler::class)->setName('blog.page' . $suffix);
             $app->get('/{slug}', BlogDetailHandler::class)->setName('blog.detail' . $suffix);
         });
-        $app->get('/projects', ProjectsIndexHandler::class)->setName('projects' . $suffix);
+        // $app->get('/projects', ProjectsIndexHandler::class)->setName('projects' . $suffix);
         $app->get('/contact', ContactHandler::class)->setName('contact' . $suffix);
         $app->get('/stats', StatsHandler::class)->setName('stats' . $suffix);
     }
