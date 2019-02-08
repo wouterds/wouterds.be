@@ -2,7 +2,7 @@ all: tag
 
 PWD = $(shell pwd)
 
-VERSION = 7.1.1
+VERSION = 7.2.0
 PROJECT_NAME = wouterdeschuyter-website
 
 TAG_NGINX = $(DOCKER_REGISTRY_HOST)/$(PROJECT_NAME)-nginx
