@@ -73,6 +73,7 @@ class MediaInlineRenderer implements InlineRendererInterface
         $html .= $ampEnabled ? '<amp-img' : '<img';
         if (!$ampEnabled) {
             $html .= ' class="media__image"';
+            $html .= ' loading="lazy"';
         }
         $html .= ' src="/static/media' . $image->getPath() . '"';
         $html .= ' alt="' . htmlentities($image->getName()) . '"';
@@ -116,6 +117,7 @@ class MediaInlineRenderer implements InlineRendererInterface
             $html .= '<iframe ';
             $html .= 'class="media__video" ';
             $html .= 'src="' . $embedUrl . '" ';
+            $html .= 'loading="lazy" ';
             $html .= 'frameborder="0" ';
             $html .= 'allowfullscreen>';
             $html .= $youtubeVideo->getUrl();
