@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  @apply min-h-full h-full;
+}
+
 html {
   @apply bg-white dark:bg-zinc-900;
   @apply text-black dark:text-white;
@@ -10,10 +15,6 @@ html {
 body {
   @apply font-mono text-xs;
   @apply p-6;
-}
-
-h1 {
-  @apply text-2xl font-bold;
 }
 
 a {
