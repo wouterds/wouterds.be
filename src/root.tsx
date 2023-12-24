@@ -1,4 +1,4 @@
-import type { LinksFunction, LoaderFunctionArgs } from '@remix-run/cloudflare';
+import type { LinksFunction } from '@remix-run/cloudflare';
 import { cssBundleHref } from '@remix-run/css-bundle';
 import {
   Links,
@@ -7,7 +7,6 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData,
 } from '@remix-run/react';
 
 import stylesheet from '~/tailwind.css';
@@ -20,15 +19,7 @@ export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesheet },
 ];
 
-export const loader = ({ context }: LoaderFunctionArgs) => {
-  return {
-    time: context.time as number,
-  };
-};
-
 export default function App() {
-  const data = useLoaderData<typeof loader>();
-
   return (
     <html lang="en">
       <head>
@@ -45,7 +36,7 @@ export default function App() {
             <Outlet />
           </main>
 
-          <Footer time={data.time} />
+          <Footer />
         </div>
         <ScrollRestoration />
         <Scripts />
