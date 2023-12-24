@@ -29,11 +29,15 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Header />
-        <main className="my-12">
-          <Outlet />
-        </main>
-        <Footer />
+        <div className="max-w-xl mx-auto mt-2">
+          <Header />
+
+          <main className="my-12">
+            <Outlet />
+          </main>
+
+          <Footer />
+        </div>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
