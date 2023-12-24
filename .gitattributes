@@ -1,3 +1,4 @@
 .eslintrc.cjs linguist-generated=false
+.prettierrc.cjs linguist-generated=false
 remix.config.js linguist-generated=false
 remix.env.d.ts linguist-generated=false
