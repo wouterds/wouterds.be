@@ -11,6 +11,9 @@ import {
 
 import stylesheet from '~/tailwind.css';
 
+import Footer from './components/Footer';
+import Header from './components/Header';
+
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
   { rel: 'stylesheet', href: stylesheet },
@@ -26,7 +29,11 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <Header />
+        <main className="my-12">
+          <Outlet />
+        </main>
+        <Footer />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
