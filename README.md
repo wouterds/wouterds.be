@@ -33,6 +33,9 @@ npm run dev
 # lint code
 npm run lint
 
+# lint & autofix code
+npm run lint:fix
+
 # typecheck
 npm run typecheck
 ```
