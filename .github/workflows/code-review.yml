@@ -1,6 +1,8 @@
 name: code-review
 
 on:
+  push:
+    branches: ['**']
   workflow_call:
 
 jobs:
