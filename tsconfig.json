@@ -1,37 +1,22 @@
 {
+  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
   "compilerOptions": {
-    "typeRoots": [
-      "node_modules/@types",
-      "@types"
-    ],
-    "baseUrl": "./",
-    "paths": { "*": [ "src/*" ] },
-    "lib": [ "dom", "es6" ],
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "jsx": "preserve",
-    "noEmit": true,
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "isolatedModules": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "noUnusedParameters": true,
-    "noUnusedLocals": true,
-    "strict": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
+    "jsx": "react-jsx",
+    "moduleResolution": "Bundler",
     "resolveJsonModule": true,
-    "skipLibCheck": true,
+    "target": "ES2022",
+    "strict": true,
     "allowJs": true,
-    "forceConsistentCasingInFileNames": true
-  },
-  "exclude": [
-    "node_modules/"
-  ],
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ]
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./app/*"]
+    },
+
+    // Remix takes care of building everything in `remix build`.
+    "noEmit": true
+  }
 }
