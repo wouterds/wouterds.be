@@ -1,48 +1,37 @@
-# wouterdeschuyter.be
+# Welcome to Remix!
 
-![version](https://img.shields.io/github/v/tag/wouterds/wouterdeschuyter.be?color=orange&label=version)
-![release](https://github.com/wouterds/wouterdeschuyter.be/workflows/release/badge.svg)
-![linting](https://github.com/wouterds/wouterdeschuyter.be/workflows/linting/badge.svg)
-![dependencies](https://img.shields.io/david/wouterds/wouterdeschuyter.be)
-![nginx image](https://img.shields.io/docker/image-size/wouterds/wouterdeschuyter.be/nginx?label=nginx%20image)
-![node image](https://img.shields.io/docker/image-size/wouterds/wouterdeschuyter.be/node?label=node%20image)
+- [Remix Docs](https://remix.run/docs)
 
-## Running
+## Development
 
-```bash
-yarn dev
+You will be running two processes during development:
+
+- The Miniflare server (miniflare is a local environment for Cloudflare Workers)
+- The Remix development server
+
+Both are started with one command:
+
+```sh
+npm run dev
 ```
 
-## Setup
+Open up [http://127.0.0.1:8787](http://127.0.0.1:8787) and you should be ready to go!
 
-```bash
-cp .env.example .env
+If you want to check the production build, you can stop the dev server and run following commands:
+
+```sh
+npm run build
+npm start
 ```
 
-### VSCode
+Then refresh the same URL in your browser (no live reload for production builds).
 
-#### Plugins
+## Deployment
 
-- https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
-- https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint
-- https://marketplace.visualstudio.com/items?itemName=cpylua.language-postcss
+If you don't already have an account, then [create a cloudflare account here](https://dash.cloudflare.com/sign-up) and after verifying your email address with Cloudflare, go to your dashboard and set up your free custom Cloudflare Workers subdomain.
 
-#### Workspace settings
+Once that's done, you should be able to deploy your app:
 
-```javascript
-{
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-  ],
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.fixAll.stylelint": true,
-  },
-  "files.associations": {
-    "*.css": "postcss",
-  },
-}
+```sh
+npm run deploy
 ```
