@@ -1,0 +1,17 @@
+post-merge:
+  parallel: true
+  commands:
+    dependencies:
+      run: npm install
+
+post-checkout:
+  parallel: true
+  commands:
+    dependencies:
+      run: npm install
+
+commit-msg:
+  parallel: true
+  commands:
+    commitlint:
+      run: npx commitlint --edit
