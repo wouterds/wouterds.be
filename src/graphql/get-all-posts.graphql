@@ -1,0 +1,24 @@
+query GetAllPosts {
+  allPosts {
+    id
+    title
+    slug
+    body {
+      value
+      blocks {
+        id
+        __typename
+        ... on PostGalleryRecord {
+          images {
+            id
+            url
+            alt
+            width
+            height
+            blurhash
+          }
+        }
+      }
+    }
+  }
+}
