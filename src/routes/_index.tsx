@@ -36,7 +36,7 @@ export default function Index() {
           {posts.map((post) => (
             <li key={post.id}>
               <h3>
-                <a href={`/posts/${post.slug}`}>{post.title}</a>
+                <a href={`/blog/${post.slug}`}>{post.title}</a>
               </h3>
             </li>
           ))}
