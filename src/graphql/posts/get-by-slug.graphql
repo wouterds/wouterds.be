@@ -3,6 +3,23 @@ query PostsGetBySlug($slug: String!) {
     id
     title
     slug
+    content {
+      value
+      blocks {
+        __typename
+        ... on PostGalleryRecord {
+          id
+          images {
+            id
+            url
+            alt
+            width
+            height
+            blurhash
+          }
+        }
+      }
+    }
     date
   }
 }

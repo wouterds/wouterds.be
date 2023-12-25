@@ -3,22 +3,6 @@ query PostsGetAll {
     id
     title
     slug
-    body {
-      value
-      blocks {
-        __typename
-        ... on PostGalleryRecord {
-          id
-          images {
-            id
-            url
-            alt
-            width
-            height
-            blurhash
-          }
-        }
-      }
-    }
+    date
   }
 }
