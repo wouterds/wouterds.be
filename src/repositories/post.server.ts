@@ -1,4 +1,4 @@
-import { GetAllPostsDocument, GetAllPostsQuery } from '~/graphql';
+import { PostsGetAllDocument, PostsGetAllQuery } from '~/graphql';
 import { fetchFromDato } from '~/services/datocms.server';
 
 export class PostRepository {
@@ -11,7 +11,7 @@ export class PostRepository {
   }
 
   public getAll = async () => {
-    const data = await fetchFromDato<GetAllPostsQuery>(GetAllPostsDocument, {
+    const data = await fetchFromDato<PostsGetAllQuery>(PostsGetAllDocument, {
       apiEndpoint: this._apiEndpoint,
       apiKey: this._apiKey,
     });
