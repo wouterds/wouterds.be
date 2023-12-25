@@ -1,15 +1,16 @@
 import { LoaderFunctionArgs } from '@remix-run/cloudflare';
 import { useLoaderData } from '@remix-run/react';
-import { render } from 'datocms-structured-text-to-plain-text';
 import { StructuredText } from 'react-datocms';
 
 import { fetchPosts } from '~/lib/datocms.server';
-import { extractDatoCmsApiKey } from '~/lib/env.server';
 
-export const loader = async ({ context }: LoaderFunctionArgs) => {
-  const DATOCMS_API_KEY = extractDatoCmsApiKey(context);
-
-  const posts = await fetchPosts(DATOCMS_API_KEY);
+export const loader = async ({
+  context,
+}: LoaderFunctionArgs & { context: { env: Record<string, string> } }) => {
+  const posts = await fetchPosts(
+    context.env.DATOCMS_API_ENDPOINT,
+    context.env.DATOCMS_API_KEY,
+  );
 
   return { posts };
 };

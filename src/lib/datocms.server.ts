@@ -1,5 +1,3 @@
-const DATOCMS_API_ENDPOINT = 'https://graphql.datocms.com/';
-
 type Post = {
   id: string;
   title: string;
@@ -31,9 +29,9 @@ const GET_POSTS = `
   }
 `;
 
-export const fetchPosts = async (apiKey: string) => {
+export const fetchPosts = async (apiEndpoint: string, apiKey: string) => {
   try {
-    const response = await fetch(DATOCMS_API_ENDPOINT, {
+    const response = await fetch(apiEndpoint, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
