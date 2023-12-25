@@ -2,7 +2,7 @@ import { LoaderFunctionArgs } from '@remix-run/cloudflare';
 import { useLoaderData } from '@remix-run/react';
 
 import { GetAllPostsDocument, GetAllPostsQuery } from '~/graphql';
-import { fetchFromDato } from '~/lib/datocms.server';
+import { fetchFromDato } from '~/services/datocms.server';
 
 export const loader = async ({
   context,
