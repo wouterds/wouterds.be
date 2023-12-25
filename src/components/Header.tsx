@@ -14,6 +14,11 @@ const Header = () => (
         </Link>
       </li>
       <li>
+        <Link to="/blog" prefetch="intent">
+          blog
+        </Link>
+      </li>
+      <li>
         <Link to="/contact" prefetch="intent">
           contact
         </Link>
