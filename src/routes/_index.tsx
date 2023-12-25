@@ -4,10 +4,10 @@ import { render } from 'datocms-structured-text-to-plain-text';
 import { StructuredText } from 'react-datocms';
 
 import { fetchPosts } from '~/lib/datocms.server';
-import { extractDatocmsApiKey } from '~/lib/env.server';
+import { extractDatoCmsApiKey } from '~/lib/env.server';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
-  const DATOCMS_API_KEY = extractDatocmsApiKey(context);
+  const DATOCMS_API_KEY = extractDatoCmsApiKey(context);
 
   const posts = await fetchPosts(DATOCMS_API_KEY);
 
