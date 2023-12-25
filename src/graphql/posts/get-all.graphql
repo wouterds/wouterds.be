@@ -1,4 +1,4 @@
-query GetAllPosts {
+query PostsGetAll {
   allPosts {
     id
     title
