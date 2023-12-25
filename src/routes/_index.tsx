@@ -1,18 +1,11 @@
-import { LoaderFunctionArgs } from '@remix-run/cloudflare';
 import { useLoaderData } from '@remix-run/react';
 
-import { GetAllPostsDocument, GetAllPostsQuery } from '~/graphql';
-import { fetchFromDato } from '~/services/datocms.server';
+import { PostRepository } from '~/repositories/post.server';
 
-export const loader = async ({
-  context,
-}: LoaderFunctionArgs & { context: { env: Record<string, string> } }) => {
-  const data = await fetchFromDato<GetAllPostsQuery>(GetAllPostsDocument, {
-    apiEndpoint: context.env.DATOCMS_API_ENDPOINT,
-    apiKey: context.env.DATOCMS_API_KEY,
-  });
+export const loader = async () => {
+  const posts = await PostRepository.getAll();
 
-  return { posts: data.allPosts };
+  return { posts };
 };
 
 export default function Index() {
