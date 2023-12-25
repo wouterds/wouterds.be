@@ -1,6 +1,7 @@
 import { LoaderFunctionArgs } from '@remix-run/cloudflare';
 import { useLoaderData } from '@remix-run/react';
 import { render } from 'datocms-structured-text-to-plain-text';
+import { StructuredText } from 'react-datocms';
 
 import { fetchPosts } from '~/lib/datocms.server';
 import { extractDatocmsApiKey } from '~/lib/env.server';
@@ -36,7 +37,7 @@ export default function Index() {
               <h3>
                 <a href={`/posts/${post.slug}`}>{post.title}</a>
               </h3>
-              <p>{render(post.body)}</p>
+              <StructuredText data={post.body} renderBlock={() => null} />
             </li>
           ))}
         </ul>
