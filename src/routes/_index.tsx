@@ -1,13 +1,20 @@
-import type { MetaFunction } from '@remix-run/cloudflare';
+import { LoaderFunctionArgs } from '@remix-run/cloudflare';
+import { useLoaderData } from '@remix-run/react';
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: 'New Remix App' },
-    { name: 'description', content: 'Welcome to Remix!' },
-  ];
+import { fetchPosts } from '~/lib/datocms.server';
+import { extractDatocmsApiKey } from '~/lib/env.server';
+
+export const loader = async ({ context }: LoaderFunctionArgs) => {
+  const DATOCMS_API_KEY = extractDatocmsApiKey(context);
+
+  const posts = await fetchPosts(DATOCMS_API_KEY);
+
+  return { posts };
 };
 
 export default function Index() {
+  const { posts } = useLoaderData<typeof loader>();
+
   return (
     <div>
       <header className="text-center">
@@ -21,6 +28,15 @@ export default function Index() {
           Digital Creative & Developer
         </h2>
       </header>
+      <section>
+        <ul>
+          {posts.map((post) => (
+            <li key={post.id}>
+              <a href={`/posts/${post.slug}`}>{post.title}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
     </div>
   );
 }
