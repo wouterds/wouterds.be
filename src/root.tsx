@@ -19,18 +19,6 @@ import stylesheet from '~/tailwind.css';
 
 import Footer from './components/Footer';
 import Header from './components/Header';
-import { PostRepository } from './repositories/post.server';
-
-export const loader = ({
-  context,
-}: LoaderFunctionArgs & {
-  context: { env: Record<string, string> };
-}) => {
-  PostRepository.apiEndpoint = context.env.DATOCMS_API_ENDPOINT;
-  PostRepository.apiKey = context.env.DATOCMS_API_KEY;
-
-  return null;
-};
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
