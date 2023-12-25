@@ -28,15 +28,7 @@ export default function Index() {
         </h2>
       </header>
       <section>
-        <ul>
-          {posts.map((post) => (
-            <li key={post.id}>
-              <h3>
-                <a href={`/blog/${post.slug}`}>{post.title}</a>
-              </h3>
-            </li>
-          ))}
-        </ul>
+        <Posts posts={posts} />
       </section>
     </div>
   );
