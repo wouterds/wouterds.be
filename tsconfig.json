@@ -16,7 +16,6 @@
       "~/*": ["./src/*"]
     },
     "skipLibCheck": true,
-    "typeRoots": ["./node_modules/@types", "./@types"],
 
     // Remix takes care of building everything in `remix build`.
     "noEmit": true
