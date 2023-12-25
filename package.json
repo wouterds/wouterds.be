@@ -19,6 +19,7 @@
     "datocms-structured-text-to-plain-text": "^2.0.4",
     "isbot": "^3.6.8",
     "react": "^18.2.0",
+    "react-datocms": "^4.1.3",
     "react-dom": "^18.2.0",
     "remix-utils": "^7.4.0"
   },
