@@ -15,8 +15,8 @@ export default function Index() {
   const posts = data.posts as Partial<PostRecord>[];
 
   return (
-    <div>
-      <header className="text-center">
+    <>
+      <header className="text-center mb-12">
         <img
           src="/images/wouterds.2024.jpg"
           alt="Headshot of Wouter De Schuyter"
@@ -30,6 +30,6 @@ export default function Index() {
       <section>
         <Posts posts={posts} />
       </section>
-    </div>
+    </>
   );
 }
