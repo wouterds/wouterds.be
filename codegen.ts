@@ -6,7 +6,7 @@ dotenv.config({ path: '.dev.vars' });
 const config: CodegenConfig = {
   schema: [
     {
-      [process.env.DATOCMS_API_ENDPOINT as string]: {
+      [process.env.DATOCMS_API_URL as string]: {
         headers: {
           Authorization: `Bearer ${process.env.DATOCMS_API_KEY as string}`,
         },
