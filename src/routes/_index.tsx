@@ -1,13 +1,16 @@
+import { LoaderFunctionArgs } from '@remix-run/cloudflare';
 import { useLoaderData } from '@remix-run/react';
 
 import { Posts } from '~/components/Posts';
 import { PostRecord } from '~/graphql';
 import { PostRepository } from '~/repositories/post.server';
+import { Context } from '~/types';
 
 export const loader = async (args: LoaderFunctionArgs) => {
+  const context = args.context as Context;
   const repository = new PostRepository(
-    args.context.env.DATOCMS_API_URL,
-    args.context.env.DATOCMS_API_KEY,
+    context.env.DATOCMS_API_URL,
+    context.env.DATOCMS_API_KEY,
   );
 
   const posts = await repository.getAll();
