@@ -1,4 +1,4 @@
-import type { LinksFunction } from '@remix-run/cloudflare';
+import type { LinksFunction, MetaFunction } from '@remix-run/cloudflare';
 import { cssBundleHref } from '@remix-run/css-bundle';
 import {
   isRouteErrorResponse,
@@ -20,6 +20,10 @@ export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
   { rel: 'stylesheet', href: stylesheet },
 ];
+
+export const meta: MetaFunction = () => {
+  return [{ title: 'Wouter De Schuyter' }];
+};
 
 export default function App() {
   return (
