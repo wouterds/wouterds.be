@@ -1,0 +1,8 @@
+query PostsGetBySlug($slug: String!) {
+  post(filter: { slug: { eq: $slug } }) {
+    id
+    title
+    slug
+    date
+  }
+}
