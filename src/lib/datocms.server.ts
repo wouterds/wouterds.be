@@ -1,57 +1,16 @@
-type Post = {
-  id: string;
-  title: string;
-  slug: string;
-  body: any;
-  published_at: string;
-};
+import { ASTNode, print } from 'graphql';
 
-const GET_POSTS = `
-  query {
-    _allPostsMeta {
-      count
-    }
-    allPosts {
-      id
-      title
-      slug
-      body {
-        value
-        blocks {
-          id
-          ... on PostGalleryRecord {
-            images { width, height, blurhash, id, url }
-          }
-        }
-      }
-      date
-    }
-  }
-`;
+export const fetchFromDato = async <TData>(
+  query: ASTNode,
+  options: { apiEndpoint: string; apiKey: string },
+): Promise<TData> => {
+  const response = await fetch(options.apiEndpoint, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${options.apiKey}` },
+    body: JSON.stringify({ query: print(query) }),
+  });
 
-export const fetchPosts = async (apiEndpoint: string, apiKey: string) => {
-  try {
-    const response = await fetch(apiEndpoint, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        query: GET_POSTS,
-      }),
-    });
+  const { data } = await response.json<{ data: TData }>();
 
-    if (!response.ok) {
-      return [];
-    }
-
-    const { data } = (await response.json()) as { data: { allPosts: Post[] } };
-    console.log(data);
-
-    return data.allPosts || [];
-  } catch (e) {
-    console.error(e);
-  }
-
-  return [];
+  return data;
 };

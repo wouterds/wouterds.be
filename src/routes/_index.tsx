@@ -1,18 +1,18 @@
 import { LoaderFunctionArgs } from '@remix-run/cloudflare';
 import { useLoaderData } from '@remix-run/react';
-import { StructuredText } from 'react-datocms';
 
-import { fetchPosts } from '~/lib/datocms.server';
+import { GetAllPostsDocument, GetAllPostsQuery } from '~/graphql';
+import { fetchFromDato } from '~/lib/datocms.server';
 
 export const loader = async ({
   context,
 }: LoaderFunctionArgs & { context: { env: Record<string, string> } }) => {
-  const posts = await fetchPosts(
-    context.env.DATOCMS_API_ENDPOINT,
-    context.env.DATOCMS_API_KEY,
-  );
+  const data = await fetchFromDato<GetAllPostsQuery>(GetAllPostsDocument, {
+    apiEndpoint: context.env.DATOCMS_API_ENDPOINT,
+    apiKey: context.env.DATOCMS_API_KEY,
+  });
 
-  return { posts };
+  return { posts: data.allPosts };
 };
 
 export default function Index() {
@@ -38,7 +38,6 @@ export default function Index() {
               <h3>
                 <a href={`/posts/${post.slug}`}>{post.title}</a>
               </h3>
-              <StructuredText data={post.body} renderBlock={() => null} />
             </li>
           ))}
         </ul>
