@@ -1,4 +1,10 @@
-import { PostsGetAllDocument, PostsGetAllQuery } from '~/graphql';
+import {
+  PostsGetAllDocument,
+  PostsGetAllQuery,
+  PostsGetBySlugDocument,
+  PostsGetBySlugQuery,
+  PostsGetBySlugQueryVariables,
+} from '~/graphql';
 import { fetchFromDato } from '~/services/datocms.server';
 
 export class PostRepository {
@@ -17,5 +23,18 @@ export class PostRepository {
     });
 
     return data.allPosts;
+  };
+
+  public getBySlug = async (slug: string) => {
+    const data = await fetchFromDato<
+      PostsGetBySlugQuery,
+      PostsGetBySlugQueryVariables
+    >(PostsGetBySlugDocument, {
+      apiEndpoint: this._apiEndpoint,
+      apiKey: this._apiKey,
+      variables: { slug },
+    });
+
+    return data.post;
   };
 }
