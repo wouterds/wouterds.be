@@ -20,6 +20,7 @@ const GET_POSTS = `
       body {
         value
         blocks {
+          id
           ... on PostGalleryRecord {
             images { width, height, blurhash, id, url }
           }
