@@ -1,5 +1,7 @@
 import { useLoaderData } from '@remix-run/react';
 
+import { Posts } from '~/components/Posts';
+import { PostRecord } from '~/graphql';
 import { PostRepository } from '~/repositories/post.server';
 
 export const loader = async () => {
@@ -9,7 +11,8 @@ export const loader = async () => {
 };
 
 export default function Index() {
-  const { posts } = useLoaderData<typeof loader>();
+  const data = useLoaderData<typeof loader>();
+  const posts = data.posts as Partial<PostRecord>[];
 
   return (
     <div>

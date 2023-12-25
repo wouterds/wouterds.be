@@ -6,9 +6,9 @@ query GetAllPosts {
     body {
       value
       blocks {
-        id
         __typename
         ... on PostGalleryRecord {
+          id
           images {
             id
             url
