@@ -4,7 +4,7 @@ type Post = {
   id: string;
   title: string;
   slug: string;
-  body: string;
+  body: any;
   published_at: string;
 };
 

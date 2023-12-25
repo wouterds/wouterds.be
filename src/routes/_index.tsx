@@ -1,5 +1,6 @@
 import { LoaderFunctionArgs } from '@remix-run/cloudflare';
 import { useLoaderData } from '@remix-run/react';
+import { render } from 'datocms-structured-text-to-plain-text';
 
 import { fetchPosts } from '~/lib/datocms.server';
 import { extractDatocmsApiKey } from '~/lib/env.server';
@@ -32,7 +33,10 @@ export default function Index() {
         <ul>
           {posts.map((post) => (
             <li key={post.id}>
-              <a href={`/posts/${post.slug}`}>{post.title}</a>
+              <h3>
+                <a href={`/posts/${post.slug}`}>{post.title}</a>
+              </h3>
+              <p>{render(post.body)}</p>
             </li>
           ))}
         </ul>
