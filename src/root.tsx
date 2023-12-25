@@ -35,7 +35,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <div className="mx-auto mt-2" style={{ maxWidth: '768px' }}>
+        <div className="mx-auto" style={{ maxWidth: '768px' }}>
           <Header />
 
           <main className="my-12">
@@ -44,6 +44,7 @@ export default function App() {
 
           <Footer />
         </div>
+
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
@@ -64,7 +65,7 @@ export const ErrorBoundary = () => {
         <Links />
       </head>
       <body>
-        <div className="mx-auto mt-2" style={{ maxWidth: '768px' }}>
+        <div className="mx-auto" style={{ maxWidth: '768px' }}>
           <Header />
 
           <main className="my-12">
@@ -84,6 +85,7 @@ export const ErrorBoundary = () => {
 
           <Footer />
         </div>
+
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
