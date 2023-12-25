@@ -1,8 +1,4 @@
-import type {
-  LinksFunction,
-  LoaderFunctionArgs,
-  MetaFunction,
-} from '@remix-run/cloudflare';
+import type { LinksFunction, MetaFunction } from '@remix-run/cloudflare';
 import { cssBundleHref } from '@remix-run/css-bundle';
 import {
   isRouteErrorResponse,
