@@ -2,18 +2,15 @@ import { GetAllPostsDocument, GetAllPostsQuery } from '~/graphql';
 import { fetchFromDato } from '~/services/datocms.server';
 
 export class PostRepository {
-  private static _apiEndpoint: string;
-  private static _apiKey: string;
+  private _apiEndpoint: string;
+  private _apiKey: string;
 
-  public static set apiEndpoint(value: string) {
-    this._apiEndpoint = value;
+  public constructor(apiEndpoint: string, apiKey: string) {
+    this._apiEndpoint = apiEndpoint;
+    this._apiKey = apiKey;
   }
 
-  public static set apiKey(value: string) {
-    this._apiKey = value;
-  }
-
-  public static getAll = async () => {
+  public getAll = async () => {
     const data = await fetchFromDato<GetAllPostsQuery>(GetAllPostsDocument, {
       apiEndpoint: this._apiEndpoint,
       apiKey: this._apiKey,
