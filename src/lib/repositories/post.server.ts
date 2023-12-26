@@ -1,5 +1,3 @@
-import { StructuredTextDocument } from 'datocms-structured-text-to-plain-text';
-
 import {
   PostsGetAllDocument,
   PostsGetAllQuery,
@@ -8,8 +6,6 @@ import {
   PostsGetBySlugQueryVariables,
 } from '~/graphql';
 import { fetchFromDato } from '~/lib/datocms/client.server';
-
-import { extractDescriptionFromContent } from '../datocms/extract-description-from-content';
 
 export class PostRepository {
   private _apiEndpoint: string;
@@ -26,15 +22,7 @@ export class PostRepository {
       apiKey: this._apiKey,
     });
 
-    return data.allPosts.map((post) => {
-      const content = post.content as unknown as StructuredTextDocument;
-
-      return {
-        ...post,
-        content,
-        excerpt: extractDescriptionFromContent(content),
-      };
-    });
+    return data.allPosts;
   };
 
   public getBySlug = async (slug: string) => {
