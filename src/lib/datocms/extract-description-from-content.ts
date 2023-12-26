@@ -7,7 +7,7 @@ export const extractDescriptionFromContent = (
   content: StructuredTextDocument,
 ) => {
   return (
-    render(content)?.slice(0, 180)?.split(' ').slice(0, -1)?.join(' ')?.trim() +
-    '...'
+    render(content)?.slice(0, 240)?.split(' ').slice(0, -1)?.join(' ')?.trim() +
+    '…'
   );
 };
