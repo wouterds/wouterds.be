@@ -106,6 +106,7 @@ export const renderBlock = ({
         {record.images.map((image) => (
           <li key={`post-gallery.image:${image.id}`}>
             <img
+              loading="lazy"
               src={`/images${new URL(image.url).pathname}`}
               alt={image.alt || undefined}
             />
