@@ -9,7 +9,7 @@ export const Posts = ({ posts }: PostsProps) => {
     <ul>
       {posts.map((post) => (
         <li key={post.id}>
-          <h3>
+          <h3 className="text-base font-medium">
             <a href={`/blog/${post.slug}`}>{post.title}</a>
           </h3>
         </li>
