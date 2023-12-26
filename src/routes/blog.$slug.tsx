@@ -55,7 +55,10 @@ export const renderBlock = ({
       <ul className="not-prose flex flex-col gap-3 mt-6">
         {record.images.map((image) => (
           <li key={`post-gallery.image:${image.id}`}>
-            <img src={image.url} alt={image.alt || undefined} />
+            <img
+              src={`/images${new URL(image.url).pathname}`}
+              alt={image.alt || undefined}
+            />
           </li>
         ))}
       </ul>
