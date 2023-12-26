@@ -6,7 +6,7 @@ export interface PostsProps {
 
 export const Posts = ({ posts }: PostsProps) => {
   return (
-    <ul>
+    <ul className="flex flex-col w-full gap-12">
       {posts.map((post) => (
         <li key={post.id}>
           <h3 className="text-base font-medium mb-2">
