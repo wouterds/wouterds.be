@@ -7,6 +7,8 @@ import {
 } from '~/graphql';
 import { fetchFromDato } from '~/lib/datocms/client.server';
 
+export type Posts = PostsGetAllQuery['allPosts'];
+
 export class PostRepository {
   private _apiEndpoint: string;
   private _apiKey: string;

@@ -1,3 +1,4 @@
+import { type Record as StructuredTextGraphQlResponseRecord, type StructuredText as StructuredTextGraphQlResponse } from 'datocms-structured-text-utils';
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -14,12 +15,12 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   BooleanType: { input: boolean; output: boolean; }
-  CustomData: { input: Record<string, unknown>; output: Record<string, unknown>; }
+  CustomData: { input: Record<string, string>; output: Record<string, string>; }
   DateTime: { input: string; output: string; }
   FloatType: { input: number; output: number; }
   IntType: { input: number; output: number; }
   ItemId: { input: string; output: string; }
-  JsonField: { input: unknown; output: unknown; }
+  JsonField: { input: StructuredTextGraphQlResponse<StructuredTextGraphQlResponseRecord,StructuredTextGraphQlResponseRecord>; output: StructuredTextGraphQlResponse<StructuredTextGraphQlResponseRecord,StructuredTextGraphQlResponseRecord>; }
   MetaTagAttributes: { input: Record<string, string>; output: Record<string, string>; }
   UploadId: { input: string; output: string; }
 };
@@ -2460,14 +2461,14 @@ export type FocalPoint = {
 export type PostsGetAllQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PostsGetAllQuery = { __typename?: 'Query', allPosts: Array<{ __typename: 'PostRecord', id: string, title: string, slug: string, date: string, content: { __typename: 'PostModelContentField', value: unknown } }> };
+export type PostsGetAllQuery = { __typename?: 'Query', allPosts: Array<{ __typename: 'PostRecord', id: string, title: string, slug: string, date: string, content: { __typename: 'PostModelContentField', value: StructuredTextGraphQlResponse<StructuredTextGraphQlResponseRecord,StructuredTextGraphQlResponseRecord> } }> };
 
 export type PostsGetBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
 }>;
 
 
-export type PostsGetBySlugQuery = { __typename?: 'Query', post?: { __typename: 'PostRecord', id: string, title: string, slug: string, date: string, content: { __typename: 'PostModelContentField', value: unknown, blocks: Array<{ __typename: 'PostGalleryRecord', id: string, images: Array<{ __typename: 'FileField', id: string, url: string, alt?: string | null, width?: number | null, height?: number | null, blurhash?: string | null }> }> } } | null };
+export type PostsGetBySlugQuery = { __typename?: 'Query', post?: { __typename: 'PostRecord', id: string, title: string, slug: string, date: string, content: { __typename: 'PostModelContentField', value: StructuredTextGraphQlResponse<StructuredTextGraphQlResponseRecord,StructuredTextGraphQlResponseRecord>, blocks: Array<{ __typename: 'PostGalleryRecord', id: string, images: Array<{ __typename: 'FileField', id: string, url: string, alt?: string | null, width?: number | null, height?: number | null, blurhash?: string | null }> }> } } | null };
 
 
 export const PostsGetAllDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PostsGetAll"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allPosts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}},{"kind":"Field","name":{"kind":"Name","value":"date"}}]}}]}}]} as unknown as DocumentNode<PostsGetAllQuery, PostsGetAllQueryVariables>;
