@@ -16,6 +16,9 @@ export default {
             h3: {
               fontWeight: '600',
             },
+            blockquote: {
+              fontWeight: 'inherit',
+            },
           },
         },
       }),
