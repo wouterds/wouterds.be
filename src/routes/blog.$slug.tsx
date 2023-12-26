@@ -1,5 +1,6 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData } from '@remix-run/react';
+import { render as renderToPlainText } from 'datocms-structured-text-to-plain-text';
 import {
   RenderBlockContext,
   StructuredText,
@@ -7,7 +8,8 @@ import {
 } from 'react-datocms';
 
 import { Context } from '~/@types';
-import { PostGalleryRecord } from '~/graphql';
+import { PostGalleryRecord, PostRecord } from '~/graphql';
+import { extractDescriptionFromContent } from '~/lib/datocms/extract-description-from-content';
 import { PostRepository } from '~/lib/repositories/post.server';
 
 export const loader = async (args: LoaderFunctionArgs) => {
@@ -29,7 +31,55 @@ export const loader = async (args: LoaderFunctionArgs) => {
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  return [{ title: data?.post?.title }];
+  const post = data?.post as PostRecord;
+  const title = post.title;
+  const description = extractDescriptionFromContent(
+    post.content as unknown as StructuredTextDocument,
+  );
+  const text = renderToPlainText(
+    post.content as unknown as StructuredTextDocument,
+  );
+  const readingTime = Math.ceil((text?.split(' ')?.length || 0) / 140);
+
+  return [
+    { title },
+    {
+      name: 'description',
+      description: description,
+    },
+    {
+      name: 'og:title',
+      content: title,
+    },
+    {
+      name: 'og:description',
+      content: description,
+    },
+    {
+      name: 'twitter:title',
+      content: title,
+    },
+    {
+      name: 'twitter:description',
+      content: description,
+    },
+    {
+      name: 'twitter:label1',
+      content: 'Written by',
+    },
+    {
+      name: 'twitter:data1',
+      content: 'Wouter De Schuyter',
+    },
+    {
+      name: 'twitter:label2',
+      content: 'Est. reading time',
+    },
+    {
+      name: 'twitter:data2',
+      content: `${readingTime} minutes`,
+    },
+  ];
 };
 
 export default function BlogSlug() {
