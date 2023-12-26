@@ -104,7 +104,14 @@ export const renderBlock = ({
     return (
       <ul className="not-prose flex flex-col gap-4 mt-6">
         {record.images.map((image) => (
-          <li key={`post-gallery.image:${image.id}`}>
+          <li
+            key={`post-gallery.image:${image.id}`}
+            className="bg-zinc-50 dark:bg-zinc-800 dark:bg-opacity-25 relative overflow-hidden"
+            style={{
+              aspectRatio: `${
+                (image.width as number) / (image.height as number)
+              }`,
+            }}>
             <img
               loading="lazy"
               src={`/images${new URL(image.url).pathname}`}
