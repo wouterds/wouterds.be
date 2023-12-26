@@ -1,10 +1,9 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData } from '@remix-run/react';
 
+import { Context } from '~/@types';
 import { Posts } from '~/components/Posts';
-import { PostRecord } from '~/graphql';
-import { PostRepository } from '~/repositories/post.server';
-import { Context } from '~/types';
+import { PostRepository } from '~/lib/repositories/post.server';
 
 export const loader = async (args: LoaderFunctionArgs) => {
   const context = args.context as Context;
@@ -23,8 +22,7 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Blog() {
-  const data = useLoaderData<typeof loader>();
-  const posts = data.posts as Partial<PostRecord>[];
+  const { posts } = useLoaderData<typeof loader>();
 
   return (
     <section>
