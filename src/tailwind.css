@@ -18,7 +18,7 @@ body {
 }
 
 a {
-  @apply inline-block px-0.5;
+  @apply inline-block px-0.5 -mx-0.5;
   @apply hover:text-white hover:bg-zinc-900;
   @apply dark:hover:bg-white dark:hover:text-black;
 }
