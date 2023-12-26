@@ -36,7 +36,7 @@ export default function BlogSlug() {
   const { post } = useLoaderData<typeof loader>();
 
   return (
-    <article className="prose prose-sm max-w-none text-xs">
+    <article className="prose prose-zinc dark:prose-invert prose-sm max-w-none text-xs leading-relaxed">
       <h1 className="text-2xl">{post.title}</h1>
 
       <StructuredText
@@ -52,7 +52,7 @@ export const renderBlock = ({
 }: RenderBlockContext<PostGalleryRecord & { __typename: string }>) => {
   if (record.__typename === 'PostGalleryRecord') {
     return (
-      <ul className="not-prose flex flex-col gap-2 mt-4">
+      <ul className="not-prose flex flex-col gap-3 mt-6">
         {record.images.map((image) => (
           <li key={`post-gallery.image:${image.id}`}>
             <img src={image.url} alt={image.alt || undefined} />
