@@ -1,10 +1,10 @@
 import { StructuredTextDocument } from 'datocms-structured-text-to-plain-text';
 
-import { PostRecord } from '~/graphql';
 import { extractDescriptionFromContent } from '~/lib/datocms/extract-description-from-content';
+import { Posts as PostsType } from '~/lib/repositories/post.server';
 
 export interface PostsProps {
-  posts: Partial<PostRecord>[];
+  posts: PostsType;
 }
 
 export const Posts = ({ posts }: PostsProps) => {

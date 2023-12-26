@@ -18,18 +18,29 @@ const config: CodegenConfig = {
   documents: ['./src/graphql/**/*.graphql'],
   generates: {
     './src/graphql/types.ts': {
-      plugins: ['typescript', 'typescript-operations', 'typed-document-node'],
+      plugins: [
+        'typescript',
+        'typescript-operations',
+        'typed-document-node',
+        {
+          add: {
+            content:
+              "import { type Record as StructuredTextGraphQlResponseRecord, type StructuredText as StructuredTextGraphQlResponse } from 'datocms-structured-text-utils';",
+          },
+        },
+      ],
       config: {
         strictScalars: true,
         scalars: {
           BooleanType: 'boolean',
-          CustomData: 'Record<string, unknown>',
+          CustomData: 'Record<string, string>',
           Date: 'string',
           DateTime: 'string',
           FloatType: 'number',
           IntType: 'number',
           ItemId: 'string',
-          JsonField: 'unknown',
+          JsonField:
+            'StructuredTextGraphQlResponse<StructuredTextGraphQlResponseRecord,StructuredTextGraphQlResponseRecord>',
           MetaTagAttributes: 'Record<string, string>',
           UploadId: 'string',
         },
