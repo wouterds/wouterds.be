@@ -102,7 +102,7 @@ export const renderBlock = ({
 }: RenderBlockContext<PostGalleryRecord & { __typename: string }>) => {
   if (record.__typename === 'PostGalleryRecord') {
     return (
-      <ul className="not-prose flex flex-col gap-3 mt-6">
+      <ul className="not-prose flex flex-col gap-4 mt-6">
         {record.images.map((image) => (
           <li key={`post-gallery.image:${image.id}`}>
             <img
