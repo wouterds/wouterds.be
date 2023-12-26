@@ -33,9 +33,8 @@ export default function Index() {
           Digital Creative & Developer
         </h2>
       </header>
-      <section>
-        <Posts posts={posts} />
-      </section>
+
+      <Posts posts={posts} />
     </>
   );
 }

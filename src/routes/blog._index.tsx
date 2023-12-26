@@ -24,9 +24,5 @@ export const meta: MetaFunction = () => {
 export default function Blog() {
   const { posts } = useLoaderData<typeof loader>();
 
-  return (
-    <section>
-      <Posts posts={posts} />
-    </section>
-  );
+  return <Posts posts={posts} />;
 }
