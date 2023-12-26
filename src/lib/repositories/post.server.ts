@@ -5,7 +5,7 @@ import {
   PostsGetBySlugQuery,
   PostsGetBySlugQueryVariables,
 } from '~/graphql';
-import { fetchFromDato } from '~/services/datocms.server';
+import { fetchFromDato } from '~/lib/datocms/client.server';
 
 export class PostRepository {
   private _apiEndpoint: string;
