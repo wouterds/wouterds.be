@@ -1,15 +1,18 @@
 query PostsGetBySlug($slug: String!) {
   post(filter: { slug: { eq: $slug } }) {
+    __typename
     id
     title
     slug
     content {
+      __typename
       value
       blocks {
-        __typename
         ... on PostGalleryRecord {
+          __typename
           id
           images {
+            __typename
             id
             url
             alt

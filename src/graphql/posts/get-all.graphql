@@ -1,5 +1,6 @@
 query PostsGetAll {
   allPosts {
+    __typename
     id
     title
     slug
