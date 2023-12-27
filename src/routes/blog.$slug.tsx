@@ -6,7 +6,6 @@ import {
   StructuredTextDocument,
 } from 'react-datocms';
 
-import { Context } from '~/@types';
 import { Image } from '~/components/Image';
 import { PostGalleryRecord, PostRecord } from '~/graphql';
 import {

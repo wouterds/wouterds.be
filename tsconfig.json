@@ -13,9 +13,11 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "@types": ["./@types"]
     },
     "skipLibCheck": true,
+    "typeRoots": ["./node_modules/@types", "./@types"],
 
     // Remix takes care of building everything in `remix build`.
     "noEmit": true
