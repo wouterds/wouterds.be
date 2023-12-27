@@ -1,10 +1,7 @@
-import { StructuredTextDocument } from 'datocms-structured-text-to-plain-text';
-
-import { extractDescriptionFromContent } from '~/lib/datocms/extract-description-from-content';
-import { Posts as PostsType } from '~/lib/repositories/post.server';
+import { type Post } from '~/lib/repositories/post.server';
 
 export interface PostsProps {
-  posts: PostsType;
+  posts: Post[];
 }
 
 export const Posts = ({ posts }: PostsProps) => {
@@ -17,9 +14,7 @@ export const Posts = ({ posts }: PostsProps) => {
               <a href={`/blog/${post.slug}`}>{post.title}</a>
             </h3>
             <p className="leading-relaxed line-clamp-3 sm:line-clamp-2 text-zinc-700 dark:text-zinc-300">
-              {extractDescriptionFromContent(
-                post.content as unknown as StructuredTextDocument,
-              )}
+              {post.excerpt}
             </p>
           </li>
         );

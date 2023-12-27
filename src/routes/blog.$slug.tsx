@@ -1,6 +1,5 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData } from '@remix-run/react';
-import { render as renderToPlainText } from 'datocms-structured-text-to-plain-text';
 import {
   RenderBlockContext,
   StructuredText,
@@ -9,7 +8,10 @@ import {
 
 import { Context } from '~/@types';
 import { PostGalleryRecord, PostRecord } from '~/graphql';
-import { extractDescriptionFromContent } from '~/lib/datocms/extract-description-from-content';
+import {
+  excerptFromContent,
+  plainTextFromContent,
+} from '~/lib/datocms/structured-text-utils';
 import { PostRepository } from '~/lib/repositories/post.server';
 
 export const loader = async (args: LoaderFunctionArgs) => {
@@ -33,16 +35,11 @@ export const loader = async (args: LoaderFunctionArgs) => {
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const post = data?.post as PostRecord;
   const title = post.title;
-  const description = extractDescriptionFromContent(
-    post.content as unknown as StructuredTextDocument,
-  );
-  const text = renderToPlainText(
-    post.content as unknown as StructuredTextDocument,
-  );
-  const readingTime = Math.min(
-    Math.ceil((text?.split(' ')?.length || 0) / 140),
-    1,
-  );
+  const description = excerptFromContent(post.content);
+  const text = plainTextFromContent(post.content);
+  const words = text?.split(' ')?.length || 0;
+  const averageWordsPerMinuteReadingSpeed = 160;
+  const readingTime = Math.ceil(words / averageWordsPerMinuteReadingSpeed);
 
   return [
     { title },
@@ -96,7 +93,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     },
     {
       name: 'twitter:data2',
-      content: `${readingTime} minute${readingTime > 1 ? 's' : ''}}`,
+      content: `${readingTime} minute${readingTime > 1 ? 's' : ''}`,
     },
   ];
 };
@@ -116,7 +113,7 @@ export default function BlogSlug() {
   );
 }
 
-export const renderBlock = ({
+const renderBlock = ({
   record,
 }: RenderBlockContext<PostGalleryRecord & { __typename: string }>) => {
   if (record.__typename === 'PostGalleryRecord') {
