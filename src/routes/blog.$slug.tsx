@@ -7,6 +7,7 @@ import {
 } from 'react-datocms';
 
 import { Context } from '~/@types';
+import { Image } from '~/components/Image';
 import { PostGalleryRecord, PostRecord } from '~/graphql';
 import {
   excerptFromContent,
@@ -128,11 +129,7 @@ const renderBlock = ({
                 (image.width as number) / (image.height as number)
               }`,
             }}>
-            <img
-              loading="lazy"
-              src={`/images${new URL(image.url).pathname}`}
-              alt={image.alt || undefined}
-            />
+            <Image {...image} />
           </li>
         ))}
       </ul>
