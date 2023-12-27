@@ -22,7 +22,6 @@ query PostsGetBySlug($slug: String!) {
             alt
             width
             height
-            blurhash
           }
         }
       }
