@@ -4,6 +4,10 @@ query PostsGetBySlug($slug: String!) {
     id
     title
     slug
+    poster {
+      __typename
+      url
+    }
     content {
       __typename
       value
