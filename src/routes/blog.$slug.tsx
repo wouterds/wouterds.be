@@ -1,7 +1,9 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData } from '@remix-run/react';
+// import { isCode } from 'datocms-structured-text-utils';
 import {
   RenderBlockContext,
+  // renderNodeRule,
   StructuredText,
   StructuredTextDocument,
 } from 'react-datocms';
@@ -104,6 +106,21 @@ export default function BlogSlug() {
       <StructuredText
         data={post.content as unknown as StructuredTextDocument}
         renderBlock={renderBlock}
+        // customNodeRules={[
+        //   renderNodeRule(isCode, ({ node: { language: _lang, code } }) => {
+        //     console.log({ _lang, code });
+
+        //     // shiki.getHighlighter({ theme: 'nord' }).then((highlighter) => {
+        //     //   console.log(highlighter.codeToHtml(code, { lang }));
+        //     // });
+
+        //     return (
+        //       <pre className="text-black dark:text-white bg-zinc-100 dark:bg-zinc-800 dark:bg-opacity-75 p-0 rounded">
+        //         <code className="p-4 block overflow-scroll">{code}</code>
+        //       </pre>
+        //     );
+        //   }),
+        // ]}
       />
     </article>
   );
