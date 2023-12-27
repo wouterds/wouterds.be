@@ -3,7 +3,7 @@
 ![code-review](https://github.com/wouterds/wouterds.be/actions/workflows/code-review.yml/badge.svg?branch=main)
 ![release](https://github.com/wouterds/wouterds.be/actions/workflows/release.yml/badge.svg)
 
-My personal website, built in React/TypeScript with Remix & Cloudflare Workers.
+My personal website, built in React/TypeScript with Remix & Cloudflare Workers and DatoCMS as headless CMS.
 
 ## Development
 
