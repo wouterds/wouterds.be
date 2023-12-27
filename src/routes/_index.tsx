@@ -1,7 +1,6 @@
 import { LoaderFunctionArgs } from '@remix-run/cloudflare';
 import { useLoaderData } from '@remix-run/react';
 
-import { Context } from '~/@types';
 import { Posts } from '~/components/Posts';
 import { PostRepository } from '~/lib/repositories/post.server';
 
