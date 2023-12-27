@@ -1,4 +1,0 @@
-name: Doctrine Migrations
-migrations_namespace: WouterDeSchuyter\Migrations
-table_name: doctrine_migration
-migrations_directory: database/migrations
