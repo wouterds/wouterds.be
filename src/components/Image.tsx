@@ -14,7 +14,7 @@ export const Image = ({ url, alt }: ImageProps) => {
     <>
       <img
         onClick={() => setExpanded(!expanded)}
-        className="cursor-pointer"
+        className="cursor-pointer hover:opacity-95 hover:dark:opacity-90 transition-opacity ease-in-out"
         loading="lazy"
         src={`/images${new URL(url).pathname}`}
         alt={alt || undefined}
