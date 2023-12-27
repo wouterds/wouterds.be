@@ -10,6 +10,7 @@ import {
   ScrollRestoration,
   useRouteError,
 } from '@remix-run/react';
+import { ExternalScripts } from 'remix-utils/external-scripts';
 
 import stylesheet from '~/tailwind.css';
 
@@ -47,6 +48,7 @@ export default function App() {
 
         <ScrollRestoration />
         <Scripts />
+        <ExternalScripts />
         <LiveReload />
 
         <div id="modal-portal" />
