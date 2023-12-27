@@ -18,7 +18,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
 };
 
 export const meta: MetaFunction = () => {
-  return [{ title: 'Blog - Wouter De Schuyter' }];
+  return [{ title: 'Blog' }];
 };
 
 export default function Blog() {
