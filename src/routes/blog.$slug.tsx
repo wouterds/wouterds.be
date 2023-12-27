@@ -57,9 +57,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     },
     {
       name: 'og:image',
-      content: `https://wouterds.be/images${
-        new URL(post.poster.url).pathname
-      }`,
+      content: `https://wouterds.be/images${new URL(post.poster.url).pathname}`,
     },
     {
       name: 'twitter:title',
@@ -75,9 +73,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     },
     {
       name: 'twitter:image',
-      content: `https://wouterds.be/images${
-        new URL(post.poster.url).pathname
-      }`,
+      content: `https://wouterds.be/images${new URL(post.poster.url).pathname}`,
     },
     {
       name: 'twitter:label1',
