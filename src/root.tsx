@@ -48,6 +48,8 @@ export default function App() {
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
+
+        <div id="modal-portal" />
       </body>
     </html>
   );
@@ -86,9 +88,7 @@ export const ErrorBoundary = () => {
           <Footer />
         </div>
 
-        <ScrollRestoration />
         <Scripts />
-        <LiveReload />
       </body>
     </html>
   );
