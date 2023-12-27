@@ -56,12 +56,28 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
       content: description,
     },
     {
+      name: 'og:image',
+      content: `https://wouterds.com/images${
+        new URL(post.poster.url).pathname
+      }`,
+    },
+    {
       name: 'twitter:title',
       content: title,
     },
     {
       name: 'twitter:description',
       content: description,
+    },
+    {
+      name: 'twitter:card',
+      content: 'summary_large_image',
+    },
+    {
+      name: 'twitter:image',
+      content: `https://wouterds.com/images${
+        new URL(post.poster.url).pathname
+      }`,
     },
     {
       name: 'twitter:label1',
