@@ -39,7 +39,10 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const text = renderToPlainText(
     post.content as unknown as StructuredTextDocument,
   );
-  const readingTime = Math.ceil((text?.split(' ')?.length || 0) / 140);
+  const readingTime = Math.min(
+    Math.ceil((text?.split(' ')?.length || 0) / 140),
+    1,
+  );
 
   return [
     { title },
@@ -93,7 +96,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     },
     {
       name: 'twitter:data2',
-      content: `${readingTime} minutes`,
+      content: `${readingTime} minute${readingTime > 1 ? 's' : ''}}`,
     },
   ];
 };
