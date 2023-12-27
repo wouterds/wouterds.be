@@ -22,7 +22,7 @@ export default function Index() {
 
   return (
     <>
-      <header className="text-center mb-12">
+      <header className="text-center mb-14">
         <img
           src="/images/wouterds.2024.jpg"
           alt="Headshot of Wouter De Schuyter"
