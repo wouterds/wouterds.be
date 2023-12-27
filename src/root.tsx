@@ -38,7 +38,7 @@ export default function App() {
         <div className="mx-auto" style={{ maxWidth: '768px' }}>
           <Header />
 
-          <main className="my-12">
+          <main className="my-8 sm:my-12">
             <Outlet />
           </main>
 
@@ -68,7 +68,7 @@ export const ErrorBoundary = () => {
         <div className="mx-auto" style={{ maxWidth: '768px' }}>
           <Header />
 
-          <main className="my-12">
+          <main className="my-8 sm:my-12">
             {isRouteErrorResponse(error) ? (
               <h1 className="text-xl font-medium">
                 {error.status} {error.statusText}
