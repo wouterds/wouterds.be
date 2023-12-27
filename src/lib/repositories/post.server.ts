@@ -6,8 +6,9 @@ import {
   PostsGetBySlugQueryVariables,
 } from '~/graphql';
 import { fetchFromDato } from '~/lib/datocms/client.server';
+import { excerptFromContent } from '~/lib/datocms/structured-text-utils';
 
-export type Posts = PostsGetAllQuery['allPosts'];
+export type Post = PostsGetAllQuery['allPosts'][0] & { excerpt: string };
 
 export class PostRepository {
   private _apiEndpoint: string;
@@ -24,7 +25,15 @@ export class PostRepository {
       apiKey: this._apiKey,
     });
 
-    return data.allPosts;
+    const posts = data.allPosts.map(
+      (post) =>
+        ({
+          ...post,
+          excerpt: excerptFromContent(post.content),
+        }) as Post,
+    );
+
+    return posts;
   };
 
   public getBySlug = async (slug: string) => {
