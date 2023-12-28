@@ -12,7 +12,7 @@ import { useMedia } from 'react-use';
 import { ExternalScriptsFunction } from 'remix-utils/external-scripts';
 
 import { Image } from '~/components/Image';
-import { PostGalleryRecord, PostRecord } from '~/graphql';
+import { GalleryRecord, PostRecord } from '~/graphql';
 import {
   excerptFromContent,
   plainTextFromContent,
@@ -214,8 +214,8 @@ export default function BlogSlug() {
 
 const renderBlock = ({
   record,
-}: RenderBlockContext<PostGalleryRecord & { __typename: string }>) => {
-  if (record.__typename === 'PostGalleryRecord') {
+}: RenderBlockContext<GalleryRecord & { __typename: string }>) => {
+  if (record.__typename === 'GalleryRecord') {
     return (
       <ul className="not-prose flex flex-col gap-4 mt-6">
         {record.images.map((image) => (
