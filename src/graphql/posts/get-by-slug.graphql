@@ -12,8 +12,8 @@ query PostsGetBySlug($slug: String!) {
       __typename
       value
       blocks {
+        __typename
         ... on GalleryRecord {
-          __typename
           id
           images {
             __typename
