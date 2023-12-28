@@ -65,11 +65,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     { title },
     {
       name: 'description',
-      description: description,
-    },
-    {
-      name: 'og:site_name',
-      content: 'Wouter De Schuyter',
+      description,
     },
     {
       name: 'og:type',

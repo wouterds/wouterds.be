@@ -45,6 +45,7 @@ export default function App() {
           href="/favicon-16x16.png"
         />
         <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <meta property="og:site_name" content="Wouter De Schuyter" />
         <Meta />
         <Links />
       </head>
