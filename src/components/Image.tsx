@@ -1,24 +1,38 @@
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
+import { BlurhashCanvas } from 'react-blurhash';
 import { createPortal } from 'react-dom';
 
 export type ImageProps = {
   url: string;
   alt?: string | null;
+  blurhash?: string | null;
+  width?: number | null;
+  height?: number | null;
 };
 
-export const Image = ({ url, alt }: ImageProps) => {
+export const Image = ({ url, alt, blurhash, width, height }: ImageProps) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
     <>
-      <img
-        onClick={() => setExpanded(!expanded)}
-        className="rounded cursor-pointer"
-        loading="lazy"
-        src={`/images${new URL(url).pathname}`}
-        alt={alt || undefined}
-      />
+      <div
+        className="bg-zinc-50 dark:bg-zinc-800 dark:bg-opacity-25 relative overflow-hidden rounded"
+        style={{ aspectRatio: `${width! / height!}` }}>
+        {blurhash && (
+          <BlurhashCanvas
+            className="absolute inset-0 w-full h-full"
+            hash={blurhash}
+          />
+        )}
+        <img
+          onClick={() => setExpanded(!expanded)}
+          className="cursor-pointer relative z-10"
+          loading="lazy"
+          src={`/images${new URL(url).pathname}`}
+          alt={alt || undefined}
+        />
+      </div>
 
       {expanded &&
         typeof document !== 'undefined' &&
