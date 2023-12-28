@@ -135,16 +135,48 @@ export default function BlogSlug() {
     }
   }, [containsCodeBlocks, awaitShiki]);
 
+  const [ref, setRef] = useState<HTMLElement | null>(null);
   useEffect(() => {
     if (!shikiLoaded) {
       return;
     }
 
-    console.log('Shiki loaded!', window.shiki);
-  }, [shikiLoaded]);
+    if (!ref) {
+      return;
+    }
+
+    const elements = ref.querySelectorAll<HTMLElement>('pre code');
+    const langs = Array.from(
+      new Set(
+        Array.from(elements)
+          .map(
+            (code) =>
+              code.parentElement!.attributes.getNamedItem('data-language')
+                ?.value as string,
+          )
+          .filter(Boolean),
+      ),
+    );
+
+    if (!langs.length) {
+      return;
+    }
+
+    window.shiki
+      .getHighlighter({ theme: 'nord', langs })
+      .then((highlighter) => {
+        for (const code of elements) {
+          const pre = code.parentElement!;
+          const lang = pre.attributes.getNamedItem('data-language')?.value;
+          pre.outerHTML = highlighter.codeToHtml(code.textContent!, { lang });
+        }
+      });
+  }, [shikiLoaded, ref]);
 
   return (
-    <article className="prose prose-zinc dark:prose-invert prose-sm max-w-none text-xs leading-relaxed">
+    <article
+      className="prose prose-zinc dark:prose-invert prose-sm max-w-none text-xs leading-relaxed"
+      ref={setRef}>
       <h1 className="text-2xl">{post.title}</h1>
 
       <StructuredText
