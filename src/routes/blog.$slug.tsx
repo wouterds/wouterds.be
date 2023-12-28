@@ -1,5 +1,6 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData } from '@remix-run/react';
+import { format } from 'date-fns';
 import { isCode } from 'datocms-structured-text-utils';
 import { useCallback, useEffect, useState } from 'react';
 import {
@@ -186,7 +187,12 @@ export default function BlogSlug() {
     <article
       className="prose prose-zinc dark:prose-invert prose-sm max-w-none text-xs leading-relaxed"
       ref={setRef}>
-      <h1 className="text-2xl">{post.title}</h1>
+      <header className="mb-4">
+        <h1 className="text-2xl mb-2">{post.title}</h1>
+        <time className="text-xs text-zinc-500" dateTime={post.date}>
+          {format(new Date(post.date), 'MMMM dd, yyyy')}
+        </time>
+      </header>
 
       <StructuredText
         data={post.content as unknown as StructuredTextDocument}
