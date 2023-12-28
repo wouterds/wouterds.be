@@ -12,7 +12,7 @@ import { useMedia } from 'react-use';
 import { ExternalScriptsFunction } from 'remix-utils/external-scripts';
 
 import { Image } from '~/components/Image';
-import { GalleryRecord, PostRecord } from '~/graphql';
+import { GalleryRecord, PostRecord, VideoRecord } from '~/graphql';
 import {
   excerptFromContent,
   plainTextFromContent,
@@ -214,7 +214,9 @@ export default function BlogSlug() {
 
 const renderBlock = ({
   record,
-}: RenderBlockContext<GalleryRecord & { __typename: string }>) => {
+}: RenderBlockContext<
+  (GalleryRecord | VideoRecord) & { __typename: string }
+>) => {
   if (record.__typename === 'GalleryRecord') {
     return (
       <ul className="not-prose flex flex-col gap-4 mt-6">
@@ -232,6 +234,27 @@ const renderBlock = ({
         ))}
       </ul>
     );
+  }
+
+  if (record.__typename === 'VideoRecord') {
+    if (record.video.provider === 'youtube') {
+      return (
+        <div className="not-prose mt-6">
+          <div
+            className="bg-zinc-50 dark:bg-zinc-800 dark:bg-opacity-25 relative overflow-hidden bg-center bg-cover aspect-video w-full rounded"
+            style={{ backgroundImage: `url(${record.video.thumbnailUrl})` }}>
+            <iframe
+              loading="lazy"
+              src={`https://www.youtube.com/embed/${record.video.providerUid}`}
+              title={record.video.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className="w-full h-full absolute inset-0"
+            />
+          </div>
+        </div>
+      );
+    }
   }
 
   return null;

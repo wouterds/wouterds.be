@@ -13,6 +13,15 @@ query PostsGetBySlug($slug: String!) {
       value
       blocks {
         __typename
+        ... on VideoRecord {
+          id
+          video {
+            title
+            provider
+            providerUid
+            thumbnailUrl
+          }
+        }
         ... on GalleryRecord {
           id
           images {
