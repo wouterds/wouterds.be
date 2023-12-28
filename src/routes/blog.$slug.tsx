@@ -1,12 +1,13 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData } from '@remix-run/react';
-// import { isCode } from 'datocms-structured-text-utils';
+import { isCode } from 'datocms-structured-text-utils';
+import { useCallback, useEffect, useState } from 'react';
 import {
   RenderBlockContext,
-  // renderNodeRule,
   StructuredText,
   StructuredTextDocument,
 } from 'react-datocms';
+import { ExternalScriptsFunction } from 'remix-utils/external-scripts';
 
 import { Image } from '~/components/Image';
 import { PostGalleryRecord, PostRecord } from '~/graphql';
@@ -31,7 +32,22 @@ export const loader = async (args: LoaderFunctionArgs) => {
     });
   }
 
-  return { post };
+  const content = post.content.value as unknown as StructuredTextDocument;
+  const containsCodeBlocks = content.document.children.some(isCode);
+
+  return { post, containsCodeBlocks };
+};
+
+export const handle: {
+  scripts: ExternalScriptsFunction<{ containsCodeBlocks: boolean }>;
+} = {
+  scripts: ({ data }) => {
+    if (data.containsCodeBlocks) {
+      return [{ src: 'https://cdn.jsdelivr.net/npm/shiki' }];
+    }
+
+    return [];
+  },
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
@@ -97,7 +113,35 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export default function BlogSlug() {
-  const { post } = useLoaderData<typeof loader>();
+  const { post, containsCodeBlocks } = useLoaderData<typeof loader>();
+
+  const [shikiLoaded, setShikiLoaded] = useState(false);
+  const awaitShiki = useCallback(() => {
+    if (!containsCodeBlocks) {
+      return;
+    }
+
+    if (window.shiki) {
+      setShikiLoaded(true);
+      return;
+    }
+
+    setTimeout(awaitShiki, 10);
+  }, [containsCodeBlocks]);
+
+  useEffect(() => {
+    if (containsCodeBlocks) {
+      awaitShiki();
+    }
+  }, [containsCodeBlocks, awaitShiki]);
+
+  useEffect(() => {
+    if (!shikiLoaded) {
+      return;
+    }
+
+    console.log('Shiki loaded!', window.shiki);
+  }, [shikiLoaded]);
 
   return (
     <article className="prose prose-zinc dark:prose-invert prose-sm max-w-none text-xs leading-relaxed">
@@ -106,21 +150,6 @@ export default function BlogSlug() {
       <StructuredText
         data={post.content as unknown as StructuredTextDocument}
         renderBlock={renderBlock}
-        // customNodeRules={[
-        //   renderNodeRule(isCode, ({ node: { language: _lang, code } }) => {
-        //     console.log({ _lang, code });
-
-        //     // shiki.getHighlighter({ theme: 'nord' }).then((highlighter) => {
-        //     //   console.log(highlighter.codeToHtml(code, { lang }));
-        //     // });
-
-        //     return (
-        //       <pre className="text-black dark:text-white bg-zinc-100 dark:bg-zinc-800 dark:bg-opacity-75 p-0 rounded">
-        //         <code className="p-4 block overflow-scroll">{code}</code>
-        //       </pre>
-        //     );
-        //   }),
-        // ]}
       />
     </article>
   );
