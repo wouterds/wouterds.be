@@ -200,10 +200,12 @@ export default function BlogSlug() {
       className="prose prose-zinc dark:prose-invert prose-sm max-w-none text-xs leading-relaxed"
       ref={setRef}>
       <header className="mb-4">
-        <h1 className="text-2xl mb-2">{post.title}</h1>
-        <time className="text-xs text-zinc-500" dateTime={post.date}>
+        <time
+          className="text-xs text-zinc-400 dark:text-zinc-500 mb-2 block"
+          dateTime={post.date}>
           {format(new Date(post.date), 'MMMM dd, yyyy')}
         </time>
+        <h1 className="text-2xl my-0">{post.title}</h1>
       </header>
 
       <StructuredText

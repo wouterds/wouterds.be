@@ -1,4 +1,5 @@
 import { Link } from '@remix-run/react';
+import { format } from 'date-fns';
 
 import { type Post } from '~/lib/repositories/post.server';
 
@@ -12,6 +13,11 @@ export const Posts = ({ posts }: PostsProps) => {
       {posts.map((post) => {
         return (
           <li key={post.id}>
+            <time
+              className="text-xs text-zinc-400 dark:text-zinc-500 mb-1 block"
+              dateTime={post.date}>
+              {format(new Date(post.date), 'MMMM dd, yyyy')}
+            </time>
             <h3 className="text-base font-medium mb-2">
               <Link to={`/blog/${post.slug}`} prefetch="intent">
                 {post.title}
