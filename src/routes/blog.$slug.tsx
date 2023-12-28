@@ -193,7 +193,7 @@ export default function BlogSlug() {
 
   return (
     <article
-      className="prose prose-zinc dark:prose-invert prose-sm max-w-none text-xs leading-relaxed"
+      className="prose prose-zinc dark:prose-dark dark:prose-invert prose-sm max-w-none text-xs leading-relaxed"
       ref={setRef}>
       <header className="mb-4">
         <time
