@@ -72,6 +72,14 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
       content: 'Wouter De Schuyter',
     },
     {
+      name: 'og:type',
+      content: 'article',
+    },
+    {
+      name: 'article:published_time',
+      content: post.date,
+    },
+    {
       name: 'og:title',
       content: title,
     },
