@@ -5,15 +5,12 @@
 html,
 body {
   @apply min-h-full;
-}
-
-html {
   @apply bg-white dark:bg-zinc-900;
-  @apply text-black dark:text-white;
 }
 
 body {
   @apply font-mono text-xs;
+  @apply text-black dark:text-white;
   @apply p-6;
 }
 
