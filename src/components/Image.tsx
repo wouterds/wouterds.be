@@ -14,7 +14,7 @@ export const Image = ({ url, alt }: ImageProps) => {
     <>
       <img
         onClick={() => setExpanded(!expanded)}
-        className="cursor-pointer hover:opacity-95 hover:dark:opacity-90 transition-opacity ease-in-out"
+        className="rounded cursor-pointer hover:opacity-95 hover:dark:opacity-90"
         loading="lazy"
         src={`/images${new URL(url).pathname}`}
         alt={alt || undefined}
@@ -32,7 +32,7 @@ export const Image = ({ url, alt }: ImageProps) => {
               <XMarkIcon className="w-6 h-6" />
             </button>
             <img
-              className="max-w-full max-h-full bg-zinc-50 dark:bg-zinc-800 dark:bg-opacity-25"
+              className="max-w-full max-h-full bg-zinc-50 dark:bg-zinc-800 dark:bg-opacity-25 rounded"
               src={`/images${new URL(url).pathname}`}
               alt={alt || undefined}
             />

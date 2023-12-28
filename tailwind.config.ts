@@ -5,7 +5,7 @@ const customizations = {
   h2: { fontWeight: '600' },
   h3: { fontWeight: '600' },
   blockquote: { fontWeight: 'inherit' },
-  pre: { fontSize: 'inherit' },
+  pre: { fontSize: '1.1em' },
 };
 
 export default {

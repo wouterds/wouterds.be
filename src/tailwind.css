@@ -22,3 +22,7 @@ a {
   @apply hover:text-white hover:bg-zinc-900;
   @apply dark:hover:bg-white dark:hover:text-black;
 }
+
+pre {
+  @apply !bg-zinc-100 dark:!bg-zinc-800;
+}

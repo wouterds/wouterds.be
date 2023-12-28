@@ -7,6 +7,7 @@ import {
   StructuredText,
   StructuredTextDocument,
 } from 'react-datocms';
+import { useMedia } from 'react-use';
 import { ExternalScriptsFunction } from 'remix-utils/external-scripts';
 
 import { Image } from '~/components/Image';
@@ -115,6 +116,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 export default function BlogSlug() {
   const { post, containsCodeBlocks } = useLoaderData<typeof loader>();
 
+  const isDarkMode = useMedia('(prefers-color-scheme: dark)', false);
   const [shikiLoaded, setShikiLoaded] = useState(false);
   const awaitShiki = useCallback(() => {
     if (!containsCodeBlocks) {
@@ -163,7 +165,10 @@ export default function BlogSlug() {
     }
 
     window.shiki
-      .getHighlighter({ theme: 'nord', langs })
+      .getHighlighter({
+        theme: isDarkMode ? 'github-dark' : 'github-light',
+        langs,
+      })
       .then((highlighter) => {
         for (const code of elements) {
           const pre = code.parentElement!;
@@ -171,7 +176,7 @@ export default function BlogSlug() {
           pre.outerHTML = highlighter.codeToHtml(code.textContent!, { lang });
         }
       });
-  }, [shikiLoaded, ref]);
+  }, [shikiLoaded, ref, isDarkMode]);
 
   return (
     <article
