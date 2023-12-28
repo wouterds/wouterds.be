@@ -42,6 +42,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: wouterds-com
+          projectName: wouterds-be
           directory: ./public
           workingDirectory: ./
