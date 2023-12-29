@@ -222,7 +222,7 @@ const renderBlock = ({
 >) => {
   if (record.__typename === 'GalleryRecord') {
     return (
-      <ul className="not-prose flex flex-col gap-4 mt-6">
+      <ul className="not-prose flex flex-col gap-3">
         {record.images.map((image) => (
           <li key={`post-gallery.image:${image.id}`}>
             <Image {...image} />
