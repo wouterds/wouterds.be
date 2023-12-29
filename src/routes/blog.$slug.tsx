@@ -234,7 +234,7 @@ const renderBlock = ({
       return (
         <div className="not-prose mt-6">
           <div
-            className="bg-zinc-50 dark:bg-zinc-800 dark:bg-opacity-25 relative overflow-hidden bg-center bg-cover aspect-video w-full rounded"
+            className="bg-zinc-50 dark:bg-zinc-800 dark:bg-opacity-25 relative overflow-hidden bg-center bg-cover aspect-video w-full rounded-sm"
             style={{ backgroundImage: `url(${record.video.thumbnailUrl})` }}>
             <iframe
               loading="lazy"

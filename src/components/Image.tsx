@@ -17,7 +17,7 @@ export const Image = ({ url, alt, blurhash, width, height }: ImageProps) => {
   return (
     <>
       <div
-        className="bg-zinc-50 dark:bg-zinc-800 dark:bg-opacity-25 relative overflow-hidden rounded"
+        className="bg-zinc-50 dark:bg-zinc-800 dark:bg-opacity-25 relative overflow-hidden rounded-sm"
         style={{ aspectRatio: `${width! / height!}` }}>
         {blurhash && (
           <BlurhashCanvas
@@ -41,12 +41,12 @@ export const Image = ({ url, alt, blurhash, width, height }: ImageProps) => {
             className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-95 p-6"
             onClick={() => setExpanded(false)}>
             <button
-              className="absolute top-4 right-4 p-1 text-white rounded hover:bg-zinc-300 hover:bg-opacity-10"
+              className="absolute top-4 right-4 p-1 text-white rounded-sm hover:bg-zinc-300 hover:bg-opacity-10"
               onClick={() => setExpanded(false)}>
               <XMarkIcon className="w-6 h-6" />
             </button>
             <img
-              className="max-w-full max-h-full bg-zinc-50 dark:bg-zinc-800 dark:bg-opacity-25 rounded"
+              className="max-w-full max-h-full bg-zinc-50 dark:bg-zinc-800 dark:bg-opacity-25 rounded-sm"
               src={`/images${new URL(url).pathname}`}
               alt={alt || undefined}
             />
