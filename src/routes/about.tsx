@@ -1,14 +1,30 @@
 import { MetaFunction } from '@remix-run/cloudflare';
+import { differenceInMilliseconds } from 'date-fns';
+import { useState } from 'react';
+import { useInterval } from 'react-use';
+
+const BIRTHDAY = '13 December 1992';
+
+const getAge = () => {
+  return (
+    differenceInMilliseconds(new Date(), new Date(BIRTHDAY)) /
+    (365 * 24 * 60 * 60) /
+    1000
+  ).toFixed(8);
+};
 
 export const meta: MetaFunction = () => {
   return [{ title: 'About' }];
 };
 
 export default function About() {
+  const [age, setAge] = useState(getAge());
+  useInterval(() => setAge(getAge()), 1);
+
   return (
     <div className="leading-relaxed">
       <p className="mb-4">
-        Hey 👋, I&apos;m Wouter, 31 years old and passionate about all things
+        Hey 👋, I&apos;m Wouter, {age} years old and passionate about all things
         digital really.
       </p>
       <p className="mb-4">
