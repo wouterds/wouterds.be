@@ -27,7 +27,7 @@ export const Image = ({ url, alt, blurhash, width, height }: ImageProps) => {
         )}
         <img
           onClick={() => setExpanded(!expanded)}
-          className="cursor-pointer relative z-10"
+          className="cursor-pointer relative z-10 w-full"
           loading="lazy"
           src={`/images${new URL(url).pathname}`}
           alt={alt || undefined}
