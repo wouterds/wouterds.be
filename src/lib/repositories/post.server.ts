@@ -1,6 +1,7 @@
 import {
   PostsGetAllDocument,
   PostsGetAllQuery,
+  PostsGetAllQueryVariables,
   PostsGetBySlugDocument,
   PostsGetBySlugQuery,
   PostsGetBySlugQueryVariables,
@@ -19,10 +20,14 @@ export class PostRepository {
     this._apiKey = apiKey;
   }
 
-  public getAll = async () => {
-    const data = await fetchFromDato<PostsGetAllQuery>(PostsGetAllDocument, {
+  public getPosts = async (limit: number = 100) => {
+    const data = await fetchFromDato<
+      PostsGetAllQuery,
+      PostsGetAllQueryVariables
+    >(PostsGetAllDocument, {
       apiEndpoint: this._apiEndpoint,
       apiKey: this._apiKey,
+      variables: { limit },
     });
 
     const posts = data.allPosts.map(
@@ -36,7 +41,7 @@ export class PostRepository {
     return posts;
   };
 
-  public getBySlug = async (slug: string) => {
+  public getPostBySlug = async (slug: string) => {
     const data = await fetchFromDato<
       PostsGetBySlugQuery,
       PostsGetBySlugQueryVariables

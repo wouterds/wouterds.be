@@ -11,7 +11,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
     context.env.DATOCMS_API_KEY,
   );
 
-  const posts = await repository.getAll();
+  const posts = await repository.getPosts(3);
 
   return { posts };
 };

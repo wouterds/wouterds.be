@@ -1,4 +1,4 @@
-query PostsGetAll ($limit: IntType! = 100) {
+query PostsGetAll ($limit: IntType) {
   allPosts(orderBy: [date_DESC], first: $limit) {
     __typename
     id

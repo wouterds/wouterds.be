@@ -9,7 +9,7 @@ export interface PostsProps {
 
 export const Posts = ({ posts }: PostsProps) => {
   return (
-    <ul className="flex flex-col w-full gap-6 sm:gap-12">
+    <ul className="flex flex-col w-full gap-6 sm:gap-10">
       {posts.map((post) => {
         return (
           <li key={post.id}>
