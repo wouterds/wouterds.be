@@ -63,7 +63,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
   return [
     { title },
-    { name: 'description', description },
+    { name: 'description', content: description },
     { name: 'og:title', content: title },
     { name: 'og:description', content: description },
     { name: 'og:type', content: 'article' },
