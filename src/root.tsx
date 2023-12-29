@@ -22,7 +22,15 @@ export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesheet },
 ];
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction = ({ error }) => {
+  if (error) {
+    return [
+      {
+        title: 'Oops, something went wrong!',
+      },
+    ];
+  }
+
   const title = 'Wouter De Schuyter';
   const description =
     "Hi, I'm Wouter and I like to call myself a Digital Creative & Developer. I build digital products and experiences that are simple, beautiful and easy to use.";
