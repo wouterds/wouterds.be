@@ -19,7 +19,10 @@ export const Posts = ({ posts }: PostsProps) => {
               {format(new Date(post.date), 'MMMM do, yyyy')}
             </time>
             <h3 className="text-base font-medium mb-2">
-              <Link to={`/blog/${post.slug}`} prefetch="intent">
+              <Link
+                to={`/blog/${post.slug}`}
+                prefetch="intent"
+                className="inline">
                 {post.title}
               </Link>
             </h3>
