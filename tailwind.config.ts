@@ -5,7 +5,7 @@ const css = {
   h2: { fontWeight: '600' },
   h3: { fontWeight: '600' },
   blockquote: { fontWeight: 'inherit' },
-  pre: { fontSize: '1.1em' },
+  pre: { fontSize: '1.1em', color: 'inherit' },
   'p > code': {
     color: '#db2756',
     padding: '0.15em 0.3em',
