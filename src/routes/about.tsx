@@ -48,7 +48,7 @@ export default function About() {
         the power of decentralized applications. And to be honest, it&apos;s
         probably one of the most exciting things I&apos;ve come across lately!
       </p>
-      <p className="mb-4">Also a cat person 🐱.</p>
+      <p className="mb-4">Also a cat person! 🐱</p>
     </div>
   );
 }
