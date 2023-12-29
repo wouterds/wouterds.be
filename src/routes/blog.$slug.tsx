@@ -63,26 +63,11 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
   return [
     { title },
-    {
-      name: 'description',
-      description,
-    },
-    {
-      name: 'og:type',
-      content: 'article',
-    },
-    {
-      name: 'article:published_time',
-      content: post.date,
-    },
-    {
-      name: 'og:title',
-      content: title,
-    },
-    {
-      name: 'og:description',
-      content: description,
-    },
+    { name: 'description', description },
+    { name: 'og:title', content: title },
+    { name: 'og:description', content: description },
+    { name: 'og:type', content: 'article' },
+    { name: 'article:published_time', content: post.date },
     {
       name: 'og:image',
       content: `https://wouterds.be/images${new URL(post.poster.url).pathname}`,

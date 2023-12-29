@@ -37,15 +37,9 @@ export const meta: MetaFunction = ({ error }) => {
 
   return [
     { title },
-    { description },
-    {
-      name: 'og:title',
-      content: title,
-    },
-    {
-      name: 'og:description',
-      content: description,
-    },
+    { name: 'description', content: description },
+    { name: 'og:title', content: title },
+    { name: 'og:description', content: description },
     {
       name: 'og:image',
       content: 'https://wouterds.be/images/og.jpg',
