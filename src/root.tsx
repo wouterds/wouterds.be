@@ -23,7 +23,46 @@ export const links: LinksFunction = () => [
 ];
 
 export const meta: MetaFunction = () => {
-  return [{ title: 'Wouter De Schuyter' }];
+  const title = 'Wouter De Schuyter';
+  const description =
+    "Hi, I'm Wouter and I like to call myself a Digital Creative & Developer. I build digital products and experiences that are simple, beautiful and easy to use.";
+
+  return [
+    { title },
+    { description },
+    {
+      name: 'og:title',
+      content: title,
+    },
+    {
+      name: 'og:description',
+      content: description,
+    },
+    {
+      name: 'og:image',
+      content: 'https://wouterds.be/images/og.jpg',
+    },
+    {
+      name: 'og:url',
+      content: 'https://wouterds.be',
+    },
+    {
+      name: 'twitter:title',
+      content: title,
+    },
+    {
+      name: 'twitter:description',
+      content: description,
+    },
+    {
+      name: 'twitter:card',
+      content: 'summary_large_image',
+    },
+    {
+      name: 'twitter:image',
+      content: 'https://wouterds.be/images/og.jpg',
+    },
+  ];
 };
 
 export default function App() {
