@@ -166,9 +166,10 @@ export default function BlogSlug() {
         Array.from(elements)
           .map(
             (code) =>
-              code.parentElement!.attributes.getNamedItem('data-language')
+              code.parentElement?.attributes?.getNamedItem?.('data-language')
                 ?.value as string,
           )
+          .filter((lang) => lang !== 'text')
           .filter(Boolean),
       ),
     );
@@ -184,9 +185,11 @@ export default function BlogSlug() {
       })
       .then((highlighter) => {
         for (const code of elements) {
-          const pre = code.parentElement!;
-          const lang = pre.attributes.getNamedItem('data-language')?.value;
-          pre.outerHTML = highlighter.codeToHtml(code.textContent!, { lang });
+          const pre = code.parentElement;
+          if (pre) {
+            const lang = pre.attributes?.getNamedItem?.('data-language')?.value;
+            pre.outerHTML = highlighter.codeToHtml(code.textContent!, { lang });
+          }
         }
       });
   }, [shikiLoaded, ref, isDarkMode]);
