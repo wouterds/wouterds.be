@@ -4,7 +4,7 @@ const css = {
   h1: { fontWeight: '600' },
   h2: { fontWeight: '600' },
   h3: { fontWeight: '600' },
-  blockquote: { fontWeight: 'inherit' },
+  blockquote: { fontWeight: 'inherit', background: 'rgba(0, 0, 0, 0.025)' },
   pre: { fontSize: '1.1em', color: 'inherit' },
   'p > code': {
     color: '#db2756',
@@ -47,6 +47,7 @@ export default {
               backgroundColor: '#2e2124',
               color: '#f24e79',
             },
+            blockquote: { background: 'rgba(255, 255, 255, 0.025)' },
           },
         },
       },
