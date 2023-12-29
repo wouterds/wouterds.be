@@ -11,7 +11,6 @@ export const loader = async (args: LoaderFunctionArgs) => {
     status: 200,
     headers: {
       'Content-Type': headers.get('Content-Type') as string,
-      'Cache-Control': 'public, max-age=31536000, immutable',
     },
   });
 };
