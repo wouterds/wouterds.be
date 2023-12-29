@@ -199,7 +199,7 @@ export default function BlogSlug() {
         <time
           className="text-xs text-zinc-400 dark:text-zinc-500 mb-2 block"
           dateTime={post.date}>
-          {format(new Date(post.date), 'MMMM dd, yyyy')}
+          {format(new Date(post.date), 'MMMM do, yyyy')}
         </time>
         <h1 className="text-2xl my-0">{post.title}</h1>
       </header>
