@@ -7,6 +7,30 @@ query PostsGetAll ($limit: IntType) {
     content {
       __typename
       value
+      blocks {
+        __typename
+        ... on VideoRecord {
+          id
+          video {
+            title
+            provider
+            providerUid
+            thumbnailUrl
+          }
+        }
+        ... on GalleryRecord {
+          id
+          images {
+            __typename
+            id
+            url
+            alt
+            width
+            height
+            blurhash
+          }
+        }
+      }
     }
     date
   }
