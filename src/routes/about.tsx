@@ -1,4 +1,4 @@
-import { MetaFunction } from '@remix-run/cloudflare';
+import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { differenceInMilliseconds, differenceInYears } from 'date-fns';
 import { useState } from 'react';
 import { useInterval } from 'react-use';

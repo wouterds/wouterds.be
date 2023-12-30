@@ -37,7 +37,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
   const content = post.content.value as unknown as StructuredTextDocument;
   const containsCodeBlocks = content.document.children.some(isCode);
 
-  return { post, containsCodeBlocks };
+  return { url: context.url, post, containsCodeBlocks };
 };
 
 export const handle: {
@@ -53,6 +53,7 @@ export const handle: {
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  const url = data?.url as string;
   const post = data?.post as PostRecord;
   const title = post.title;
   const description = excerptFromContent(post.content);
@@ -70,11 +71,11 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     { name: 'article:published_time', content: post.date },
     {
       name: 'og:image',
-      content: `https://wouterds.be/images${new URL(post.poster.url).pathname}`,
+      content: `${url}/images${new URL(post.poster.url).pathname}`,
     },
     {
       name: 'og:url',
-      content: `https://wouterds.be/blog/${post.slug}`,
+      content: `${url}/blog/${post.slug}`,
     },
     {
       name: 'twitter:title',
@@ -90,7 +91,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     },
     {
       name: 'twitter:image',
-      content: `https://wouterds.be/images${new URL(post.poster.url).pathname}`,
+      content: `${url}/images${new URL(post.poster.url).pathname}`,
     },
     {
       name: 'twitter:label1',

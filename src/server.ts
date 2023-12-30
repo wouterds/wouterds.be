@@ -8,6 +8,11 @@ if (process.env.NODE_ENV === 'development') {
 
 export const onRequest = createPagesFunctionHandler({
   build,
-  getLoadContext: (context) => ({ env: context.env }),
+  getLoadContext: ({ env, request }) => {
+    const { protocol, host } = new URL(request.url);
+    const url = `${protocol}//${host}`;
+
+    return { env, url };
+  },
   mode: build.mode,
 });

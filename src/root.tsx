@@ -1,4 +1,8 @@
-import type { LinksFunction, MetaFunction } from '@remix-run/cloudflare';
+import type {
+  LinksFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from '@remix-run/cloudflare';
 import { cssBundleHref } from '@remix-run/css-bundle';
 import {
   isRouteErrorResponse,
@@ -22,7 +26,13 @@ export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesheet },
 ];
 
-export const meta: MetaFunction = ({ error }) => {
+export const loader = (args: LoaderFunctionArgs) => {
+  const context = args.context as Context;
+
+  return { url: context.url };
+};
+
+export const meta: MetaFunction<typeof loader> = ({ error, data }) => {
   if (error) {
     return [
       {
@@ -42,11 +52,11 @@ export const meta: MetaFunction = ({ error }) => {
     { name: 'og:description', content: description },
     {
       name: 'og:image',
-      content: 'https://wouterds.be/images/og.jpg',
+      content: `${data?.url}/images/og.jpg`,
     },
     {
       name: 'og:url',
-      content: 'https://wouterds.be',
+      content: `${data?.url}`,
     },
     {
       name: 'twitter:title',
@@ -62,7 +72,7 @@ export const meta: MetaFunction = ({ error }) => {
     },
     {
       name: 'twitter:image',
-      content: 'https://wouterds.be/images/og.jpg',
+      content: `${data?.url}/images/og.jpg`,
     },
   ];
 };
