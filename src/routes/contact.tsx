@@ -1,7 +1,14 @@
 import { MetaFunction } from '@remix-run/cloudflare';
 
 export const meta: MetaFunction = () => {
-  return [{ title: 'Contact' }];
+  return [
+    { title: 'Contact' },
+    {
+      name: 'description',
+      content:
+        "If you're writing for a project or to work together, please include as much details as possible (goal, timeline, budget, ...). For everything else, write as you please, I'll be more than happy to reply!",
+    },
+  ];
 };
 
 export default function Contact() {
