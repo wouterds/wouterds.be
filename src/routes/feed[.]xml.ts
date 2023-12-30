@@ -32,7 +32,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
     author: { name: 'Wouter De Schuyter' },
   });
 
-  for (const { slug, title, excerpt, content, date } of posts) {
+  for (const { poster, slug, title, excerpt, content, date } of posts) {
     if (!isStructuredText(content)) {
       continue;
     }
@@ -41,6 +41,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
       title,
       id: `${context.url}/blog/${slug}`,
       link: `${context.url}/blog/${slug}`,
+      image: `${context.url}/images${new URL(poster.url).pathname}`,
       description: excerpt,
       content: render(content as unknown as StructuredTextDocument, {
         renderBlock: ({ record, adapter: { renderNode } }) => {

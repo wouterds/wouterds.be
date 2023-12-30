@@ -4,6 +4,10 @@ query PostsGetAll ($limit: IntType) {
     id
     title
     slug
+    poster {
+      __typename
+      url
+    }
     content {
       __typename
       value
