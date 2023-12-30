@@ -24,7 +24,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
       'My personal blog where I write about software development, fun/side projects, travel, and other random stuff that I find interesting.',
     id: context.url,
     link: context.url,
-    copyright: `&copy; ${new Date().getFullYear()} Wouter De Schuyter`,
+    copyright: `© ${new Date().getFullYear()} Wouter De Schuyter`,
     image: `${context.url}/images/og.jpg`,
     favicon: `${context.url}/favicon.ico`,
     updated: new Date(posts[0].date),
