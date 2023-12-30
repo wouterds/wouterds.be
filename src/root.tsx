@@ -79,7 +79,7 @@ export const meta: MetaFunction<typeof loader> = ({ error, data }) => {
 };
 
 export default function App() {
-  const { ray } = useLoaderData<typeof loader>();
+  const data = useLoaderData<typeof loader>();
 
   return (
     <html lang="en">
@@ -118,7 +118,7 @@ export default function App() {
             <Outlet />
           </main>
 
-          <Footer ray={ray} />
+          <Footer ray={data?.ray} />
         </div>
 
         <ScrollRestoration />
@@ -133,7 +133,7 @@ export default function App() {
 }
 
 export const ErrorBoundary = () => {
-  const { ray } = useLoaderData<typeof loader>();
+  const data = useLoaderData<typeof loader>();
   const error = useRouteError();
 
   return (
@@ -164,7 +164,7 @@ export const ErrorBoundary = () => {
             )}
           </main>
 
-          <Footer ray={ray} />
+          <Footer ray={data?.ray} />
         </div>
 
         <Scripts />
