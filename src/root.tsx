@@ -100,6 +100,12 @@ export default function App() {
           href="/favicon-16x16.png"
         />
         <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="Blog RSS feed for wouterds.be"
+          href={`${data?.url}/feed.xml`}
+        />
         <meta property="og:site_name" content="Wouter De Schuyter" />
         <Meta />
         <Links />
