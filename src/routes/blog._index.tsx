@@ -17,7 +17,14 @@ export const loader = async (args: LoaderFunctionArgs) => {
 };
 
 export const meta: MetaFunction = () => {
-  return [{ title: 'Blog' }];
+  return [
+    { title: 'Blog' },
+    {
+      name: 'description',
+      content:
+        'My personal blog where I write about software development, fun/side projects, travel, and other random stuff that I find interesting.',
+    },
+  ];
 };
 
 export default function Blog() {
