@@ -22,7 +22,7 @@ export const meta: MetaFunction = () => {
     {
       name: 'description',
       content:
-        'My personal blog where I write about software development, fun/side projects, travel, and other random stuff that I find interesting.',
+        'My personal blog where I write about software development, side projects, travel, and other random stuff that I find interesting.',
     },
   ];
 };

@@ -21,7 +21,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
   const feed = new Feed({
     title: 'Blog - Wouter De Schuyter',
     description:
-      'My personal blog where I write about software development, fun/side projects, travel, and other random stuff that I find interesting.',
+      'My personal blog where I write about software development, side projects, travel, and other random stuff that I find interesting.',
     id: context.url,
     link: context.url,
     copyright: `© ${new Date().getFullYear()} Wouter De Schuyter`,
