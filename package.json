@@ -20,6 +20,7 @@
     "@remix-run/css-bundle": "^2.4.1",
     "@remix-run/react": "^2.4.1",
     "date-fns": "^3.0.6",
+    "datocms-structured-text-to-html-string": "^2.1.11",
     "datocms-structured-text-to-plain-text": "^2.0.4",
     "datocms-structured-text-utils": "^2.0.4",
     "feed": "^4.2.2",
