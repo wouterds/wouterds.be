@@ -19,7 +19,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
   const posts = await repository.getPosts();
 
   const feed = new Feed({
-    title: 'Blog - Wouter De Schuyter',
+    title: "Wouter's blog",
     description:
       'My personal blog where I write about software development, side projects, travel, and other random stuff that I find interesting.',
     id: context.url,
