@@ -4,7 +4,6 @@ import { PostRepository } from '~/lib/repositories/post.server';
 
 export const loader = async (args: LoaderFunctionArgs) => {
   const context = args.context as Context;
-
   const repository = new PostRepository(
     context.env.DATOCMS_API_URL,
     context.env.DATOCMS_API_KEY,
@@ -12,18 +11,14 @@ export const loader = async (args: LoaderFunctionArgs) => {
 
   const posts = await repository.getPosts();
 
-  const paths = [
-    '/',
-    '/about',
-    '/blog',
-    '/contact',
-    ...posts.map(({ slug }) => `/blog/${slug}`),
-  ];
-
   let sitemap = '<?xml version="1.0" encoding="UTF-8"?>';
   sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
-  for (const path of paths) {
-    sitemap += `<url><loc>${context.url}${path}</loc></url>`;
+  sitemap += `<url><loc>${context.url}</loc></url>`;
+  sitemap += `<url><loc>${context.url}/about</loc></url>`;
+  sitemap += `<url><loc>${context.url}/blog</loc></url>`;
+  sitemap += `<url><loc>${context.url}/contact</loc></url>`;
+  for (const { slug } of posts) {
+    sitemap += `<url><loc>${context.url}/blog/${slug}</loc></url>`;
   }
   sitemap += '</urlset>';
 
