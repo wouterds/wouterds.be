@@ -4,5 +4,6 @@ declare global {
   export type Context = {
     env: Env;
     url: string;
+    ray: string | null;
   };
 }

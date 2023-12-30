@@ -12,6 +12,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
   useRouteError,
 } from '@remix-run/react';
 import { ExternalScripts } from 'remix-utils/external-scripts';
@@ -29,7 +30,7 @@ export const links: LinksFunction = () => [
 export const loader = (args: LoaderFunctionArgs) => {
   const context = args.context as Context;
 
-  return { url: context.url };
+  return { url: context.url, ray: context.ray };
 };
 
 export const meta: MetaFunction<typeof loader> = ({ error, data }) => {
@@ -78,6 +79,8 @@ export const meta: MetaFunction<typeof loader> = ({ error, data }) => {
 };
 
 export default function App() {
+  const { ray } = useLoaderData<typeof loader>();
+
   return (
     <html lang="en">
       <head>
@@ -109,7 +112,7 @@ export default function App() {
             <Outlet />
           </main>
 
-          <Footer />
+          <Footer ray={ray} />
         </div>
 
         <ScrollRestoration />
@@ -124,6 +127,7 @@ export default function App() {
 }
 
 export const ErrorBoundary = () => {
+  const { ray } = useLoaderData<typeof loader>();
   const error = useRouteError();
 
   return (
@@ -154,7 +158,7 @@ export const ErrorBoundary = () => {
             )}
           </main>
 
-          <Footer />
+          <Footer ray={ray} />
         </div>
 
         <Scripts />

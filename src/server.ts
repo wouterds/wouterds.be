@@ -11,8 +11,9 @@ export const onRequest = createPagesFunctionHandler({
   getLoadContext: ({ env, request }) => {
     const { protocol, host } = new URL(request.url);
     const url = `${protocol}//${host}`;
+    const ray = request.headers.get('cf-ray');
 
-    return { env, url };
+    return { env, url, ray };
   },
   mode: build.mode,
 });
