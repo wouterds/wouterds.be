@@ -51,11 +51,21 @@ export const action = async (args: ActionFunctionArgs) => {
 
   try {
     let TextPart = '';
+    let HTMLPart = '';
     TextPart += `Name: ${name}\n`;
+    HTMLPart += `<p><strong>Name:</strong> ${name}</p>`;
     TextPart += `Email: ${email}\n`;
+    HTMLPart += `<p><strong>Email:</strong> ${email}</p>`;
     TextPart += `Message: ${message}\n\n`;
+    HTMLPart += `<p><strong>Message:</strong></p><p>${message
+      ?.toString()
+      ?.replace(/\n/g, '<br />')}</p>`;
     TextPart += `--\n`;
+    HTMLPart += `<br /><hr style="border-top: 1px solid #ccc" />`;
     TextPart += `IP: ${request.headers.get('CF-Connecting-IP')}\n`;
+    HTMLPart += `<p><strong>IP:</strong> ${request.headers.get(
+      'CF-Connecting-IP',
+    )}</p>`;
     TextPart += `Location: ${
       cf.country === 'T1'
         ? 'Tor Network'
@@ -65,7 +75,17 @@ export const action = async (args: ActionFunctionArgs) => {
             ? `${getCountryName(cf.country, 'en')}, ${cf.postalCode} ${cf.city}`
             : 'Unknown'
     }\n`;
+    HTMLPart += `<p><strong>Location:</strong> ${
+      cf.country === 'T1'
+        ? 'Tor Network'
+        : cf.country === 'XX'
+          ? 'Unknown'
+          : cf.country
+            ? `${getCountryName(cf.country, 'en')}, ${cf.postalCode} ${cf.city}`
+            : 'Unknown'
+    }</p>`;
     TextPart += `Timezone: ${cf.timezone}\n`;
+    HTMLPart += `<p><strong>Timezone:</strong> ${cf.timezone}</p>`;
 
     const response = await fetch(`${context.env.MAILJET_API_URL}/send`, {
       method: 'POST',
@@ -93,6 +113,7 @@ export const action = async (args: ActionFunctionArgs) => {
             },
             Subject: `[Contact] message from ${name}`,
             TextPart,
+            HTMLPart,
           },
         ],
       }),
