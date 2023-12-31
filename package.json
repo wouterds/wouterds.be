@@ -29,6 +29,7 @@
     "feed": "^4.2.2",
     "graphql": "^16.8.1",
     "isbot": "^3.6.8",
+    "posthog-js": "^1.96.1",
     "react": "^18.2.0",
     "react-blurhash": "^0.3.0",
     "react-datocms": "^4.1.3",
