@@ -30,16 +30,17 @@ export const action = async (args: ActionFunctionArgs) => {
   const request = args.request;
   const data = await request.formData();
 
-  const cf = (
-    request as unknown as {
-      cf: {
-        country: string;
-        city: string;
-        postalCode: string;
-        timezone: string;
-      };
-    }
-  )?.cf;
+  const cf =
+    (
+      request as unknown as {
+        cf: {
+          country: string;
+          city: string;
+          postalCode: string;
+          timezone: string;
+        };
+      }
+    )?.cf || {};
 
   const name = data.get('name');
   const email = data.get('email');
@@ -53,39 +54,42 @@ export const action = async (args: ActionFunctionArgs) => {
     let TextPart = '';
     let HTMLPart = '';
     TextPart += `Name: ${name}\n`;
-    HTMLPart += `<p><strong>Name:</strong> ${name}</p>`;
     TextPart += `Email: ${email}\n`;
-    HTMLPart += `<p><strong>Email:</strong> ${email}</p>`;
     TextPart += `Message: ${message}\n\n`;
-    HTMLPart += `<p><strong>Message:</strong></p><p>${message
-      ?.toString()
-      ?.replace(/\n/g, '<br />')}</p>`;
+    HTMLPart += `<p>`;
+    HTMLPart += `<strong>Name:</strong> ${name}<br />`;
+    HTMLPart += `<strong>Email:</strong> ${email}<br />`;
+    HTMLPart += `<strong>Message:</strong>`;
+    HTMLPart += `</p>`;
+    HTMLPart += `<p>${message?.toString()?.replace(/\n/g, '<br />')}</p>`;
     TextPart += `--\n`;
-    HTMLPart += `<br /><hr style="border-top: 1px solid #ccc" />`;
-    TextPart += `IP: ${request.headers.get('CF-Connecting-IP')}\n`;
-    HTMLPart += `<p><strong>IP:</strong> ${request.headers.get(
-      'CF-Connecting-IP',
-    )}</p>`;
+    HTMLPart += `<br /><hr />`;
+    TextPart += `IP: ${request.headers.get('CF-Connecting-IP') || 'unknown'}\n`;
     TextPart += `Location: ${
       cf.country === 'T1'
         ? 'Tor Network'
         : cf.country === 'XX'
-          ? 'Unknown'
+          ? 'unknown'
           : cf.country
             ? `${getCountryName(cf.country, 'en')}, ${cf.postalCode} ${cf.city}`
-            : 'Unknown'
+            : 'unknown'
     }\n`;
-    HTMLPart += `<p><strong>Location:</strong> ${
+    TextPart += `Timezone: ${cf.timezone || 'unknown'}\n`;
+    HTMLPart += `<p>`;
+    HTMLPart += `<strong>IP:</strong> ${
+      request.headers.get('CF-Connecting-IP') || 'unknown'
+    }, `;
+    HTMLPart += `<strong>location:</strong> ${
       cf.country === 'T1'
         ? 'Tor Network'
         : cf.country === 'XX'
-          ? 'Unknown'
+          ? 'unknown'
           : cf.country
             ? `${getCountryName(cf.country, 'en')}, ${cf.postalCode} ${cf.city}`
-            : 'Unknown'
-    }</p>`;
-    TextPart += `Timezone: ${cf.timezone}\n`;
-    HTMLPart += `<p><strong>Timezone:</strong> ${cf.timezone}</p>`;
+            : 'unknown'
+    }, `;
+    HTMLPart += `<strong>timezone:</strong> ${cf.timezone || 'unknown'}`;
+    HTMLPart += `</p>`;
 
     const response = await fetch(`${context.env.MAILJET_API_URL}/send`, {
       method: 'POST',
@@ -120,6 +124,7 @@ export const action = async (args: ActionFunctionArgs) => {
     });
 
     if (!response.ok) {
+      console.error(response);
       return new Response('Failed to send email', { status: 500 });
     }
 
