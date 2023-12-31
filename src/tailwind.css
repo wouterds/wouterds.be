@@ -30,7 +30,7 @@ textarea {
   @apply focus:outline-none;
   @apply p-2;
   @apply bg-zinc-50 dark:bg-zinc-800;
-  @apply border-b border-dotted border-zinc-600 dark:border-zinc-400;
+  @apply border-b border-dotted border-zinc-800 dark:border-zinc-200;
   @apply focus:border-solid;
 }
 

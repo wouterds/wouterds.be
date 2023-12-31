@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ActionFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
-import { useFetcher } from '@remix-run/react';
+import { ActionFunctionArgs, json, MetaFunction } from '@remix-run/cloudflare';
+import { Form, useActionData } from '@remix-run/react';
 import { getName as getCountryName } from 'country-list';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -13,6 +13,8 @@ const schema = z.object({
       'Oops, it seems your message is rather short. To better understand your needs, please provide a more detailed message. Feel free to include as much details as possible!',
   }),
 });
+
+type Schema = z.infer<typeof schema>;
 
 export const meta: MetaFunction = () => {
   return [
@@ -28,38 +30,39 @@ export const meta: MetaFunction = () => {
 export const action = async (args: ActionFunctionArgs) => {
   const context = args.context as Context;
   const request = args.request;
-  const data = await request.formData();
-
-  const name = data.get('name');
-  const email = data.get('email');
-  const message = data.get('message');
+  const data = Object.fromEntries(await request.formData()) as Schema;
   const countryCode = request.headers.get('CF-IPCountry') as string;
 
-  if (!name || !email || !message) {
-    return new Response('Missing data', { status: 400 });
+  try {
+    schema.parse(data);
+  } catch {
+    return json({ success: false }, { status: 400 });
   }
 
   try {
     let TextPart = '';
-    let HTMLPart = '';
-    TextPart += `Name: ${name}\n`;
-    TextPart += `Email: ${email}\n`;
-    TextPart += `Message: ${message}\n\n`;
-    HTMLPart += `<p>`;
-    HTMLPart += `<strong>Name:</strong> ${name}<br />`;
-    HTMLPart += `<strong>Email:</strong> ${email}<br />`;
-    HTMLPart += `<strong>Message:</strong>`;
-    HTMLPart += `</p>`;
-    HTMLPart += `<p>${message?.toString()?.replace(/\n/g, '<br />')}</p>`;
+    TextPart += `Name: ${data.name}\n`;
+    TextPart += `Email: ${data.email}\n`;
+    TextPart += `Message: ${data.message}\n\n`;
     TextPart += `--\n`;
-    HTMLPart += `<hr />`;
     TextPart += `IP: ${
       request.headers.get('CF-Connecting-IP') || 'unknown'
-    }, location: ${getCountryName(countryCode) || countryCode}\n`;
+    }, location: ${
+      countryCode ? getCountryName(countryCode) : 'unknown' || countryCode
+    }\n`;
+
+    let HTMLPart = '';
+    HTMLPart += `<p>`;
+    HTMLPart += `<strong>Name:</strong> ${data.name}<br />`;
+    HTMLPart += `<strong>Email:</strong> ${data.email}<br />`;
+    HTMLPart += `<strong>Message:</strong>`;
+    HTMLPart += `</p>`;
+    HTMLPart += `<p>${data.message.replace(/\n/g, '<br />')}</p>`;
+    HTMLPart += `<hr />`;
     HTMLPart += `<p><strong>IP:</strong> ${
       request.headers.get('CF-Connecting-IP') || 'unknown'
     }, <strong>location:</strong> ${
-      getCountryName(countryCode) || countryCode
+      countryCode ? getCountryName(countryCode) : 'unknown' || countryCode
     }</p>`;
 
     const response = await fetch(`${context.env.MAILJET_API_URL}/send`, {
@@ -83,10 +86,10 @@ export const action = async (args: ActionFunctionArgs) => {
               },
             ],
             ReplyTo: {
-              Email: email as string,
-              Name: name as string,
+              Email: data.email,
+              Name: data.name,
             },
-            Subject: `[Contact] New message from ${name}!`,
+            Subject: `[Contact] New message from ${data.name}!`,
             TextPart,
             HTMLPart,
           },
@@ -95,26 +98,33 @@ export const action = async (args: ActionFunctionArgs) => {
     });
 
     if (!response.ok) {
-      console.error(response);
-      return new Response('Failed to send email', { status: 500 });
+      return json({ success: false }, { status: 500 });
     }
 
-    return new Response('ok', { status: 200 });
-  } catch (e) {
-    console.error(e);
-    return new Response('Failed to send email', { status: 500 });
+    return json({ success: true });
+  } catch {
+    return json({ success: false }, { status: 500 });
   }
 };
 
 export default function Contact() {
+  const data = useActionData<typeof action>();
+  const success = data?.success;
+
   const {
     register,
+    formState: { errors, isValid },
     handleSubmit,
-    formState: { errors },
   } = useForm({ resolver: zodResolver(schema) });
 
-  const fetcher = useFetcher();
-  console.log(fetcher.state);
+  if (success) {
+    return (
+      <p className="text-green-700 dark:text-green-400">
+        Your message has been sent, I&apos;ll get back to you as soon as
+        possible!
+      </p>
+    );
+  }
 
   return (
     <>
@@ -124,12 +134,13 @@ export default function Contact() {
         everything else, write as you please, I&apos;ll be more than happy to
         reply!
       </p>
-      <fetcher.Form
+      <Form
         className="flex flex-col gap-4 mt-6"
+        action="/contact"
         method="post"
-        onSubmit={handleSubmit((data) => {
-          fetcher.submit(data, { method: 'POST' });
-        })}
+        onSubmit={
+          isValid ? undefined : handleSubmit((data) => console.log(data))
+        }
         style={{ maxWidth: '640px' }}>
         <div className="flex gap-4 flex-col sm:flex-row">
           <div className="flex-1">
@@ -189,7 +200,12 @@ export default function Contact() {
         <div>
           <button type="submit">Submit</button>
         </div>
-      </fetcher.Form>
+        {typeof success === 'boolean' && !success && (
+          <p className="text-red-600 dark:text-red-400 mt-2">
+            Something went wrong, please try again later.
+          </p>
+        )}
+      </Form>
     </>
   );
 }
