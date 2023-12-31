@@ -42,6 +42,9 @@ export const action = async (args: ActionFunctionArgs) => {
       }
     )?.cf || {};
 
+  console.log(request);
+  console.log({ cf });
+
   const name = data.get('name');
   const email = data.get('email');
   const message = data.get('message');
