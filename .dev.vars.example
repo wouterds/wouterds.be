@@ -1,2 +1,5 @@
-DATOCMS_API_URL=https://graphql.datocms.com/
+DATOCMS_API_URL=https://graphql.datocms.com
 DATOCMS_API_KEY=
+MAILJET_API_URL=https://api.mailjet.com/v3.1
+MAILJET_API_KEY=
+MAILJET_API_SECRET=
