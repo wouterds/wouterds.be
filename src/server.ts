@@ -13,7 +13,7 @@ export const onRequest = createPagesFunctionHandler({
     const url = `${protocol}//${host}`;
     const rayId = request.headers.get('cf-ray');
     const colo = (request as unknown as { cf: { colo: string } })?.cf?.colo;
-    const ray = rayId ? `${colo}-${rayId}` : rayId || colo;
+    const ray = rayId ? `${rayId}-${colo}` : rayId || colo;
 
     return { env, url, ray };
   },
