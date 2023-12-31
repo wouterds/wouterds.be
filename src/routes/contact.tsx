@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ActionFunctionArgs, json, MetaFunction } from '@remix-run/cloudflare';
 import { Form, useActionData } from '@remix-run/react';
 import { getName as getCountryName } from 'country-list';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
@@ -115,7 +116,14 @@ export default function Contact() {
     register,
     formState: { errors, isValid },
     handleSubmit,
+    reset,
   } = useForm({ resolver: zodResolver(schema) });
+
+  useEffect(() => {
+    if (success) {
+      reset();
+    }
+  }, [reset, success]);
 
   if (success) {
     return (
