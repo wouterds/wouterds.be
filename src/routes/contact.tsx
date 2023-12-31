@@ -253,11 +253,11 @@ export default function Contact() {
           <button type="submit">Submit</button>
         </div>
         {typeof success === 'boolean' && !success && (
-          <p className="text-red-600 dark:text-red-400 mt-2">
+          <p className="text-red-600 dark:text-red-400 mt-2 mb-4">
             Something went wrong, please try again later.
           </p>
         )}
-        <div className="mt-4">
+        <div className="mt-2">
           <div
             className="cf-turnstile"
             data-sitekey={CLOUDFLARE_TURNSTILE_KEY}
