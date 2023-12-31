@@ -17,6 +17,7 @@ import {
 } from '@remix-run/react';
 import { posthog } from 'posthog-js';
 import { useEffect, useRef } from 'react';
+import { ExternalScripts } from 'remix-utils/external-scripts';
 
 import stylesheet from '~/tailwind.css';
 
@@ -157,6 +158,7 @@ export default function App() {
 
         <ScrollRestoration />
         <Scripts />
+        <ExternalScripts />
         <LiveReload />
 
         <div id="modal-portal" />
