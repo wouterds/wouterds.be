@@ -1,9 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ActionFunctionArgs, json, MetaFunction } from '@remix-run/cloudflare';
-import { Form, useActionData } from '@remix-run/react';
+import {
+  ActionFunctionArgs,
+  json,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from '@remix-run/cloudflare';
+import { Form, useActionData, useLoaderData } from '@remix-run/react';
 import { getName as getCountryName } from 'country-list';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { ExternalScriptsFunction } from 'remix-utils/external-scripts';
 import * as z from 'zod';
 
 const schema = z.object({
@@ -16,6 +22,14 @@ const schema = z.object({
 });
 
 type Schema = z.infer<typeof schema>;
+
+export const loader = (args: LoaderFunctionArgs) => {
+  const context = args.context as Context;
+
+  return {
+    CLOUDFLARE_TURNSTILE_KEY: context.env.CLOUDFLARE_TURNSTILE_KEY,
+  };
+};
 
 export const meta: MetaFunction = () => {
   return [
@@ -31,8 +45,29 @@ export const meta: MetaFunction = () => {
 export const action = async (args: ActionFunctionArgs) => {
   const context = args.context as Context;
   const request = args.request;
-  const data = Object.fromEntries(await request.formData()) as Schema;
-  const countryCode = request.headers.get('CF-IPCountry') as string;
+
+  const form = await request.formData();
+  const ip = request.headers.get('CF-Connecting-IP') as string;
+  const country = request.headers.get('CF-IPCountry') as string;
+  const token = form.get('cf-turnstile-response')?.toString();
+
+  const payload = new FormData();
+  payload.append('secret', context.env.CLOUDFLARE_TURNSTILE_SECRET);
+  payload.append('response', token!);
+  payload.append('remoteip', ip);
+
+  const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+  const response = await fetch(url, {
+    body: payload,
+    method: 'POST',
+  });
+
+  const { success } = await response.json<{ success: boolean }>();
+  if (!success) {
+    return json({ success: false }, { status: 400 });
+  }
+
+  const data = Object.fromEntries(form) as Schema;
 
   try {
     schema.parse(data);
@@ -46,10 +81,8 @@ export const action = async (args: ActionFunctionArgs) => {
     TextPart += `Email: ${data.email}\n`;
     TextPart += `Message: ${data.message}\n\n`;
     TextPart += `--\n`;
-    TextPart += `IP: ${
-      request.headers.get('CF-Connecting-IP') || 'unknown'
-    }, location: ${
-      countryCode ? getCountryName(countryCode) : 'unknown' || countryCode
+    TextPart += `IP: ${ip || 'unknown'}, location: ${
+      country ? getCountryName(country) : 'unknown' || country
     }\n`;
 
     let HTMLPart = '';
@@ -61,9 +94,9 @@ export const action = async (args: ActionFunctionArgs) => {
     HTMLPart += `<p>${data.message.replace(/\n/g, '<br />')}</p>`;
     HTMLPart += `<hr />`;
     HTMLPart += `<p><strong>IP:</strong> ${
-      request.headers.get('CF-Connecting-IP') || 'unknown'
+      ip || 'unknown'
     }, <strong>location:</strong> ${
-      countryCode ? getCountryName(countryCode) : 'unknown' || countryCode
+      country ? getCountryName(country) : 'unknown' || country
     }</p>`;
 
     const response = await fetch(`${context.env.MAILJET_API_URL}/send`, {
@@ -108,7 +141,18 @@ export const action = async (args: ActionFunctionArgs) => {
   }
 };
 
+export const handle: { scripts: ExternalScriptsFunction } = {
+  scripts: () => [
+    {
+      src: 'https://challenges.cloudflare.com/turnstile/v0/api.js',
+      async: true,
+      defer: true,
+    },
+  ],
+};
+
 export default function Contact() {
+  const { CLOUDFLARE_TURNSTILE_KEY } = useLoaderData<typeof loader>();
   const data = useActionData<typeof action>();
   const success = data?.success;
 
@@ -213,6 +257,12 @@ export default function Contact() {
             Something went wrong, please try again later.
           </p>
         )}
+        <div className="mt-4">
+          <div
+            className="cf-turnstile"
+            data-sitekey={CLOUDFLARE_TURNSTILE_KEY}
+          />
+        </div>
       </Form>
     </>
   );

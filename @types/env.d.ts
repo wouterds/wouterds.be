@@ -4,4 +4,6 @@ export type Env = {
   MAILJET_API_URL: string;
   MAILJET_API_KEY: string;
   MAILJET_API_SECRET: string;
+  CLOUDFLARE_TURNSTILE_KEY: string;
+  CLOUDFLARE_TURNSTILE_SECRET: string;
 };
