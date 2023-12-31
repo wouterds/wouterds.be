@@ -143,7 +143,6 @@ export default function App() {
 }
 
 export const ErrorBoundary = () => {
-  const data = useLoaderData<typeof loader>();
   const error = useRouteError();
 
   return (
@@ -174,7 +173,7 @@ export const ErrorBoundary = () => {
             )}
           </main>
 
-          <Footer ray={data?.ray} />
+          <Footer />
         </div>
 
         <Scripts />
