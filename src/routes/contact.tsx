@@ -1,4 +1,19 @@
-import { MetaFunction } from '@remix-run/cloudflare';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ActionFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
+import { useFetcher } from '@remix-run/react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+
+const schema = z.object({
+  name: z.string().min(8, { message: 'Please enter your full name.' }),
+  email: z.string().email({ message: 'Please enter a valid email address.' }),
+  message: z.string().min(48, {
+    message:
+      'Oops, it seems your message is rather short. To better understand your needs, please provide a more detailed message. Feel free to include as much details as possible!',
+  }),
+});
+
+type Schema = z.infer<typeof schema>;
 
 export const meta: MetaFunction = () => {
   return [
@@ -11,7 +26,72 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+export const action = async (args: ActionFunctionArgs) => {
+  const context = args.context as Context;
+  const request = args.request;
+  const data = await request.formData();
+
+  const name = data.get('name');
+  const email = data.get('email');
+  const message = data.get('message');
+
+  if (!name || !email || !message) {
+    return new Response('Missing data', { status: 400 });
+  }
+
+  try {
+    const response = await fetch(`${context.env.MAILJET_API_URL}/send`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Basic ${btoa(
+          `${context.env.MAILJET_API_KEY}:${context.env.MAILJET_API_SECRET}`,
+        )}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        Messages: [
+          {
+            From: {
+              Email: 'noreply@wouterds.be',
+            },
+            To: [
+              {
+                Email: 'wouter.de.schuyter@gmail.com',
+                Name: 'Wouter De Schuyter',
+              },
+            ],
+            ReplyTo: {
+              Email: email as string,
+              Name: name as string,
+            },
+            Subject: `[Contact] message from ${name}`,
+            TextPart: message as string,
+          },
+        ],
+      }),
+    });
+
+    if (!response.ok) {
+      return new Response('Failed to send email', { status: 500 });
+    }
+
+    return new Response('ok', { status: 200 });
+  } catch (e) {
+    console.error(e);
+    return new Response('Failed to send email', { status: 500 });
+  }
+};
+
 export default function Contact() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: zodResolver(schema) });
+
+  const fetcher = useFetcher();
+  console.log(fetcher.state);
+
   return (
     <>
       <p className="mb-4">
@@ -20,10 +100,12 @@ export default function Contact() {
         everything else, write as you please, I&apos;ll be more than happy to
         reply!
       </p>
-      <form
-        action=""
+      <fetcher.Form
+        className="flex flex-col gap-4 mt-6"
         method="post"
-        className="flex flex-col gap-4"
+        onSubmit={handleSubmit((data) => {
+          fetcher.submit(data, { method: 'POST' });
+        })}
         style={{ maxWidth: '640px' }}>
         <div className="flex gap-4 flex-col sm:flex-row">
           <div className="flex-1">
@@ -31,24 +113,36 @@ export default function Contact() {
               Name
             </label>
             <input
-              className="block px-2 py-1.5 border border-gray-300 rounded-sm"
               type="text"
-              name="name"
               id="name"
-              required
+              {...register('name')}
+              className={
+                errors.name ? 'border-red-600 dark:border-red-400' : undefined
+              }
             />
+            {errors.name?.message && (
+              <p className="text-red-600 dark:text-red-400 mt-1.5">
+                {errors.name?.message as string}
+              </p>
+            )}
           </div>
           <div className="flex-1">
             <label className="font-semibold inline-block mb-1" htmlFor="email">
               Email
             </label>
             <input
-              className="block px-2 py-1.5 border border-gray-300 rounded-sm"
-              type="email"
-              name="email"
+              type="text"
               id="email"
-              required
+              {...register('email')}
+              className={
+                errors.email ? 'border-red-600 dark:border-red-400' : undefined
+              }
             />
+            {errors.email?.message && (
+              <p className="text-red-600 dark:text-red-400 mt-1.5">
+                {errors.email?.message as string}
+              </p>
+            )}
           </div>
         </div>
         <div>
@@ -56,20 +150,22 @@ export default function Contact() {
             Message
           </label>
           <textarea
-            className="block px-2 py-1.5 border border-gray-300 rounded-sm"
-            name="message"
             id="message"
-            required
+            {...register('message')}
+            className={
+              errors.message ? 'border-red-600 dark:border-red-400' : undefined
+            }
           />
+          {errors.message?.message && (
+            <p className="text-red-600 dark:text-red-400 mt-1.5">
+              {errors.message?.message as string}
+            </p>
+          )}
         </div>
         <div>
-          <button
-            className="inline-block px-4 py-1.5 bg-gray-900 hover:bg-black text-white font-semibold rounded-sm"
-            type="submit">
-            Submit
-          </button>
+          <button type="submit">Submit</button>
         </div>
-      </form>
+      </fetcher.Form>
     </>
   );
 }
