@@ -30,15 +30,20 @@ export const action = async (args: ActionFunctionArgs) => {
   const request = args.request;
   const data = await request.formData();
 
-  console.log(request);
+  const cf = (
+    request as unknown as {
+      cf: {
+        country: string;
+        city: string;
+        postalCode: string;
+        timezone: string;
+      };
+    }
+  )?.cf;
 
   const name = data.get('name');
   const email = data.get('email');
   const message = data.get('message');
-  const country = getCountryName(
-    request.headers.get('CF-IPCountry') as string,
-    'en',
-  );
 
   if (!name || !email || !message) {
     return new Response('Missing data', { status: 400 });
@@ -51,9 +56,16 @@ export const action = async (args: ActionFunctionArgs) => {
     TextPart += `Message: ${message}\n\n`;
     TextPart += `--\n`;
     TextPart += `IP: ${request.headers.get('CF-Connecting-IP')}\n`;
-    TextPart += `Country: ${
-      country || country === 'T1' ? 'TOR Network' : 'Unknown'
+    TextPart += `Location: ${
+      cf.country === 'T1'
+        ? 'Tor Network'
+        : cf.country === 'XX'
+          ? 'Unknown'
+          : cf.country
+            ? `${getCountryName(cf.country, 'en')}, ${cf.postalCode} ${cf.city}`
+            : 'Unknown'
     }\n`;
+    TextPart += `Timezone: ${cf.timezone}\n`;
 
     const response = await fetch(`${context.env.MAILJET_API_URL}/send`, {
       method: 'POST',
