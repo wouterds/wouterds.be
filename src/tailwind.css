@@ -23,3 +23,13 @@ a {
 pre {
   @apply !bg-zinc-100 dark:!bg-zinc-800;
 }
+
+input,
+textarea {
+  @apply w-full;
+  @apply focus:outline-1;
+}
+
+textarea {
+  @apply h-32;
+}
