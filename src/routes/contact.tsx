@@ -30,24 +30,10 @@ export const action = async (args: ActionFunctionArgs) => {
   const request = args.request;
   const data = await request.formData();
 
-  const cf =
-    (
-      request as unknown as {
-        cf: {
-          country: string;
-          city: string;
-          postalCode: string;
-          timezone: string;
-        };
-      }
-    )?.cf || {};
-
-  console.log(request);
-  console.log({ cf });
-
   const name = data.get('name');
   const email = data.get('email');
   const message = data.get('message');
+  const countryCode = request.headers.get('CF-IPCountry') as string;
 
   if (!name || !email || !message) {
     return new Response('Missing data', { status: 400 });
@@ -66,32 +52,18 @@ export const action = async (args: ActionFunctionArgs) => {
     HTMLPart += `</p>`;
     HTMLPart += `<p>${message?.toString()?.replace(/\n/g, '<br />')}</p>`;
     TextPart += `--\n`;
-    HTMLPart += `<br /><hr />`;
+    HTMLPart += `<hr />`;
     TextPart += `IP: ${request.headers.get('CF-Connecting-IP') || 'unknown'}\n`;
-    TextPart += `Location: ${
-      cf.country === 'T1'
-        ? 'Tor Network'
-        : cf.country === 'XX'
-          ? 'unknown'
-          : cf.country
-            ? `${getCountryName(cf.country, 'en')}, ${cf.postalCode} ${cf.city}`
-            : 'unknown'
+    TextPart += `Country: ${
+      getCountryName(countryCode, 'en') || countryCode
     }\n`;
-    TextPart += `Timezone: ${cf.timezone || 'unknown'}\n`;
     HTMLPart += `<p>`;
     HTMLPart += `<strong>IP:</strong> ${
       request.headers.get('CF-Connecting-IP') || 'unknown'
     }, `;
     HTMLPart += `<strong>location:</strong> ${
-      cf.country === 'T1'
-        ? 'Tor Network'
-        : cf.country === 'XX'
-          ? 'unknown'
-          : cf.country
-            ? `${getCountryName(cf.country, 'en')}, ${cf.postalCode} ${cf.city}`
-            : 'unknown'
+      getCountryName(countryCode, 'en') || countryCode
     }, `;
-    HTMLPart += `<strong>timezone:</strong> ${cf.timezone || 'unknown'}`;
     HTMLPart += `</p>`;
 
     const response = await fetch(`${context.env.MAILJET_API_URL}/send`, {
