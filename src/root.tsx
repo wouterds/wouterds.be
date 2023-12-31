@@ -161,11 +161,13 @@ export default function App() {
 
         <div id="modal-portal" />
 
-        <script
-          defer
-          src="https://static.cloudflareinsights.com/beacon.min.js"
-          data-cf-beacon='{"token": "7316ff9489bb4ad5977fa6f3e4981db1"}'
-        />
+        {!data?.url?.includes('localhost') && (
+          <script
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon='{"token": "7316ff9489bb4ad5977fa6f3e4981db1"}'
+          />
+        )}
       </body>
     </html>
   );
