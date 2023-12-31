@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ActionFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useFetcher } from '@remix-run/react';
+import { getName as getCountryName } from 'i18n-iso-countries';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
@@ -12,8 +13,6 @@ const schema = z.object({
       'Oops, it seems your message is rather short. To better understand your needs, please provide a more detailed message. Feel free to include as much details as possible!',
   }),
 });
-
-type Schema = z.infer<typeof schema>;
 
 export const meta: MetaFunction = () => {
   return [
@@ -31,15 +30,31 @@ export const action = async (args: ActionFunctionArgs) => {
   const request = args.request;
   const data = await request.formData();
 
+  console.log(request);
+
   const name = data.get('name');
   const email = data.get('email');
   const message = data.get('message');
+  const country = getCountryName(
+    request.headers.get('CF-IPCountry') as string,
+    'en',
+  );
 
   if (!name || !email || !message) {
     return new Response('Missing data', { status: 400 });
   }
 
   try {
+    let TextPart = '';
+    TextPart += `Name: ${name}\n`;
+    TextPart += `Email: ${email}\n`;
+    TextPart += `Message: ${message}\n\n`;
+    TextPart += `--\n`;
+    TextPart += `IP: ${request.headers.get('CF-Connecting-IP')}\n`;
+    TextPart += `Country: ${
+      country || country === 'T1' ? 'TOR Network' : 'Unknown'
+    }\n`;
+
     const response = await fetch(`${context.env.MAILJET_API_URL}/send`, {
       method: 'POST',
       headers: {
@@ -65,7 +80,7 @@ export const action = async (args: ActionFunctionArgs) => {
               Name: name as string,
             },
             Subject: `[Contact] message from ${name}`,
-            TextPart: message as string,
+            TextPart,
           },
         ],
       }),
