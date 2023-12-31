@@ -24,12 +24,12 @@ export default function Index() {
       <header className="text-center mb-14">
         <div className="relative overflow-hidden rounded-full w-32 h-32 mx-auto mb-4 bg-zinc-100 dark:bg-zinc-800 dark:bg-opacity-50">
           <img
-            src="/images/wouterds-2024-spectrum.jpg"
+            src="/images/wouterds-2024.jpg"
             alt="Headshot of Wouter De Schuyter"
             className="position absolute inset-0 w-full h-full"
           />
           <img
-            src="/images/wouterds-2024.jpg"
+            src="/images/wouterds-2024-spectrum.jpg"
             alt="Headshot of Wouter De Schuyter"
             className="position absolute inset-0 w-full h-full opacity-0 hover:opacity-100"
           />
