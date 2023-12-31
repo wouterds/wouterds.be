@@ -111,7 +111,7 @@ export const action = async (args: ActionFunctionArgs) => {
               Email: email as string,
               Name: name as string,
             },
-            Subject: `[Contact] message from ${name}`,
+            Subject: `[Contact] New message from ${name}!`,
             TextPart,
             HTMLPart,
           },
