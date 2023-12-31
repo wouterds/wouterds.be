@@ -12,11 +12,11 @@ type AranetEntry = {
 };
 
 export const action = async (args: ActionFunctionArgs) => {
-  const params = args.params;
   const request = args.request;
   const context = args.context as Context;
 
-  if (params.token !== context.env.ARANET_AUTH_TOKEN) {
+  const query = new URL(request.url).searchParams;
+  if (query.get('token') !== context.env.ARANET_AUTH_TOKEN) {
     return json({ success: false }, { status: 403 });
   }
 
