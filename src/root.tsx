@@ -29,8 +29,11 @@ export const links: LinksFunction = () => [
 
 export const loader = (args: LoaderFunctionArgs) => {
   const context = args.context as Context;
+  const url = context.url;
+  const location = new URL(args.request.url);
+  const canonical = new URL(location.pathname, url).href;
 
-  return { url: context.url, ray: context.ray };
+  return { url: context.url, ray: context.ray, canonical };
 };
 
 export const meta: MetaFunction<typeof loader> = ({ error, data }) => {
@@ -109,6 +112,7 @@ export default function App() {
         <meta property="og:site_name" content="Wouter De Schuyter" />
         <Meta />
         <Links />
+        {data?.canonical && <link rel="canonical" href={data?.canonical} />}
         <script
           dangerouslySetInnerHTML={{
             __html:
