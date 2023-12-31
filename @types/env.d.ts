@@ -6,4 +6,6 @@ export type Env = {
   MAILJET_API_SECRET: string;
   CLOUDFLARE_TURNSTILE_KEY: string;
   CLOUDFLARE_TURNSTILE_SECRET: string;
+  POSTHOG_HOST: string;
+  POSTHOG_API_KEY: string;
 };

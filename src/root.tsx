@@ -15,6 +15,8 @@ import {
   useLoaderData,
   useRouteError,
 } from '@remix-run/react';
+import { posthog } from 'posthog-js';
+import { useEffect, useRef } from 'react';
 
 import stylesheet from '~/tailwind.css';
 
@@ -32,7 +34,15 @@ export const loader = (args: LoaderFunctionArgs) => {
   const location = new URL(args.request.url);
   const canonical = new URL(location.pathname, url).href;
 
-  return { url: context.url, ray: context.ray, canonical };
+  return {
+    url: context.url,
+    ray: context.ray,
+    canonical,
+    posthog: {
+      host: context.env.POSTHOG_HOST,
+      apiKey: context.env.POSTHOG_API_KEY,
+    },
+  };
 };
 
 export const meta: MetaFunction<typeof loader> = ({ error, data }) => {
@@ -82,6 +92,27 @@ export const meta: MetaFunction<typeof loader> = ({ error, data }) => {
 
 export default function App() {
   const data = useLoaderData<typeof loader>();
+  const posthogInitialized = useRef(false);
+
+  useEffect(() => {
+    if (posthogInitialized.current) {
+      return;
+    }
+
+    posthog.init(data.posthog.apiKey, {
+      api_host: data.posthog.host,
+      loaded: (posthog) => {
+        posthogInitialized.current = true;
+
+        if (
+          location?.hostname === 'localhost' ||
+          location?.hostname === '127.0.0.1'
+        ) {
+          posthog.opt_out_capturing();
+        }
+      },
+    });
+  }, [data.posthog.apiKey, data.posthog.host]);
 
   return (
     <html lang="en">
