@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ActionFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useFetcher } from '@remix-run/react';
-import { getName as getCountryName } from 'i18n-iso-countries';
+import { getName as getCountryName } from 'country-list';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
@@ -53,18 +53,14 @@ export const action = async (args: ActionFunctionArgs) => {
     HTMLPart += `<p>${message?.toString()?.replace(/\n/g, '<br />')}</p>`;
     TextPart += `--\n`;
     HTMLPart += `<hr />`;
-    TextPart += `IP: ${request.headers.get('CF-Connecting-IP') || 'unknown'}\n`;
-    TextPart += `Country: ${
-      getCountryName(countryCode, 'en') || countryCode
-    }\n`;
-    HTMLPart += `<p>`;
-    HTMLPart += `<strong>IP:</strong> ${
+    TextPart += `IP: ${
       request.headers.get('CF-Connecting-IP') || 'unknown'
-    }, `;
-    HTMLPart += `<strong>location:</strong> ${
-      getCountryName(countryCode, 'en') || countryCode
-    }, `;
-    HTMLPart += `</p>`;
+    }, location: ${getCountryName(countryCode) || countryCode}\n`;
+    HTMLPart += `<p><strong>IP:</strong> ${
+      request.headers.get('CF-Connecting-IP') || 'unknown'
+    }, <strong>location:</strong> ${
+      getCountryName(countryCode) || countryCode
+    }</p>`;
 
     const response = await fetch(`${context.env.MAILJET_API_URL}/send`, {
       method: 'POST',
