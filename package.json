@@ -20,6 +20,8 @@
     "@remix-run/cloudflare-pages": "^2.4.1",
     "@remix-run/css-bundle": "^2.4.1",
     "@remix-run/react": "^2.4.1",
+    "@types/country-list": "^2.1.4",
+    "country-list": "^2.3.0",
     "date-fns": "^3.0.6",
     "datocms-structured-text-to-html-string": "^2.1.11",
     "datocms-structured-text-to-plain-text": "^2.0.4",
