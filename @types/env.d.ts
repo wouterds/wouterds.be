@@ -8,4 +8,5 @@ export type Env = {
   CLOUDFLARE_TURNSTILE_SECRET: string;
   POSTHOG_HOST: string;
   POSTHOG_API_KEY: string;
+  WOUTERDSBE: KVNamespace;
 };

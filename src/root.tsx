@@ -29,13 +29,14 @@ export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesheet },
 ];
 
-export const loader = (args: LoaderFunctionArgs) => {
+export const loader = async (args: LoaderFunctionArgs) => {
   const context = args.context as Context;
   const url = context.url;
   const location = new URL(args.request.url);
   const canonical = new URL(location.pathname, url).href;
 
   return {
+    kbdb: await context.env.WOUTERDSBE.list(),
     url: context.url,
     ray: context.ray,
     canonical,
@@ -94,6 +95,8 @@ export const meta: MetaFunction<typeof loader> = ({ error, data }) => {
 export default function App() {
   const data = useLoaderData<typeof loader>();
   const posthogInitialized = useRef(false);
+
+  console.log({ data });
 
   useEffect(() => {
     if (posthogInitialized.current) {
