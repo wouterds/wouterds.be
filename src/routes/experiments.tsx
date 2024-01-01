@@ -38,7 +38,7 @@ export default function Experiments() {
       <p className="mb-4">
         Once a minute a Raspberry Pi pushes{' '}
         <a className="underline" href="https://aranet.com/products/aranet4">
-          aranet4
+          Aranet4
         </a>{' '}
         readings to{' '}
         <a className="underline" href="https://developers.cloudflare.com/kv/">
