@@ -34,35 +34,37 @@ export default function Experiments() {
         here!
       </p>
       <h2 className="text-lg font-medium mb-2">Lastest Aranet readings</h2>
-      <ul className="gap-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6">
-        <li className="border border-black dark:border-white text-center py-2 px-4 flex-1">
-          <div className="text-sm font-semibold mb-1">{lastRecord.co2}</div>
+      <p className="mb-4">
+        Once a minute a Raspberry Pi pushes{' '}
+        <a href="https://aranet.com/products/aranet4">aranet4</a> readings to{' '}
+        <a href="https://developers.cloudflare.com/kv/">
+          Cloudflare Workers KV
+        </a>
+        which you can view here.
+      </p>
+      <ul className="gap-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6">
+        <li className="border border-black dark:border-white text-center py-1.5 px-3 flex-1">
+          <div className="text-sm font-semibold">{lastRecord.co2}</div>
           <div className="font-medium">co2</div>
         </li>
-        <li className="border border-black dark:border-white text-center py-2 px-4 flex-1">
-          <div className="text-sm font-semibold mb-1">
-            {lastRecord.temperature}
-          </div>
+        <li className="border border-black dark:border-white text-center py-1.5 px-3 flex-1">
+          <div className="text-sm font-semibold">{lastRecord.temperature}</div>
           <div className="font-medium">temperature</div>
         </li>
-        <li className="border border-black dark:border-white text-center py-2 px-4 flex-1">
-          <div className="text-sm font-semibold mb-1">
-            {lastRecord.humidity}
-          </div>
+        <li className="border border-black dark:border-white text-center py-1.5 px-3 flex-1">
+          <div className="text-sm font-semibold">{lastRecord.humidity}</div>
           <div className="font-medium">humidity</div>
         </li>
-        <li className="border border-black dark:border-white text-center py-2 px-4 flex-1">
-          <div className="text-sm font-semibold mb-1">
-            {lastRecord.pressure}
-          </div>
+        <li className="border border-black dark:border-white text-center py-1.5 px-3 flex-1">
+          <div className="text-sm font-semibold">{lastRecord.pressure}</div>
           <div className="font-medium">pressure</div>
         </li>
-        <li className="border border-black dark:border-white text-center py-2 px-4 flex-1">
-          <div className="text-sm font-semibold mb-1">{lastRecord.battery}</div>
+        <li className="border border-black dark:border-white text-center py-1.5 px-3 flex-1">
+          <div className="text-sm font-semibold">{lastRecord.battery}</div>
           <div className="font-medium">battery</div>
         </li>
-        <li className="border border-black dark:border-white text-center py-2 px-4 flex-1">
-          <div className="text-sm font-semibold mb-1">{lastRecord.time}</div>
+        <li className="border border-black dark:border-white text-center py-1.5 px-3 flex-1">
+          <div className="text-sm font-semibold">{lastRecord.time}</div>
           <div className="font-medium">time</div>
         </li>
       </ul>
