@@ -1,4 +1,5 @@
 import { ActionFunctionArgs, json } from '@remix-run/cloudflare';
+import { differenceInMinutes, fromUnixTime } from 'date-fns';
 
 // TODO: add some form of protection
 
@@ -14,9 +15,13 @@ export const action = async (args: ActionFunctionArgs) => {
   const raw = await context.env.WOUTERDSBE.get('aranet');
 
   const values: AranetRecord[] = raw ? JSON.parse(raw) : [];
-
   if (!Array.isArray(values)) {
     return json({ success: false }, { status: 500 });
+  }
+
+  const lastPush = fromUnixTime(values[values.length - 1]?.time ?? 0);
+  if (differenceInMinutes(new Date(), lastPush) < 3) {
+    return json({ success: false }, { status: 429 });
   }
 
   const data = await request.formData();
