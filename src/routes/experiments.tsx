@@ -54,7 +54,9 @@ export default function Experiments() {
         <li className="border border-black dark:border-white">
           <div className="text-sm font-semibold py-2">
             <Suspense fallback="--">
-              <Await resolve={records}>{([record]) => record.co2}</Await>
+              <Await resolve={records}>
+                {(records) => records[records.length - 1].co2}
+              </Await>
             </Suspense>
           </div>
           <div
@@ -67,7 +69,7 @@ export default function Experiments() {
           <div className="text-sm font-semibold py-2">
             <Suspense fallback="--">
               <Await resolve={records}>
-                {([record]) => record.temperature}
+                {(records) => records[records.length - 1].temperature}
               </Await>
             </Suspense>
           </div>
@@ -80,7 +82,9 @@ export default function Experiments() {
         <li className="border border-black dark:border-white">
           <div className="text-sm font-semibold py-2">
             <Suspense fallback="--">
-              <Await resolve={records}>{([record]) => record.humidity}</Await>
+              <Await resolve={records}>
+                {(records) => records[records.length - 1].humidity}
+              </Await>
             </Suspense>
           </div>
           <div
@@ -92,7 +96,9 @@ export default function Experiments() {
         <li className="border border-black dark:border-white">
           <div className="text-sm font-semibold py-2">
             <Suspense fallback="--">
-              <Await resolve={records}>{([record]) => record.pressure}</Await>
+              <Await resolve={records}>
+                {(records) => records[records.length - 1].pressure}
+              </Await>
             </Suspense>
           </div>
           <div
@@ -104,7 +110,9 @@ export default function Experiments() {
         <li className="border border-black dark:border-white">
           <div className="text-sm font-semibold py-2">
             <Suspense fallback="--">
-              <Await resolve={records}>{([record]) => record.battery}</Await>
+              <Await resolve={records}>
+                {(records) => records[records.length - 1].battery}
+              </Await>
             </Suspense>
           </div>
           <div
@@ -116,7 +124,9 @@ export default function Experiments() {
         <li className="border border-black dark:border-white">
           <div className="text-sm font-semibold py-2">
             <Suspense fallback="--">
-              <Await resolve={records}>{([record]) => record.time}</Await>
+              <Await resolve={records}>
+                {(records) => records[records.length - 1].time}
+              </Await>
             </Suspense>
           </div>
           <div
