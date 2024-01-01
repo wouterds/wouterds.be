@@ -37,7 +37,7 @@ textarea {
 }
 
 textarea {
-  @apply min-h-48;
+  @apply min-h-32;
 }
 
 button[type=submit] {
