@@ -29,14 +29,15 @@ textarea {
   @apply block w-full;
   @apply focus:outline-none;
   @apply p-2;
-  @apply bg-zinc-50 dark:bg-zinc-800;
-  @apply border-b border-dotted border-zinc-800 dark:border-zinc-200;
+  @apply bg-transparent;
+  @apply border border-transparent border-b-zinc-800 dark:border-b-zinc-200;
+  @apply focus:border-zinc-800 dark:focus:border-zinc-200;
   @apply focus:border-solid;
   @apply rounded-none;
 }
 
 textarea {
-  @apply min-h-32;
+  @apply min-h-48;
 }
 
 button[type=submit] {

@@ -192,8 +192,7 @@ export default function Contact() {
         method="post"
         onSubmit={
           isValid ? undefined : handleSubmit((data) => console.log(data))
-        }
-        style={{ maxWidth: '640px' }}>
+        }>
         <div className="flex gap-4 flex-col sm:flex-row">
           <div className="flex-1">
             <label className="font-semibold inline-block mb-1" htmlFor="name">
