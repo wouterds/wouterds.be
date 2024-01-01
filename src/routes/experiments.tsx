@@ -1,6 +1,7 @@
 import { defer, LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
-import { Await, useLoaderData } from '@remix-run/react';
+import { Await, useLoaderData, useRevalidator } from '@remix-run/react';
 import { Suspense } from 'react';
+import { useInterval } from 'react-use';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   const env = (context as Context).env;
@@ -26,6 +27,9 @@ export const meta: MetaFunction = () => {
 
 export default function Experiments() {
   const { records } = useLoaderData<typeof loader>();
+
+  const { revalidate } = useRevalidator();
+  useInterval(revalidate, 1000 * 30);
 
   return (
     <>
