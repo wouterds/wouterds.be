@@ -45,30 +45,60 @@ export default function Experiments() {
         </a>{' '}
         which you can view here.
       </p>
-      <ul className="gap-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6">
-        <li className="border border-black dark:border-white text-center py-1.5 px-3 flex-1">
-          <div className="text-sm font-semibold">{lastRecord.co2}</div>
-          <div className="font-medium">co2</div>
+      <ul className="gap-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 text-center">
+        <li className="border border-black dark:border-white">
+          <div className="text-sm font-semibold py-2">{lastRecord.co2}</div>
+          <div
+            className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
+            style={{ margin: 1 }}>
+            co2
+          </div>
         </li>
-        <li className="border border-black dark:border-white text-center py-1.5 px-3 flex-1">
-          <div className="text-sm font-semibold">{lastRecord.temperature}</div>
-          <div className="font-medium">temperature</div>
+        <li className="border border-black dark:border-white">
+          <div className="text-sm font-semibold py-2">
+            {lastRecord.temperature}
+          </div>
+          <div
+            className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
+            style={{ margin: 1 }}>
+            temperature
+          </div>
         </li>
-        <li className="border border-black dark:border-white text-center py-1.5 px-3 flex-1">
-          <div className="text-sm font-semibold">{lastRecord.humidity}</div>
-          <div className="font-medium">humidity</div>
+        <li className="border border-black dark:border-white">
+          <div className="text-sm font-semibold py-2">
+            {lastRecord.humidity}
+          </div>
+          <div
+            className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
+            style={{ margin: 1 }}>
+            humidity
+          </div>
         </li>
-        <li className="border border-black dark:border-white text-center py-1.5 px-3 flex-1">
-          <div className="text-sm font-semibold">{lastRecord.pressure}</div>
-          <div className="font-medium">pressure</div>
+        <li className="border border-black dark:border-white">
+          <div className="text-sm font-semibold py-2">
+            {lastRecord.pressure}
+          </div>
+          <div
+            className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
+            style={{ margin: 1 }}>
+            pressure
+          </div>
         </li>
-        <li className="border border-black dark:border-white text-center py-1.5 px-3 flex-1">
-          <div className="text-sm font-semibold">{lastRecord.battery}</div>
-          <div className="font-medium">battery</div>
+        <li className="border border-black dark:border-white">
+          <div className="text-sm font-semibold py-2">{lastRecord.battery}</div>
+          <div
+            className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
+            style={{ margin: 1 }}>
+            battery
+          </div>
         </li>
-        <li className="border border-black dark:border-white text-center py-1.5 px-3 flex-1">
-          <div className="text-sm font-semibold">{lastRecord.time}</div>
-          <div className="font-medium">time</div>
+        <li className="border border-black dark:border-white">
+          <div className="text-sm font-semibold py-2">{lastRecord.time}</div>
+          <div
+            className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
+            style={{ margin: 1 }}>
+            time
+          </div>
         </li>
       </ul>
     </>
