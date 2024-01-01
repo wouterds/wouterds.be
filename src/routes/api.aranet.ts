@@ -2,15 +2,6 @@ import { ActionFunctionArgs, json } from '@remix-run/cloudflare';
 
 // TODO: add some form of protection
 
-type AranetEntry = {
-  time: number;
-  co2: number;
-  temperature: number;
-  humidity: number;
-  pressure: number;
-  battery: number;
-};
-
 export const action = async (args: ActionFunctionArgs) => {
   const request = args.request;
   const context = args.context as Context;
@@ -22,7 +13,7 @@ export const action = async (args: ActionFunctionArgs) => {
 
   const raw = await context.env.WOUTERDSBE.get('aranet');
 
-  const values: AranetEntry[] = raw ? JSON.parse(raw) : [];
+  const values: AranetRecord[] = raw ? JSON.parse(raw) : [];
 
   if (!Array.isArray(values)) {
     return json({ success: false }, { status: 500 });
