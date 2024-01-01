@@ -1,16 +1,14 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData, useRevalidator } from '@remix-run/react';
 import { useInterval } from 'react-use';
-import { Line, LineChart, ResponsiveContainer } from 'recharts';
+import { Line, LineChart, ResponsiveContainer, XAxis } from 'recharts';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   const env = (context as Context).env;
 
-  const records = (
-    await env.WOUTERDSBE.get('aranet').then((value) => {
-      return JSON.parse(value || '') as AranetRecord[];
-    })
-  ).reverse();
+  const records = await env.WOUTERDSBE.get('aranet').then((value) => {
+    return JSON.parse(value || '') as AranetRecord[];
+  });
 
   return { records };
 };
@@ -20,13 +18,14 @@ export const meta: MetaFunction = () => {
     { title: 'Experiments' },
     {
       name: 'description',
-      content: 'Just a page with random experiments.',
+      content: 'My playground with random experiments, not much to see here!',
     },
   ];
 };
 
 export default function Experiments() {
   const { records } = useLoaderData<typeof loader>();
+  const record = records[records.length - 1];
   const { revalidate } = useRevalidator();
 
   useInterval(revalidate, 1000 * 30);
@@ -53,7 +52,7 @@ export default function Experiments() {
       <ul className="gap-2 grid grid-cols-2 sm:grid-cols-4 text-center">
         <li className="border border-black dark:border-white">
           <div className="py-2">
-            <span className="font-semibold">{records[0].co2}</span> ppm
+            <span className="font-semibold">{record.co2}</span> ppm
           </div>
           <div className="relative aspect-[3/1]">
             <ResponsiveContainer>
@@ -76,7 +75,7 @@ export default function Experiments() {
         </li>
         <li className="border border-black dark:border-white">
           <div className="py-2">
-            <span className="font-semibold">{records[0].temperature}</span>
+            <span className="font-semibold">{record.temperature}</span>
             ºC
           </div>
           <div className="relative aspect-[3/1]">
@@ -100,7 +99,7 @@ export default function Experiments() {
         </li>
         <li className="border border-black dark:border-white">
           <div className="py-2">
-            <span className="font-semibold">{records[0].humidity}</span>%
+            <span className="font-semibold">{record.humidity}</span>%
           </div>
           <div className="relative aspect-[3/1]">
             <ResponsiveContainer>
@@ -123,7 +122,7 @@ export default function Experiments() {
         </li>
         <li className="border border-black dark:border-white">
           <div className="py-2">
-            <span className="font-semibold">{records[0].pressure}</span> hPa
+            <span className="font-semibold">{record.pressure}</span> hPa
           </div>
           <div className="relative aspect-[3/1]">
             <ResponsiveContainer>
