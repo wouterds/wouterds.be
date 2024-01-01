@@ -33,7 +33,7 @@ export default function Experiments() {
         This page is just a playground for random experiments. Not much to see
         here!
       </p>
-      <h2 className="text-lg font-medium mb-2">Lastest Aranet readings</h2>
+      <h2 className="text-lg font-medium mb-2">Aranet readings</h2>
       <p className="mb-4">
         Once a minute a Raspberry Pi pushes{' '}
         <a className="underline" href="https://aranet.com/products/aranet4">
