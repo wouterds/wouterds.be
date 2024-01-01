@@ -39,11 +39,11 @@ export default function About() {
       </p>
       <p className="mb-4">
         I studied Digital Design & Development at Howest University College and
-        currently I&apos;m freelancing as a Full Stack Developer. I have over 10
+        currently I&apos;m freelancing as Full-stack Developer. I have over 10
         years of experience as a professional web & mobile developer and the
-        last few years, I&apos;ve been specializing on React, React Native &
-        Node.js (web) applications. Before I started freelancing & contracting I
-        used to work for a variety of startups, scale-ups and agencies.
+        last few years, I&apos;ve been specializing in React, React Native &
+        Node.js (web) applications. Before I started contracting I used to work
+        for a variety of startups, scale-ups and agencies.
       </p>
       <p className="mb-4">
         When I&apos;m not creating kickass digital applications, I&apos;m
