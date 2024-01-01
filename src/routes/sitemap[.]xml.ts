@@ -17,6 +17,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
   sitemap += `<url><loc>${context.url}/about</loc></url>`;
   sitemap += `<url><loc>${context.url}/blog</loc></url>`;
   sitemap += `<url><loc>${context.url}/contact</loc></url>`;
+  sitemap += `<url><loc>${context.url}/experiments</loc></url>`;
   for (const { slug } of posts) {
     sitemap += `<url><loc>${context.url}/blog/${slug}</loc></url>`;
   }
