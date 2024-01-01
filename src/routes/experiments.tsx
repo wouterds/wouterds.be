@@ -1,6 +1,6 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData, useRevalidator } from '@remix-run/react';
-import { useInterval } from 'react-use';
+import { useInterval, useMedia } from 'react-use';
 import { Line, LineChart, ResponsiveContainer, XAxis } from 'recharts';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
@@ -27,6 +27,7 @@ export default function Experiments() {
   const { records } = useLoaderData<typeof loader>();
   const record = records[records.length - 1];
   const { revalidate } = useRevalidator();
+  const isDarkMode = useMedia('(prefers-color-scheme: dark)', false);
 
   useInterval(revalidate, 1000 * 30);
 
@@ -60,7 +61,7 @@ export default function Experiments() {
                 <Line
                   type="monotone"
                   dataKey="co2"
-                  stroke="#000"
+                  stroke={isDarkMode ? '#fff' : '#000'}
                   strokeWidth={2}
                   dot={false}
                 />
@@ -84,7 +85,7 @@ export default function Experiments() {
                 <Line
                   type="monotone"
                   dataKey="temperature"
-                  stroke="#000"
+                  stroke={isDarkMode ? '#fff' : '#000'}
                   strokeWidth={2}
                   dot={false}
                 />
@@ -107,7 +108,7 @@ export default function Experiments() {
                 <Line
                   type="monotone"
                   dataKey="humidity"
-                  stroke="#000"
+                  stroke={isDarkMode ? '#fff' : '#000'}
                   strokeWidth={2}
                   dot={false}
                 />
@@ -130,7 +131,7 @@ export default function Experiments() {
                 <Line
                   type="monotone"
                   dataKey="pressure"
-                  stroke="#000"
+                  stroke={isDarkMode ? '#fff' : '#000'}
                   strokeWidth={2}
                   dot={false}
                 />
