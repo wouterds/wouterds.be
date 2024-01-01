@@ -1,15 +1,17 @@
-import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
-import { useLoaderData } from '@remix-run/react';
+import { defer, LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
+import { Await, useLoaderData } from '@remix-run/react';
+import { Suspense } from 'react';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   const env = (context as Context).env;
 
-  const raw = await env.WOUTERDSBE.get('aranet');
-  const records = JSON.parse(raw || '') as AranetRecord[];
+  const records = env.WOUTERDSBE.get('aranet').then((value) => {
+    return JSON.parse(value || '') as AranetRecord[];
+  });
 
-  return {
+  return defer({
     records,
-  };
+  });
 };
 
 export const meta: MetaFunction = () => {
@@ -23,8 +25,7 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Experiments() {
-  const data = useLoaderData<typeof loader>();
-  const lastRecord = data.records[data.records.length - 1];
+  const { records } = useLoaderData<typeof loader>();
 
   return (
     <>
@@ -47,7 +48,11 @@ export default function Experiments() {
       </p>
       <ul className="gap-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 text-center">
         <li className="border border-black dark:border-white">
-          <div className="text-sm font-semibold py-2">{lastRecord.co2}</div>
+          <div className="text-sm font-semibold py-2">
+            <Suspense fallback="--">
+              <Await resolve={records}>{([record]) => record.co2}</Await>
+            </Suspense>
+          </div>
           <div
             className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
             style={{ margin: 1 }}>
@@ -56,7 +61,11 @@ export default function Experiments() {
         </li>
         <li className="border border-black dark:border-white">
           <div className="text-sm font-semibold py-2">
-            {lastRecord.temperature}
+            <Suspense fallback="--">
+              <Await resolve={records}>
+                {([record]) => record.temperature}
+              </Await>
+            </Suspense>
           </div>
           <div
             className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
@@ -66,7 +75,9 @@ export default function Experiments() {
         </li>
         <li className="border border-black dark:border-white">
           <div className="text-sm font-semibold py-2">
-            {lastRecord.humidity}
+            <Suspense fallback="--">
+              <Await resolve={records}>{([record]) => record.humidity}</Await>
+            </Suspense>
           </div>
           <div
             className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
@@ -76,7 +87,9 @@ export default function Experiments() {
         </li>
         <li className="border border-black dark:border-white">
           <div className="text-sm font-semibold py-2">
-            {lastRecord.pressure}
+            <Suspense fallback="--">
+              <Await resolve={records}>{([record]) => record.pressure}</Await>
+            </Suspense>
           </div>
           <div
             className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
@@ -85,7 +98,11 @@ export default function Experiments() {
           </div>
         </li>
         <li className="border border-black dark:border-white">
-          <div className="text-sm font-semibold py-2">{lastRecord.battery}</div>
+          <div className="text-sm font-semibold py-2">
+            <Suspense fallback="--">
+              <Await resolve={records}>{([record]) => record.battery}</Await>
+            </Suspense>
+          </div>
           <div
             className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
             style={{ margin: 1 }}>
@@ -93,7 +110,11 @@ export default function Experiments() {
           </div>
         </li>
         <li className="border border-black dark:border-white">
-          <div className="text-sm font-semibold py-2">{lastRecord.time}</div>
+          <div className="text-sm font-semibold py-2">
+            <Suspense fallback="--">
+              <Await resolve={records}>{([record]) => record.time}</Await>
+            </Suspense>
+          </div>
           <div
             className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
             style={{ margin: 1 }}>
