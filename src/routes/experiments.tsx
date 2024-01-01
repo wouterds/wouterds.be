@@ -2,7 +2,7 @@ import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData, useRevalidator } from '@remix-run/react';
 import { format, fromUnixTime } from 'date-fns';
 import { useInterval, useMedia } from 'react-use';
-import { Line, LineChart, ResponsiveContainer, XAxis } from 'recharts';
+import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   const env = (context as Context).env;
@@ -66,6 +66,13 @@ export default function Experiments() {
                   strokeWidth={2}
                   dot={false}
                 />
+                <YAxis
+                  hide
+                  domain={[
+                    Math.min(...records.map((record) => record.co2)) * 0.7,
+                    Math.max(...records.map((record) => record.co2)),
+                  ]}
+                />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -90,6 +97,14 @@ export default function Experiments() {
                   strokeWidth={2}
                   dot={false}
                 />
+                <YAxis
+                  hide
+                  domain={[
+                    Math.min(...records.map((record) => record.temperature)) *
+                      0.85,
+                    Math.max(...records.map((record) => record.temperature)),
+                  ]}
+                />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -113,6 +128,13 @@ export default function Experiments() {
                   strokeWidth={2}
                   dot={false}
                 />
+                <YAxis
+                  hide
+                  domain={[
+                    Math.min(...records.map((record) => record.humidity)) * 0.9,
+                    Math.max(...records.map((record) => record.humidity)) * 0.8,
+                  ]}
+                />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -135,6 +157,15 @@ export default function Experiments() {
                   stroke={isDarkMode ? '#fff' : '#000'}
                   strokeWidth={2}
                   dot={false}
+                />
+                <YAxis
+                  hide
+                  domain={[
+                    Math.min(...records.map((record) => record.pressure)) *
+                      0.995,
+                    Math.max(...records.map((record) => record.pressure)) *
+                      1.001,
+                  ]}
                 />
               </LineChart>
             </ResponsiveContainer>
