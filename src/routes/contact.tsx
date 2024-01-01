@@ -5,7 +5,7 @@ import {
   LoaderFunctionArgs,
   MetaFunction,
 } from '@remix-run/cloudflare';
-import { Form, useActionData, useLoaderData } from '@remix-run/react';
+import { Form, useActionData } from '@remix-run/react';
 import { getName as getCountryName } from 'country-list';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -49,23 +49,23 @@ export const action = async (args: ActionFunctionArgs) => {
   const form = await request.formData();
   const ip = request.headers.get('CF-Connecting-IP') as string;
   const country = request.headers.get('CF-IPCountry') as string;
-  const token = form.get('cf-turnstile-response')?.toString();
+  // const token = form.get('cf-turnstile-response')?.toString();
 
-  const payload = new FormData();
-  payload.append('secret', context.env.CLOUDFLARE_TURNSTILE_SECRET);
-  payload.append('response', token!);
-  payload.append('remoteip', ip);
+  // const payload = new FormData();
+  // payload.append('secret', context.env.CLOUDFLARE_TURNSTILE_SECRET);
+  // payload.append('response', token!);
+  // payload.append('remoteip', ip);
 
-  const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
-  const response = await fetch(url, {
-    body: payload,
-    method: 'POST',
-  });
+  // const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+  // const response = await fetch(url, {
+  //   body: payload,
+  //   method: 'POST',
+  // });
 
-  const { success } = await response.json<{ success: boolean }>();
-  if (!success) {
-    return json({ success: false }, { status: 400 });
-  }
+  // const { success } = await response.json<{ success: boolean }>();
+  // if (!success) {
+  //   return json({ success: false }, { status: 400 });
+  // }
 
   const data = Object.fromEntries(form) as Schema;
 
@@ -152,7 +152,7 @@ export const handle: { scripts: ExternalScriptsFunction } = {
 };
 
 export default function Contact() {
-  const { CLOUDFLARE_TURNSTILE_KEY } = useLoaderData<typeof loader>();
+  // const { CLOUDFLARE_TURNSTILE_KEY } = useLoaderData<typeof loader>();
   const data = useActionData<typeof action>();
   const success = data?.success;
 
@@ -257,12 +257,12 @@ export default function Contact() {
             Something went wrong, please try again later.
           </p>
         )}
-        <div className="mt-2">
+        {/* <div className="mt-2">
           <div
             className="cf-turnstile"
             data-sitekey={CLOUDFLARE_TURNSTILE_KEY}
           />
-        </div>
+        </div> */}
       </Form>
     </>
   );
