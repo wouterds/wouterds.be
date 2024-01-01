@@ -39,7 +39,7 @@ export default function Experiments() {
         <a href="https://aranet.com/products/aranet4">aranet4</a> readings to{' '}
         <a href="https://developers.cloudflare.com/kv/">
           Cloudflare Workers KV
-        </a>
+        </a>{' '}
         which you can view here.
       </p>
       <ul className="gap-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6">
