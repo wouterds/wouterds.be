@@ -148,7 +148,7 @@ export default function Experiments() {
       </ul>
       <p className="mt-3">
         Last updated: {format(fromUnixTime(record.time), 'MMMM do, yyyy')} at{' '}
-        {format(fromUnixTime(record.time), 'HH:mm:ss')}, battery percentage:{' '}
+        {format(fromUnixTime(record.time), 'HH:mm')}, battery percentage:{' '}
         {record.battery}%.
       </p>
     </>
