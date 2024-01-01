@@ -36,8 +36,11 @@ export default function Experiments() {
       <h2 className="text-lg font-medium mb-2">Lastest Aranet readings</h2>
       <p className="mb-4">
         Once a minute a Raspberry Pi pushes{' '}
-        <a href="https://aranet.com/products/aranet4">aranet4</a> readings to{' '}
-        <a href="https://developers.cloudflare.com/kv/">
+        <a className="underline" href="https://aranet.com/products/aranet4">
+          aranet4
+        </a>{' '}
+        readings to{' '}
+        <a className="underline" href="https://developers.cloudflare.com/kv/">
           Cloudflare Workers KV
         </a>{' '}
         which you can view here.

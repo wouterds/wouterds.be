@@ -20,7 +20,6 @@ const css = {
       content: 'normal',
     },
   },
-  a: { display: 'inline' },
 };
 
 export default {
