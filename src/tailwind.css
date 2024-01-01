@@ -47,3 +47,7 @@ button[type=submit] {
   @apply inline-block;
   @apply rounded-none;
 }
+
+p {
+  @apply break-words;
+}
