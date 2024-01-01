@@ -6,9 +6,11 @@ import { Line, LineChart, ResponsiveContainer } from 'recharts';
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   const env = (context as Context).env;
 
-  const records = await env.WOUTERDSBE.get('aranet').then((value) => {
-    return JSON.parse(value || '') as AranetRecord[];
-  });
+  const records = (
+    await env.WOUTERDSBE.get('aranet').then((value) => {
+      return JSON.parse(value || '') as AranetRecord[];
+    })
+  ).reverse();
 
   return { records };
 };
@@ -51,10 +53,7 @@ export default function Experiments() {
       <ul className="gap-2 grid grid-cols-2 sm:grid-cols-4 text-center">
         <li className="border border-black dark:border-white">
           <div className="py-2">
-            <span className="font-semibold">
-              {records[records.length - 1].co2}
-            </span>{' '}
-            ppm
+            <span className="font-semibold">{records[0].co2}</span> ppm
           </div>
           <div className="relative aspect-[3/1]">
             <ResponsiveContainer>
@@ -77,9 +76,7 @@ export default function Experiments() {
         </li>
         <li className="border border-black dark:border-white">
           <div className="py-2">
-            <span className="font-semibold">
-              {records[records.length - 1].temperature}
-            </span>
+            <span className="font-semibold">{records[0].temperature}</span>
             ºC
           </div>
           <div className="relative aspect-[3/1]">
@@ -103,10 +100,7 @@ export default function Experiments() {
         </li>
         <li className="border border-black dark:border-white">
           <div className="py-2">
-            <span className="font-semibold">
-              {records[records.length - 1].humidity}
-            </span>
-            %
+            <span className="font-semibold">{records[0].humidity}</span>%
           </div>
           <div className="relative aspect-[3/1]">
             <ResponsiveContainer>
@@ -129,10 +123,7 @@ export default function Experiments() {
         </li>
         <li className="border border-black dark:border-white">
           <div className="py-2">
-            <span className="font-semibold">
-              {records[records.length - 1].pressure}
-            </span>{' '}
-            hPa
+            <span className="font-semibold">{records[0].pressure}</span> hPa
           </div>
           <div className="relative aspect-[3/1]">
             <ResponsiveContainer>
