@@ -1,18 +1,16 @@
-import { defer, LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
-import { Await, useLoaderData, useRevalidator } from '@remix-run/react';
-import { Suspense } from 'react';
+import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
+import { useLoaderData, useRevalidator } from '@remix-run/react';
 import { useInterval } from 'react-use';
+import { Line, LineChart, ResponsiveContainer } from 'recharts';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   const env = (context as Context).env;
 
-  const records = env.WOUTERDSBE.get('aranet').then((value) => {
+  const records = await env.WOUTERDSBE.get('aranet').then((value) => {
     return JSON.parse(value || '') as AranetRecord[];
   });
 
-  return defer({
-    records,
-  });
+  return { records };
 };
 
 export const meta: MetaFunction = () => {
@@ -27,8 +25,8 @@ export const meta: MetaFunction = () => {
 
 export default function Experiments() {
   const { records } = useLoaderData<typeof loader>();
-
   const { revalidate } = useRevalidator();
+
   useInterval(revalidate, 1000 * 30);
 
   return (
@@ -50,14 +48,23 @@ export default function Experiments() {
         </a>{' '}
         which you can view here.
       </p>
-      <ul className="gap-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 text-center">
+      <ul className="gap-2 grid grid-cols-2 sm:grid-cols-4 text-center">
         <li className="border border-black dark:border-white">
           <div className="text-sm font-semibold py-2">
-            <Suspense fallback="--">
-              <Await resolve={records}>
-                {(records) => records[records.length - 1].co2}
-              </Await>
-            </Suspense>
+            {records[records.length - 1].co2}
+          </div>
+          <div className="relative aspect-[3/1]">
+            <ResponsiveContainer>
+              <LineChart data={records}>
+                <Line
+                  type="monotone"
+                  dataKey="co2"
+                  stroke="#000"
+                  strokeWidth={2}
+                  dot={false}
+                />
+              </LineChart>
+            </ResponsiveContainer>
           </div>
           <div
             className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
@@ -67,11 +74,20 @@ export default function Experiments() {
         </li>
         <li className="border border-black dark:border-white">
           <div className="text-sm font-semibold py-2">
-            <Suspense fallback="--">
-              <Await resolve={records}>
-                {(records) => records[records.length - 1].temperature}
-              </Await>
-            </Suspense>
+            {records[records.length - 1].temperature}
+          </div>
+          <div className="relative aspect-[3/1]">
+            <ResponsiveContainer>
+              <LineChart data={records}>
+                <Line
+                  type="monotone"
+                  dataKey="temperature"
+                  stroke="#000"
+                  strokeWidth={2}
+                  dot={false}
+                />
+              </LineChart>
+            </ResponsiveContainer>
           </div>
           <div
             className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
@@ -81,11 +97,20 @@ export default function Experiments() {
         </li>
         <li className="border border-black dark:border-white">
           <div className="text-sm font-semibold py-2">
-            <Suspense fallback="--">
-              <Await resolve={records}>
-                {(records) => records[records.length - 1].humidity}
-              </Await>
-            </Suspense>
+            {records[records.length - 1].humidity}
+          </div>
+          <div className="relative aspect-[3/1]">
+            <ResponsiveContainer>
+              <LineChart data={records}>
+                <Line
+                  type="monotone"
+                  dataKey="humidity"
+                  stroke="#000"
+                  strokeWidth={2}
+                  dot={false}
+                />
+              </LineChart>
+            </ResponsiveContainer>
           </div>
           <div
             className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
@@ -95,44 +120,25 @@ export default function Experiments() {
         </li>
         <li className="border border-black dark:border-white">
           <div className="text-sm font-semibold py-2">
-            <Suspense fallback="--">
-              <Await resolve={records}>
-                {(records) => records[records.length - 1].pressure}
-              </Await>
-            </Suspense>
+            {records[records.length - 1].pressure}
+          </div>
+          <div className="relative aspect-[3/1]">
+            <ResponsiveContainer>
+              <LineChart data={records}>
+                <Line
+                  type="monotone"
+                  dataKey="pressure"
+                  stroke="#000"
+                  strokeWidth={2}
+                  dot={false}
+                />
+              </LineChart>
+            </ResponsiveContainer>
           </div>
           <div
             className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
             style={{ margin: 1 }}>
             pressure
-          </div>
-        </li>
-        <li className="border border-black dark:border-white">
-          <div className="text-sm font-semibold py-2">
-            <Suspense fallback="--">
-              <Await resolve={records}>
-                {(records) => records[records.length - 1].battery}
-              </Await>
-            </Suspense>
-          </div>
-          <div
-            className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
-            style={{ margin: 1 }}>
-            battery
-          </div>
-        </li>
-        <li className="border border-black dark:border-white">
-          <div className="text-sm font-semibold py-2">
-            <Suspense fallback="--">
-              <Await resolve={records}>
-                {(records) => records[records.length - 1].time}
-              </Await>
-            </Suspense>
-          </div>
-          <div
-            className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
-            style={{ margin: 1 }}>
-            time
           </div>
         </li>
       </ul>
