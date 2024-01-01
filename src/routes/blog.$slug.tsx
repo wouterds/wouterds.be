@@ -190,7 +190,7 @@ export default function BlogSlug() {
           dateTime={post.date}>
           {format(new Date(post.date), 'MMMM do, yyyy')}
         </time>
-        <h1 className="text-2xl my-0">{post.title}</h1>
+        <h1 className="text-2xl font-medium my-0">{post.title}</h1>
       </header>
 
       <StructuredText
