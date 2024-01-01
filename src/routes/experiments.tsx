@@ -50,8 +50,11 @@ export default function Experiments() {
       </p>
       <ul className="gap-2 grid grid-cols-2 sm:grid-cols-4 text-center">
         <li className="border border-black dark:border-white">
-          <div className="text-sm font-semibold py-2">
-            {records[records.length - 1].co2}
+          <div className="py-2">
+            <span className="font-semibold">
+              {records[records.length - 1].co2}
+            </span>{' '}
+            ppm
           </div>
           <div className="relative aspect-[3/1]">
             <ResponsiveContainer>
@@ -73,8 +76,11 @@ export default function Experiments() {
           </div>
         </li>
         <li className="border border-black dark:border-white">
-          <div className="text-sm font-semibold py-2">
-            {records[records.length - 1].temperature}
+          <div className="py-2">
+            <span className="font-semibold">
+              {records[records.length - 1].temperature}
+            </span>
+            ºC
           </div>
           <div className="relative aspect-[3/1]">
             <ResponsiveContainer>
@@ -96,8 +102,11 @@ export default function Experiments() {
           </div>
         </li>
         <li className="border border-black dark:border-white">
-          <div className="text-sm font-semibold py-2">
-            {records[records.length - 1].humidity}
+          <div className="py-2">
+            <span className="font-semibold">
+              {records[records.length - 1].humidity}
+            </span>
+            %
           </div>
           <div className="relative aspect-[3/1]">
             <ResponsiveContainer>
@@ -119,8 +128,11 @@ export default function Experiments() {
           </div>
         </li>
         <li className="border border-black dark:border-white">
-          <div className="text-sm font-semibold py-2">
-            {records[records.length - 1].pressure}
+          <div className="py-2">
+            <span className="font-semibold">
+              {records[records.length - 1].pressure}
+            </span>{' '}
+            hPa
           </div>
           <div className="relative aspect-[3/1]">
             <ResponsiveContainer>
