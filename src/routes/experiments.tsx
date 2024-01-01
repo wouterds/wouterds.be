@@ -40,15 +40,15 @@ export default function Experiments() {
       </p>
       <h2 className="text-lg font-medium mb-2">Aranet readings</h2>
       <p className="mb-4">
-        Once a minute a Raspberry Pi pushes{' '}
+        Every 3 minutes a Raspberry Pi pushes{' '}
         <a className="underline" href="https://aranet.com/products/aranet4">
           Aranet4
         </a>{' '}
-        readings to{' '}
+        bluetooth readings to{' '}
         <a className="underline" href="https://developers.cloudflare.com/kv/">
           Cloudflare Workers KV
-        </a>{' '}
-        which you can view here.
+        </a>
+        .
       </p>
       <ul className="gap-2 grid grid-cols-2 sm:grid-cols-4 text-center">
         <li className="border border-black dark:border-white">

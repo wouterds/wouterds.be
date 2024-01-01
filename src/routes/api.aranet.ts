@@ -36,8 +36,8 @@ export const action = async (args: ActionFunctionArgs) => {
     battery,
   });
 
-  // readings are every 2 minutes, so keep 24 hours worth of data
-  if (values.length > (24 * 60) / 2) {
+  // readings are every 3 minutes, so keep 24 hours worth of data
+  if (values.length > (24 * 60) / 3) {
     values.shift();
   }
 
