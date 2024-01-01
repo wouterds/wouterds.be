@@ -1,5 +1,6 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData, useRevalidator } from '@remix-run/react';
+import { format, fromUnixTime } from 'date-fns';
 import { useInterval, useMedia } from 'react-use';
 import { Line, LineChart, ResponsiveContainer, XAxis } from 'recharts';
 
@@ -145,6 +146,11 @@ export default function Experiments() {
           </div>
         </li>
       </ul>
+      <p className="mt-3">
+        Last updated: {format(fromUnixTime(record.time), 'MMMM do, yyyy')} at{' '}
+        {format(fromUnixTime(record.time), 'HH:mm:ss')}, battery percentage:{' '}
+        {record.battery}%.
+      </p>
     </>
   );
 }
