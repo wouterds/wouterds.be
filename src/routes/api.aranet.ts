@@ -1,8 +1,6 @@
 import { ActionFunctionArgs, json } from '@remix-run/cloudflare';
 import { differenceInMinutes, fromUnixTime } from 'date-fns';
 
-// TODO: add some form of protection
-
 export const action = async (args: ActionFunctionArgs) => {
   const request = args.request;
   const context = args.context as Context;
@@ -20,7 +18,7 @@ export const action = async (args: ActionFunctionArgs) => {
   }
 
   const lastPush = fromUnixTime(values[values.length - 1]?.time ?? 0);
-  if (differenceInMinutes(new Date(), lastPush) < 3) {
+  if (differenceInMinutes(new Date(), lastPush) < 5) {
     return json({ success: false }, { status: 429 });
   }
 
@@ -41,8 +39,8 @@ export const action = async (args: ActionFunctionArgs) => {
     battery,
   });
 
-  // readings are every 3 minutes, so keep 24 hours worth of data
-  if (values.length > (24 * 60) / 3) {
+  // readings are every 5 minutes, so keep 24 hours worth of data
+  if (values.length > (24 * 60) / 5) {
     values.shift();
   }
 
