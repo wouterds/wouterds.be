@@ -1,8 +1,9 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData, useRevalidator } from '@remix-run/react';
-import { format, fromUnixTime } from 'date-fns';
+import { format, formatDistanceToNowStrict, fromUnixTime } from 'date-fns';
+import { useState } from 'react';
 import { useInterval, useMedia } from 'react-use';
-import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
+import { Line, LineChart, ResponsiveContainer, YAxis } from 'recharts';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   const env = (context as Context).env;
@@ -29,8 +30,21 @@ export default function Experiments() {
   const record = records[records.length - 1];
   const { revalidate } = useRevalidator();
   const isDarkMode = useMedia('(prefers-color-scheme: dark)', false);
+  const [lastUpdated, setLastUpdated] = useState(
+    formatDistanceToNowStrict(fromUnixTime(record.time), {
+      addSuffix: true,
+    }),
+  );
 
   useInterval(revalidate, 1000 * 30);
+
+  useInterval(() => {
+    setLastUpdated(
+      formatDistanceToNowStrict(fromUnixTime(record.time), {
+        addSuffix: true,
+      }),
+    );
+  }, 1000);
 
   return (
     <>
@@ -177,11 +191,11 @@ export default function Experiments() {
           </div>
         </li>
       </ul>
-      <p className="mt-3">
-        Last updated: {format(fromUnixTime(record.time), 'MMMM do, yyyy')} at{' '}
-        {format(fromUnixTime(record.time), 'HH:mm')}, battery percentage:{' '}
-        {record.battery}%.
-      </p>
+      {lastUpdated && (
+        <p className="mt-3" title={format(fromUnixTime(record.time), 'HH:mm')}>
+          Last updated: {lastUpdated}
+        </p>
+      )}
     </>
   );
 }
