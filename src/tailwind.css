@@ -30,9 +30,9 @@ textarea {
   @apply focus:outline-none;
   @apply p-2;
   @apply bg-transparent;
-  @apply border border-transparent border-b-zinc-800 dark:border-b-zinc-200;
+  @apply border-b border-b-zinc-800 dark:border-b-zinc-200;
   @apply focus:border-zinc-800 dark:focus:border-zinc-200;
-  @apply focus:border-solid;
+  @apply focus:bg-zinc-100 dark:focus:bg-zinc-800;
   @apply rounded-none;
 }
 
@@ -41,11 +41,13 @@ textarea {
 }
 
 button[type=submit] {
-  @apply bg-zinc-800 text-white dark:text-black dark:bg-zinc-200 hover:bg-zinc-900 hover:dark:bg-zinc-100;
   @apply font-medium;
   @apply px-3 py-1.5;
   @apply inline-block;
   @apply rounded-none;
+  @apply border;
+  @apply border-zinc-800 hover:bg-zinc-800 hover:text-white;
+  @apply dark:hover:text-black dark:hover:bg-zinc-200;
 }
 
 p {
