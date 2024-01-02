@@ -1,3 +1,4 @@
+import { Battery0Icon } from '@heroicons/react/16/solid';
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData, useRevalidator } from '@remix-run/react';
 import { format, formatDistanceToNowStrict, fromUnixTime } from 'date-fns';
@@ -192,8 +193,11 @@ export default function Experiments() {
         </li>
       </ul>
       {lastUpdated && (
-        <p className="mt-3" title={format(fromUnixTime(record.time), 'HH:mm')}>
-          Last updated: {lastUpdated}
+        <p
+          className="flex justify-between mt-3"
+          title={format(fromUnixTime(record.time), 'HH:mm')}>
+          <span>last updated: {lastUpdated}</span>
+          <span>battery: {record.battery}%</span>
         </p>
       )}
     </>
