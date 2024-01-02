@@ -30,7 +30,7 @@ textarea {
   @apply focus:outline-none;
   @apply p-2;
   @apply bg-transparent;
-  @apply border-b border-b-zinc-800 dark:border-b-zinc-200;
+  @apply border-b border-zinc-800 dark:border-zinc-200;
   @apply focus:border-zinc-800 dark:focus:border-zinc-200;
   @apply focus:bg-zinc-100 dark:focus:bg-zinc-800;
   @apply rounded-none;
@@ -47,7 +47,7 @@ button[type=submit] {
   @apply rounded-none;
   @apply border;
   @apply border-zinc-800 hover:bg-zinc-800 hover:text-white;
-  @apply dark:hover:text-black dark:hover:bg-zinc-200;
+  @apply dark:border-zinc-200 dark:hover:text-black dark:hover:bg-zinc-200;
 }
 
 p {
