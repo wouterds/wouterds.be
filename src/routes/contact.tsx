@@ -10,7 +10,6 @@ import { Form, useActionData, useLoaderData } from '@remix-run/react';
 import { getName as getCountryName } from 'country-list';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { ExternalScriptsFunction } from 'remix-utils/external-scripts';
 import * as z from 'zod';
 
 const schema = z.object({

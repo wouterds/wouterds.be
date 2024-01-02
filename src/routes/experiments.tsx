@@ -1,4 +1,3 @@
-import { Battery0Icon } from '@heroicons/react/16/solid';
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData, useRevalidator } from '@remix-run/react';
 import { format, formatDistanceToNowStrict, fromUnixTime } from 'date-fns';
