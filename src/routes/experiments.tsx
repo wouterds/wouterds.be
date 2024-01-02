@@ -63,7 +63,7 @@ export default function Experiments() {
                   type="monotone"
                   dataKey="co2"
                   stroke={isDarkMode ? '#fff' : '#000'}
-                  strokeWidth={2}
+                  strokeWidth={1.5}
                   dot={false}
                 />
                 <YAxis
@@ -94,7 +94,7 @@ export default function Experiments() {
                   type="monotone"
                   dataKey="temperature"
                   stroke={isDarkMode ? '#fff' : '#000'}
-                  strokeWidth={2}
+                  strokeWidth={1.5}
                   dot={false}
                 />
                 <YAxis
@@ -125,7 +125,7 @@ export default function Experiments() {
                   type="monotone"
                   dataKey="humidity"
                   stroke={isDarkMode ? '#fff' : '#000'}
-                  strokeWidth={2}
+                  strokeWidth={1.5}
                   dot={false}
                 />
                 <YAxis
@@ -155,7 +155,7 @@ export default function Experiments() {
                   type="monotone"
                   dataKey="pressure"
                   stroke={isDarkMode ? '#fff' : '#000'}
-                  strokeWidth={2}
+                  strokeWidth={1.5}
                   dot={false}
                 />
                 <YAxis
