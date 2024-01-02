@@ -1,11 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Turnstile } from '@marsidev/react-turnstile';
 import {
   ActionFunctionArgs,
   json,
   LoaderFunctionArgs,
   MetaFunction,
 } from '@remix-run/cloudflare';
-import { Form, useActionData } from '@remix-run/react';
+import { Form, useActionData, useLoaderData } from '@remix-run/react';
 import { getName as getCountryName } from 'country-list';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -49,23 +50,23 @@ export const action = async (args: ActionFunctionArgs) => {
   const form = await request.formData();
   const ip = request.headers.get('CF-Connecting-IP') as string;
   const country = request.headers.get('CF-IPCountry') as string;
-  // const token = form.get('cf-turnstile-response')?.toString();
+  const token = form.get('cf-turnstile-response')?.toString();
 
-  // const payload = new FormData();
-  // payload.append('secret', context.env.CLOUDFLARE_TURNSTILE_SECRET);
-  // payload.append('response', token!);
-  // payload.append('remoteip', ip);
+  const payload = new FormData();
+  payload.append('secret', context.env.CLOUDFLARE_TURNSTILE_SECRET);
+  payload.append('response', token!);
+  payload.append('remoteip', ip);
 
-  // const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
-  // const response = await fetch(url, {
-  //   body: payload,
-  //   method: 'POST',
-  // });
+  const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+  const response = await fetch(url, {
+    body: payload,
+    method: 'POST',
+  });
 
-  // const { success } = await response.json<{ success: boolean }>();
-  // if (!success) {
-  //   return json({ success: false }, { status: 400 });
-  // }
+  const { success } = await response.json<{ success: boolean }>();
+  if (!success) {
+    return json({ success: false }, { status: 400 });
+  }
 
   const data = Object.fromEntries(form) as Schema;
 
@@ -141,18 +142,8 @@ export const action = async (args: ActionFunctionArgs) => {
   }
 };
 
-export const handle: { scripts: ExternalScriptsFunction } = {
-  scripts: () => [
-    {
-      src: 'https://challenges.cloudflare.com/turnstile/v0/api.js',
-      async: true,
-      defer: true,
-    },
-  ],
-};
-
 export default function Contact() {
-  // const { CLOUDFLARE_TURNSTILE_KEY } = useLoaderData<typeof loader>();
+  const { CLOUDFLARE_TURNSTILE_KEY } = useLoaderData<typeof loader>();
   const data = useActionData<typeof action>();
   const success = data?.success;
 
@@ -193,6 +184,11 @@ export default function Contact() {
         onSubmit={
           isValid ? undefined : handleSubmit((data) => console.log(data))
         }>
+        {typeof success === 'boolean' && !success && (
+          <p className="text-red-600 dark:text-red-400 mt-2 mb-4">
+            Something went wrong, please try again later.
+          </p>
+        )}
         <div className="flex gap-4 flex-col sm:flex-row">
           <div className="flex-1">
             <label className="font-semibold inline-block mb-1" htmlFor="name">
@@ -248,20 +244,14 @@ export default function Contact() {
             </p>
           )}
         </div>
-        <div>
-          <button type="submit">Submit</button>
+        <div className="flex flex-col sm:flex-row justify-between gap-4">
+          <div>
+            <button type="submit">Submit</button>
+          </div>
+          <div>
+            <Turnstile siteKey={CLOUDFLARE_TURNSTILE_KEY} />
+          </div>
         </div>
-        {typeof success === 'boolean' && !success && (
-          <p className="text-red-600 dark:text-red-400 mt-2 mb-4">
-            Something went wrong, please try again later.
-          </p>
-        )}
-        {/* <div className="mt-2">
-          <div
-            className="cf-turnstile"
-            data-sitekey={CLOUDFLARE_TURNSTILE_KEY}
-          />
-        </div> */}
       </Form>
     </>
   );
