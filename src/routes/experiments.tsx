@@ -30,7 +30,7 @@ export default function Experiments() {
   const { revalidate } = useRevalidator();
   const isDarkMode = useMedia('(prefers-color-scheme: dark)', false);
 
-  useInterval(revalidate, 1000 * 15);
+  useInterval(revalidate, 1000 * 30);
 
   return (
     <>
