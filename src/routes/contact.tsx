@@ -37,7 +37,7 @@ export const meta: MetaFunction = () => {
     {
       name: 'description',
       content:
-        "If you're writing for a project or to work together, please include as much details as possible (goal, timeline, budget, ...). For everything else, write as you please, I'll be more than happy to reply!",
+        "If you're writing for a project or to work together, please include as much details as possible. For everything else, write as you please, I'll be more than happy to reply!",
     },
   ];
 };

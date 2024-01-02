@@ -21,8 +21,7 @@ export const meta: MetaFunction = () => {
       content: `Hey 👋, I'm Wouter, ${differenceInYears(
         new Date(),
         new Date(BIRTHDAY),
-      )}
-        )} years old and passionate about all things digital really. Devine alumni & currently freelancing as a Full Stack Developer.`,
+      )} years old and passionate about all things digital really. Devine alumni & currently contracting as a Full-stack Developer.`,
     },
   ];
 };
@@ -39,7 +38,7 @@ export default function About() {
       </p>
       <p className="mb-4">
         I studied Digital Design & Development at Howest University College and
-        currently I&apos;m freelancing as Full-stack Developer. I have over 10
+        currently I&apos;m contracting as Full-stack Developer. I have over 10
         years of experience as a professional web & mobile developer and the
         last few years, I&apos;ve been specializing in React, React Native &
         Node.js (web) applications. Before I started contracting I used to work
