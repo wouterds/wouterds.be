@@ -41,7 +41,7 @@ export default function Experiments() {
       </p>
       <h2 className="text-lg font-medium mb-2">Aranet readings</h2>
       <p className="mb-4">
-        Every 3 minutes a Raspberry Pi pushes{' '}
+        Every 5 minutes a Raspberry Pi pushes{' '}
         <a className="underline" href="https://aranet.com/products/aranet4">
           Aranet4
         </a>{' '}
