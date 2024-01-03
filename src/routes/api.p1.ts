@@ -34,7 +34,11 @@ export const action = async (args: ActionFunctionArgs) => {
   );
   const total = data[data.length - 1].total;
   const peak = data[data.length - 1].peak;
-  const peakTime = getUnixTime(new Date(data[data.length - 1].peak_timestamp));
+  const [year, month, day, hour, minute] =
+    `${data[data.length - 1].peak_timestamp}`.match(/.{1,2}/g)?.flat() || [];
+  const peakTime = getUnixTime(
+    new Date(`20${year}-${month}-${day} ${hour}:${minute}`),
+  );
   const time = getUnixTime(new Date());
 
   const raw = await context.env.WOUTERDSBE.get('p1');
