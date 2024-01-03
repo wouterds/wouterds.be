@@ -1,4 +1,5 @@
 import { ActionFunctionArgs, json } from '@remix-run/cloudflare';
+import { differenceInMinutes, fromUnixTime, getUnixTime } from 'date-fns';
 
 export const action = async (args: ActionFunctionArgs) => {
   const request = args.request;
@@ -10,9 +11,39 @@ export const action = async (args: ActionFunctionArgs) => {
   }
 
   const body = (await request.text()) || '';
-  const data = JSON.parse(`[${body.split('}{').join('},{')}]`);
+  const data: Array<{
+    active: number;
+    total: number;
+    peak: number;
+    peak_timestamp: number;
+  }> = JSON.parse(`[${body.split('}{').join('},{')}]`);
 
-  console.log(data);
+  const active = data.reduce((acc, curr) => acc + curr.active, 0) / data.length;
+  const total = data[data.length - 1].total;
+  // const peak = data[data.length - 1].peak;
+  // const peakTime = getUnixTime(new Date(data[data.length - 1].peak_timestamp));
+  const time = getUnixTime(new Date());
 
-  return json({ success: true, data });
+  const raw = await context.env.WOUTERDSBE.get('p1');
+  const values: P1Record[] = raw ? JSON.parse(raw) : [];
+
+  const lastPush = fromUnixTime(values[values.length - 1]?.time ?? 0);
+  if (differenceInMinutes(new Date(), lastPush) < 5) {
+    return json({ success: false }, { status: 429 });
+  }
+
+  values.push({
+    active,
+    total,
+    time,
+  });
+
+  // readings are every 5 minutes, so keep 24 hours worth of data
+  if (values.length > (24 * 60) / 5) {
+    values.shift();
+  }
+
+  await context.env.WOUTERDSBE.put('p1', JSON.stringify(values));
+
+  return json({ success: true });
 };
