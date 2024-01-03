@@ -5,6 +5,7 @@ import {
   fromUnixTime,
   getDayOfYear,
   getUnixTime,
+  isEqual,
 } from 'date-fns';
 
 export const action = async (args: ActionFunctionArgs) => {
@@ -53,16 +54,19 @@ export const action = async (args: ActionFunctionArgs) => {
   const history: P1HistoryRecord[] = rawHistory ? JSON.parse(rawHistory) : [];
   const lastHistoryRecord = history[history.length - 1];
 
+  const yesterday = getUnixTime(endOfYesterday());
+
   if (
+    // if there's no history yet
     !lastHistoryRecord ||
-    getDayOfYear(endOfYesterday()) !==
-      getDayOfYear(fromUnixTime(lastHistoryRecord.time))
+    // or the last entry is not yesterday
+    yesterday !== lastHistoryRecord.time
   ) {
     history.push({
       total,
       peak,
       peakTime,
-      time: getUnixTime(endOfYesterday()),
+      time: yesterday,
     });
 
     await context.env.WOUTERDSBE.put('p1-history', JSON.stringify(history));
