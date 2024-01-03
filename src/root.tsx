@@ -33,7 +33,9 @@ export const loader = async (args: LoaderFunctionArgs) => {
   const context = args.context as Context;
   const url = context.url;
   const location = new URL(args.request.url);
-  const canonical = new URL(location.pathname, url).href;
+  const canonical = new URL(location.pathname, url).href
+    // remove trailing slash
+    ?.replace(/\/$/, '');
 
   return {
     url: context.url,
