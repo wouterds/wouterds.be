@@ -1,5 +1,7 @@
 import { Link } from '@remix-run/react';
 
+import Typewriter from './Typewriter';
+
 type Props = {
   ray?: string | null;
 };
@@ -11,7 +13,11 @@ const Footer = ({ ray }: Props) => {
         <div className="flex justify-between gap-2">
           <p>&copy; {new Date().getFullYear()} Wouter De Schuyter</p>
           <p>
-            <Link to="/experiments">experiments</Link>
+            <Link to="/experiments" title="experiments">
+              <Typewriter delay={3000} interval={150}>
+                experiments
+              </Typewriter>
+            </Link>
           </p>
         </div>
       </footer>
