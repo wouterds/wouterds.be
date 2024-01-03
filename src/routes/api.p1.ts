@@ -56,7 +56,7 @@ export const action = async (args: ActionFunctionArgs) => {
   if (
     !lastHistoryRecord ||
     getDayOfYear(endOfYesterday()) !==
-      getDayOfYear(fromUnixTime(lastHistoryRecord.time * 1000))
+      getDayOfYear(fromUnixTime(lastHistoryRecord.time))
   ) {
     history.push({
       total,
