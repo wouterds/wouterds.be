@@ -18,6 +18,10 @@ export const action = async (args: ActionFunctionArgs) => {
   }
 
   const body = (await request.text()) || '';
+  if (!body) {
+    return json({ success: false }, { status: 400 });
+  }
+
   const data: Array<{
     active: number;
     total: number;
