@@ -21,7 +21,7 @@ export default function Index() {
 
   return (
     <>
-      <header className="text-center mb-14">
+      <header className="text-center mb-12">
         <div className="relative overflow-hidden rounded-full w-32 h-32 mx-auto mb-4 bg-zinc-100 dark:bg-zinc-800 dark:bg-opacity-50">
           <img
             src="/images/wouterds-2024-spectrum.jpg"

@@ -17,7 +17,7 @@ const Footer = ({ ray }: Props) => {
       </footer>
 
       {ray && (
-        <p className="text-center text-zinc-400 dark:text-zinc-500 py-3">
+        <p className="text-center text-zinc-400 dark:text-zinc-500 mt-3">
           {ray}
         </p>
       )}
