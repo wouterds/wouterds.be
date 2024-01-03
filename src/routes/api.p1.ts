@@ -63,7 +63,7 @@ export const action = async (args: ActionFunctionArgs) => {
       time,
     });
 
-    await context.env.WOUTERDSBE.put('p1-history', JSON.stringify(values));
+    await context.env.WOUTERDSBE.put('p1-history', JSON.stringify(history));
   }
 
   return json({ success: true });
