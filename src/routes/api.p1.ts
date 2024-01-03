@@ -24,10 +24,12 @@ export const action = async (args: ActionFunctionArgs) => {
     peak_timestamp: number;
   }> = JSON.parse(`[${body.split('}{').join('},{')}]`);
 
-  const active = data.reduce((acc, curr) => acc + curr.active, 0) / data.length;
+  const active = Math.round(
+    data.reduce((acc, curr) => acc + curr.active, 0) / data.length,
+  );
   const total = data[data.length - 1].total;
-  // const peak = data[data.length - 1].peak;
-  // const peakTime = getUnixTime(new Date(data[data.length - 1].peak_timestamp));
+  const peak = data[data.length - 1].peak;
+  const peakTime = getUnixTime(new Date(data[data.length - 1].peak_timestamp));
   const time = getUnixTime(new Date());
 
   const raw = await context.env.WOUTERDSBE.get('p1');
@@ -58,9 +60,9 @@ export const action = async (args: ActionFunctionArgs) => {
   ) {
     history.push({
       total,
-      peak: total,
-      peakTime: time,
-      time,
+      peak,
+      peakTime,
+      time: getUnixTime(endOfYesterday()),
     });
 
     await context.env.WOUTERDSBE.put('p1-history', JSON.stringify(history));
