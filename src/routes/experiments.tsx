@@ -75,7 +75,7 @@ export default function Experiments() {
         <a className="underline" href="https://aranet.com/products/aranet4">
           Aranet4
         </a>{' '}
-        bluetooth readings to{' '}
+        readings to{' '}
         <a className="underline" href="https://developers.cloudflare.com/kv/">
           Cloudflare Workers KV
         </a>
@@ -232,7 +232,7 @@ export default function Experiments() {
         <a className="underline" href="https://www.homewizard.com/p1-meter/">
           P1 meter
         </a>{' '}
-        energy readings to{' '}
+        readings to{' '}
         <a className="underline" href="https://developers.cloudflare.com/kv/">
           Cloudflare Workers KV
         </a>
