@@ -43,14 +43,14 @@ export const action = async (args: ActionFunctionArgs) => {
   const values: P1Record[] = raw ? JSON.parse(raw) : [];
 
   const lastPush = fromUnixTime(values[values.length - 1]?.time ?? 0);
-  if (differenceInMinutes(new Date(), lastPush) < 5) {
+  if (differenceInMinutes(new Date(), lastPush) < 10) {
     return json({ success: false }, { status: 429 });
   }
 
   values.push({ active, total, time });
 
-  // readings are every 5 minutes, so keep 24 hours worth of data
-  if (values.length > (24 * 60) / 5) {
+  // readings are every 10 minutes, so keep 24 hours worth of data
+  if (values.length > (24 * 60) / 10) {
     values.shift();
   }
 
