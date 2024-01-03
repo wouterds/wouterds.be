@@ -70,7 +70,7 @@ export default function Experiments() {
           <div className="py-2">
             <span className="font-semibold">{record.co2}</span> ppm
           </div>
-          <div className="relative aspect-[3/1] -mb-2">
+          <div className="relative aspect-[4/1] -my-1">
             <ResponsiveContainer>
               <LineChart data={records}>
                 <Line
@@ -101,7 +101,7 @@ export default function Experiments() {
             <span className="font-semibold">{record.temperature}</span>
             ºC
           </div>
-          <div className="relative aspect-[3/1] -mb-2">
+          <div className="relative aspect-[4/1] -my-1">
             <ResponsiveContainer>
               <LineChart data={records}>
                 <Line
@@ -132,7 +132,7 @@ export default function Experiments() {
           <div className="py-2">
             <span className="font-semibold">{record.humidity}</span>%
           </div>
-          <div className="relative aspect-[3/1] -mb-2">
+          <div className="relative aspect-[4/1] -my-1">
             <ResponsiveContainer>
               <LineChart data={records}>
                 <Line
@@ -162,7 +162,7 @@ export default function Experiments() {
           <div className="py-2">
             <span className="font-semibold">{record.pressure}</span> hPa
           </div>
-          <div className="relative aspect-[3/1] -mb-2">
+          <div className="relative aspect-[4/1] -my-1">
             <ResponsiveContainer>
               <LineChart data={records}>
                 <Line
