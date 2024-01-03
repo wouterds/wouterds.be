@@ -11,4 +11,11 @@ export declare global {
     total: number;
     time: number;
   };
+
+  export type P1HistoryRecord = {
+    total: number;
+    peak: number;
+    peakTime: number;
+    time: number;
+  };
 }
