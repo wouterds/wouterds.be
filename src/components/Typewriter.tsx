@@ -8,14 +8,10 @@ type Props = {
 
 const Typewriter = ({ children, interval, delay }: Props) => {
   const [blinkingBlock, setBlinkingBlock] = useState(false);
-  const [currentText, setCurrentText] = useState(children);
+  const [currentText, setCurrentText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [started, setStarted] = useState(false);
   const [ended, setEnded] = useState(false);
-
-  useEffect(() => {
-    setCurrentText('');
-  }, []);
 
   useEffect(() => {
     const timeout = setTimeout(() => {

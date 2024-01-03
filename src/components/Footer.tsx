@@ -14,9 +14,7 @@ const Footer = ({ ray }: Props) => {
           <p>&copy; {new Date().getFullYear()} Wouter De Schuyter</p>
           <p>
             <Link to="/experiments" title="experiments">
-              <Typewriter delay={3000} interval={150}>
-                experiments
-              </Typewriter>
+              experiments
             </Link>
           </p>
         </div>
@@ -24,7 +22,9 @@ const Footer = ({ ray }: Props) => {
 
       {ray && (
         <p className="text-center text-zinc-400 dark:text-zinc-500 mt-3">
-          {ray}
+          <Typewriter delay={3000} interval={150}>
+            {ray}
+          </Typewriter>
         </p>
       )}
     </>
