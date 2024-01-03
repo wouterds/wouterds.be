@@ -14,6 +14,12 @@ const Typewriter = ({ children, interval, delay }: Props) => {
   const [ended, setEnded] = useState(false);
 
   useEffect(() => {
+    setCurrentText('');
+    setCurrentIndex(0);
+    setEnded(false);
+  }, [children]);
+
+  useEffect(() => {
     const timeout = setTimeout(() => {
       setStarted(true);
     }, delay);
@@ -34,7 +40,7 @@ const Typewriter = ({ children, interval, delay }: Props) => {
   }, [ended, blinkingBlock]);
 
   useEffect(() => {
-    if (!started) {
+    if (!started || ended) {
       return;
     }
 
@@ -51,7 +57,7 @@ const Typewriter = ({ children, interval, delay }: Props) => {
     } else {
       setEnded(true);
     }
-  }, [started, currentIndex, interval, children]);
+  }, [started, ended, currentIndex, interval, children]);
 
   return (
     <span className="relative">
