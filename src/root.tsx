@@ -135,7 +135,7 @@ export default function App() {
           sizes="16x16"
           href="/favicon-16x16.png"
         />
-        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link
           rel="alternate"
           type="application/rss+xml"
