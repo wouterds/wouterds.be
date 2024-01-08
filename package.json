@@ -13,7 +13,7 @@
     "codegen": "graphql-codegen"
   },
   "dependencies": {
-    "@commitlint/config-conventional": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.4",
     "@heroicons/react": "^2.1.1",
     "@hookform/resolvers": "^3.3.3",
     "@marsidev/react-turnstile": "^0.4.0",
