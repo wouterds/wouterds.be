@@ -15,7 +15,7 @@
   "dependencies": {
     "@commitlint/config-conventional": "^18.4.3",
     "@heroicons/react": "^2.1.1",
-    "@hookform/resolvers": "^3.3.3",
+    "@hookform/resolvers": "^3.3.4",
     "@marsidev/react-turnstile": "^0.4.0",
     "@remix-run/cloudflare": "^2.4.1",
     "@remix-run/cloudflare-pages": "^2.4.1",
