@@ -36,7 +36,7 @@
     "react-datocms": "^4.1.3",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.49.2",
-    "react-use": "^17.4.2",
+    "react-use": "^17.4.4",
     "recharts": "^2.10.3",
     "remix-utils": "^7.5.0",
     "zod": "^3.22.4"
