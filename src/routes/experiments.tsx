@@ -372,7 +372,7 @@ export default function Experiments() {
               <ResponsiveContainer>
                 <BarChart data={P1HistoryRecords}>
                   <YAxis hide />
-                  <Bar dataKey="usage" fill="#000" />
+                  <Bar dataKey="usage" fill={isDarkMode ? '#fff' : '#000'} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
