@@ -12,30 +12,6 @@ import {
   YAxis,
 } from 'recharts';
 
-const DUMMY_DATA = [
-  { total: 7329, peak: 3935, peakTime: 1704219300, time: 1704239999 },
-  { total: 7340.166, peak: 3935, peakTime: 1704219300, time: 1704326399 },
-  { total: 7356.855, peak: 3935, peakTime: 1704219300, time: 1704412799 },
-  { total: 7383.933, peak: 3994, peakTime: 1704457800, time: 1704499199 },
-  { total: 7403.136, peak: 3994, peakTime: 1704457800, time: 1704585599 },
-  { total: 7431.676, peak: 3994, peakTime: 1704457800, time: 1704671999 },
-  { total: 7466.716, peak: 4129, peakTime: 1704706200, time: 1704758399 },
-  { total: 7505.368, peak: 5277, peakTime: 1704823200, time: 1704844799 },
-  { total: 7543.138, peak: 5277, peakTime: 1704823200, time: 1704931199 },
-  { total: 7582.57, peak: 5277, peakTime: 1704823200, time: 1705017599 },
-  { total: 7608.711, peak: 5277, peakTime: 1704823200, time: 1705103999 },
-  { total: 7634.4, peak: 5277, peakTime: 1704823200, time: 1705190399 },
-  { total: 7658.767, peak: 5277, peakTime: 1704823200, time: 1705276799 },
-  { total: 7686.467, peak: 5277, peakTime: 1704823200, time: 1705363199 },
-  { total: 7713.999, peak: 5277, peakTime: 1704823200, time: 1705449599 },
-  { total: 7743.354, peak: 5277, peakTime: 1704823200, time: 1705535999 },
-  { total: 7762.29, peak: 5277, peakTime: 1704823200, time: 1705622399 },
-  { total: 7798.23, peak: 5277, peakTime: 1704823200, time: 1705708799 },
-  { total: 7814.446, peak: 5277, peakTime: 1704823200, time: 1705795199 },
-  { total: 7852.123, peak: 5351, peakTime: 1705835700, time: 1705881599 },
-  { total: 7873.847, peak: 5351, peakTime: 1705835700, time: 1705967999 },
-];
-
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   const env = (context as Context).env;
 
