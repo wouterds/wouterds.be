@@ -318,7 +318,7 @@ export default function Experiments() {
         <ul className="gap-1.5 text-center">
           <li className="border border-black dark:border-white">
             <div className="py-2">
-              <span className="font-semibold">{P1Record.active}</span> W
+              <span className="font-semibold">{P1Record.active}</span> Wh
             </div>
             <div className="relative aspect-[8/1] sm:aspect-[10/1] -mt-1">
               <ResponsiveContainer>
@@ -366,7 +366,7 @@ export default function Experiments() {
               <span className="font-semibold">
                 {P1HistoryRecord.usage.toFixed(2)}
               </span>{' '}
-              kW
+              kWh
             </div>
             <div className="relative aspect-[8/1] sm:aspect-[10/1] -mt-1">
               <ResponsiveContainer>
@@ -379,22 +379,21 @@ export default function Experiments() {
             <div
               className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
               style={{ margin: 1 }}>
-              power usage (rolling 30 days)
+              power usage (daily total)
             </div>
           </li>
         </ul>
       )}
 
       <p className="flex justify-between mt-2">
-        {!!peak?.usage && (
-          <span>
-            peak: {(peak.usage / 1000).toFixed(2)} kW,{' '}
-            {format(fromUnixTime(peak.time), 'dd.MM.yyyy, HH:mm')}
-          </span>
-        )}
-
         {lastP1HistoryUpdate && (
           <span>last updated: {lastP1HistoryUpdate}</span>
+        )}
+        {!!peak?.usage && (
+          <span>
+            peak: {(peak.usage / 1000).toFixed(2)} kWh @{' '}
+            {format(fromUnixTime(peak.time), 'dd.MM.yyyy, HH:mm')}
+          </span>
         )}
       </p>
     </>
