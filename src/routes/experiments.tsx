@@ -3,20 +3,92 @@ import { useLoaderData, useRevalidator } from '@remix-run/react';
 import { format, formatDistanceToNowStrict, fromUnixTime } from 'date-fns';
 import { useState } from 'react';
 import { useInterval, useMedia } from 'react-use';
-import { Line, LineChart, ResponsiveContainer, YAxis } from 'recharts';
+import {
+  Bar,
+  BarChart,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  YAxis,
+} from 'recharts';
+
+const DUMMY_DATA = [
+  { total: 7329, peak: 3935, peakTime: 1704219300, time: 1704239999 },
+  { total: 7340.166, peak: 3935, peakTime: 1704219300, time: 1704326399 },
+  { total: 7356.855, peak: 3935, peakTime: 1704219300, time: 1704412799 },
+  { total: 7383.933, peak: 3994, peakTime: 1704457800, time: 1704499199 },
+  { total: 7403.136, peak: 3994, peakTime: 1704457800, time: 1704585599 },
+  { total: 7431.676, peak: 3994, peakTime: 1704457800, time: 1704671999 },
+  { total: 7466.716, peak: 4129, peakTime: 1704706200, time: 1704758399 },
+  { total: 7505.368, peak: 5277, peakTime: 1704823200, time: 1704844799 },
+  { total: 7543.138, peak: 5277, peakTime: 1704823200, time: 1704931199 },
+  { total: 7582.57, peak: 5277, peakTime: 1704823200, time: 1705017599 },
+  { total: 7608.711, peak: 5277, peakTime: 1704823200, time: 1705103999 },
+  { total: 7634.4, peak: 5277, peakTime: 1704823200, time: 1705190399 },
+  { total: 7658.767, peak: 5277, peakTime: 1704823200, time: 1705276799 },
+  { total: 7686.467, peak: 5277, peakTime: 1704823200, time: 1705363199 },
+  { total: 7713.999, peak: 5277, peakTime: 1704823200, time: 1705449599 },
+  { total: 7743.354, peak: 5277, peakTime: 1704823200, time: 1705535999 },
+  { total: 7762.29, peak: 5277, peakTime: 1704823200, time: 1705622399 },
+  { total: 7798.23, peak: 5277, peakTime: 1704823200, time: 1705708799 },
+  { total: 7814.446, peak: 5277, peakTime: 1704823200, time: 1705795199 },
+  { total: 7852.123, peak: 5351, peakTime: 1705835700, time: 1705881599 },
+  { total: 7873.847, peak: 5351, peakTime: 1705835700, time: 1705967999 },
+];
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   const env = (context as Context).env;
 
-  const aranetRecords = await env.WOUTERDSBE.get('aranet').then((value) => {
-    return JSON.parse(value || '') as AranetRecord[];
-  });
+  const aranetRecords: AranetRecord[] = [];
+  try {
+    aranetRecords.push(
+      ...(await env.WOUTERDSBE.get('aranet').then((value) => {
+        return JSON.parse(value || '');
+      })),
+    );
+  } catch {
+    // noop
+  }
 
-  const P1Records = await env.WOUTERDSBE.get('p1').then((value) => {
-    return JSON.parse(value || '') as P1Record[];
-  });
+  const P1Records: P1Record[] = [];
+  try {
+    P1Records.push(
+      ...(await env.WOUTERDSBE.get('p1').then((value) => {
+        return JSON.parse(value || '');
+      })),
+    );
+  } catch {
+    // noop
+  }
 
-  return { aranetRecords, P1Records };
+  const P1HistoryRecordsData: P1HistoryRecord[] = [];
+  try {
+    P1HistoryRecordsData.push(
+      ...(await env.WOUTERDSBE.get('p1-history').then((value) => {
+        return JSON.parse(value || '');
+      })),
+    );
+  } catch {
+    // noop
+  }
+
+  const peakRecord = P1HistoryRecordsData.find(
+    (record) =>
+      record.peak === Math.max(...P1HistoryRecordsData.map((r) => r.peak)),
+  );
+  const peak = {
+    usage: peakRecord?.peak || 0,
+    time: peakRecord?.peakTime || 0,
+  };
+
+  const P1HistoryRecords: Array<{ usage: number; time: number }> =
+    P1HistoryRecordsData.map((record, index) => ({
+      usage:
+        index === 0 ? 0 : record.total - P1HistoryRecordsData[index - 1].total,
+      time: record.time,
+    })).slice(1);
+
+  return { aranetRecords, P1Records, peak, P1HistoryRecords };
 };
 
 export const meta: MetaFunction = () => {
@@ -30,36 +102,61 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Experiments() {
-  const { aranetRecords, P1Records } = useLoaderData<typeof loader>();
+  const { aranetRecords, P1Records, P1HistoryRecords, peak } =
+    useLoaderData<typeof loader>();
   const aranetRecord = aranetRecords[aranetRecords.length - 1];
   const P1Record = P1Records[P1Records.length - 1];
+  const P1HistoryRecord = P1HistoryRecords[P1HistoryRecords.length - 1];
   const { revalidate } = useRevalidator();
   const isDarkMode = useMedia('(prefers-color-scheme: dark)', false);
   const [lastAranetUpdate, setLastAranetUpdate] = useState(
-    formatDistanceToNowStrict(fromUnixTime(aranetRecord.time), {
-      addSuffix: true,
-    }),
+    aranetRecord?.time
+      ? formatDistanceToNowStrict(fromUnixTime(aranetRecord?.time), {
+          addSuffix: true,
+        })
+      : null,
   );
   const [lastP1Update, setLastP1Update] = useState(
-    formatDistanceToNowStrict(fromUnixTime(P1Record.time), {
-      addSuffix: true,
-    }),
+    P1Record?.time
+      ? formatDistanceToNowStrict(fromUnixTime(P1Record?.time), {
+          addSuffix: true,
+        })
+      : null,
+  );
+  const [lastP1HistoryUpdate, setLastP1HistoryUpdate] = useState(
+    P1HistoryRecord?.time
+      ? formatDistanceToNowStrict(fromUnixTime(P1HistoryRecord?.time), {
+          addSuffix: true,
+        })
+      : null,
   );
 
   useInterval(revalidate, 1000 * 30);
 
   useInterval(() => {
-    setLastAranetUpdate(
-      formatDistanceToNowStrict(fromUnixTime(aranetRecord.time), {
-        addSuffix: true,
-      }),
-    );
+    if (aranetRecord) {
+      setLastAranetUpdate(
+        formatDistanceToNowStrict(fromUnixTime(aranetRecord.time), {
+          addSuffix: true,
+        }),
+      );
+    }
 
-    setLastP1Update(
-      formatDistanceToNowStrict(fromUnixTime(P1Record.time), {
-        addSuffix: true,
-      }),
-    );
+    if (P1Record) {
+      setLastP1Update(
+        formatDistanceToNowStrict(fromUnixTime(P1Record.time), {
+          addSuffix: true,
+        }),
+      );
+    }
+
+    if (P1HistoryRecord) {
+      setLastP1HistoryUpdate(
+        formatDistanceToNowStrict(fromUnixTime(P1HistoryRecord.time), {
+          addSuffix: true,
+        }),
+      );
+    }
   }, 1000);
 
   return (
@@ -81,142 +178,144 @@ export default function Experiments() {
         </a>
         .
       </p>
-      <ul className="gap-1.5 grid grid-cols-2 sm:grid-cols-4 text-center">
-        <li className="border border-black dark:border-white">
-          <div className="py-2">
-            <span className="font-semibold">{aranetRecord.co2}</span> ppm
-          </div>
-          <div className="relative aspect-[4/1] -my-1">
-            <ResponsiveContainer>
-              <LineChart data={aranetRecords}>
-                <Line
-                  type="monotone"
-                  dataKey="co2"
-                  stroke={isDarkMode ? '#fff' : '#000'}
-                  strokeWidth={1.5}
-                  dot={false}
-                />
-                <YAxis
-                  hide
-                  domain={[
-                    Math.min(...aranetRecords.map((record) => record.co2)) *
-                      0.7,
-                    Math.max(...aranetRecords.map((record) => record.co2)),
-                  ]}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-          <div
-            className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
-            style={{ margin: 1 }}>
-            co2
-          </div>
-        </li>
-        <li className="border border-black dark:border-white">
-          <div className="py-2">
-            <span className="font-semibold">{aranetRecord.temperature}</span>
-            ºC
-          </div>
-          <div className="relative aspect-[4/1] -my-1">
-            <ResponsiveContainer>
-              <LineChart data={aranetRecords}>
-                <Line
-                  type="monotone"
-                  dataKey="temperature"
-                  stroke={isDarkMode ? '#fff' : '#000'}
-                  strokeWidth={1.5}
-                  dot={false}
-                />
-                <YAxis
-                  hide
-                  domain={[
-                    Math.min(
-                      ...aranetRecords.map((record) => record.temperature),
-                    ) * 0.85,
-                    Math.max(
-                      ...aranetRecords.map((record) => record.temperature),
-                    ),
-                  ]}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-          <div
-            className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
-            style={{ margin: 1 }}>
-            temperature
-          </div>
-        </li>
-        <li className="border border-black dark:border-white">
-          <div className="py-2">
-            <span className="font-semibold">{aranetRecord.humidity}</span>%
-          </div>
-          <div className="relative aspect-[4/1] -my-1">
-            <ResponsiveContainer>
-              <LineChart data={aranetRecords}>
-                <Line
-                  type="monotone"
-                  dataKey="humidity"
-                  stroke={isDarkMode ? '#fff' : '#000'}
-                  strokeWidth={1.5}
-                  dot={false}
-                />
-                <YAxis
-                  hide
-                  domain={[
-                    Math.min(
-                      ...aranetRecords.map((record) => record.humidity),
-                    ) * 0.9,
-                    Math.max(
-                      ...aranetRecords.map((record) => record.humidity),
-                    ) * 0.8,
-                  ]}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-          <div
-            className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
-            style={{ margin: 1 }}>
-            humidity
-          </div>
-        </li>
-        <li className="border border-black dark:border-white">
-          <div className="py-2">
-            <span className="font-semibold">{aranetRecord.pressure}</span> hPa
-          </div>
-          <div className="relative aspect-[4/1] -my-1">
-            <ResponsiveContainer>
-              <LineChart data={aranetRecords}>
-                <Line
-                  type="monotone"
-                  dataKey="pressure"
-                  stroke={isDarkMode ? '#fff' : '#000'}
-                  strokeWidth={1.5}
-                  dot={false}
-                />
-                <YAxis
-                  hide
-                  domain={[
-                    Math.min(
-                      ...aranetRecords.map((record) => record.pressure),
-                    ) * 0.995,
-                    Math.max(
-                      ...aranetRecords.map((record) => record.pressure),
-                    ) * 1.001,
-                  ]}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-          <div
-            className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
-            style={{ margin: 1 }}>
-            pressure
-          </div>
-        </li>
-      </ul>
+      {aranetRecord && (
+        <ul className="gap-1.5 grid grid-cols-2 sm:grid-cols-4 text-center">
+          <li className="border border-black dark:border-white">
+            <div className="py-2">
+              <span className="font-semibold">{aranetRecord.co2}</span> ppm
+            </div>
+            <div className="relative aspect-[4/1] -my-1">
+              <ResponsiveContainer>
+                <LineChart data={aranetRecords}>
+                  <Line
+                    type="monotone"
+                    dataKey="co2"
+                    stroke={isDarkMode ? '#fff' : '#000'}
+                    strokeWidth={1.5}
+                    dot={false}
+                  />
+                  <YAxis
+                    hide
+                    domain={[
+                      Math.min(...aranetRecords.map((record) => record.co2)) *
+                        0.7,
+                      Math.max(...aranetRecords.map((record) => record.co2)),
+                    ]}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <div
+              className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
+              style={{ margin: 1 }}>
+              co2
+            </div>
+          </li>
+          <li className="border border-black dark:border-white">
+            <div className="py-2">
+              <span className="font-semibold">{aranetRecord.temperature}</span>
+              ºC
+            </div>
+            <div className="relative aspect-[4/1] -my-1">
+              <ResponsiveContainer>
+                <LineChart data={aranetRecords}>
+                  <Line
+                    type="monotone"
+                    dataKey="temperature"
+                    stroke={isDarkMode ? '#fff' : '#000'}
+                    strokeWidth={1.5}
+                    dot={false}
+                  />
+                  <YAxis
+                    hide
+                    domain={[
+                      Math.min(
+                        ...aranetRecords.map((record) => record.temperature),
+                      ) * 0.85,
+                      Math.max(
+                        ...aranetRecords.map((record) => record.temperature),
+                      ),
+                    ]}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <div
+              className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
+              style={{ margin: 1 }}>
+              temperature
+            </div>
+          </li>
+          <li className="border border-black dark:border-white">
+            <div className="py-2">
+              <span className="font-semibold">{aranetRecord.humidity}</span>%
+            </div>
+            <div className="relative aspect-[4/1] -my-1">
+              <ResponsiveContainer>
+                <LineChart data={aranetRecords}>
+                  <Line
+                    type="monotone"
+                    dataKey="humidity"
+                    stroke={isDarkMode ? '#fff' : '#000'}
+                    strokeWidth={1.5}
+                    dot={false}
+                  />
+                  <YAxis
+                    hide
+                    domain={[
+                      Math.min(
+                        ...aranetRecords.map((record) => record.humidity),
+                      ) * 0.9,
+                      Math.max(
+                        ...aranetRecords.map((record) => record.humidity),
+                      ) * 0.8,
+                    ]}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <div
+              className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
+              style={{ margin: 1 }}>
+              humidity
+            </div>
+          </li>
+          <li className="border border-black dark:border-white">
+            <div className="py-2">
+              <span className="font-semibold">{aranetRecord.pressure}</span> hPa
+            </div>
+            <div className="relative aspect-[4/1] -my-1">
+              <ResponsiveContainer>
+                <LineChart data={aranetRecords}>
+                  <Line
+                    type="monotone"
+                    dataKey="pressure"
+                    stroke={isDarkMode ? '#fff' : '#000'}
+                    strokeWidth={1.5}
+                    dot={false}
+                  />
+                  <YAxis
+                    hide
+                    domain={[
+                      Math.min(
+                        ...aranetRecords.map((record) => record.pressure),
+                      ) * 0.995,
+                      Math.max(
+                        ...aranetRecords.map((record) => record.pressure),
+                      ) * 1.001,
+                    ]}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <div
+              className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
+              style={{ margin: 1 }}>
+              pressure
+            </div>
+          </li>
+        </ul>
+      )}
       {lastAranetUpdate && (
         <p
           className="flex justify-between mt-3"
@@ -239,38 +338,43 @@ export default function Experiments() {
         .
       </p>
 
-      <ul className="gap-1.5 text-center">
-        <li className="border border-black dark:border-white">
-          <div className="py-2">
-            <span className="font-semibold">{P1Record.active}</span> W
-          </div>
-          <div className="relative aspect-[8/1] sm:aspect-[10/1] -mt-1">
-            <ResponsiveContainer>
-              <LineChart data={P1Records}>
-                <Line
-                  type="monotone"
-                  dataKey="active"
-                  stroke={isDarkMode ? '#fff' : '#000'}
-                  strokeWidth={1.5}
-                  dot={false}
-                />
-                <YAxis
-                  hide
-                  domain={[
-                    Math.min(...P1Records.map((record) => record.active)) * 1.3,
-                    Math.max(...P1Records.map((record) => record.active)) * 0.7,
-                  ]}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-          <div
-            className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
-            style={{ margin: 1 }}>
-            power draw
-          </div>
-        </li>
-      </ul>
+      {P1Record && (
+        <ul className="gap-1.5 text-center">
+          <li className="border border-black dark:border-white">
+            <div className="py-2">
+              <span className="font-semibold">{P1Record.active}</span> W
+            </div>
+            <div className="relative aspect-[8/1] sm:aspect-[10/1] -mt-1">
+              <ResponsiveContainer>
+                <LineChart data={P1Records}>
+                  <Line
+                    type="monotone"
+                    dataKey="active"
+                    stroke={isDarkMode ? '#fff' : '#000'}
+                    strokeWidth={1.5}
+                    dot={false}
+                  />
+                  <YAxis
+                    hide
+                    domain={[
+                      Math.min(...P1Records.map((record) => record.active)) *
+                        1.3,
+                      Math.max(...P1Records.map((record) => record.active)) *
+                        0.7,
+                    ]}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <div
+              className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
+              style={{ margin: 1 }}>
+              power usage
+            </div>
+          </li>
+        </ul>
+      )}
+
       {lastP1Update && (
         <p
           className="flex justify-between mt-3"
@@ -278,6 +382,45 @@ export default function Experiments() {
           <span>last updated: {lastP1Update}</span>
         </p>
       )}
+
+      {P1HistoryRecord && (
+        <ul className="gap-1.5 text-center mt-4">
+          <li className="border border-black dark:border-white">
+            <div className="py-2">
+              <span className="font-semibold">
+                {P1HistoryRecord.usage.toFixed(2)}
+              </span>{' '}
+              kW
+            </div>
+            <div className="relative aspect-[8/1] sm:aspect-[10/1] -mt-1">
+              <ResponsiveContainer>
+                <BarChart data={P1HistoryRecords}>
+                  <YAxis hide />
+                  <Bar dataKey="usage" fill="#000" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div
+              className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
+              style={{ margin: 1 }}>
+              power usage (rolling 30 days)
+            </div>
+          </li>
+        </ul>
+      )}
+
+      <p className="flex justify-between mt-3">
+        {!!peak?.usage && (
+          <span>
+            peak: {(peak.usage / 1000).toFixed(2)} kW,{' '}
+            {format(fromUnixTime(peak.time), 'dd.MM.yyyy, HH:mm')}
+          </span>
+        )}
+
+        {lastP1HistoryUpdate && (
+          <span>last updated: {lastP1HistoryUpdate}</span>
+        )}
+      </p>
     </>
   );
 }
