@@ -294,7 +294,7 @@ export default function Experiments() {
       )}
       {lastAranetUpdate && (
         <p
-          className="flex justify-between mt-3"
+          className="flex justify-between mt-2"
           title={format(fromUnixTime(aranetRecord.time), 'HH:mm')}>
           <span>last updated: {lastAranetUpdate}</span>
           <span>battery: {aranetRecord.battery}%</span>
@@ -353,7 +353,7 @@ export default function Experiments() {
 
       {lastP1Update && (
         <p
-          className="flex justify-between mt-3"
+          className="flex justify-between mt-2"
           title={format(fromUnixTime(P1Record.time), 'HH:mm')}>
           <span>last updated: {lastP1Update}</span>
         </p>
@@ -385,7 +385,7 @@ export default function Experiments() {
         </ul>
       )}
 
-      <p className="flex justify-between mt-3">
+      <p className="flex justify-between mt-2">
         {!!peak?.usage && (
           <span>
             peak: {(peak.usage / 1000).toFixed(2)} kW,{' '}
