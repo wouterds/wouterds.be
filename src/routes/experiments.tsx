@@ -385,7 +385,7 @@ export default function Experiments() {
         </ul>
       )}
 
-      <p className="flex justify-between mt-2">
+      <p className="flex flex-col sm:flex-row gap-1 justify-start sm:justify-between mt-2">
         {lastP1HistoryUpdate && (
           <span>last updated: {lastP1HistoryUpdate}</span>
         )}
