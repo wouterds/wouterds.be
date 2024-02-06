@@ -45,7 +45,7 @@ export const handle: {
 } = {
   scripts: ({ data }) => {
     if (data.containsCodeBlocks) {
-      return [{ src: 'https://cdn.jsdelivr.net/npm/shiki' }];
+      return [{ src: 'https://cdn.jsdelivr.net/npm/shiki@v0.14.6' }];
     }
 
     return [];
