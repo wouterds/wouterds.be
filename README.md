@@ -2,6 +2,8 @@
 
 ![code-review](https://github.com/wouterds/wouterds.be/actions/workflows/code-review.yml/badge.svg?branch=main)
 ![release](https://github.com/wouterds/wouterds.be/actions/workflows/release.yml/badge.svg)
+[![Better Stack Badge](https://uptime.betterstack.com/status-badges/v2/monitor/za5r.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
+![code-size](https://img.shields.io/github/languages/code-size/wouterds/wouterds.be)
 
 My personal website, built in React/TypeScript with Remix & Cloudflare Workers and DatoCMS as headless CMS.
 
