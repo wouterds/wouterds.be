@@ -17,5 +17,4 @@ export const onRequest = createPagesFunctionHandler({
 
     return { env, url, ray };
   },
-  mode: build.mode,
 });
