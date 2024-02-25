@@ -24,7 +24,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
     status: 200,
     headers: {
       'Content-Type': 'application/xml',
-      'Cache-Control': 'public, max-age=86400',
+      'Cache-Control': 'public, max-age=86400, must-revalidate',
     },
   });
 };
