@@ -8,13 +8,13 @@ if (process.env.NODE_ENV === 'development') {
 
 export const onRequest = createPagesFunctionHandler({
   build,
-  getLoadContext: ({ env, request }) => {
+  getLoadContext: ({ context: { cloudflare }, request }) => {
     const { protocol, host } = new URL(request.url);
     const url = `${protocol}//${host}`;
     const rayId = request.headers.get('cf-ray');
     const colo = (request as unknown as { cf: { colo: string } })?.cf?.colo;
     const ray = rayId ? `${rayId}-${colo}` : rayId || colo;
 
-    return { env, url, ray };
+    return { env: cloudflare.env, url, ray };
   },
 });
