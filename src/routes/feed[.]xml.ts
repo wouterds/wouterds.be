@@ -88,6 +88,9 @@ export const loader = async (args: LoaderFunctionArgs) => {
 
   return new Response(feed.rss2(), {
     status: 200,
-    headers: { 'Content-Type': 'application/xml' },
+    headers: {
+      'Content-Type': 'application/xml',
+      'Cache-Control': 'public, max-age=86400, must-revalidate',
+    },
   });
 };

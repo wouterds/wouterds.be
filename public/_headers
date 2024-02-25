@@ -8,7 +8,3 @@ https://:project.pages.dev/*
 
 /robots.txt
   Cache-Control: public, max-age=86400, must-revalidate
-/sitemap.xml
-  Cache-Control: public, max-age=86400, must-revalidate
-/feed.xml
-  Cache-Control: public, max-age=86400, must-revalidate
