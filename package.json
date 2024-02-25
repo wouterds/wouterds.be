@@ -8,7 +8,7 @@
     "dev": "remix dev --manual -c \"npm run start\"",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx --fix ./src",
-    "start": "wrangler pages dev --compatibility-date=2023-06-21 ./public --kv WOUTERDSBE",
+    "start": "wrangler pages dev --compatibility-date=2023-06-21 ./public --port 3000 --kv WOUTERDSBE",
     "typecheck": "tsc",
     "codegen": "graphql-codegen"
   },
