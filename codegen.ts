@@ -7,7 +7,7 @@ const config: CodegenConfig = {
   overwrite: true,
   schema: [
     {
-      [process.env.DATOCMS_API_URL as string]: {
+      'https://graphql.datocms.com': {
         headers: {
           Authorization: `Bearer ${process.env.DATOCMS_API_KEY as string}`,
           'X-Exclude-Invalid': 'true',

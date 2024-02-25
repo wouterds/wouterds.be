@@ -42,7 +42,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
     ray: context.ray,
     canonical,
     posthog: {
-      host: context.env.POSTHOG_HOST,
+      host: 'https://eu.posthog.com',
       apiKey: context.env.POSTHOG_API_KEY,
     },
   };

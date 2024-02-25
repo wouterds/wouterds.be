@@ -99,7 +99,7 @@ export const action = async (args: ActionFunctionArgs) => {
       country ? getCountryName(country) : 'unknown' || country
     }</p>`;
 
-    const response = await fetch(`${context.env.MAILJET_API_URL}/send`, {
+    const response = await fetch('https://api.mailjet.com/v3.1/send', {
       method: 'POST',
       headers: {
         Authorization: `Basic ${btoa(
