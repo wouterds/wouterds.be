@@ -4,7 +4,7 @@ import { PostRepository } from '~/lib/repositories/post.server';
 
 export const loader = async (args: LoaderFunctionArgs) => {
   const context = args.context as Context;
-  const repository = new PostRepository('https://graphql.datocms.com', context.env.DATOCMS_API_KEY);
+  const repository = new PostRepository(context.env.DATOCMS_API_KEY);
 
   const posts = await repository.getPosts();
 
@@ -24,7 +24,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
     status: 200,
     headers: {
       'Content-Type': 'application/xml',
-      'Cache-Control': 'public, max-age=3600',
+      'Cache-Control': 'public, max-age=86400',
     },
   });
 };

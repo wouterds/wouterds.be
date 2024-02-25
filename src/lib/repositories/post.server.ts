@@ -6,28 +6,17 @@ import {
   PostsGetBySlugQuery,
   PostsGetBySlugQueryVariables,
 } from '~/graphql';
-import { fetchFromDato } from '~/lib/datocms/client.server';
 import { excerptFromContent } from '~/lib/datocms/structured-text-utils';
+
+import { DatoCMSRepository } from './abstract/datocms-repository.server';
 
 export type Post = PostsGetAllQuery['allPosts'][0] & { excerpt: string };
 
-export class PostRepository {
-  private _apiEndpoint: string;
-  private _apiKey: string;
-
-  public constructor(apiEndpoint: string, apiKey: string) {
-    this._apiEndpoint = apiEndpoint;
-    this._apiKey = apiKey;
-  }
-
+export class PostRepository extends DatoCMSRepository {
   public getPosts = async (limit: number = 100) => {
-    const data = await fetchFromDato<PostsGetAllQuery, PostsGetAllQueryVariables>(
+    const data = await this.fetch<PostsGetAllQuery, PostsGetAllQueryVariables>(
       PostsGetAllDocument,
-      {
-        apiEndpoint: this._apiEndpoint,
-        apiKey: this._apiKey,
-        variables: { limit },
-      },
+      { variables: { limit } },
     );
 
     const posts = data.allPosts.map(
@@ -42,13 +31,9 @@ export class PostRepository {
   };
 
   public getPostBySlug = async (slug: string) => {
-    const data = await fetchFromDato<PostsGetBySlugQuery, PostsGetBySlugQueryVariables>(
+    const data = await this.fetch<PostsGetBySlugQuery, PostsGetBySlugQueryVariables>(
       PostsGetBySlugDocument,
-      {
-        apiEndpoint: this._apiEndpoint,
-        apiKey: this._apiKey,
-        variables: { slug },
-      },
+      { variables: { slug } },
     );
 
     return data.post;
