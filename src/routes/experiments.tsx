@@ -3,14 +3,7 @@ import { useLoaderData, useRevalidator } from '@remix-run/react';
 import { format, formatDistanceToNowStrict, fromUnixTime } from 'date-fns';
 import { useState } from 'react';
 import { useInterval, useMedia } from 'react-use';
-import {
-  Bar,
-  BarChart,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  YAxis,
-} from 'recharts';
+import { Bar, BarChart, Line, LineChart, ResponsiveContainer, YAxis } from 'recharts';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   const env = (context as Context).env;
@@ -49,20 +42,19 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   }
 
   const peakRecord = P1HistoryRecordsData.find(
-    (record) =>
-      record.peak === Math.max(...P1HistoryRecordsData.map((r) => r.peak)),
+    (record) => record.peak === Math.max(...P1HistoryRecordsData.map((r) => r.peak)),
   );
   const peak = {
     usage: peakRecord?.peak || 0,
     time: peakRecord?.peakTime || 0,
   };
 
-  const P1HistoryRecords: Array<{ usage: number; time: number }> =
-    P1HistoryRecordsData.map((record, index) => ({
-      usage:
-        index === 0 ? 0 : record.total - P1HistoryRecordsData[index - 1].total,
+  const P1HistoryRecords: Array<{ usage: number; time: number }> = P1HistoryRecordsData.map(
+    (record, index) => ({
+      usage: index === 0 ? 0 : record.total - P1HistoryRecordsData[index - 1].total,
       time: record.time,
-    })).slice(1);
+    }),
+  ).slice(1);
 
   return { aranetRecords, P1Records, peak, P1HistoryRecords };
 };
@@ -78,8 +70,7 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Experiments() {
-  const { aranetRecords, P1Records, P1HistoryRecords, peak } =
-    useLoaderData<typeof loader>();
+  const { aranetRecords, P1Records, P1HistoryRecords, peak } = useLoaderData<typeof loader>();
   const aranetRecord = aranetRecords[aranetRecords.length - 1];
   const P1Record = P1Records[P1Records.length - 1];
   const P1HistoryRecord = P1HistoryRecords[P1HistoryRecords.length - 1];
@@ -139,8 +130,7 @@ export default function Experiments() {
     <>
       <h1 className="text-xl font-medium mb-2">Experiments</h1>
       <p className="mb-6">
-        This page is just a playground for random experiments. Not much to see
-        here!
+        This page is just a playground for random experiments. Not much to see here!
       </p>
       <h2 className="text-lg font-medium mb-2">Aranet readings</h2>
       <p className="mb-4">
@@ -173,8 +163,7 @@ export default function Experiments() {
                   <YAxis
                     hide
                     domain={[
-                      Math.min(...aranetRecords.map((record) => record.co2)) *
-                        0.7,
+                      Math.min(...aranetRecords.map((record) => record.co2)) * 0.7,
                       Math.max(...aranetRecords.map((record) => record.co2)),
                     ]}
                   />
@@ -205,12 +194,8 @@ export default function Experiments() {
                   <YAxis
                     hide
                     domain={[
-                      Math.min(
-                        ...aranetRecords.map((record) => record.temperature),
-                      ) * 0.85,
-                      Math.max(
-                        ...aranetRecords.map((record) => record.temperature),
-                      ),
+                      Math.min(...aranetRecords.map((record) => record.temperature)) * 0.85,
+                      Math.max(...aranetRecords.map((record) => record.temperature)),
                     ]}
                   />
                 </LineChart>
@@ -239,12 +224,8 @@ export default function Experiments() {
                   <YAxis
                     hide
                     domain={[
-                      Math.min(
-                        ...aranetRecords.map((record) => record.humidity),
-                      ) * 0.9,
-                      Math.max(
-                        ...aranetRecords.map((record) => record.humidity),
-                      ) * 0.8,
+                      Math.min(...aranetRecords.map((record) => record.humidity)) * 0.9,
+                      Math.max(...aranetRecords.map((record) => record.humidity)) * 0.8,
                     ]}
                   />
                 </LineChart>
@@ -273,12 +254,8 @@ export default function Experiments() {
                   <YAxis
                     hide
                     domain={[
-                      Math.min(
-                        ...aranetRecords.map((record) => record.pressure),
-                      ) * 0.995,
-                      Math.max(
-                        ...aranetRecords.map((record) => record.pressure),
-                      ) * 1.001,
+                      Math.min(...aranetRecords.map((record) => record.pressure)) * 0.995,
+                      Math.max(...aranetRecords.map((record) => record.pressure)) * 1.001,
                     ]}
                   />
                 </LineChart>
@@ -333,10 +310,8 @@ export default function Experiments() {
                   <YAxis
                     hide
                     domain={[
-                      Math.min(...P1Records.map((record) => record.active)) *
-                        1.3,
-                      Math.max(...P1Records.map((record) => record.active)) *
-                        0.7,
+                      Math.min(...P1Records.map((record) => record.active)) * 1.3,
+                      Math.max(...P1Records.map((record) => record.active)) * 0.7,
                     ]}
                   />
                 </LineChart>
@@ -363,10 +338,7 @@ export default function Experiments() {
         <ul className="gap-1.5 text-center mt-4">
           <li className="border border-black dark:border-white">
             <div className="py-2">
-              <span className="font-semibold">
-                {P1HistoryRecord.usage.toFixed(2)}
-              </span>{' '}
-              kWh
+              <span className="font-semibold">{P1HistoryRecord.usage.toFixed(2)}</span> kWh
             </div>
             <div className="relative aspect-[8/1] sm:aspect-[10/1] -mt-1">
               <ResponsiveContainer>
@@ -386,9 +358,7 @@ export default function Experiments() {
       )}
 
       <p className="flex flex-col sm:flex-row gap-1 justify-start sm:justify-between mt-2">
-        {lastP1HistoryUpdate && (
-          <span>last updated: {lastP1HistoryUpdate}</span>
-        )}
+        {lastP1HistoryUpdate && <span>last updated: {lastP1HistoryUpdate}</span>}
         {!!peak?.usage && (
           <span>
             peak: {(peak.usage / 1000).toFixed(2)} kWh @{' '}

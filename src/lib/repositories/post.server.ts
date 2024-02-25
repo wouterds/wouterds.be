@@ -21,14 +21,14 @@ export class PostRepository {
   }
 
   public getPosts = async (limit: number = 100) => {
-    const data = await fetchFromDato<
-      PostsGetAllQuery,
-      PostsGetAllQueryVariables
-    >(PostsGetAllDocument, {
-      apiEndpoint: this._apiEndpoint,
-      apiKey: this._apiKey,
-      variables: { limit },
-    });
+    const data = await fetchFromDato<PostsGetAllQuery, PostsGetAllQueryVariables>(
+      PostsGetAllDocument,
+      {
+        apiEndpoint: this._apiEndpoint,
+        apiKey: this._apiKey,
+        variables: { limit },
+      },
+    );
 
     const posts = data.allPosts.map(
       (post) =>
@@ -42,14 +42,14 @@ export class PostRepository {
   };
 
   public getPostBySlug = async (slug: string) => {
-    const data = await fetchFromDato<
-      PostsGetBySlugQuery,
-      PostsGetBySlugQueryVariables
-    >(PostsGetBySlugDocument, {
-      apiEndpoint: this._apiEndpoint,
-      apiKey: this._apiKey,
-      variables: { slug },
-    });
+    const data = await fetchFromDato<PostsGetBySlugQuery, PostsGetBySlugQueryVariables>(
+      PostsGetBySlugDocument,
+      {
+        apiEndpoint: this._apiEndpoint,
+        apiKey: this._apiKey,
+        variables: { slug },
+      },
+    );
 
     return data.post;
   };

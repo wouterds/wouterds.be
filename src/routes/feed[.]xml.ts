@@ -1,8 +1,5 @@
 import { LoaderFunctionArgs } from '@remix-run/cloudflare';
-import {
-  render,
-  StructuredTextDocument,
-} from 'datocms-structured-text-to-html-string';
+import { render, StructuredTextDocument } from 'datocms-structured-text-to-html-string';
 import { isStructuredText } from 'datocms-structured-text-utils';
 import { Feed } from 'feed';
 
@@ -11,10 +8,7 @@ import { PostRepository } from '~/lib/repositories/post.server';
 
 export const loader = async (args: LoaderFunctionArgs) => {
   const context = args.context as Context;
-  const repository = new PostRepository(
-    'https://graphql.datocms.com',
-    context.env.DATOCMS_API_KEY,
-  );
+  const repository = new PostRepository('https://graphql.datocms.com', context.env.DATOCMS_API_KEY);
 
   const posts = await repository.getPosts();
 
@@ -53,9 +47,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
                 images
                   .map((image, index) => [
                     renderNode('img', {
-                      src: `${context.url}/images${
-                        new URL(image.url).pathname
-                      }`,
+                      src: `${context.url}/images${new URL(image.url).pathname}`,
                       width: '100%',
                     }),
                     index !== images.length - 1 && renderNode('br'),

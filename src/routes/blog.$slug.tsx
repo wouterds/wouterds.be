@@ -3,28 +3,18 @@ import { useLoaderData } from '@remix-run/react';
 import { format } from 'date-fns';
 import { isCode } from 'datocms-structured-text-utils';
 import { useCallback, useEffect, useState } from 'react';
-import {
-  RenderBlockContext,
-  StructuredText,
-  StructuredTextDocument,
-} from 'react-datocms';
+import { RenderBlockContext, StructuredText, StructuredTextDocument } from 'react-datocms';
 import { useMedia } from 'react-use';
 import { ExternalScriptsFunction } from 'remix-utils/external-scripts';
 
 import { Image } from '~/components/Image';
 import { GalleryRecord, PostRecord, VideoRecord } from '~/graphql';
-import {
-  excerptFromContent,
-  plainTextFromContent,
-} from '~/lib/datocms/structured-text-utils';
+import { excerptFromContent, plainTextFromContent } from '~/lib/datocms/structured-text-utils';
 import { PostRepository } from '~/lib/repositories/post.server';
 
 export const loader = async (args: LoaderFunctionArgs) => {
   const context = args.context as Context;
-  const repository = new PostRepository(
-    'https://graphql.datocms.com',
-    context.env.DATOCMS_API_KEY,
-  );
+  const repository = new PostRepository('https://graphql.datocms.com', context.env.DATOCMS_API_KEY);
 
   const post = await repository.getPostBySlug(args.params.slug as string);
   if (!post) {
@@ -152,8 +142,7 @@ export default function BlogSlug() {
         Array.from(elements)
           .map(
             (code) =>
-              code.parentElement?.attributes?.getNamedItem?.('data-language')
-                ?.value as string,
+              code.parentElement?.attributes?.getNamedItem?.('data-language')?.value as string,
           )
           .filter((lang) => lang !== 'text')
           .filter(Boolean),
@@ -185,9 +174,7 @@ export default function BlogSlug() {
       className="prose prose-zinc dark:prose-dark dark:prose-invert prose-sm max-w-none text-xs leading-relaxed"
       ref={setRef}>
       <header className="mb-4">
-        <time
-          className="text-xs text-zinc-400 dark:text-zinc-500 mb-2 block"
-          dateTime={post.date}>
+        <time className="text-xs text-zinc-400 dark:text-zinc-500 mb-2 block" dateTime={post.date}>
           {format(new Date(post.date), 'MMMM do, yyyy')}
         </time>
         <h1 className="text-2xl font-medium my-0">{post.title}</h1>
@@ -203,9 +190,7 @@ export default function BlogSlug() {
 
 const renderBlock = ({
   record,
-}: RenderBlockContext<
-  (GalleryRecord | VideoRecord) & { __typename: string }
->) => {
+}: RenderBlockContext<(GalleryRecord | VideoRecord) & { __typename: string }>) => {
   if (record.__typename === 'GalleryRecord') {
     return (
       <ul className="not-prose flex flex-col gap-3">

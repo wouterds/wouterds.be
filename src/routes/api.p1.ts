@@ -1,10 +1,5 @@
 import { ActionFunctionArgs, json } from '@remix-run/cloudflare';
-import {
-  differenceInMinutes,
-  endOfYesterday,
-  fromUnixTime,
-  getUnixTime,
-} from 'date-fns';
+import { differenceInMinutes, endOfYesterday, fromUnixTime, getUnixTime } from 'date-fns';
 
 export const action = async (args: ActionFunctionArgs) => {
   const request = args.request;
@@ -27,16 +22,12 @@ export const action = async (args: ActionFunctionArgs) => {
     peak_timestamp: number;
   }> = JSON.parse(`[${body.split('}{').join('},{')}]`);
 
-  const active = Math.round(
-    data.reduce((acc, curr) => acc + curr.active, 0) / data.length,
-  );
+  const active = Math.round(data.reduce((acc, curr) => acc + curr.active, 0) / data.length);
   const total = data[data.length - 1].total;
   const peak = data[data.length - 1].peak;
   const [year, month, day, hour, minute] =
     `${data[data.length - 1].peak_timestamp}`.match(/.{1,2}/g)?.flat() || [];
-  const peakTime = getUnixTime(
-    new Date(`20${year}-${month}-${day} ${hour}:${minute}`),
-  );
+  const peakTime = getUnixTime(new Date(`20${year}-${month}-${day} ${hour}:${minute}`));
   const time = getUnixTime(new Date());
 
   const raw = await context.env.WOUTERDSBE.get('p1');

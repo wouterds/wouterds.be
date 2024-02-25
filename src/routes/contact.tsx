@@ -1,11 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Turnstile } from '@marsidev/react-turnstile';
-import {
-  ActionFunctionArgs,
-  json,
-  LoaderFunctionArgs,
-  MetaFunction,
-} from '@remix-run/cloudflare';
+import { ActionFunctionArgs, json, LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { Form, useActionData, useLoaderData } from '@remix-run/react';
 import { getName as getCountryName } from 'country-list';
 import { useEffect } from 'react';
@@ -93,9 +88,7 @@ export const action = async (args: ActionFunctionArgs) => {
     HTMLPart += `</p>`;
     HTMLPart += `<p>${data.message.replace(/\n/g, '<br />')}</p>`;
     HTMLPart += `<hr />`;
-    HTMLPart += `<p><strong>IP:</strong> ${
-      ip || 'unknown'
-    }, <strong>location:</strong> ${
+    HTMLPart += `<p><strong>IP:</strong> ${ip || 'unknown'}, <strong>location:</strong> ${
       country ? getCountryName(country) : 'unknown' || country
     }</p>`;
 
@@ -162,8 +155,7 @@ export default function Contact() {
   if (success) {
     return (
       <p className="text-green-700 dark:text-green-400">
-        Your message has been sent, I&apos;ll get back to you as soon as
-        possible!
+        Your message has been sent, I&apos;ll get back to you as soon as possible!
       </p>
     );
   }
@@ -171,18 +163,15 @@ export default function Contact() {
   return (
     <>
       <p className="mb-4">
-        If you&apos;re writing for a project or to work together, please include
-        as much details as possible (goal, timeline, budget, ...). For
-        everything else, write as you please, I&apos;ll be more than happy to
-        reply!
+        If you&apos;re writing for a project or to work together, please include as much details as
+        possible (goal, timeline, budget, ...). For everything else, write as you please, I&apos;ll
+        be more than happy to reply!
       </p>
       <Form
         className="flex flex-col gap-4 mt-6"
         action="/contact"
         method="post"
-        onSubmit={
-          isValid ? undefined : handleSubmit((data) => console.log(data))
-        }>
+        onSubmit={isValid ? undefined : handleSubmit((data) => console.log(data))}>
         {typeof success === 'boolean' && !success && (
           <p className="text-red-600 dark:text-red-400 mt-2 mb-4">
             Something went wrong, please try again later.
@@ -197,9 +186,7 @@ export default function Contact() {
               type="text"
               id="name"
               {...register('name')}
-              className={
-                errors.name ? 'border-red-600 dark:border-red-400' : undefined
-              }
+              className={errors.name ? 'border-red-600 dark:border-red-400' : undefined}
             />
             {errors.name?.message && (
               <p className="text-red-600 dark:text-red-400 mt-1.5">
@@ -215,9 +202,7 @@ export default function Contact() {
               type="text"
               id="email"
               {...register('email')}
-              className={
-                errors.email ? 'border-red-600 dark:border-red-400' : undefined
-              }
+              className={errors.email ? 'border-red-600 dark:border-red-400' : undefined}
             />
             {errors.email?.message && (
               <p className="text-red-600 dark:text-red-400 mt-1.5">
@@ -233,9 +218,7 @@ export default function Contact() {
           <textarea
             id="message"
             {...register('message')}
-            className={
-              errors.message ? 'border-red-600 dark:border-red-400' : undefined
-            }
+            className={errors.message ? 'border-red-600 dark:border-red-400' : undefined}
           />
           {errors.message?.message && (
             <p className="text-red-600 dark:text-red-400 mt-1.5">

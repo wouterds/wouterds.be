@@ -4,13 +4,7 @@ import { createPortal } from 'react-dom';
 
 import { FileField } from '~/graphql';
 
-export const Image = ({
-  url,
-  alt,
-  responsiveImage,
-  width,
-  height,
-}: FileField) => {
+export const Image = ({ url, alt, responsiveImage, width, height }: FileField) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -19,10 +13,7 @@ export const Image = ({
         className="bg-zinc-50 dark:bg-zinc-800 dark:bg-opacity-25 relative overflow-hidden rounded-sm"
         style={{ aspectRatio: `${width! / height!}` }}>
         {responsiveImage?.base64 && (
-          <img
-            className="absolute inset-0 w-full h-full"
-            src={responsiveImage.base64}
-          />
+          <img className="absolute inset-0 w-full h-full" src={responsiveImage.base64} />
         )}
         <img
           onClick={() => setExpanded(!expanded)}

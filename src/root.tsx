@@ -1,8 +1,4 @@
-import type {
-  LinksFunction,
-  LoaderFunctionArgs,
-  MetaFunction,
-} from '@remix-run/cloudflare';
+import type { LinksFunction, LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { cssBundleHref } from '@remix-run/css-bundle';
 import {
   isRouteErrorResponse,
@@ -107,10 +103,7 @@ export default function App() {
       loaded: (posthog) => {
         posthogInitialized.current = true;
 
-        if (
-          location?.hostname === 'localhost' ||
-          location?.hostname === '127.0.0.1'
-        ) {
+        if (location?.hostname === 'localhost' || location?.hostname === '127.0.0.1') {
           posthog.opt_out_capturing();
         }
       },
@@ -123,18 +116,8 @@ export default function App() {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="index, follow" />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/favicon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/favicon-16x16.png"
-        />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link
           rel="alternate"

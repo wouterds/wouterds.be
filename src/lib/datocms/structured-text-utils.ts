@@ -1,7 +1,4 @@
-import {
-  render,
-  StructuredTextDocument,
-} from 'datocms-structured-text-to-plain-text';
+import { render, StructuredTextDocument } from 'datocms-structured-text-to-plain-text';
 
 import { Scalars } from '~/graphql';
 
@@ -19,11 +16,6 @@ export const excerptFromContent = (content: {
   blocks?: unknown[];
 }) => {
   return (
-    plainTextFromContent(content)
-      ?.slice(0, 240)
-      ?.split(' ')
-      .slice(0, -1)
-      ?.join(' ')
-      ?.trim() + '…'
+    plainTextFromContent(content)?.slice(0, 240)?.split(' ').slice(0, -1)?.join(' ')?.trim() + '…'
   );
 };
