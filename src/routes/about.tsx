@@ -20,7 +20,7 @@ export const meta: MetaFunction = () => {
       name: 'description',
       content: `Hey 👋, I'm Wouter, ${differenceInYears(
         new Date(),
-        new Date(BIRTHDAY),
+        BIRTHDAY,
       )} years old and passionate about all things digital really. Devine alumni & currently contracting as a Full-stack Developer.`,
     },
   ];
