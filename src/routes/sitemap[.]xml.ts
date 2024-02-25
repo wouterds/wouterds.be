@@ -22,9 +22,6 @@ export const loader = async (args: LoaderFunctionArgs) => {
 
   return new Response(sitemap, {
     status: 200,
-    headers: {
-      'Content-Type': 'application/xml',
-      'Cache-Control': 'public, max-age=86400, must-revalidate',
-    },
+    headers: { 'Content-Type': 'application/xml' },
   });
 };

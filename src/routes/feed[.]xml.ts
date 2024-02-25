@@ -63,7 +63,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
               return renderNode(
                 'iframe',
                 {
-                  src: `https://www.youtube.com/embed/${video.providerUid}`,
+                  src: `https://youtube.com/embed/${video.providerUid}`,
                   width: '100%',
                   style: 'aspect-ratio:16/9',
                 },
@@ -88,9 +88,6 @@ export const loader = async (args: LoaderFunctionArgs) => {
 
   return new Response(feed.rss2(), {
     status: 200,
-    headers: {
-      'Content-Type': 'application/xml',
-      'Cache-Control': 'public, max-age=3600',
-    },
+    headers: { 'Content-Type': 'application/xml' },
   });
 };
