@@ -1,2 +1,2 @@
-*.wouterds-be.pages.dev               https://wouterds.be               301
-/amp/blog/*                           /blog/:splat                      301
+*.wouterds.pages.dev                              https://wouterds.be                           301
+/amp/blog/*                                       /blog/:splat                                  301
