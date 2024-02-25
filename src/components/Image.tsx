@@ -1,17 +1,16 @@
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
-import { BlurhashCanvas } from 'react-blurhash';
 import { createPortal } from 'react-dom';
 
-export type ImageProps = {
-  url: string;
-  alt?: string | null;
-  blurhash?: string | null;
-  width?: number | null;
-  height?: number | null;
-};
+import { FileField } from '~/graphql';
 
-export const Image = ({ url, alt, blurhash, width, height }: ImageProps) => {
+export const Image = ({
+  url,
+  alt,
+  responsiveImage,
+  width,
+  height,
+}: FileField) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -19,10 +18,10 @@ export const Image = ({ url, alt, blurhash, width, height }: ImageProps) => {
       <div
         className="bg-zinc-50 dark:bg-zinc-800 dark:bg-opacity-25 relative overflow-hidden rounded-sm"
         style={{ aspectRatio: `${width! / height!}` }}>
-        {blurhash && (
-          <BlurhashCanvas
+        {responsiveImage?.base64 && (
+          <img
             className="absolute inset-0 w-full h-full"
-            hash={blurhash}
+            src={responsiveImage.base64}
           />
         )}
         <img
