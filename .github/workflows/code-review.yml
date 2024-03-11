@@ -5,6 +5,10 @@ on:
     branches: ['**']
   workflow_call:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   linting:
     runs-on: ubuntu-latest
