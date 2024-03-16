@@ -10,7 +10,9 @@ import { excerptFromContent } from '~/lib/datocms/structured-text-utils';
 
 import { DatoCMSRepository } from './abstract/datocms-repository.server';
 
-export type Post = NonNullable<PostsGetAllQuery['allPosts'][number]> & { excerpt: string };
+type _Post = NonNullable<PostsGetAllQuery['allPosts'][number]>;
+
+export type Post = _Post & { excerpt: string };
 
 export class PostRepository extends DatoCMSRepository {
   public getPosts = async (limit: number = 100) => {
@@ -19,15 +21,7 @@ export class PostRepository extends DatoCMSRepository {
       { variables: { limit } },
     );
 
-    const posts = data.allPosts.map(
-      (post) =>
-        ({
-          ...post,
-          excerpt: excerptFromContent(post.content),
-        }) as Post,
-    );
-
-    return posts;
+    return data.allPosts.map(this.mapPost);
   };
 
   public getPostBySlug = async (slug: string) => {
@@ -38,4 +32,9 @@ export class PostRepository extends DatoCMSRepository {
 
     return data.post;
   };
+
+  private mapPost = (post: _Post): Post => ({
+    ...post,
+    excerpt: excerptFromContent(post.content),
+  });
 }
