@@ -10,7 +10,7 @@ import { excerptFromContent } from '~/lib/datocms/structured-text-utils';
 
 import { DatoCMSRepository } from './abstract/datocms-repository.server';
 
-export type Post = PostsGetAllQuery['allPosts'][0] & { excerpt: string };
+export type Post = NonNullable<PostsGetAllQuery['allPosts'][number]> & { excerpt: string };
 
 export class PostRepository extends DatoCMSRepository {
   public getPosts = async (limit: number = 100) => {
