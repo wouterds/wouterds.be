@@ -35,7 +35,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.2",
     "react-use": "^17.4.4",
-    "recharts": "^2.12.3",
+    "recharts": "^2.12.4",
     "remix-utils": "^7.5.0",
     "zod": "^3.22.4"
   },
