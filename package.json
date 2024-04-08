@@ -44,7 +44,7 @@
     "@commitlint/cli": "^19.2.1",
     "@commitlint/config-conventional": "^19.1.0",
     "@graphql-codegen/cli": "^5.0.2",
-    "@graphql-codegen/client-preset": "^4.2.4",
+    "@graphql-codegen/client-preset": "^4.2.5",
     "@remix-run/dev": "^2.8.1",
     "@tailwindcss/typography": "^0.5.10",
     "@types/react": "^18.2.48",
