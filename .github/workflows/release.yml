@@ -30,6 +30,7 @@ jobs:
         run: npm run build
       - name: deploy
         id: deploy
+        if: ${{ github.actor != 'dependabot[bot]' }}
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
