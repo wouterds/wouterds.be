@@ -1,20 +1,19 @@
 name: release
 
 on:
-  push:
+  workflow_run:
+    workflows: [code-review]
     branches: [main]
+    types:
+      - completed
 
 concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: true
 
 jobs:
-  code-review:
-    uses: ./.github/workflows/code-review.yml
-
   deploy:
     runs-on: ubuntu-latest
-    needs: [code-review]
     environment:
       name: production
       url: ${{ steps.deploy.outputs.deployment-url }}
