@@ -36,7 +36,7 @@
     "react-hook-form": "^7.51.3",
     "react-use": "^17.4.4",
     "recharts": "^2.12.4",
-    "remix-utils": "^7.5.0",
+    "remix-utils": "^7.6.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
