@@ -16,6 +16,10 @@ export default async function handleRequest(
   remixContext: EntryContext,
   _loadContext: AppLoadContext,
 ) {
+  if (request.url.includes('.pages.dev')) {
+    responseHeaders.set('X-Robots-Tag', 'noindex');
+  }
+
   const body = await renderToReadableStream(
     <RemixServer context={remixContext} url={request.url} />,
     {
