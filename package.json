@@ -4,7 +4,7 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "remix build",
+    "build": "remix build --sourcemap && sentry-upload-sourcemaps --org wouterds --project website",
     "dev": "remix dev --manual -c \"npm run start\"",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx --fix ./src",
@@ -20,6 +20,7 @@
     "@remix-run/cloudflare-pages": "^2.9.1",
     "@remix-run/css-bundle": "^2.9.1",
     "@remix-run/react": "^2.9.1",
+    "@sentry/remix": "^7.112.2",
     "@types/country-list": "^2.1.4",
     "country-list": "^2.3.0",
     "date-fns": "^3.0.6",
