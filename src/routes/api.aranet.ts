@@ -1,6 +1,8 @@
 import { ActionFunctionArgs, json } from '@remix-run/cloudflare';
 import { differenceInMinutes, fromUnixTime } from 'date-fns';
 
+import { AranetRecord } from '~/lib/kv';
+
 export const action = async (args: ActionFunctionArgs) => {
   const request = args.request;
   const context = args.context;

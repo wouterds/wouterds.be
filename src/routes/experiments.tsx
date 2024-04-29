@@ -5,8 +5,10 @@ import { useState } from 'react';
 import { useInterval, useMedia } from 'react-use';
 import { Bar, BarChart, Line, LineChart, ResponsiveContainer, YAxis } from 'recharts';
 
+import { AranetRecord, P1HistoryRecord, P1Record } from '~/lib/kv';
+
 export const loader = async ({ context }: LoaderFunctionArgs) => {
-  const env = (context).env;
+  const env = context.env;
 
   const aranetRecords: AranetRecord[] = [];
   try {
