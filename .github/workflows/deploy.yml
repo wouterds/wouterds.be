@@ -19,6 +19,11 @@ jobs:
     environment:
       name: ${{ github.ref == 'refs/heads/main' && 'production' || 'preview' }}
       url: ${{ github.ref == 'refs/heads/main' && 'https://wouterds.be' || steps.deploy.outputs.deployment-url }}
+    env:
+      SENTRY_ORG: wouterds
+      SENTRY_PROJECT: website
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_DIST: ${{ github.sha }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -29,6 +34,12 @@ jobs:
         run: npm ci
       - name: build
         run: npm run build
+      - name: sentry
+        uses: getsentry/action-release@v1.7.0
+        with:
+          environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'preview' }}
+          dist: ${{ github.sha }}
+          ignore_missing: true
       - name: deploy
         id: deploy
         uses: cloudflare/wrangler-action@v3

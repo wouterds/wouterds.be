@@ -12,3 +12,6 @@ node_modules
 /public/build
 .dev.vars
 .env
+
+# Sentry Config File
+.sentryclirc
