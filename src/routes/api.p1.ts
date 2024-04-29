@@ -3,7 +3,7 @@ import { differenceInMinutes, endOfYesterday, fromUnixTime, getUnixTime } from '
 
 export const action = async (args: ActionFunctionArgs) => {
   const request = args.request;
-  const context = args.context as Context;
+  const context = args.context;
 
   const query = new URL(request.url).searchParams;
   if (query.get('token') !== context.env.API_AUTH_TOKEN) {

@@ -7,7 +7,7 @@ import { GalleryRecord, VideoRecord } from '~/graphql';
 import { PostRepository } from '~/lib/repositories/post.server';
 
 export const loader = async (args: LoaderFunctionArgs) => {
-  const context = args.context as Context;
+  const context = args.context;
   const repository = new PostRepository(context.env.DATOCMS_API_KEY);
 
   const posts = await repository.getPosts();

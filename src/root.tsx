@@ -26,7 +26,7 @@ export const links: LinksFunction = () => [
 ];
 
 export const loader = async (args: LoaderFunctionArgs) => {
-  const context = args.context as Context;
+  const context = args.context;
   const url = context.url;
   const location = new URL(args.request.url);
   const canonical = new URL(location.pathname, url).href

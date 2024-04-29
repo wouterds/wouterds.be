@@ -6,7 +6,7 @@ import { useInterval, useMedia } from 'react-use';
 import { Bar, BarChart, Line, LineChart, ResponsiveContainer, YAxis } from 'recharts';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
-  const env = (context as Context).env;
+  const env = (context).env;
 
   const aranetRecords: AranetRecord[] = [];
   try {
