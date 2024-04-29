@@ -53,14 +53,15 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
   payload.append('response', token!);
   payload.append('remoteip', ip);
 
-  const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
-  const response = await fetch(url, {
-    body: payload,
-    method: 'POST',
-  });
+  const { success: validatedCaptcha } = await fetch(
+    'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+    {
+      body: payload,
+      method: 'POST',
+    },
+  ).then((response) => response.json<{ success: boolean }>());
 
-  const { success } = await response.json<{ success: boolean }>();
-  if (!success) {
+  if (!validatedCaptcha) {
     return json({ success: false }, { status: 403 });
   }
 
@@ -86,7 +87,7 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
       country ? getCountryName(country) : 'unknown' || country
     }</p>`;
 
-    const response = await fetch('https://api.mailjet.com/v3.1/send', {
+    const { ok: mailSent } = await fetch('https://api.mailjet.com/v3.1/send', {
       method: 'POST',
       headers: {
         Authorization: `Basic ${btoa(
@@ -97,19 +98,9 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
       body: JSON.stringify({
         Messages: [
           {
-            From: {
-              Email: 'noreply@wouterds.be',
-            },
-            To: [
-              {
-                Email: 'wouter.de.schuyter@gmail.com',
-                Name: 'Wouter De Schuyter',
-              },
-            ],
-            ReplyTo: {
-              Email: data.email,
-              Name: data.name,
-            },
+            From: { Email: 'noreply@wouterds.be' },
+            To: [{ Email: 'wouter.de.schuyter@gmail.com', Name: 'Wouter De Schuyter' }],
+            ReplyTo: { Email: data.email, Name: data.name },
             Subject: `[Contact] New message from ${data.name}!`,
             TextPart,
             HTMLPart,
@@ -118,7 +109,7 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
       }),
     });
 
-    if (!response.ok) {
+    if (!mailSent) {
       return json({ success: false }, { status: 500 });
     }
 
@@ -131,7 +122,6 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
 export default function Contact() {
   const { CLOUDFLARE_TURNSTILE_KEY } = useLoaderData<typeof loader>();
   const data = useActionData<typeof action>();
-  const success = data?.success;
 
   const {
     register,
@@ -141,12 +131,12 @@ export default function Contact() {
   } = useForm({ resolver: zodResolver(schema) });
 
   useEffect(() => {
-    if (success) {
+    if (data?.success) {
       reset();
     }
-  }, [reset, success]);
+  }, [reset, data?.success]);
 
-  if (success) {
+  if (data?.success) {
     return (
       <p className="text-green-700 dark:text-green-400">
         Your message has been sent, I&apos;ll get back to you as soon as possible!
@@ -166,7 +156,7 @@ export default function Contact() {
         action="/contact"
         method="post"
         onSubmit={isValid ? undefined : handleSubmit((data) => console.log(data))}>
-        {typeof success === 'boolean' && !success && (
+        {data?.success === false && (
           <p className="text-red-600 dark:text-red-400 mt-2 mb-4">
             Something went wrong, please try again later.
           </p>
