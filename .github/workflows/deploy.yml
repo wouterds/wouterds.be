@@ -1,11 +1,12 @@
 name: release
 
 on:
-  workflow_run:
-    workflows: [code-review]
-    branches: [main]
-    types:
-      - completed
+  push:
+    branches: main
+    paths: [src/**, package.json]
+  pull_request:
+    paths: [src/**, package.json]
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}
@@ -15,8 +16,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment:
-      name: production
-      url: ${{ steps.deploy.outputs.deployment-url }}
+      name: ${{ github.ref == 'refs/heads/main' && 'production' || 'preview' }}
+      url: ${{ github.ref == 'refs/heads/main' && 'https://wouterds.be' || steps.deploy.outputs.deployment-url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -35,4 +36,4 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: ./
-          command: pages deploy ./public --project-name=wouterds --branch=main
+          command: pages deploy ./public --project-name=wouterds --branch=${{ github.ref == 'refs/heads/main' && 'main' || github.ref }}
