@@ -17,7 +17,7 @@
     "@hookform/resolvers": "^3.3.4",
     "@marsidev/react-turnstile": "^0.6.0",
     "@remix-run/cloudflare": "^2.9.1",
-    "@remix-run/cloudflare-pages": "^2.8.1",
+    "@remix-run/cloudflare-pages": "^2.9.1",
     "@remix-run/css-bundle": "^2.9.1",
     "@remix-run/react": "^2.9.1",
     "@types/country-list": "^2.1.4",
