@@ -23,7 +23,7 @@
     "@types/country-list": "^2.1.4",
     "country-list": "^2.3.0",
     "date-fns": "^3.0.6",
-    "datocms-structured-text-to-html-string": "^3.0.0",
+    "datocms-structured-text-to-html-string": "^4.0.0",
     "datocms-structured-text-to-plain-text": "^3.0.2",
     "datocms-structured-text-utils": "^4.0.0",
     "feed": "^4.2.2",
