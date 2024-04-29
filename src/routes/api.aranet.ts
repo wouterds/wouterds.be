@@ -1,24 +1,27 @@
-import { ActionFunctionArgs, json } from '@remix-run/cloudflare';
+import { ActionFunctionArgs } from '@remix-run/cloudflare';
 import { differenceInMinutes, fromUnixTime } from 'date-fns';
 
 import { AranetRecord } from '~/lib/kv';
 
-export const action = async ({ request, context }: ActionFunctionArgs) => {
+export const action = async ({ request, response, context }: ActionFunctionArgs) => {
   const query = new URL(request.url).searchParams;
   if (query.get('token') !== context.env.API_AUTH_TOKEN) {
-    return json({ success: false }, { status: 403 });
+    response!.status = 403;
+    return { success: false };
   }
 
   const raw = await context.env.WOUTERDSBE.get('aranet');
 
   const values: AranetRecord[] = raw ? JSON.parse(raw) : [];
   if (!Array.isArray(values)) {
-    return json({ success: false }, { status: 500 });
+    response!.status = 500;
+    return { success: false };
   }
 
   const lastPush = fromUnixTime(values[values.length - 1]?.time ?? 0);
   if (differenceInMinutes(new Date(), lastPush) < 5) {
-    return json({ success: false }, { status: 429 });
+    response!.status = 429;
+    return { success: false };
   }
 
   const data = await request.formData();
@@ -45,5 +48,5 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
 
   await context.env.WOUTERDSBE.put('aranet', JSON.stringify(values));
 
-  return json({ success: true });
+  return { success: true };
 };

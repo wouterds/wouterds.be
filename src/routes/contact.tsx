@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Turnstile } from '@marsidev/react-turnstile';
-import { ActionFunctionArgs, json, LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
+import { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { Form, useActionData, useLoaderData } from '@remix-run/react';
 import { getName as getCountryName } from 'country-list';
 import { useEffect } from 'react';
@@ -35,7 +35,7 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const action = async ({ request, context }: ActionFunctionArgs) => {
+export const action = async ({ request, response, context }: ActionFunctionArgs) => {
   const form = await request.formData();
   const ip = request.headers.get('CF-Connecting-IP') as string;
   const country = request.headers.get('CF-IPCountry') as string;
@@ -44,7 +44,8 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
   try {
     schema.parse(data);
   } catch {
-    return json({ success: false }, { status: 400 });
+    response!.status = 400;
+    return { success: false };
   }
 
   const token = form.get('cf-turnstile-response')?.toString();
@@ -62,7 +63,8 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
   ).then((response) => response.json<{ success: boolean }>());
 
   if (!validatedCaptcha) {
-    return json({ success: false }, { status: 403 });
+    response!.status = 403;
+    return { success: false };
   }
 
   try {
@@ -110,12 +112,14 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
     });
 
     if (!mailSent) {
-      return json({ success: false }, { status: 500 });
+      response!.status = 500;
+      return { success: false };
     }
 
-    return json({ success: true });
+    return { success: true };
   } catch {
-    return json({ success: false }, { status: 500 });
+    response!.status = 500;
+    return { success: false };
   }
 };
 

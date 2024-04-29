@@ -1,17 +1,19 @@
-import { ActionFunctionArgs, json } from '@remix-run/cloudflare';
+import { ActionFunctionArgs } from '@remix-run/cloudflare';
 import { differenceInMinutes, endOfYesterday, fromUnixTime, getUnixTime } from 'date-fns';
 
 import { P1HistoryRecord, P1Record } from '~/lib/kv';
 
-export const action = async ({ request, context }: ActionFunctionArgs) => {
+export const action = async ({ request, response, context }: ActionFunctionArgs) => {
   const query = new URL(request.url).searchParams;
   if (query.get('token') !== context.env.API_AUTH_TOKEN) {
-    return json({ success: false }, { status: 403 });
+    response!.status = 403;
+    return { success: false };
   }
 
   const body = (await request.text()) || '';
   if (!body) {
-    return json({ success: false }, { status: 400 });
+    response!.status = 400;
+    return { success: false };
   }
 
   const data: Array<{
@@ -34,7 +36,8 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
 
   const lastPush = fromUnixTime(values[values.length - 1]?.time ?? 0);
   if (differenceInMinutes(new Date(), lastPush) < 10) {
-    return json({ success: false }, { status: 429 });
+    response!.status = 429;
+    return { success: false };
   }
 
   values.push({ active, total, time });
@@ -68,5 +71,5 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
     await context.env.WOUTERDSBE.put('p1-history', JSON.stringify(history));
   }
 
-  return json({ success: true });
+  return { success: true };
 };
