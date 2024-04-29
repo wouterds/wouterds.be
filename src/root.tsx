@@ -11,6 +11,7 @@ import {
   useLoaderData,
   useRouteError,
 } from '@remix-run/react';
+import { captureRemixErrorBoundaryError, withSentry } from '@sentry/remix';
 import { posthog } from 'posthog-js';
 import { useEffect, useRef } from 'react';
 import { ExternalScripts } from 'remix-utils/external-scripts';
@@ -88,7 +89,7 @@ export const meta: MetaFunction<typeof loader> = ({ error, data }) => {
   ];
 };
 
-export default function App() {
+const App = () => {
   const data = useLoaderData<typeof loader>();
   const posthogInitialized = useRef(false);
 
@@ -149,10 +150,16 @@ export default function App() {
       </body>
     </html>
   );
-}
+};
+
+export default withSentry(App, { wrapWithErrorBoundary: false });
+
+export { wrapRemixHandleError as handleError } from '@sentry/remix';
 
 export const ErrorBoundary = () => {
   const error = useRouteError();
+
+  captureRemixErrorBoundaryError(error);
 
   return (
     <html lang="en">
