@@ -39,8 +39,15 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
   const form = await request.formData();
   const ip = request.headers.get('CF-Connecting-IP') as string;
   const country = request.headers.get('CF-IPCountry') as string;
-  const token = form.get('cf-turnstile-response')?.toString();
+  const data = Object.fromEntries(form) as Schema;
 
+  try {
+    schema.parse(data);
+  } catch {
+    return json({ success: false }, { status: 400 });
+  }
+
+  const token = form.get('cf-turnstile-response')?.toString();
   const payload = new FormData();
   payload.append('secret', context.env.CLOUDFLARE_TURNSTILE_SECRET);
   payload.append('response', token!);
@@ -54,15 +61,7 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
 
   const { success } = await response.json<{ success: boolean }>();
   if (!success) {
-    return json({ success: false }, { status: 400 });
-  }
-
-  const data = Object.fromEntries(form) as Schema;
-
-  try {
-    schema.parse(data);
-  } catch {
-    return json({ success: false }, { status: 400 });
+    return json({ success: false }, { status: 403 });
   }
 
   try {
