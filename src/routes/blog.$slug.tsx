@@ -12,11 +12,10 @@ import { GalleryRecord, PostRecord, VideoRecord } from '~/graphql';
 import { excerptFromContent, plainTextFromContent } from '~/lib/datocms/structured-text-utils';
 import { PostRepository } from '~/lib/repositories/post.server';
 
-export const loader = async (args: LoaderFunctionArgs) => {
-  const context = args.context;
+export const loader = async ({ context, params }: LoaderFunctionArgs) => {
   const repository = new PostRepository(context.env.DATOCMS_API_KEY);
 
-  const post = await repository.getPostBySlug(args.params.slug as string);
+  const post = await repository.getPostBySlug(params.slug as string);
   if (!post) {
     throw new Response(null, {
       status: 404,

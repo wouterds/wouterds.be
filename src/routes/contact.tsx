@@ -18,9 +18,7 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>;
 
-export const loader = (args: LoaderFunctionArgs) => {
-  const context = args.context;
-
+export const loader = ({ context }: LoaderFunctionArgs) => {
   return {
     CLOUDFLARE_TURNSTILE_KEY: context.env.CLOUDFLARE_TURNSTILE_KEY,
   };
@@ -37,10 +35,7 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const action = async (args: ActionFunctionArgs) => {
-  const context = args.context;
-  const request = args.request;
-
+export const action = async ({ request, context }: ActionFunctionArgs) => {
   const form = await request.formData();
   const ip = request.headers.get('CF-Connecting-IP') as string;
   const country = request.headers.get('CF-IPCountry') as string;

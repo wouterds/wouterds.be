@@ -25,10 +25,9 @@ export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesheet },
 ];
 
-export const loader = async (args: LoaderFunctionArgs) => {
-  const context = args.context;
+export const loader = async ({ request, context }: LoaderFunctionArgs) => {
   const url = context.url;
-  const location = new URL(args.request.url);
+  const location = new URL(request.url);
   const canonical = new URL(location.pathname, url).href
     // remove trailing slash
     ?.replace(/\/$/, '');

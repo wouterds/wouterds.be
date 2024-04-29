@@ -1,8 +1,8 @@
 import { LoaderFunctionArgs } from '@remix-run/cloudflare';
 
-export const loader = async (args: LoaderFunctionArgs) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { body, headers } = await fetch(
-    `https://www.datocms-assets.com/${new URL(args.request.url).pathname?.split('/images/').pop()}`,
+    `https://www.datocms-assets.com/${new URL(request.url).pathname?.split('/images/').pop()}`,
   );
 
   return new Response(body, {

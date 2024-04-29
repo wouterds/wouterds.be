@@ -7,9 +7,7 @@ import { Bar, BarChart, Line, LineChart, ResponsiveContainer, YAxis } from 'rech
 
 import { AranetRecord, P1HistoryRecord, P1Record } from '~/lib/kv';
 
-export const loader = async ({ context }: LoaderFunctionArgs) => {
-  const env = context.env;
-
+export const loader = async ({ context: { env } }: LoaderFunctionArgs) => {
   const aranetRecords: AranetRecord[] = [];
   try {
     aranetRecords.push(

@@ -3,10 +3,7 @@ import { differenceInMinutes, endOfYesterday, fromUnixTime, getUnixTime } from '
 
 import { P1HistoryRecord, P1Record } from '~/lib/kv';
 
-export const action = async (args: ActionFunctionArgs) => {
-  const request = args.request;
-  const context = args.context;
-
+export const action = async ({ request, context }: ActionFunctionArgs) => {
   const query = new URL(request.url).searchParams;
   if (query.get('token') !== context.env.API_AUTH_TOKEN) {
     return json({ success: false }, { status: 403 });

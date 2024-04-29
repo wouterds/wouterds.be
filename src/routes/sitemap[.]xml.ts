@@ -2,8 +2,7 @@ import { LoaderFunctionArgs } from '@remix-run/cloudflare';
 
 import { PostRepository } from '~/lib/repositories/post.server';
 
-export const loader = async (args: LoaderFunctionArgs) => {
-  const context = args.context;
+export const loader = async ({ context }: LoaderFunctionArgs) => {
   const repository = new PostRepository(context.env.DATOCMS_API_KEY);
 
   const posts = await repository.getPosts();
