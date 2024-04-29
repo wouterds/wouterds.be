@@ -12,4 +12,7 @@ export default {
   appDirectory: 'src',
   // assetsBuildDirectory: "public/build",
   // publicPath: "/build/",
+  future: {
+    unstable_singleFetch: true,
+  },
 };
