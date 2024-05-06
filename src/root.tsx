@@ -1,9 +1,7 @@
 import type { LinksFunction, LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
-import { cssBundleHref } from '@remix-run/css-bundle';
 import {
   isRouteErrorResponse,
   Links,
-  LiveReload,
   Meta,
   Outlet,
   Scripts,
@@ -16,15 +14,12 @@ import { posthog } from 'posthog-js';
 import { useEffect, useRef } from 'react';
 import { ExternalScripts } from 'remix-utils/external-scripts';
 
-import stylesheet from '~/tailwind.css';
+import stylesheet from '~/tailwind.css?url';
 
 import Footer from './components/Footer';
 import Header from './components/Header';
 
-export const links: LinksFunction = () => [
-  ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
-  { rel: 'stylesheet', href: stylesheet },
-];
+export const links: LinksFunction = () => [{ rel: 'stylesheet', href: stylesheet }];
 
 export const loader = async ({ request, context }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
@@ -138,7 +133,6 @@ const App = () => {
         <ScrollRestoration />
         <Scripts />
         <ExternalScripts />
-        <LiveReload />
 
         <div id="modal-portal" />
       </body>
