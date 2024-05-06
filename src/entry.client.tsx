@@ -18,7 +18,7 @@ Sentry.init({
       useLocation,
       useMatches,
     }),
-    Sentry.replayIntegration({ maskAllText: false }),
+    Sentry.replayIntegration({ maskAllText: false, blockAllMedia: false }),
   ],
 
   // https://docs.sentry.io/platforms/javascript/session-replay/
