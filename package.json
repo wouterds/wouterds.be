@@ -18,7 +18,6 @@
     "@marsidev/react-turnstile": "^0.6.0",
     "@remix-run/cloudflare": "^2.9.1",
     "@remix-run/cloudflare-pages": "^2.9.1",
-    "@remix-run/css-bundle": "^2.9.1",
     "@remix-run/react": "^2.9.1",
     "@sentry/remix": "^7.113.0",
     "@types/country-list": "^2.1.4",
