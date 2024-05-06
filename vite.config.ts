@@ -3,6 +3,7 @@ import {
   vitePlugin as remix,
 } from '@remix-run/dev';
 import { installGlobals } from '@remix-run/node';
+import { sentryVitePlugin } from '@sentry/vite-plugin';
 import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
@@ -15,6 +16,9 @@ export default defineConfig({
   ssr: {
     noExternal: ['react-use'],
   },
+  build: {
+    sourcemap: true,
+  },
   plugins: [
     remixCloudflareDevProxy(),
     remix({
@@ -23,6 +27,10 @@ export default defineConfig({
       future: {
         unstable_singleFetch: true,
       },
+    }),
+    sentryVitePlugin({
+      org: 'wouterds',
+      project: 'website',
     }),
     tsconfigPaths(),
   ],
