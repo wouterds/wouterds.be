@@ -24,7 +24,7 @@ export const links: LinksFunction = () => [{ rel: 'stylesheet', href: stylesheet
 export const loader = async ({ request, context }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const baseUrl = `${url.protocol}//${url.host}`;
-  const canonical = new URL(location.pathname, baseUrl).href;
+  const canonical = new URL(url.pathname, baseUrl).href;
 
   return {
     url,
