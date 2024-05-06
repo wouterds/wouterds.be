@@ -27,30 +27,23 @@ export const links: LinksFunction = () => [
 ];
 
 export const loader = async ({ request, context }: LoaderFunctionArgs) => {
-  const url = context.url;
-  const location = new URL(request.url);
-  const canonical = new URL(location.pathname, url).href
-    // remove trailing slash
-    ?.replace(/\/$/, '');
+  const url = new URL(request.url);
+  const canonical = new URL(location.pathname, url).href;
 
   return {
-    url: context.url,
-    ray: context.ray,
+    url,
+    ray: context.cloudflare.cf.colo,
     canonical,
     posthog: {
       host: 'https://eu.posthog.com',
-      apiKey: context.env.POSTHOG_API_KEY,
+      apiKey: context.cloudflare.env.POSTHOG_API_KEY,
     },
   };
 };
 
 export const meta: MetaFunction<typeof loader> = ({ error, data }) => {
   if (error) {
-    return [
-      {
-        title: 'Oops, something went wrong!',
-      },
-    ];
+    return [{ title: 'Oops, something went wrong!' }];
   }
 
   const title = 'Wouter De Schuyter';

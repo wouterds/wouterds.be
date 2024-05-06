@@ -5,7 +5,7 @@ import { P1HistoryRecord, P1Record } from '~/lib/kv';
 
 export const action = async ({ request, response, context }: ActionFunctionArgs) => {
   const query = new URL(request.url).searchParams;
-  if (query.get('token') !== context.env.API_AUTH_TOKEN) {
+  if (query.get('token') !== context.cloudflare.env.API_AUTH_TOKEN) {
     response!.status = 403;
     return { success: false };
   }
@@ -31,7 +31,7 @@ export const action = async ({ request, response, context }: ActionFunctionArgs)
   const peakTime = getUnixTime(new Date(`20${year}-${month}-${day} ${hour}:${minute}`));
   const time = getUnixTime(new Date());
 
-  const raw = await context.env.WOUTERDSBE.get('p1');
+  const raw = await context.cloudflare.env.WOUTERDSBE.get('p1');
   const values: P1Record[] = raw ? JSON.parse(raw) : [];
 
   const lastPush = fromUnixTime(values[values.length - 1]?.time ?? 0);
@@ -47,9 +47,9 @@ export const action = async ({ request, response, context }: ActionFunctionArgs)
     values.shift();
   }
 
-  await context.env.WOUTERDSBE.put('p1', JSON.stringify(values));
+  await context.cloudflare.env.WOUTERDSBE.put('p1', JSON.stringify(values));
 
-  const rawHistory = await context.env.WOUTERDSBE.get('p1-history');
+  const rawHistory = await context.cloudflare.env.WOUTERDSBE.get('p1-history');
   const history: P1HistoryRecord[] = rawHistory ? JSON.parse(rawHistory) : [];
   const lastHistoryRecord = history[history.length - 1];
 
@@ -68,7 +68,7 @@ export const action = async ({ request, response, context }: ActionFunctionArgs)
       time: yesterday,
     });
 
-    await context.env.WOUTERDSBE.put('p1-history', JSON.stringify(history));
+    await context.cloudflare.env.WOUTERDSBE.put('p1-history', JSON.stringify(history));
   }
 
   return { success: true };

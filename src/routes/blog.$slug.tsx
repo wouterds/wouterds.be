@@ -13,7 +13,7 @@ import { excerptFromContent, plainTextFromContent } from '~/lib/datocms/structur
 import { PostRepository } from '~/lib/repositories/post.server';
 
 export const loader = async ({ context, params }: LoaderFunctionArgs) => {
-  const repository = new PostRepository(context.env.DATOCMS_API_KEY);
+  const repository = new PostRepository(context.cloudflare.env.DATOCMS_API_KEY);
 
   const post = await repository.getPostBySlug(params.slug as string);
   if (!post) {

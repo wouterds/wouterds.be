@@ -20,7 +20,7 @@ type Schema = z.infer<typeof schema>;
 
 export const loader = ({ context }: LoaderFunctionArgs) => {
   return {
-    CLOUDFLARE_TURNSTILE_KEY: context.env.CLOUDFLARE_TURNSTILE_KEY,
+    CLOUDFLARE_TURNSTILE_KEY: context.cloudflare.env.CLOUDFLARE_TURNSTILE_KEY,
   };
 };
 
@@ -50,7 +50,7 @@ export const action = async ({ request, response, context }: ActionFunctionArgs)
 
   const token = form.get('cf-turnstile-response')?.toString();
   const payload = new FormData();
-  payload.append('secret', context.env.CLOUDFLARE_TURNSTILE_SECRET);
+  payload.append('secret', context.cloudflare.env.CLOUDFLARE_TURNSTILE_SECRET);
   payload.append('response', token!);
   payload.append('remoteip', ip);
 
@@ -93,7 +93,7 @@ export const action = async ({ request, response, context }: ActionFunctionArgs)
       method: 'POST',
       headers: {
         Authorization: `Basic ${btoa(
-          `${context.env.MAILJET_API_KEY}:${context.env.MAILJET_API_SECRET}`,
+          `${context.cloudflare.env.MAILJET_API_KEY}:${context.cloudflare.env.MAILJET_API_SECRET}`,
         )}`,
         'Content-Type': 'application/json',
       },

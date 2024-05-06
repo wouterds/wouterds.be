@@ -5,12 +5,12 @@ import { AranetRecord } from '~/lib/kv';
 
 export const action = async ({ request, response, context }: ActionFunctionArgs) => {
   const query = new URL(request.url).searchParams;
-  if (query.get('token') !== context.env.API_AUTH_TOKEN) {
+  if (query.get('token') !== context.cloudflare.env.API_AUTH_TOKEN) {
     response!.status = 403;
     return { success: false };
   }
 
-  const raw = await context.env.WOUTERDSBE.get('aranet');
+  const raw = await context.cloudflare.env.WOUTERDSBE.get('aranet');
 
   const values: AranetRecord[] = raw ? JSON.parse(raw) : [];
   if (!Array.isArray(values)) {
@@ -46,7 +46,7 @@ export const action = async ({ request, response, context }: ActionFunctionArgs)
     values.shift();
   }
 
-  await context.env.WOUTERDSBE.put('aranet', JSON.stringify(values));
+  await context.cloudflare.env.WOUTERDSBE.put('aranet', JSON.stringify(values));
 
   return { success: true };
 };

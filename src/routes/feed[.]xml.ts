@@ -7,7 +7,7 @@ import { GalleryRecord, VideoRecord } from '~/graphql';
 import { PostRepository } from '~/lib/repositories/post.server';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
-  const repository = new PostRepository(context.env.DATOCMS_API_KEY);
+  const repository = new PostRepository(context.cloudflare.env.DATOCMS_API_KEY);
 
   const posts = await repository.getPosts();
 

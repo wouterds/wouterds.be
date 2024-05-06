@@ -46,4 +46,4 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: ./
-          command: pages deploy ./public --project-name=wouterds --branch=${{ github.ref == 'refs/heads/main' && 'main' || github.ref }}
+          command: pages deploy ./build/client --project-name=wouterds --branch=${{ github.ref == 'refs/heads/main' && 'main' || github.ref }}
