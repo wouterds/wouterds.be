@@ -146,7 +146,7 @@ export { wrapRemixHandleError as handleError } from '@sentry/remix';
 
 export const ErrorBoundary = () => {
   const error = useRouteError();
-
+  console.error(error);
   captureRemixErrorBoundaryError(error);
 
   return (
@@ -163,17 +163,23 @@ export const ErrorBoundary = () => {
           <Header />
 
           <main className="my-8 sm:my-12">
-            {isRouteErrorResponse(error) ? (
-              <h1 className="text-xl font-medium">
-                {error.status} {error.statusText}
-              </h1>
-            ) : error instanceof Error ? (
-              <>
-                <h1 className="text-xl font-medium mb-2">Error</h1>
-                <p>{error.message}</p>
-              </>
+            <h1 className="text-xl font-medium">Ooops, something went wrong!</h1>
+            <p>
+              {isRouteErrorResponse(error) ? (
+                <>
+                  {error.status && <span className="font-medium">{error.status}</span>}{' '}
+                  {error.statusText}
+                </>
+              ) : error instanceof Error ? (
+                error.message
+              ) : (
+                'Unknown error occured'
+              )}
+            </p>
+            {error instanceof Error ? (
+              <code>{error.stack}</code>
             ) : (
-              <h1 className="text-xl font-medium">Unknown error</h1>
+              <code>{JSON.stringify(error, null, 2)}</code>
             )}
           </main>
 
