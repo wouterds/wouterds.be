@@ -31,6 +31,7 @@ export default defineConfig({
     sentryVitePlugin({
       org: 'wouterds',
       project: 'website',
+      silent: true,
     }),
     tsconfigPaths(),
   ],
