@@ -1,6 +1,6 @@
 import { type PlatformProxy } from 'wrangler';
 
-import { Env } from './env';
+import { Env } from './dotenv';
 
 export * from '@remix-run/cloudflare';
 

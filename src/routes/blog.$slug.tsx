@@ -8,11 +8,13 @@ import { useMedia } from 'react-use';
 import { ExternalScriptsFunction } from 'remix-utils/external-scripts';
 
 import { Image } from '~/components/Image';
-import { GalleryRecord, PostRecord, VideoRecord } from '~/graphql';
+import { GalleryRecord, VideoRecord } from '~/graphql';
 import { excerptFromContent, plainTextFromContent } from '~/lib/datocms/structured-text-utils';
 import { PostRepository } from '~/lib/repositories/post.server';
 
-export const loader = async ({ context, params }: LoaderFunctionArgs) => {
+export const loader = async ({ request, context, params }: LoaderFunctionArgs) => {
+  const url = new URL(request.url);
+  const baseUrl = `${url.protocol}//${url.host}`;
   const repository = new PostRepository(context.cloudflare.env.DATOCMS_API_KEY);
 
   const post = await repository.getPostBySlug(params.slug as string);
@@ -26,7 +28,7 @@ export const loader = async ({ context, params }: LoaderFunctionArgs) => {
   const content = post.content.value as unknown as StructuredTextDocument;
   const containsCodeBlocks = content.document.children.some(isCode);
 
-  return { url: context.url, post, containsCodeBlocks };
+  return { url: baseUrl, post, containsCodeBlocks };
 };
 
 export const handle: {
@@ -42,11 +44,11 @@ export const handle: {
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  const url = data?.url as string;
-  const post = data?.post as PostRecord;
-  const title = post.title;
-  const description = excerptFromContent(post.content);
-  const text = plainTextFromContent(post.content);
+  const url = data?.url;
+  const post = data?.post;
+  const title = post?.title;
+  const description = post?.content ? excerptFromContent(post.content) : '';
+  const text = post?.content ? plainTextFromContent(post.content) : '';
   const words = text?.split(' ')?.length || 0;
   const averageWordsPerMinuteReadingSpeed = 160;
   const readingTime = Math.ceil(words / averageWordsPerMinuteReadingSpeed);
@@ -57,14 +59,14 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     { name: 'og:title', content: title },
     { name: 'og:description', content: description },
     { name: 'og:type', content: 'article' },
-    { name: 'article:published_time', content: post.date },
+    { name: 'article:published_time', content: post?.date },
     {
       name: 'og:image',
-      content: `${url}/images${new URL(post.poster.url).pathname}`,
+      content: post?.poster ? `${url}/images${new URL(post?.poster.url).pathname}` : '',
     },
     {
       name: 'og:url',
-      content: `${url}/blog/${post.slug}`,
+      content: `${url}/blog/${post?.slug}`,
     },
     {
       name: 'twitter:title',
@@ -80,7 +82,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     },
     {
       name: 'twitter:image',
-      content: `${url}/images${new URL(post.poster.url).pathname}`,
+      content: post?.poster ? `${url}/images${new URL(post?.poster.url).pathname}` : '',
     },
     {
       name: 'twitter:label1',

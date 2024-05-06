@@ -6,7 +6,9 @@ import { Feed } from 'feed';
 import { GalleryRecord, VideoRecord } from '~/graphql';
 import { PostRepository } from '~/lib/repositories/post.server';
 
-export const loader = async ({ context }: LoaderFunctionArgs) => {
+export const loader = async ({ request, context }: LoaderFunctionArgs) => {
+  const url = new URL(request.url);
+  const baseUrl = `${url.protocol}//${url.host}`;
   const repository = new PostRepository(context.cloudflare.env.DATOCMS_API_KEY);
 
   const posts = await repository.getPosts();
@@ -15,10 +17,10 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
     title: "Wouter's blog",
     description:
       'My personal blog where I write about software development, side projects, travel, and other random stuff that I find interesting.',
-    id: context.url,
-    link: context.url,
+    id: baseUrl,
+    link: baseUrl,
     copyright: `© ${new Date().getFullYear()} Wouter De Schuyter`,
-    image: `${context.url}/apple-touch-icon.png`,
+    image: `${baseUrl}/apple-touch-icon.png`,
     updated: new Date(posts[0].date),
     generator: 'https://github.com/wouterds/wouterds.be',
     author: { name: 'Wouter De Schuyter' },
@@ -31,9 +33,9 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
 
     feed.addItem({
       title,
-      id: `${context.url}/blog/${slug}`,
-      link: `${context.url}/blog/${slug}`,
-      image: `${context.url}/images${new URL(poster.url).pathname}`,
+      id: `${baseUrl}/blog/${slug}`,
+      link: `${baseUrl}/blog/${slug}`,
+      image: `${baseUrl}/images${new URL(poster.url).pathname}`,
       description: excerpt,
       content: render(content as unknown as StructuredTextDocument, {
         renderBlock: ({ record, adapter: { renderNode } }) => {
@@ -46,7 +48,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
                 images
                   .map((image, index) => [
                     renderNode('img', {
-                      src: `${context.url}/images${new URL(image.url).pathname}`,
+                      src: `${baseUrl}/images${new URL(image.url).pathname}`,
                       width: '100%',
                     }),
                     index !== images.length - 1 && renderNode('br'),

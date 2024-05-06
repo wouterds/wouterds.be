@@ -2,20 +2,22 @@ import { LoaderFunctionArgs } from '@remix-run/cloudflare';
 
 import { PostRepository } from '~/lib/repositories/post.server';
 
-export const loader = async ({ context }: LoaderFunctionArgs) => {
+export const loader = async ({ request, context }: LoaderFunctionArgs) => {
+  const url = new URL(request.url);
+  const baseUrl = `${url.protocol}//${url.host}`;
   const repository = new PostRepository(context.cloudflare.env.DATOCMS_API_KEY);
 
   const posts = await repository.getPosts();
 
   let sitemap = '<?xml version="1.0" encoding="UTF-8"?>';
   sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
-  sitemap += `<url><loc>${context.url}</loc></url>`;
-  sitemap += `<url><loc>${context.url}/about</loc></url>`;
-  sitemap += `<url><loc>${context.url}/blog</loc></url>`;
-  sitemap += `<url><loc>${context.url}/contact</loc></url>`;
-  sitemap += `<url><loc>${context.url}/experiments</loc></url>`;
+  sitemap += `<url><loc>${baseUrl}</loc></url>`;
+  sitemap += `<url><loc>${baseUrl}/about</loc></url>`;
+  sitemap += `<url><loc>${baseUrl}/blog</loc></url>`;
+  sitemap += `<url><loc>${baseUrl}/contact</loc></url>`;
+  sitemap += `<url><loc>${baseUrl}/experiments</loc></url>`;
   for (const { slug } of posts) {
-    sitemap += `<url><loc>${context.url}/blog/${slug}</loc></url>`;
+    sitemap += `<url><loc>${baseUrl}/blog/${slug}</loc></url>`;
   }
   sitemap += '</urlset>';
 
