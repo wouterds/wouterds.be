@@ -1,11 +1,13 @@
+import { type PlatformProxy } from 'wrangler';
+
 import { Env } from './env';
 
-export * from '@remix-run/node';
+export * from '@remix-run/cloudflare';
 
-declare module '@remix-run/node' {
-  export interface AppLoadContext extends Record<string, string> {
-    env: Env;
-    url: string;
-    ray: string | null;
+type Cloudflare = Omit<PlatformProxy<Env>, 'dispose'>;
+
+declare module '@remix-run/cloudflare' {
+  interface AppLoadContext {
+    cloudflare: Cloudflare;
   }
 }
