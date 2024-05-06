@@ -9,6 +9,7 @@ node_modules
 /public/build
 .dev.vars
 .env
+.mjs
 
 # Sentry Config File
 .sentryclirc
