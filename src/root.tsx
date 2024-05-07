@@ -142,8 +142,6 @@ const App = () => {
 
 export default withSentry(App, { wrapWithErrorBoundary: false });
 
-export { wrapRemixHandleError as handleError } from '@sentry/remix';
-
 export const ErrorBoundary = () => {
   const error = useRouteError();
   console.error(error);
