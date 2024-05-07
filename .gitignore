@@ -1,15 +1,10 @@
 .DS_Store
-
 node_modules
 
 /.cache
-/.wrangler
 /build
-/src/graphql/types.ts
-/public/build
 .dev.vars
-.env
-.mjs
+.wrangler
 
 # Sentry Config File
 .sentryclirc
