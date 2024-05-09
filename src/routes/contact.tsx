@@ -1,22 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Turnstile } from '@marsidev/react-turnstile';
 import { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
-import { Form, useActionData, useLoaderData } from '@remix-run/react';
-import { getName as getCountryName } from 'country-list';
+import { json, useActionData, useLoaderData, useSubmit } from '@remix-run/react';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-
-const schema = z.object({
-  name: z.string().min(8, { message: 'Please enter your full name.' }),
-  email: z.string().email({ message: 'Please enter a valid email address.' }),
-  message: z.string().min(48, {
-    message:
-      'Oops, it seems your message is rather short. To better understand your needs, please provide a more detailed message. Feel free to include as much details as possible!',
-  }),
-});
-
-type Schema = z.infer<typeof schema>;
 
 export const loader = ({ context }: LoaderFunctionArgs) => {
   return {
@@ -35,109 +23,93 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const action = async ({ request, response, context }: ActionFunctionArgs) => {
+export const action = async ({ request, context }: ActionFunctionArgs) => {
   const form = await request.formData();
-  const ip = request.headers.get('CF-Connecting-IP') as string;
-  const country = request.headers.get('CF-IPCountry') as string;
   const data = Object.fromEntries(form) as Schema;
 
   try {
     schema.parse(data);
   } catch {
-    response!.status = 400;
-    return { success: false };
+    return json({ success: false }, { status: 400 });
   }
 
-  const token = form.get('cf-turnstile-response')?.toString();
   const payload = new FormData();
   payload.append('secret', context.cloudflare.env.CLOUDFLARE_TURNSTILE_SECRET);
-  payload.append('response', token!);
-  payload.append('remoteip', ip);
+  payload.append('response', form.get('cf-turnstile-response')!);
+  payload.append('remoteip', request.headers.get('cf-connecting-ip')!);
 
   const { success: validatedCaptcha } = await fetch(
     'https://challenges.cloudflare.com/turnstile/v0/siteverify',
-    {
-      body: payload,
-      method: 'POST',
+    { body: payload, method: 'POST' },
+  )
+    .then((response) => response.json<{ success: boolean }>())
+    .catch(() => ({ success: false }));
+
+  if (!validatedCaptcha) return json({ success: false }, { status: 403 });
+
+  let TextPart = '';
+  TextPart += `Name: ${data.name}\n`;
+  TextPart += `Email: ${data.email}\n`;
+  TextPart += `Message: ${data.message}\n\n`;
+  TextPart += `--\n`;
+  TextPart += `IP: ${request.headers.get('cf-connecting-ip')!}, location: ${
+    context.cloudflare.cf.city
+  }, ${context.cloudflare.cf.region}, ${context.cloudflare.cf.country}\n`;
+
+  let HTMLPart = '';
+  HTMLPart += `<p>`;
+  HTMLPart += `<strong>Name:</strong> ${data.name}<br />`;
+  HTMLPart += `<strong>Email:</strong> ${data.email}<br />`;
+  HTMLPart += `<strong>Message:</strong>`;
+  HTMLPart += `</p>`;
+  HTMLPart += `<p>${data.message.replace(/\n/g, '<br />')}</p>`;
+  HTMLPart += `<hr />`;
+  HTMLPart += `<p><strong>IP:</strong> ${request.headers.get(
+    'cf-connecting-ip',
+  )!}, <strong>location:</strong> ${context.cloudflare.cf.city}, ${context.cloudflare.cf.region}, ${
+    context.cloudflare.cf.country
+  }</p>`;
+
+  const { ok: mailSent } = await fetch('https://api.mailjet.com/v3.1/send', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Basic ${btoa(
+        `${context.cloudflare.env.MAILJET_API_KEY}:${context.cloudflare.env.MAILJET_API_SECRET}`,
+      )}`,
     },
-  ).then((response) => response.json<{ success: boolean }>());
+    body: JSON.stringify({
+      Messages: [
+        {
+          From: { Email: 'noreply@wouterds.be' },
+          To: [{ Email: 'wouter.de.schuyter@gmail.com', Name: 'Wouter De Schuyter' }],
+          ReplyTo: { Email: data.email, Name: data.name },
+          Subject: `[Contact] New message from ${data.name}!`,
+          TextPart,
+          HTMLPart,
+        },
+      ],
+    }),
+  }).catch(() => ({ ok: false }));
 
-  if (!validatedCaptcha) {
-    response!.status = 403;
-    return { success: false };
-  }
+  if (mailSent) return json({ success: true });
 
-  try {
-    let TextPart = '';
-    TextPart += `Name: ${data.name}\n`;
-    TextPart += `Email: ${data.email}\n`;
-    TextPart += `Message: ${data.message}\n\n`;
-    TextPart += `--\n`;
-    TextPart += `IP: ${ip || 'unknown'}, location: ${
-      country ? getCountryName(country) : 'unknown' || country
-    }\n`;
-
-    let HTMLPart = '';
-    HTMLPart += `<p>`;
-    HTMLPart += `<strong>Name:</strong> ${data.name}<br />`;
-    HTMLPart += `<strong>Email:</strong> ${data.email}<br />`;
-    HTMLPart += `<strong>Message:</strong>`;
-    HTMLPart += `</p>`;
-    HTMLPart += `<p>${data.message.replace(/\n/g, '<br />')}</p>`;
-    HTMLPart += `<hr />`;
-    HTMLPart += `<p><strong>IP:</strong> ${ip || 'unknown'}, <strong>location:</strong> ${
-      country ? getCountryName(country) : 'unknown' || country
-    }</p>`;
-
-    const { ok: mailSent } = await fetch('https://api.mailjet.com/v3.1/send', {
-      method: 'POST',
-      headers: {
-        Authorization: `Basic ${btoa(
-          `${context.cloudflare.env.MAILJET_API_KEY}:${context.cloudflare.env.MAILJET_API_SECRET}`,
-        )}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        Messages: [
-          {
-            From: { Email: 'noreply@wouterds.be' },
-            To: [{ Email: 'wouter.de.schuyter@gmail.com', Name: 'Wouter De Schuyter' }],
-            ReplyTo: { Email: data.email, Name: data.name },
-            Subject: `[Contact] New message from ${data.name}!`,
-            TextPart,
-            HTMLPart,
-          },
-        ],
-      }),
-    });
-
-    if (!mailSent) {
-      response!.status = 500;
-      return { success: false };
-    }
-
-    return { success: true };
-  } catch {
-    response!.status = 500;
-    return { success: false };
-  }
+  return json({ success: false }, { status: 500 });
 };
 
 export default function Contact() {
   const { CLOUDFLARE_TURNSTILE_KEY } = useLoaderData<typeof loader>();
   const data = useActionData<typeof action>();
-
   const {
     register,
-    formState: { errors, isValid },
+    formState: { errors },
     handleSubmit,
     reset,
   } = useForm({ resolver: zodResolver(schema) });
+  const submit = useSubmit();
 
   useEffect(() => {
-    if (data?.success) {
-      reset();
-    }
+    if (data?.success) reset();
   }, [reset, data?.success]);
 
   if (data?.success) {
@@ -155,11 +127,11 @@ export default function Contact() {
         possible (goal, timeline, budget, ...). For everything else, write as you please, I&apos;ll
         be more than happy to reply!
       </p>
-      <Form
+      <form
         className="flex flex-col gap-4 mt-6"
         action="/contact"
         method="post"
-        onSubmit={isValid ? undefined : handleSubmit((data) => console.log(data))}>
+        onSubmit={handleSubmit((data) => submit(data))}>
         {data?.success === false && (
           <p className="text-red-600 dark:text-red-400 mt-2 mb-4">
             Something went wrong, please try again later.
@@ -222,7 +194,15 @@ export default function Contact() {
             <Turnstile siteKey={CLOUDFLARE_TURNSTILE_KEY} />
           </div>
         </div>
-      </Form>
+      </form>
     </>
   );
 }
+
+const schema = z.object({
+  name: z.string().min(8, { message: 'Please enter your full name.' }),
+  email: z.string().email({ message: 'Please enter a valid email address.' }),
+  message: z.string().min(48, { message: 'Oops, it seems your message is rather short.' }),
+});
+
+type Schema = z.infer<typeof schema>;
