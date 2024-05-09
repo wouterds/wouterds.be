@@ -10,6 +10,8 @@ import { startTransition, StrictMode, useEffect } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 
 Sentry.init({
+  enabled: process.env.NODE_ENV === 'production',
+  allowUrls: ['wouterds.be'],
   dsn: 'https://44cdfe565167b5011cd0839a569ea36d@o308818.ingest.us.sentry.io/4507171516055552',
   integrations: [
     Sentry.browserTracingIntegration({
