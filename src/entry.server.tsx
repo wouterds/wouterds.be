@@ -13,7 +13,7 @@ import { renderToReadableStream } from 'react-dom/server';
 Sentry.init({
   enabled: process.env.NODE_ENV === 'production',
   allowUrls: ['wouterds.be'],
-  dsn: 'https://44cdfe565167b5011cd0839a569ea36d@o308818.ingest.us.sentry.io/4507171516055552',
+  dsn: 'https://643c9fdf710bb10c8fa8f39f2c2cf7ea@o308818.ingest.us.sentry.io/4507231940640768',
 });
 
 export const handleError = Sentry.wrapRemixHandleError;
