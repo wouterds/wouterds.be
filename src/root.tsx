@@ -82,11 +82,6 @@ const App = () => {
           src="https://analytics.eu.umami.is/script.js"
           data-website-id="d504a83c-bc7e-49a6-b643-74c90cd77d01"
         />
-        <script
-          defer
-          src="https://static.cloudflareinsights.com/beacon.min.js"
-          data-cf-beacon='{"token": "7316ff9489bb4ad5977fa6f3e4981db1"}'
-        />
       </head>
       <body>
         <div className="mx-auto" style={{ maxWidth: '768px' }}>
@@ -127,11 +122,6 @@ export const ErrorBoundary = () => {
           defer
           src="https://analytics.eu.umami.is/script.js"
           data-website-id="d504a83c-bc7e-49a6-b643-74c90cd77d01"
-        />
-        <script
-          defer
-          src="https://static.cloudflareinsights.com/beacon.min.js"
-          data-cf-beacon='{"token": "7316ff9489bb4ad5977fa6f3e4981db1"}'
         />
       </head>
       <body>
