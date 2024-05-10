@@ -10,7 +10,7 @@ export const action = async ({ request, response, context }: ActionFunctionArgs)
     return { success: false };
   }
 
-  const raw = await context.cloudflare.env.WOUTERDSBE.get('aranet');
+  const raw = await context.cloudflare.env.CACHE.get('aranet');
 
   const values: AranetRecord[] = raw ? JSON.parse(raw) : [];
   if (!Array.isArray(values)) {
@@ -46,7 +46,7 @@ export const action = async ({ request, response, context }: ActionFunctionArgs)
     values.shift();
   }
 
-  await context.cloudflare.env.WOUTERDSBE.put('aranet', JSON.stringify(values));
+  await context.cloudflare.env.CACHE.put('aranet', JSON.stringify(values));
 
   return { success: true };
 };

@@ -31,7 +31,7 @@ export const action = async ({ request, response, context }: ActionFunctionArgs)
   const peakTime = getUnixTime(new Date(`20${year}-${month}-${day} ${hour}:${minute}`));
   const time = getUnixTime(new Date());
 
-  const raw = await context.cloudflare.env.WOUTERDSBE.get('p1');
+  const raw = await context.cloudflare.env.CACHE.get('p1');
   const values: P1Record[] = raw ? JSON.parse(raw) : [];
 
   const lastPush = fromUnixTime(values[values.length - 1]?.time ?? 0);
@@ -47,9 +47,9 @@ export const action = async ({ request, response, context }: ActionFunctionArgs)
     values.shift();
   }
 
-  await context.cloudflare.env.WOUTERDSBE.put('p1', JSON.stringify(values));
+  await context.cloudflare.env.CACHE.put('p1', JSON.stringify(values));
 
-  const rawHistory = await context.cloudflare.env.WOUTERDSBE.get('p1-history');
+  const rawHistory = await context.cloudflare.env.CACHE.get('p1-history');
   const history: P1HistoryRecord[] = rawHistory ? JSON.parse(rawHistory) : [];
   const lastHistoryRecord = history[history.length - 1];
 
@@ -68,7 +68,7 @@ export const action = async ({ request, response, context }: ActionFunctionArgs)
       time: yesterday,
     });
 
-    await context.cloudflare.env.WOUTERDSBE.put('p1-history', JSON.stringify(history));
+    await context.cloudflare.env.CACHE.put('p1-history', JSON.stringify(history));
   }
 
   return { success: true };

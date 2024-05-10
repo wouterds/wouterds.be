@@ -15,7 +15,7 @@ export const loader = async ({
   const aranetRecords: AranetRecord[] = [];
   try {
     aranetRecords.push(
-      ...(await env.WOUTERDSBE.get('aranet').then((value) => {
+      ...(await env.CACHE.get('aranet').then((value) => {
         return JSON.parse(value || '');
       })),
     );
@@ -26,7 +26,7 @@ export const loader = async ({
   const P1Records: P1Record[] = [];
   try {
     P1Records.push(
-      ...(await env.WOUTERDSBE.get('p1').then((value) => {
+      ...(await env.CACHE.get('p1').then((value) => {
         return JSON.parse(value || '');
       })),
     );
@@ -37,7 +37,7 @@ export const loader = async ({
   const P1HistoryRecordsData: P1HistoryRecord[] = [];
   try {
     P1HistoryRecordsData.push(
-      ...(await env.WOUTERDSBE.get('p1-history').then((value) => {
+      ...(await env.CACHE.get('p1-history').then((value) => {
         return JSON.parse(value || '');
       })),
     );

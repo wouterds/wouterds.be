@@ -9,7 +9,7 @@ type Env = {
   CLOUDFLARE_TURNSTILE_SECRET: string;
   POSTHOG_API_KEY: string;
   API_AUTH_TOKEN: string;
-  WOUTERDSBE: KVNamespace;
+  CACHE: KVNamespace;
 };
 
 type Cloudflare = Omit<PlatformProxy<Env>, 'dispose'>;
