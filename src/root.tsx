@@ -137,7 +137,7 @@ export const ErrorBoundary = () => {
           <Header />
 
           <main className="my-8 sm:my-12">
-            <h1 className="text-xl font-medium">
+            <h1 className="text-xl font-medium mb-4">
               {(isRouteErrorResponse(error) && error.status) || 'Oops, something went wrong!'}
             </h1>
             <p>
