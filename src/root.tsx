@@ -28,7 +28,7 @@ export const loader = async ({ request, context }: LoaderFunctionArgs) => {
 
   return {
     url,
-    ray: context.cloudflare.cf.colo,
+    ray: `${context.cloudflare.cf.colo}-${request.headers.get('cf-ray')}`,
     canonical,
     posthog: {
       host: 'https://eu.posthog.com',
