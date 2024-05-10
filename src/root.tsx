@@ -10,7 +10,6 @@ import {
   useRouteError,
 } from '@remix-run/react';
 import { captureRemixErrorBoundaryError, withSentry } from '@sentry/remix';
-import { useEffect, useRef } from 'react';
 import { ExternalScripts } from 'remix-utils/external-scripts';
 
 import stylesheet from '~/tailwind.css?url';
