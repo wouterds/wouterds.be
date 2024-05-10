@@ -138,23 +138,15 @@ export const ErrorBoundary = () => {
 
           <main className="my-8 sm:my-12">
             <h1 className="text-xl font-medium mb-4">
-              {(isRouteErrorResponse(error) && error.status) || 'Oops, something went wrong!'}
+              {(isRouteErrorResponse(error) && `${error.status} ${error.statusText}`) ||
+                'Oops, something went wrong!'}
             </h1>
             <p>
-              {isRouteErrorResponse(error) ? (
-                error.status === 404 ? (
-                  'The page you were looking for could not be found.'
-                ) : (
-                  <>
-                    {error.status && <span className="font-medium">{error.status}</span>}{' '}
-                    {error.statusText}
-                  </>
-                )
-              ) : error instanceof Error ? (
-                error.message
-              ) : (
-                'Unknown error occured'
-              )}
+              {isRouteErrorResponse(error) && error.status === 404
+                ? 'The page you were looking for could not be found.'
+                : error instanceof Error
+                  ? error.message
+                  : 'Unknown error occured'}
             </p>
             {error instanceof Error && <code>{error.stack}</code>}
           </main>
