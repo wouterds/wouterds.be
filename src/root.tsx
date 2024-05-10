@@ -77,7 +77,11 @@ const App = () => {
         <Meta />
         <Links />
         {data?.canonical && <link rel="canonical" href={data?.canonical} />}
-        <script defer data-domain="wouterds.be" src="https://plausible.io/js/script.js" />
+        <script
+          defer
+          src="https://analytics.eu.umami.is/script.js"
+          data-website-id="d504a83c-bc7e-49a6-b643-74c90cd77d01"
+        />
         <script
           defer
           src="https://static.cloudflareinsights.com/beacon.min.js"
@@ -120,7 +124,11 @@ export const ErrorBoundary = () => {
         <meta name="robots" content="noindex" />
         <Meta />
         <Links />
-        <script defer data-domain="wouterds.be" src="https://plausible.io/js/script.js" />
+        <script
+          defer
+          src="https://analytics.eu.umami.is/script.js"
+          data-website-id="d504a83c-bc7e-49a6-b643-74c90cd77d01"
+        />
         <script
           defer
           src="https://static.cloudflareinsights.com/beacon.min.js"
