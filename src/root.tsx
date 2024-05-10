@@ -10,7 +10,6 @@ import {
   useRouteError,
 } from '@remix-run/react';
 import { captureRemixErrorBoundaryError, withSentry } from '@sentry/remix';
-import { posthog } from 'posthog-js';
 import { useEffect, useRef } from 'react';
 import { ExternalScripts } from 'remix-utils/external-scripts';
 
@@ -30,10 +29,6 @@ export const loader = async ({ request, context }: LoaderFunctionArgs) => {
     url,
     ray: `${context.cloudflare.cf.colo}-${request.headers.get('cf-ray')}`,
     canonical,
-    posthog: {
-      host: 'https://eu.posthog.com',
-      apiKey: context.cloudflare.env.POSTHOG_API_KEY,
-    },
   };
 };
 
@@ -80,24 +75,6 @@ export const meta: MetaFunction<typeof loader> = ({ error, data }) => {
 
 const App = () => {
   const data = useLoaderData<typeof loader>();
-  const posthogInitialized = useRef(false);
-
-  useEffect(() => {
-    if (posthogInitialized.current) {
-      return;
-    }
-
-    posthog.init(data.posthog.apiKey, {
-      api_host: data.posthog.host,
-      loaded: (posthog) => {
-        posthogInitialized.current = true;
-
-        if (location?.hostname === 'localhost' || location?.hostname === '127.0.0.1') {
-          posthog.opt_out_capturing();
-        }
-      },
-    });
-  }, [data.posthog.apiKey, data.posthog.host]);
 
   return (
     <html lang="en">
