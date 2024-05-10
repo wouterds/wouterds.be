@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
-import { Mailer } from '~/lib/mailer';
+import { MailjetMailer } from '~/lib/mailjet';
 import { TurnstileValidator } from '~/lib/turnstile';
 
 export const loader = ({ context }: LoaderFunctionArgs) => {
@@ -46,7 +46,7 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
     context.cloudflare.cf.region ? `${context.cloudflare.cf.region}, ` : ''
   }${context.cloudflare.cf.country || 'Unknown'}`;
 
-  const mailer = Mailer.fromContext(context);
+  const mailer = MailjetMailer.fromContext(context);
   mailer.setSender({ email: 'noreply@wouterds.be' });
   mailer.setReceiver({ name: 'Wouter De Schuyter', email: 'wouter.de.schuyter@gmail.com' });
   mailer.setSubject(`[Contact] New message from ${data.name}!`);

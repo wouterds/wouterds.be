@@ -5,7 +5,7 @@ type Contact = {
   email: string;
 };
 
-export class Mailer {
+export class MailjetMailer {
   private _context: AppLoadContext;
   private _sender?: Contact;
   private _replyTo?: Contact;
@@ -19,7 +19,7 @@ export class Mailer {
   }
 
   public static fromContext(context: AppLoadContext) {
-    return new Mailer(context);
+    return new MailjetMailer(context);
   }
 
   private get apiKey() {
