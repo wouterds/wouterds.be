@@ -113,7 +113,6 @@ export default withSentry(App, { wrapWithErrorBoundary: false });
 
 export const ErrorBoundary = () => {
   const error = useRouteError();
-  console.error(error);
   captureRemixErrorBoundaryError(error);
 
   return (
