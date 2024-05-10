@@ -56,6 +56,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [
     { title },
     { name: 'description', content: description },
+    { name: 'og:site_name', content: 'Wouter De Schuyter' },
     { name: 'og:title', content: title },
     { name: 'og:description', content: description },
     { name: 'og:type', content: 'article' },
@@ -64,42 +65,18 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
       name: 'og:image',
       content: post?.poster ? `${url}/images${new URL(post?.poster.url).pathname}` : '',
     },
-    {
-      name: 'og:url',
-      content: `${url}/blog/${post?.slug}`,
-    },
-    {
-      name: 'twitter:title',
-      content: title,
-    },
-    {
-      name: 'twitter:description',
-      content: description,
-    },
-    {
-      name: 'twitter:card',
-      content: 'summary_large_image',
-    },
+    { name: 'og:url', content: `${url}/blog/${post?.slug}` },
+    { name: 'twitter:title', content: title },
+    { name: 'twitter:description', content: description },
+    { name: 'twitter:card', content: 'summary_large_image' },
     {
       name: 'twitter:image',
       content: post?.poster ? `${url}/images${new URL(post?.poster.url).pathname}` : '',
     },
-    {
-      name: 'twitter:label1',
-      content: 'Written by',
-    },
-    {
-      name: 'twitter:data1',
-      content: 'Wouter De Schuyter',
-    },
-    {
-      name: 'twitter:label2',
-      content: 'Est. reading time',
-    },
-    {
-      name: 'twitter:data2',
-      content: `${readingTime} minute${readingTime > 1 ? 's' : ''}`,
-    },
+    { name: 'twitter:label1', content: 'Written by' },
+    { name: 'twitter:data1', content: 'Wouter De Schuyter' },
+    { name: 'twitter:label2', content: 'Est. reading time' },
+    { name: 'twitter:data2', content: `${readingTime} minute${readingTime > 1 ? 's' : ''}` },
   ];
 };
 

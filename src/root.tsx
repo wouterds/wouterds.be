@@ -43,32 +43,15 @@ export const meta: MetaFunction<typeof loader> = ({ error, data }) => {
   return [
     { title },
     { name: 'description', content: description },
+    { name: 'og:site_name', content: 'Wouter De Schuyter' },
     { name: 'og:title', content: title },
     { name: 'og:description', content: description },
-    {
-      name: 'og:image',
-      content: `${data?.url}/images/og.jpg`,
-    },
-    {
-      name: 'og:url',
-      content: `${data?.url}`,
-    },
-    {
-      name: 'twitter:title',
-      content: title,
-    },
-    {
-      name: 'twitter:description',
-      content: description,
-    },
-    {
-      name: 'twitter:card',
-      content: 'summary_large_image',
-    },
-    {
-      name: 'twitter:image',
-      content: `${data?.url}/images/og.jpg`,
-    },
+    { name: 'og:image', content: `${data?.url}/images/og.jpg` },
+    { name: 'og:url', content: `${data?.url}` },
+    { name: 'twitter:title', content: title },
+    { name: 'twitter:description', content: description },
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:image', content: `${data?.url}/images/og.jpg` },
   ];
 };
 
