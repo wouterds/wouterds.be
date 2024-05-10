@@ -1,4 +1,3 @@
-import { XMarkIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -33,7 +32,19 @@ export const Image = ({ url, alt, responsiveImage, width, height }: FileField) =
             <button
               className="absolute top-4 right-4 p-1 text-white rounded-sm hover:bg-zinc-300 hover:bg-opacity-10"
               onClick={() => setExpanded(false)}>
-              <XMarkIcon className="w-6 h-6" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-6 h-6"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M18 6l-12 12" />
+                <path d="M6 6l12 12" />
+              </svg>
             </button>
             <img
               className="max-w-full max-h-full bg-zinc-50 dark:bg-zinc-800 dark:bg-opacity-25 rounded-sm"
