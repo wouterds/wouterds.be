@@ -85,7 +85,7 @@ export default function Contact() {
 
   if (data?.success) {
     return (
-      <p className="text-green-700 dark:text-green-400">
+      <p className="text-emerald-700 dark:text-emerald-400">
         Your message has been sent, I&apos;ll get back to you as soon as possible!
       </p>
     );
@@ -104,7 +104,7 @@ export default function Contact() {
         method="post"
         onSubmit={isValid ? undefined : handleSubmit(() => {})}>
         {data?.success === false && (
-          <p className="text-red-600 dark:text-red-400 mt-2 mb-4">
+          <p className="text-rose-600 dark:text-rose-400 mt-2 mb-4">
             Something went wrong, please try again later.
           </p>
         )}
@@ -117,10 +117,10 @@ export default function Contact() {
               type="text"
               id="name"
               {...register('name')}
-              className={errors.name ? 'border-red-600 dark:border-red-400' : undefined}
+              className={errors.name ? 'border-rose-600 dark:border-rose-400' : undefined}
             />
             {errors.name?.message && (
-              <p className="text-red-600 dark:text-red-400 mt-1.5">
+              <p className="text-rose-600 dark:text-rose-400 mt-1.5">
                 {errors.name?.message as string}
               </p>
             )}
@@ -133,10 +133,10 @@ export default function Contact() {
               type="text"
               id="email"
               {...register('email')}
-              className={errors.email ? 'border-red-600 dark:border-red-400' : undefined}
+              className={errors.email ? 'border-rose-600 dark:border-rose-400' : undefined}
             />
             {errors.email?.message && (
-              <p className="text-red-600 dark:text-red-400 mt-1.5">
+              <p className="text-rose-600 dark:text-rose-400 mt-1.5">
                 {errors.email?.message as string}
               </p>
             )}
@@ -149,10 +149,10 @@ export default function Contact() {
           <textarea
             id="message"
             {...register('message')}
-            className={errors.message ? 'border-red-600 dark:border-red-400' : undefined}
+            className={errors.message ? 'border-rose-600 dark:border-rose-400' : undefined}
           />
           {errors.message?.message && (
-            <p className="text-red-600 dark:text-red-400 mt-1.5">
+            <p className="text-rose-600 dark:text-rose-400 mt-1.5">
               {errors.message?.message as string}
             </p>
           )}

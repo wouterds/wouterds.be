@@ -30,9 +30,8 @@ textarea {
   @apply focus:outline-none;
   @apply p-2;
   @apply bg-transparent;
-  @apply border-b border-zinc-800 dark:border-zinc-200;
-  @apply focus:border-zinc-800 dark:focus:border-zinc-200;
-  @apply focus:bg-zinc-100 dark:focus:bg-zinc-800;
+  @apply border-b border-zinc-600 dark:border-zinc-400;
+  @apply focus:border-zinc-950 dark:focus:border-zinc-50;
   @apply rounded-none;
 }
 
@@ -41,13 +40,14 @@ textarea {
 }
 
 button[type=submit] {
-  @apply font-medium;
+  @apply font-semibold;
   @apply px-3 py-1.5;
+  @apply leading-relaxed;
   @apply inline-block;
   @apply rounded-none;
   @apply border;
-  @apply border-zinc-800 hover:bg-zinc-800 hover:text-white;
-  @apply dark:border-zinc-200 dark:hover:text-black dark:hover:bg-zinc-200;
+  @apply border-zinc-800 hover:bg-zinc-800 text-black hover:text-white;
+  @apply dark:border-zinc-200 dark:text-white dark:hover:text-black dark:hover:bg-zinc-200;
 }
 
 p {
