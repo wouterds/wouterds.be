@@ -6,7 +6,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   let robots = '';
   robots += 'User-agent: *\n';
-  if (process.env.NODE_ENV !== 'production' || url.host?.includes('pages.dev')) {
+  if (process.env.NODE_ENV === 'development' || url.host?.includes('pages.dev')) {
     robots += 'Disallow: /\n';
   } else {
     robots += 'Allow: /\n';
