@@ -58,7 +58,7 @@ export const loader = async ({
       usage: index === 0 ? 0 : record.total - P1HistoryRecordsData[index - 1].total,
       time: record.time,
     }),
-  ).slice(1);
+  ).slice(1, 61); // last 2 months excluding today
 
   return { aranetRecords, P1Records, peak, P1HistoryRecords };
 };
