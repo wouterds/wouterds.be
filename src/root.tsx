@@ -14,8 +14,8 @@ import { ExternalScripts } from 'remix-utils/external-scripts';
 
 import stylesheet from '~/tailwind.css?url';
 
-import Footer from './components/Footer';
-import Header from './components/Header';
+import Footer from './components/footer';
+import Header from './components/header';
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: stylesheet }];
 

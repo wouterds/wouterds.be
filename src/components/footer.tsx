@@ -1,6 +1,6 @@
 import { Link } from '@remix-run/react';
 
-import Typewriter from './Typewriter';
+import Typewriter from './typewriter';
 
 type Props = {
   ray?: string | null;

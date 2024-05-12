@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 import { FileField } from '~/graphql';
 import { humanReadableSize } from '~/lib/utils';
 
-import { Loader } from './Loader';
+import { Loader } from './loader';
 
 export const Image = ({ url, alt, responsiveImage, width, height, size }: FileField) => {
   const [expanded, setExpanded] = useState(false);

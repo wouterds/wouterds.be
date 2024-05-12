@@ -7,7 +7,7 @@ import { RenderBlockContext, StructuredText, StructuredTextDocument } from 'reac
 import { useMedia } from 'react-use';
 import { ExternalScriptsFunction } from 'remix-utils/external-scripts';
 
-import { Image } from '~/components/Image';
+import { Image } from '~/components/image';
 import { GalleryRecord, VideoRecord } from '~/graphql';
 import { excerptFromContent, plainTextFromContent } from '~/lib/datocms/structured-text-utils';
 import { PostRepository } from '~/lib/repositories/post.server';
