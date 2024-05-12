@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 const time = 125;
 const characters = ['|', '/', '-', '\\'];
 
-const TextSpinner = () => {
+const Loader = () => {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -17,4 +17,4 @@ const TextSpinner = () => {
   return <>{characters[index]}</>;
 };
 
-export default TextSpinner;
+export default Loader;
