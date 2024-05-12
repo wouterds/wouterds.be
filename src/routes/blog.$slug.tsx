@@ -171,7 +171,7 @@ const renderBlock = ({
 }: RenderBlockContext<(GalleryRecord | VideoRecord) & { __typename: string }>) => {
   if (record.__typename === 'GalleryRecord') {
     return (
-      <ul className="not-prose flex flex-col gap-3">
+      <ul className="not-prose flex flex-col gap-3 mt-6">
         {record.images.map((image) => (
           <li key={`post-gallery.image:${image.id}`}>
             <Image {...image} />

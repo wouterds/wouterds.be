@@ -29,6 +29,7 @@ query PostsGetBySlug($slug: String!) {
             id
             url
             alt
+            size
             width
             height
             responsiveImage { base64 }
