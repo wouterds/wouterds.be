@@ -32,7 +32,7 @@ export const Image = ({ url, alt, responsiveImage, width, height }: FileField) =
           onClick={() => setExpanded(!expanded)}
           className="cursor-pointer relative z-10 w-full"
           loading="lazy"
-          src={`/images${new URL(url).pathname}`}
+          src={`/images/thumb${new URL(url).pathname}`}
           alt={alt || undefined}
         />
       </div>
@@ -64,6 +64,7 @@ export const Image = ({ url, alt, responsiveImage, width, height }: FileField) =
               className="max-w-full max-h-full bg-zinc-50 dark:bg-zinc-800 dark:bg-opacity-25 rounded-sm"
               src={`/images${new URL(url).pathname}`}
               alt={alt || undefined}
+              loading="lazy"
             />
           </div>,
           document.getElementById('modal-portal')!,
