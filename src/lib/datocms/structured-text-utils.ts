@@ -16,6 +16,6 @@ export const excerptFromContent = (content: {
   blocks?: unknown[];
 }) => {
   return (
-    plainTextFromContent(content)?.slice(0, 240)?.split(' ').slice(0, -1)?.join(' ')?.trim() + '…'
+    plainTextFromContent(content)?.slice(0, 158)?.split(' ').slice(0, -1)?.join(' ')?.trim() + '…'
   );
 };
