@@ -4,8 +4,17 @@ import { createPortal } from 'react-dom';
 import { FileField } from '~/graphql';
 import { humanReadableSize } from '~/lib/utils';
 
+import { Loader } from './Loader';
+
 export const Image = ({ url, alt, responsiveImage, width, height, size }: FileField) => {
   const [expanded, setExpanded] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (expanded) {
+      setLoading(true);
+    }
+  }, [expanded]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -65,9 +74,13 @@ export const Image = ({ url, alt, responsiveImage, width, height, size }: FileFi
               style={{ aspectRatio: `${width! / height!}` }}
               src={`/images${new URL(url).pathname}`}
               alt={alt!}
+              onLoad={() => setLoading(false)}
             />
-            <p className="text-white text-opacity-25 absolute bottom-4 left-4">
-              {width}x{height}, {humanReadableSize(size)}
+            <p className="text-white text-opacity-25 absolute bottom-4 left-4 flex gap-2.5 items-center">
+              <span>
+                {width}x{height}, {humanReadableSize(size)}
+              </span>
+              {loading && <Loader className="opacity-50" />}
             </p>
             <button
               className="z-50 absolute top-4 right-4 p-1 text-white rounded-sm hover:bg-zinc-300 hover:bg-opacity-10"
