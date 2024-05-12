@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 import { FileField } from '~/graphql';
 import { humanReadableSize } from '~/lib/utils';
 
-import { Loader } from './loader';
+import TextSpinner from './spinner';
 
 export const Image = ({ url, alt, responsiveImage, width, height, size }: FileField) => {
   const [expanded, setExpanded] = useState(false);
@@ -80,7 +80,7 @@ export const Image = ({ url, alt, responsiveImage, width, height, size }: FileFi
               <span>
                 {width}x{height}, {humanReadableSize(size)}
               </span>
-              {loading && <Loader className="opacity-50" />}
+              {loading && <TextSpinner />}
             </p>
             <button
               className="z-50 absolute top-4 right-4 p-1 text-white rounded-sm hover:bg-zinc-300 hover:bg-opacity-10"
