@@ -47,7 +47,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const url = data?.url;
   const post = data?.post;
   const title = post?.title;
-  const description = post?.content ? excerptFromContent(post.content) : '';
+  const description = post?.content ? excerptFromContent(post.content, 160) : '';
   const text = post?.content ? plainTextFromContent(post.content) : '';
   const words = text?.split(' ')?.length || 0;
   const averageWordsPerMinuteReadingSpeed = 160;

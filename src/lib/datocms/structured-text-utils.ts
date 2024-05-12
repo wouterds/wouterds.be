@@ -10,12 +10,20 @@ export const plainTextFromContent = (content: {
   return render(content as unknown as StructuredTextDocument)?.trim();
 };
 
-export const excerptFromContent = (content: {
-  value: Scalars['JsonField']['output'];
-  links?: unknown[];
-  blocks?: unknown[];
-}) => {
+export const excerptFromContent = (
+  content: {
+    value: Scalars['JsonField']['output'];
+    links?: unknown[];
+    blocks?: unknown[];
+  },
+  length = 240,
+) => {
   return (
-    plainTextFromContent(content)?.slice(0, 158)?.split(' ').slice(0, -1)?.join(' ')?.trim() + '…'
+    plainTextFromContent(content)
+      ?.slice(0, Math.max(length - 2, 0))
+      ?.split(' ')
+      .slice(0, -1)
+      ?.join(' ')
+      ?.trim() + '…'
   );
 };
