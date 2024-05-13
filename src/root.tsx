@@ -22,12 +22,22 @@ export const links: LinksFunction = () => [{ rel: 'stylesheet', href: stylesheet
 export const loader = async ({ request, context }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const baseUrl = `${url.protocol}//${url.host}`;
-  const canonical = new URL(url.pathname, baseUrl).href;
+
+  if (url.pathname.endsWith('/') && url.pathname !== '/') {
+    if (url.pathname === '//') {
+      throw new Response(null, { status: 301, headers: { Location: `/` } });
+    }
+
+    throw new Response(null, {
+      status: 301,
+      headers: { Location: `${url.pathname.slice(0, -1)}${url.search}` },
+    });
+  }
 
   return {
     url,
     ray: `${context.cloudflare.cf.colo}-${request.headers.get('cf-ray')}`,
-    canonical,
+    canonical: new URL(url.pathname, baseUrl).href,
   };
 };
 
