@@ -87,11 +87,13 @@ const App = () => {
         <Meta />
         <Links />
         {data?.canonical && <link rel="canonical" href={data?.canonical} />}
-        <script
-          defer
-          src="https://analytics.eu.umami.is/script.js"
-          data-website-id="d504a83c-bc7e-49a6-b643-74c90cd77d01"
-        />
+        {data?.url?.includes('wouterds.be') && (
+          <script
+            defer
+            src="https://analytics.eu.umami.is/script.js"
+            data-website-id="d504a83c-bc7e-49a6-b643-74c90cd77d01"
+          />
+        )}
       </head>
       <body>
         <div className="mx-auto" style={{ maxWidth: '768px' }}>
