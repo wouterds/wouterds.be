@@ -26,7 +26,7 @@ export const Image = ({ id, images }: Props) => {
     if (expanded) {
       setLoading(true);
     }
-  }, [expanded]);
+  }, [expanded, activeIndex]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
