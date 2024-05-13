@@ -51,50 +51,40 @@ export const Image = ({ url, alt, responsiveImage, width, height, size }: FileFi
         typeof document !== 'undefined' &&
         createPortal(
           <div
-            className="fixed inset-0 z-50 bg-black bg-opacity-95 flex items-center justify-center p-12"
+            className="fixed inset-0 z-50 bg-black bg-opacity-95 flex"
             onClick={() => setExpanded(false)}>
-            {responsiveImage?.base64 && (
+            <div className="flex-1 relative my-12 mx-6">
+              {responsiveImage?.base64 && (
+                <img
+                  className="max-w-full max-h-full flex-1 absolute w-full object-contain"
+                  style={{ aspectRatio: `${width! / height!}` }}
+                  src={responsiveImage.base64}
+                />
+              )}
               <img
-                className="max-w-full max-h-full flex-1 absolute w-full object-contain"
+                className="max-w-full max-h-full flex-1 object-contain absolute w-full"
                 style={{ aspectRatio: `${width! / height!}` }}
-                src={responsiveImage.base64}
+                src={`/images/thumb${new URL(url).pathname}`}
+                alt={alt!}
               />
-            )}
-            <img
-              className="max-w-full max-h-full flex-1 object-contain absolute w-full"
-              style={{ aspectRatio: `${width! / height!}` }}
-              src={`/images/thumb${new URL(url).pathname}`}
-              alt={alt!}
-            />
-            <img
-              className="max-w-full max-h-full flex-1 object-contain absolute w-full"
-              style={{ aspectRatio: `${width! / height!}` }}
-              src={`/images${new URL(url).pathname}`}
-              alt={alt!}
-              onLoad={() => setLoading(false)}
-            />
-            <p className="text-white text-opacity-25 absolute bottom-4 left-4 flex gap-2.5 items-center">
+              <img
+                className="max-w-full max-h-full flex-1 object-contain absolute w-full"
+                style={{ aspectRatio: `${width! / height!}` }}
+                src={`/images${new URL(url).pathname}`}
+                alt={alt!}
+                onLoad={() => setLoading(false)}
+              />
+            </div>
+            <p className="text-white text-opacity-25 absolute bottom-4 left-6 flex gap-2.5 items-center">
               <span>
                 {width}x{height}, {humanReadableSize(size)}
               </span>
               {loading && <Loader />}
             </p>
             <button
-              className="z-50 absolute top-4 right-4 p-1 text-white rounded-sm hover:bg-zinc-300 hover:bg-opacity-10"
+              className="z-50 absolute top-4 right-4 text-white rounded-sm hover:bg-zinc-300 hover:bg-opacity-10 aspect-square w-6 h-6 text-xl leading-none"
               onClick={() => setExpanded(false)}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-6 h-6"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M18 6l-12 12" />
-                <path d="M6 6l12 12" />
-              </svg>
+              &times;
             </button>
           </div>,
           document.getElementById('modal-portal')!,
