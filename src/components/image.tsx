@@ -116,46 +116,48 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
                 </svg>
               </button>
             </header>
-            <nav className="absolute z-10 top-0 bottom-0 left-4 right-4 flex items-center justify-between">
-              <button
-                title="Previous image"
-                className="text-white text-opacity-90 hover:text-opacity-100 rounded-sm hover:bg-zinc-300 hover:bg-opacity-10 aspect-square w-7 h-7 text-xl inline-flex items-center justify-center"
-                onClick={onPrevious}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="1em"
-                  width="1em"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M15 6l-6 6l6 6" />
-                </svg>
-              </button>
-              <button
-                title="Next image"
-                className="text-white text-opacity-90 hover:text-opacity-100 rounded-sm hover:bg-zinc-300 hover:bg-opacity-10 aspect-square w-7 h-7 text-xl inline-flex items-center justify-center"
-                onClick={onNext}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="1em"
-                  width="1em"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M9 6l6 6l-6 6" />
-                </svg>
-              </button>
-            </nav>
+            {images.length > 1 && (
+              <nav className="absolute z-10 top-0 bottom-0 left-4 right-4 flex items-center justify-between">
+                <button
+                  title="Previous image"
+                  className="text-white text-opacity-90 hover:text-opacity-100 rounded-sm hover:bg-zinc-300 hover:bg-opacity-10 aspect-square w-7 h-7 text-xl inline-flex items-center justify-center"
+                  onClick={onPrevious}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="1em"
+                    width="1em"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M15 6l-6 6l6 6" />
+                  </svg>
+                </button>
+                <button
+                  title="Next image"
+                  className="text-white text-opacity-90 hover:text-opacity-100 rounded-sm hover:bg-zinc-300 hover:bg-opacity-10 aspect-square w-7 h-7 text-xl inline-flex items-center justify-center"
+                  onClick={onNext}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="1em"
+                    width="1em"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M9 6l6 6l-6 6" />
+                  </svg>
+                </button>
+              </nav>
+            )}
             <div className="flex-1 relative flex items-center justify-center my-12 mx-6">
               {image.responsiveImage?.base64 && (
                 <img
