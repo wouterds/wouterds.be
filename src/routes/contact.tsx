@@ -48,6 +48,7 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
 
   const mailer = MailjetMailer.fromContext(context);
   mailer.setSender({ email: 'noreply@wouterds.be' });
+  mailer.setReplyTo({ name: data.name, email: data.email });
   mailer.setReceiver({ name: 'Wouter De Schuyter', email: 'wouter.de.schuyter@gmail.com' });
   mailer.setSubject(`[Contact] New message from ${data.name}!`);
   mailer.setTextMessage(
