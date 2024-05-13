@@ -183,13 +183,18 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
                 onLoad={() => setLoading(false)}
               />
             </div>
-            <footer>
-              <p className="text-white text-opacity-30 text-xs absolute bottom-4 left-4 flex gap-2.5 items-center">
+            <footer className="flex items-center justify-between absolute bottom-4 left-4 right-4 z-20 text-white text-opacity-30 text-xs">
+              <p className="flex gap-2.5 items-center">
                 <span>
-                  {image.width}x{image.height}, {humanReadableSize(image.size)}
+                  {image.width} &times; {image.height}, {humanReadableSize(image.size)}
                 </span>
                 {loading && <Loader />}
               </p>
+              {images.length > 1 && (
+                <p>
+                  {activeIndex + 1} / {images.length}
+                </p>
+              )}
             </footer>
           </div>,
           document.getElementById('modal-portal')!,
