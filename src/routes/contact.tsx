@@ -159,7 +159,27 @@ export default function Contact() {
         </div>
         <div className="flex flex-col sm:flex-row justify-between gap-4">
           <div>
-            <button type="submit">Submit</button>
+            <button
+              type="submit"
+              className="relative leading-none flex items-center justify-center group font-medium">
+              <span className="text-xl relative left-0" style={{ bottom: -3 }}>
+                &#8990;
+              </span>
+              <span
+                className="text-xl absolute left-0 hidden group-hover:inline-block"
+                style={{ top: -4 }}>
+                &#8988;
+              </span>
+              <span>submit</span>
+              <span className="text-xl relative" style={{ top: -4, right: 1 }}>
+                &#8989;
+              </span>
+              <span
+                className="text-xl absolute hidden group-hover:inline-block"
+                style={{ bottom: -3, right: 1 }}>
+                &#8991;
+              </span>
+            </button>
           </div>
           <div>
             <Turnstile siteKey={CLOUDFLARE_TURNSTILE_KEY} />

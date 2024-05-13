@@ -39,17 +39,6 @@ textarea {
   @apply min-h-32;
 }
 
-button[type=submit] {
-  @apply font-semibold;
-  @apply px-3 py-1.5;
-  @apply leading-relaxed;
-  @apply inline-block;
-  @apply rounded-none;
-  @apply border;
-  @apply border-zinc-800 hover:bg-zinc-800 text-black hover:text-white;
-  @apply dark:border-zinc-200 dark:text-white dark:hover:text-black dark:hover:bg-zinc-200;
-}
-
 p {
   @apply break-words;
 }
