@@ -36,7 +36,7 @@ export const loader = async ({ request, context }: LoaderFunctionArgs) => {
 
   return {
     url,
-    ray: `${context.cloudflare.cf.colo}-${request.headers.get('cf-ray')}`,
+    ray: `${request.headers.get('cf-ray')}-${context.cloudflare.cf.colo}`,
     canonical: new URL(url.pathname, baseUrl).href,
   };
 };
