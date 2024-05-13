@@ -139,18 +139,21 @@ export const Image = ({ id, images }: Props) => {
             <div className="flex-1 relative flex items-center justify-center my-12 mx-6">
               {responsiveImage?.base64 && (
                 <img
+                  key={`${id}-responsive`}
                   className="max-w-full max-h-full flex-1 absolute w-full object-contain"
                   style={{ aspectRatio: `${width! / height!}` }}
                   src={responsiveImage.base64}
                 />
               )}
               <img
+                key={`${id}-lowres`}
                 className="max-w-full max-h-full flex-1 object-contain absolute w-full"
                 style={{ aspectRatio: `${width! / height!}` }}
                 src={`/images/thumb${new URL(url).pathname}`}
                 alt={alt!}
               />
               <img
+                key={`${id}-highres`}
                 className="max-w-full max-h-full flex-1 object-contain absolute w-full"
                 style={{ aspectRatio: `${width! / height!}` }}
                 src={`/images${new URL(url).pathname}`}
