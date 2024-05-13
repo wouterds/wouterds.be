@@ -22,6 +22,9 @@ export const Image = ({ id, images }: Props) => {
     [activeIndex, images],
   );
 
+  const onNext = () => setActiveIndex((prev) => (prev + 1) % images.length);
+  const onPrevious = () => setActiveIndex((prev) => (prev - 1 + images.length) % images.length);
+
   useEffect(() => {
     if (expanded) {
       setLoading(true);
@@ -33,6 +36,14 @@ export const Image = ({ id, images }: Props) => {
       if (event.key === 'Escape') {
         setExpanded(false);
       }
+
+      if (event.key === 'ArrowRight') {
+        onNext();
+      }
+
+      if (event.key === 'ArrowLeft') {
+        onPrevious();
+      }
     };
 
     document.addEventListener('keydown', handleKeyDown);
@@ -40,7 +51,7 @@ export const Image = ({ id, images }: Props) => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [onNext, onPrevious, setExpanded]);
 
   return (
     <>
@@ -89,9 +100,7 @@ export const Image = ({ id, images }: Props) => {
               <button
                 title="Previous image"
                 className="text-white text-opacity-90 hover:text-opacity-100 rounded-sm hover:bg-zinc-300 hover:bg-opacity-10 aspect-square w-7 h-7 text-xl inline-flex items-center justify-center"
-                onClick={() =>
-                  setActiveIndex((prev) => (prev - 1 + images.length) % images.length)
-                }>
+                onClick={onPrevious}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="1em"
@@ -110,7 +119,7 @@ export const Image = ({ id, images }: Props) => {
               <button
                 title="Next image"
                 className="text-white text-opacity-90 hover:text-opacity-100 rounded-sm hover:bg-zinc-300 hover:bg-opacity-10 aspect-square w-7 h-7 text-xl inline-flex items-center justify-center"
-                onClick={() => setActiveIndex((prev) => (prev + 1) % images.length)}>
+                onClick={onNext}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="1em"
