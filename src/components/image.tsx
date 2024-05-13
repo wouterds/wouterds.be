@@ -53,7 +53,7 @@ export const Image = ({ url, alt, responsiveImage, width, height, size }: FileFi
           <div
             className="fixed inset-0 z-50 bg-black bg-opacity-95 flex"
             onClick={() => setExpanded(false)}>
-            <div className="flex-1 relative my-12 mx-6">
+            <div className="flex-1 relative flex items-center justify-center my-12 mx-6">
               {responsiveImage?.base64 && (
                 <img
                   className="max-w-full max-h-full flex-1 absolute w-full object-contain"
@@ -82,7 +82,7 @@ export const Image = ({ url, alt, responsiveImage, width, height, size }: FileFi
               {loading && <Loader />}
             </p>
             <button
-              className="z-50 absolute top-3.5 right-4 text-white text-opacity-90 hover:text-opacity-100 rounded-sm hover:bg-zinc-300 hover:bg-opacity-10 aspect-square w-7 h-7 text-2xl"
+              className="z-50 absolute top-2.5 right-3 sm:top-3.5 sm:right-4 text-white text-opacity-90 hover:text-opacity-100 rounded-sm hover:bg-zinc-300 hover:bg-opacity-10 aspect-square w-7 h-7 text-2xl"
               onClick={() => setExpanded(false)}>
               <span className="relative" style={{ top: -3 }}>
                 &times;
