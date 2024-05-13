@@ -10,17 +10,14 @@ interface Props extends FileField {
   images: FileField[];
 }
 
-export const Image = ({ id, images }: Props) => {
+export const Image = ({ id, width, height, responsiveImage, url, alt, images }: Props) => {
   const [expanded, setExpanded] = useState(false);
   const [loading, setLoading] = useState(false);
   const [activeIndex, setActiveIndex] = useState(
     images?.findIndex((image) => image.id === id) || 0,
   );
 
-  const { url, alt, responsiveImage, width, height, size } = useMemo(
-    () => images[activeIndex]!,
-    [activeIndex, images],
-  );
+  const image = useMemo(() => images[activeIndex]!, [activeIndex, images]);
 
   const onNext = useCallback(() => {
     setActiveIndex((prev) => (prev + 1) % images.length);
@@ -142,34 +139,34 @@ export const Image = ({ id, images }: Props) => {
               </button>
             </nav>
             <div className="flex-1 relative flex items-center justify-center my-12 mx-6">
-              {responsiveImage?.base64 && (
+              {image.responsiveImage?.base64 && (
                 <img
-                  key={`${id}-responsive`}
+                  key={`${image.id}-responsive`}
                   className="max-w-full max-h-full flex-1 absolute w-full object-contain"
-                  style={{ aspectRatio: `${width! / height!}` }}
-                  src={responsiveImage.base64}
+                  style={{ aspectRatio: `${image.width! / image.height!}` }}
+                  src={image.responsiveImage.base64}
                 />
               )}
               <img
-                key={`${id}-lowres`}
+                key={`${image.id}-lowres`}
                 className="max-w-full max-h-full flex-1 object-contain absolute w-full"
-                style={{ aspectRatio: `${width! / height!}` }}
-                src={`/images/thumb${new URL(url).pathname}`}
-                alt={alt!}
+                style={{ aspectRatio: `${image.width! / image.height!}` }}
+                src={`/images/thumb${new URL(image.url).pathname}`}
+                alt={image.alt!}
               />
               <img
-                key={`${id}-highres`}
+                key={`${image.id}-highres`}
                 className="max-w-full max-h-full flex-1 object-contain absolute w-full"
-                style={{ aspectRatio: `${width! / height!}` }}
-                src={`/images${new URL(url).pathname}`}
-                alt={alt!}
+                style={{ aspectRatio: `${image.width! / image.height!}` }}
+                src={`/images${new URL(image.url).pathname}`}
+                alt={image.alt!}
                 onLoad={() => setLoading(false)}
               />
             </div>
             <footer>
               <p className="text-white text-opacity-30 text-xs absolute bottom-4 left-4 flex gap-2.5 items-center">
                 <span>
-                  {width}x{height}, {humanReadableSize(size)}
+                  {image.width}x{image.height}, {humanReadableSize(image.size)}
                 </span>
                 {loading && <Loader />}
               </p>
