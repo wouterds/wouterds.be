@@ -162,7 +162,7 @@ export default function Contact() {
           <div>
             <button
               type="submit"
-              className="relative leading-none flex items-center justify-center group font-medium">
+              className="relative leading-none flex items-center justify-center group font-medium bg-gray-50 hover:bg-gray-100 dark:bg-zinc-800 dark:bg-opacity-50 dark:hover:bg-zinc-800 dark:hover:bg-opacity-100">
               <span className="text-xl relative left-0" style={{ bottom: -3 }}>
                 &#8990;
               </span>

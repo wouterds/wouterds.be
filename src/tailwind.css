@@ -33,6 +33,7 @@ textarea {
   @apply border-b border-zinc-600 dark:border-zinc-400;
   @apply focus:border-zinc-950 dark:focus:border-zinc-50;
   @apply rounded-none;
+  @apply focus:bg-gray-50 dark:focus:bg-zinc-800 dark:focus:bg-opacity-50;
 }
 
 textarea {
