@@ -81,7 +81,7 @@ const App = () => {
           rel="alternate"
           type="application/rss+xml"
           title="Blog RSS feed for wouterds.be"
-          href={`${data?.url}/feed.xml`}
+          href={new URL('/feed.xml', data?.url).toString()}
         />
         <meta property="og:site_name" content="Wouter De Schuyter" />
         <Meta />
