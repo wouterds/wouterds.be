@@ -30,9 +30,13 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
   }, [images]);
 
   useEffect(() => {
-    if (expanded) {
+    if (expanded && image.id) {
       setLoading(true);
+    }
+  }, [expanded, image.id]);
 
+  useEffect(() => {
+    if (expanded) {
       const params = new URLSearchParams();
       params.set('image', image.id);
       setSearchParams(params, { replace: true, preventScrollReset: true });
