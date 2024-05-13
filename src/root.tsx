@@ -87,7 +87,7 @@ const App = () => {
         <Meta />
         <Links />
         {data?.canonical && <link rel="canonical" href={data?.canonical} />}
-        {data?.url?.includes('wouterds.be') && (
+        {data?.url?.toString()?.includes?.('wouterds.be') && (
           <script
             defer
             src="https://analytics.eu.umami.is/script.js"
