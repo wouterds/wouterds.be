@@ -1,3 +1,4 @@
+import { useSearchParams } from '@remix-run/react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -11,7 +12,8 @@ interface Props extends FileField {
 }
 
 export const Image = ({ id, width, height, responsiveImage, url, alt, images }: Props) => {
-  const [expanded, setExpanded] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [expanded, setExpanded] = useState(searchParams.get('image') === id);
   const [loading, setLoading] = useState(false);
   const [activeIndex, setActiveIndex] = useState(
     images?.findIndex((image) => image.id === id) || 0,
@@ -30,11 +32,23 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
   useEffect(() => {
     if (expanded) {
       setLoading(true);
+
+      const params = new URLSearchParams();
+      params.set('image', image.id);
+      setSearchParams(params, { replace: true, preventScrollReset: true });
+
+      return () => {
+        setSearchParams({}, { replace: true, preventScrollReset: true });
+      };
     }
-  }, [expanded, activeIndex]);
+  }, [expanded, image.id, setSearchParams]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (!expanded) {
+        return;
+      }
+
       if (event.key === 'Escape') {
         setExpanded(false);
       }
@@ -53,7 +67,7 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [onNext, onPrevious, setExpanded]);
+  }, [onNext, onPrevious, setExpanded, expanded]);
 
   return (
     <>
