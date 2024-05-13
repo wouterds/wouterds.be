@@ -33,13 +33,10 @@ export const Image = ({ url, alt, responsiveImage, width, height, size }: FileFi
   return (
     <>
       <div
-        className="bg-zinc-50 dark:bg-zinc-800 dark:bg-opacity-25 relative overflow-hidden rounded-sm"
+        className="bg-zinc-50 dark:bg-zinc-800 dark:bg-opacity-25 relative overflow-hidden rounded-sm w-full"
         style={{ aspectRatio: `${width! / height!}` }}>
         {responsiveImage?.base64 && (
-          <img
-            className="absolute inset-0 w-full h-full object-contain"
-            src={responsiveImage.base64}
-          />
+          <img className="absolute inset-0 w-full h-full" src={responsiveImage.base64} />
         )}
         <img
           onClick={() => setExpanded(!expanded)}
@@ -58,7 +55,7 @@ export const Image = ({ url, alt, responsiveImage, width, height, size }: FileFi
             onClick={() => setExpanded(false)}>
             {responsiveImage?.base64 && (
               <img
-                className="max-w-full max-h-full flex-1 object-contain absolute w-full"
+                className="max-w-full max-h-full flex-1 absolute w-full object-contain"
                 style={{ aspectRatio: `${width! / height!}` }}
                 src={responsiveImage.base64}
               />
