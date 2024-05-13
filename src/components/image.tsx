@@ -75,16 +75,18 @@ export const Image = ({ url, alt, responsiveImage, width, height, size }: FileFi
                 onLoad={() => setLoading(false)}
               />
             </div>
-            <p className="text-white text-opacity-25 absolute bottom-4 left-6 flex gap-2.5 items-center">
+            <p className="text-white text-opacity-30 text-xs absolute bottom-4 left-6 flex gap-2.5 items-center">
               <span>
                 {width}x{height}, {humanReadableSize(size)}
               </span>
               {loading && <Loader />}
             </p>
             <button
-              className="z-50 absolute top-4 right-4 text-white rounded-sm hover:bg-zinc-300 hover:bg-opacity-10 aspect-square w-6 h-6 text-xl leading-none"
+              className="z-50 absolute top-3.5 right-4 text-white text-opacity-90 hover:text-opacity-100 rounded-sm hover:bg-zinc-300 hover:bg-opacity-10 aspect-square w-7 h-7 text-2xl"
               onClick={() => setExpanded(false)}>
-              &times;
+              <span className="relative" style={{ top: -3 }}>
+                &times;
+              </span>
             </button>
           </div>,
           document.getElementById('modal-portal')!,
