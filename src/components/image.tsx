@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { FileField } from '~/graphql';
@@ -22,8 +22,13 @@ export const Image = ({ id, images }: Props) => {
     [activeIndex, images],
   );
 
-  const onNext = () => setActiveIndex((prev) => (prev + 1) % images.length);
-  const onPrevious = () => setActiveIndex((prev) => (prev - 1 + images.length) % images.length);
+  const onNext = useCallback(() => {
+    setActiveIndex((prev) => (prev + 1) % images.length);
+  }, [images]);
+
+  const onPrevious = useCallback(() => {
+    setActiveIndex((prev) => (prev - 1 + images.length) % images.length);
+  }, [images]);
 
   useEffect(() => {
     if (expanded) {
