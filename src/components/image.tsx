@@ -1,5 +1,5 @@
 import { useSearchParams } from '@remix-run/react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { FileField } from '~/graphql';
@@ -15,11 +15,15 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
   const [searchParams, setSearchParams] = useSearchParams();
   const [expanded, setExpanded] = useState(searchParams.get('image') === id);
   const [loading, setLoading] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(
-    images.findIndex((image) => image.id === id),
-  );
+  const originalImageIndex = useRef(images.findIndex((image) => image.id === id)).current;
+  const [activeIndex, setActiveIndex] = useState(originalImageIndex);
 
   const image = useMemo(() => images[activeIndex]!, [activeIndex, images]);
+
+  const onResetIndex = useCallback(() => {
+    console.log('resetting index', originalImageIndex);
+    setActiveIndex(originalImageIndex);
+  }, [originalImageIndex]);
 
   const onNext = useCallback(() => {
     setActiveIndex((prev) => (prev + 1) % images.length);
@@ -37,16 +41,23 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
 
   useEffect(() => {
     if (expanded) {
+      return () => {
+        onResetIndex();
+      };
+    }
+  }, [expanded, onResetIndex]);
+
+  useEffect(() => {
+    if (expanded) {
       const params = new URLSearchParams();
       params.set('image', image.id);
       setSearchParams(params, { replace: true, preventScrollReset: true });
 
       return () => {
         setSearchParams({}, { replace: true, preventScrollReset: true });
-        setActiveIndex(images.findIndex((image) => image.id === id));
       };
     }
-  }, [expanded, image.id, setSearchParams, images, setActiveIndex]);
+  }, [expanded, image.id, setSearchParams]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -94,7 +105,7 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
       {expanded &&
         typeof document !== 'undefined' &&
         createPortal(
-          <div className="fixed inset-0 z-50 bg-black bg-opacity-90 backdrop-blur-sm flex">
+          <div className="fixed inset-0 z-50 bg-black bg-opacity-95 backdrop-blur-sm flex">
             <header className="absolute z-20 top-4 left-4 right-4 flex items-center justify-end">
               <button
                 title="Close"
@@ -184,16 +195,16 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
                 onLoad={() => setLoading(false)}
               />
             </div>
-            <footer className="flex items-center justify-between absolute bottom-4 left-4 right-4 z-20 text-white text-opacity-30 text-xs">
+            <footer className="flex items-center justify-between absolute bottom-4 left-4 right-4 z-20 text-white text-opacity-25 text-xs">
               <p className="flex gap-2.5 items-center">
                 <span>
-                  {image.width} &times; {image.height}, {humanReadableSize(image.size)}
+                  {image.width}&times;{image.height}, {humanReadableSize(image.size)}
                 </span>
                 {loading && <Loader />}
               </p>
               {images.length > 1 && (
                 <p>
-                  {activeIndex + 1} / {images.length}
+                  {activeIndex + 1}/{images.length}
                 </p>
               )}
             </footer>
