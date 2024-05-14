@@ -16,7 +16,7 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
   const [expanded, setExpanded] = useState(searchParams.get('image') === id);
   const [loading, setLoading] = useState(false);
   const [activeIndex, setActiveIndex] = useState(
-    images?.findIndex((image) => image.id === id) || 0,
+    images.findIndex((image) => image.id === id),
   );
 
   const image = useMemo(() => images[activeIndex]!, [activeIndex, images]);
@@ -30,7 +30,7 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
   }, [images]);
 
   useEffect(() => {
-    if (expanded && image.id) {
+    if (expanded) {
       setLoading(true);
     }
   }, [expanded, image.id]);
@@ -43,9 +43,10 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
 
       return () => {
         setSearchParams({}, { replace: true, preventScrollReset: true });
+        setActiveIndex(images.findIndex((image) => image.id === id));
       };
     }
-  }, [expanded, image.id, setSearchParams]);
+  }, [expanded, image.id, setSearchParams, images, setActiveIndex]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
