@@ -53,7 +53,6 @@ export const meta: MetaFunction<typeof loader> = ({ error, data }) => {
   return [
     { title },
     { name: 'description', content: description },
-    { name: 'og:site_name', content: 'Wouter De Schuyter' },
     { name: 'og:title', content: title },
     { name: 'og:description', content: description },
     { name: 'og:image', content: `${data?.url}/images/og.jpg` },
