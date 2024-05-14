@@ -2,10 +2,10 @@ import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData } from '@remix-run/react';
 import { format } from 'date-fns';
 import { isCode } from 'datocms-structured-text-utils';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { RenderBlockContext, StructuredText, StructuredTextDocument } from 'react-datocms';
 import { useMedia } from 'react-use';
-import { ExternalScriptsFunction } from 'remix-utils/external-scripts';
+import { codeToHtml } from 'shiki';
 
 import { Image } from '~/components/image';
 import { GalleryRecord, VideoRecord } from '~/graphql';
@@ -29,18 +29,6 @@ export const loader = async ({ request, context, params }: LoaderFunctionArgs) =
   const containsCodeBlocks = content.document.children.some(isCode);
 
   return { url: baseUrl, post, containsCodeBlocks };
-};
-
-export const handle: {
-  scripts: ExternalScriptsFunction<{ containsCodeBlocks: boolean }>;
-} = {
-  scripts: ({ data }) => {
-    if (data.containsCodeBlocks) {
-      return [{ src: 'https://cdn.jsdelivr.net/npm/shiki@v0.14.6' }];
-    }
-
-    return [];
-  },
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
@@ -80,71 +68,37 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export default function BlogSlug() {
-  const { post, containsCodeBlocks } = useLoaderData<typeof loader>();
+  const { post } = useLoaderData<typeof loader>();
 
   const isDarkMode = useMedia('(prefers-color-scheme: dark)', false);
-  const [shikiLoaded, setShikiLoaded] = useState(false);
-  const awaitShiki = useCallback(() => {
-    if (!containsCodeBlocks) {
-      return;
-    }
-
-    if (window.shiki) {
-      setShikiLoaded(true);
-      return;
-    }
-
-    setTimeout(awaitShiki, 10);
-  }, [containsCodeBlocks]);
-
-  useEffect(() => {
-    if (containsCodeBlocks) {
-      awaitShiki();
-    }
-  }, [containsCodeBlocks, awaitShiki]);
+  const theme = useMemo(() => (isDarkMode ? 'github-dark' : 'github-light'), [isDarkMode]);
 
   const [ref, setRef] = useState<HTMLElement | null>(null);
   useEffect(() => {
-    if (!shikiLoaded) {
-      return;
-    }
-
     if (!ref) {
       return;
     }
 
     const elements = ref.querySelectorAll<HTMLElement>('pre code');
-    const langs = Array.from(
-      new Set(
-        Array.from(elements)
-          .map(
-            (code) =>
-              code.parentElement?.attributes?.getNamedItem?.('data-language')?.value as string,
-          )
-          .filter((lang) => lang !== 'text')
-          .filter(Boolean),
-      ),
-    );
+    for (const code of elements) {
+      const contents = code.textContent;
+      if (!contents) {
+        continue;
+      }
 
-    if (!langs.length) {
-      return;
+      const pre = code.parentElement;
+      if (!pre) {
+        continue;
+      }
+
+      const lang = pre.attributes.getNamedItem('data-language')?.value;
+      if (!lang) {
+        continue;
+      }
+
+      codeToHtml(contents, { lang, theme }).then((html) => (pre.outerHTML = html));
     }
-
-    window.shiki
-      .getHighlighter({
-        theme: isDarkMode ? 'github-dark' : 'github-light',
-        langs,
-      })
-      .then((highlighter) => {
-        for (const code of elements) {
-          const pre = code.parentElement;
-          if (pre) {
-            const lang = pre.attributes?.getNamedItem?.('data-language')?.value;
-            pre.outerHTML = highlighter.codeToHtml(code.textContent!, { lang });
-          }
-        }
-      });
-  }, [shikiLoaded, ref, isDarkMode]);
+  }, [ref, theme]);
 
   return (
     <article
