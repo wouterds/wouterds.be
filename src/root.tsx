@@ -10,7 +10,6 @@ import {
   useRouteError,
 } from '@remix-run/react';
 import { captureRemixErrorBoundaryError, withSentry } from '@sentry/remix';
-import { ExternalScripts } from 'remix-utils/external-scripts';
 
 import stylesheet from '~/tailwind.css?url';
 
@@ -106,7 +105,6 @@ const App = () => {
         <div id="modal-portal" />
         <ScrollRestoration />
         <Scripts />
-        <ExternalScripts />
       </body>
     </html>
   );
