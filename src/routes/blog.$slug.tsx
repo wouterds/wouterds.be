@@ -85,7 +85,6 @@ export default function BlogSlug() {
   const { post } = useLoaderData<typeof loader>();
 
   const isDarkMode = useMedia('(prefers-color-scheme: dark)', false);
-  const theme = useMemo(() => (isDarkMode ? 'github-dark' : 'github-light'), [isDarkMode]);
 
   const [ref, setRef] = useState<HTMLElement | null>(null);
   useEffect(() => {
@@ -105,14 +104,16 @@ export default function BlogSlug() {
         continue;
       }
 
-      const lang = pre.attributes.getNamedItem('data-language')?.value;
+      const lang = pre.dataset.language;
       if (!lang) {
         continue;
       }
 
-      codeToHtml(contents, { lang, theme }).then((html) => (pre.outerHTML = html));
+      codeToHtml(contents, { lang, theme: isDarkMode ? 'github-dark' : 'github-light' }).then(
+        (html) => (pre.outerHTML = html),
+      );
     }
-  }, [ref, theme]);
+  }, [ref, isDarkMode]);
 
   return (
     <article
