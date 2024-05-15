@@ -9,7 +9,6 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   server: { port: 3000 },
-  ssr: { noExternal: ['react-use'] },
   build: { sourcemap: true },
   plugins: [
     remixCloudflareDevProxy(),
