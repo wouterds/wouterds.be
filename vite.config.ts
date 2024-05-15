@@ -17,6 +17,11 @@ export default defineConfig({
       future: { unstable_singleFetch: true },
     }),
     tsconfigPaths(),
-    sentryVitePlugin({ org: 'wouterds', project: 'website', silent: true }),
+    sentryVitePlugin({
+      org: 'wouterds',
+      project: 'website',
+      silent: true,
+      sourcemaps: { filesToDeleteAfterUpload: ['**/*.map'] },
+    }),
   ],
 });
