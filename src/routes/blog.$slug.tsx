@@ -9,7 +9,11 @@ import { codeToHtml } from 'shiki';
 
 import { Image } from '~/components/image';
 import { GalleryRecord, VideoRecord } from '~/graphql';
-import { excerptFromContent, plainTextFromContent } from '~/lib/datocms/structured-text-utils';
+import {
+  excerptFromContent,
+  imagesFromContent,
+  plainTextFromContent,
+} from '~/lib/datocms/structured-text-utils';
 import { PostRepository } from '~/lib/repositories/post.server';
 
 export const loader = async ({ request, context, params }: LoaderFunctionArgs) => {
@@ -31,7 +35,7 @@ export const loader = async ({ request, context, params }: LoaderFunctionArgs) =
   return { url: baseUrl, post, containsCodeBlocks };
 };
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
   const url = data?.url;
   const post = data?.post;
   const title = post?.title;
@@ -40,6 +44,16 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const words = text?.split(' ')?.length || 0;
   const averageWordsPerMinuteReadingSpeed = 160;
   const readingTime = Math.ceil(words / averageWordsPerMinuteReadingSpeed);
+
+  const params = new URLSearchParams(location.search);
+  const images = imagesFromContent(post?.content);
+  const image = images.find((image) => image.id === params.get('image'));
+
+  const ogImage = image?.url
+    ? `/thumb${new URL(image.url).pathname}`
+    : post?.poster?.url
+      ? new URL(post.poster.url).pathname
+      : '';
 
   return [
     { title },
@@ -50,7 +64,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     { name: 'article:published_time', content: post?.date },
     {
       name: 'og:image',
-      content: post?.poster ? `${url}/images${new URL(post?.poster.url).pathname}` : '',
+      content: ogImage ? `${url}/images${ogImage}` : '',
     },
     { name: 'og:url', content: `${url}/blog/${post?.slug}` },
     { name: 'twitter:title', content: title },
