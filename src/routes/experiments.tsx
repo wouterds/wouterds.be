@@ -2,9 +2,10 @@ import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData, useRevalidator } from '@remix-run/react';
 import { format, formatDistanceToNowStrict, fromUnixTime } from 'date-fns';
 import { useState } from 'react';
-import { useInterval, useMedia } from 'react-use';
 import { Bar, BarChart, Line, LineChart, ResponsiveContainer, YAxis } from 'recharts';
 
+import { useInterval } from '~/hooks/use-interval';
+import { useIsDarkMode } from '~/hooks/use-is-dark-mode';
 import { AranetRecord, P1HistoryRecord, P1Record } from '~/lib/kv';
 
 export const loader = async ({
@@ -79,7 +80,8 @@ export default function Experiments() {
   const P1Record = P1Records[P1Records.length - 1];
   const P1HistoryRecord = P1HistoryRecords[P1HistoryRecords.length - 1];
   const { revalidate } = useRevalidator();
-  const isDarkMode = useMedia('(prefers-color-scheme: dark)', false);
+  const isDarkMode = useIsDarkMode();
+
   const [lastAranetUpdate, setLastAranetUpdate] = useState(
     aranetRecord?.time
       ? formatDistanceToNowStrict(fromUnixTime(aranetRecord?.time), {
