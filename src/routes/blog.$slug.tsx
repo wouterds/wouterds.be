@@ -2,7 +2,7 @@ import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData } from '@remix-run/react';
 import { format } from 'date-fns';
 import { isCode } from 'datocms-structured-text-utils';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RenderBlockContext, StructuredText, StructuredTextDocument } from 'react-datocms';
 import { useMedia } from 'react-use';
 import { codeToHtml } from 'shiki';
@@ -93,14 +93,14 @@ export default function BlogSlug() {
     }
 
     const elements = ref.querySelectorAll<HTMLElement>('pre code');
-    for (const code of elements) {
-      const contents = code.textContent;
-      if (!contents) {
+    for (const element of elements) {
+      const pre = element.parentElement;
+      if (!pre) {
         continue;
       }
 
-      const pre = code.parentElement;
-      if (!pre) {
+      const code = element.textContent;
+      if (!code) {
         continue;
       }
 
@@ -109,7 +109,7 @@ export default function BlogSlug() {
         continue;
       }
 
-      codeToHtml(contents, { lang, theme: isDarkMode ? 'github-dark' : 'github-light' }).then(
+      codeToHtml(code, { lang, theme: isDarkMode ? 'github-dark' : 'github-light' }).then(
         (html) => (pre.outerHTML = html),
       );
     }
