@@ -2,10 +2,9 @@ import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData } from '@remix-run/react';
 import { format } from 'date-fns';
 import { isCode } from 'datocms-structured-text-utils';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { RenderBlockContext, StructuredText, StructuredTextDocument } from 'react-datocms';
-import { useMedia } from 'react-use';
-import { codeToHtml } from 'shiki';
+import { LanguageInput, ThemeInput } from 'shiki';
 
 import { Image } from '~/components/image';
 import { GalleryRecord, VideoRecord } from '~/graphql';
@@ -84,41 +83,86 @@ export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
 export default function BlogSlug() {
   const { post } = useLoaderData<typeof loader>();
 
-  const isDarkMode = useMedia('(prefers-color-scheme: dark)', false);
-
-  const [ref, setRef] = useState<HTMLElement | null>(null);
+  const ref = useRef<HTMLElement>(null);
   useEffect(() => {
     if (!ref) {
       return;
     }
 
-    const elements = ref.querySelectorAll<HTMLElement>('pre code');
+    const elements = ref.current?.querySelectorAll<HTMLElement>('pre code') || [];
     for (const element of elements) {
       const pre = element.parentElement;
-      if (!pre) {
+      const code = element.dataset.code || element.textContent;
+      const lang = pre?.dataset.language || 'console';
+      if (!pre || !code || !lang) {
         continue;
       }
 
-      const code = element.textContent;
-      if (!code) {
-        continue;
-      }
+      // https://shiki.style/guide/install#fine-grained-bundle
+      import('shiki/core').then(async ({ getHighlighterCore }) => {
+        const langs: LanguageInput[] = [];
+        switch (lang) {
+          case 'javascript':
+            langs.push(import('shiki/langs/javascript.mjs'));
+            break;
+          case 'typescript':
+            langs.push(import('shiki/langs/typescript.mjs'));
+            break;
+          case 'python':
+            langs.push(import('shiki/langs/python.mjs'));
+            break;
+          case 'bash':
+            langs.push(import('shiki/langs/bash.mjs'));
+            break;
+          case 'xml':
+            langs.push(import('shiki/langs/xml.mjs'));
+            break;
+          case 'json':
+            langs.push(import('shiki/langs/json.mjs'));
+            break;
+          case 'bibtex':
+            langs.push(import('shiki/langs/bibtex.mjs'));
+            break;
+          case 'php':
+            langs.push(import('shiki/langs/php.mjs'));
+            break;
+          case 'c':
+            langs.push(import('shiki/langs/c.mjs'));
+            break;
+          case 'cpp':
+            langs.push(import('shiki/langs/cpp.mjs'));
+            break;
+          default:
+            langs.push(import('shiki/langs/console.mjs'));
+            break;
+        }
 
-      const lang = pre.dataset.language;
-      if (!lang) {
-        continue;
-      }
+        const isDarkMode = window?.matchMedia('(prefers-color-scheme: dark)').matches;
+        const themes: ThemeInput[] = [];
+        if (isDarkMode) {
+          themes.push(import('shiki/themes/github-dark.mjs'));
+        } else {
+          themes.push(import('shiki/themes/github-light.mjs'));
+        }
 
-      codeToHtml(code, { lang, theme: isDarkMode ? 'github-dark' : 'github-light' }).then(
-        (html) => (pre.outerHTML = html),
-      );
+        const highlighter = await getHighlighterCore({
+          themes,
+          langs,
+          loadWasm: await import('shiki/wasm'),
+        });
+
+        pre.outerHTML = highlighter.codeToHtml(code, {
+          lang,
+          theme: isDarkMode ? 'github-dark' : 'github-light',
+        });
+      });
     }
-  }, [ref, isDarkMode]);
+  }, []);
 
   return (
     <article
       className="prose prose-zinc dark:prose-dark dark:prose-invert prose-sm max-w-none text-xs leading-relaxed"
-      ref={setRef}>
+      ref={ref}>
       <header className="mb-4">
         <time className="text-xs text-zinc-400 dark:text-zinc-500 mb-2 block" dateTime={post.date}>
           {format(post.date, 'MMMM do, yyyy')}
