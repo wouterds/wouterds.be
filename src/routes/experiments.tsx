@@ -93,6 +93,17 @@ export default function Experiments() {
   const P1HistoryRecord = P1HistoryRecords[P1HistoryRecords.length - 1];
   const teslaRecord = teslaHistoryRecords[teslaHistoryRecords.length - 1];
 
+  const lastCharge = teslaHistoryRecords.reduceRight(
+    (acc, record) => {
+      if (record.battery && record.battery > acc.battery!) {
+        return record;
+      }
+
+      return acc;
+    },
+    { battery: 0 } as TeslaRecord,
+  );
+
   const { revalidate } = useRevalidator();
   const isDarkMode = useIsDarkMode();
 
@@ -451,6 +462,9 @@ export default function Experiments() {
           className="flex justify-between mt-2"
           title={format(fromUnixTime(teslaRecord.time), 'HH:mm')}>
           <span>last updated: {lastTeslaUpdate}</span>
+          <span>
+            last charged: {lastCharge.battery}% @ {format(fromUnixTime(lastCharge.time), 'HH:mm')}
+          </span>
         </p>
       )}
     </>
