@@ -459,7 +459,7 @@ export default function Experiments() {
 
       {teslaRecord && (
         <p
-          className="flex justify-between mt-2"
+          className="flex flex-col sm:flex-row gap-1 justify-start sm:justify-between mt-2"
           title={format(fromUnixTime(teslaRecord.time), 'HH:mm')}>
           <span>last updated: {lastTeslaUpdate}</span>
           <span>
