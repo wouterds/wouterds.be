@@ -1,3 +1,5 @@
+import { Buffer } from 'node:buffer';
+
 import { AppLoadContext } from '@remix-run/cloudflare';
 
 export class Tesla {
@@ -37,7 +39,14 @@ export class Tesla {
       return this._refreshToken;
     }
 
-    return this._context.cloudflare.env.CACHE?.get?.('TESLA_REFRESH_TOKEN');
+    // todo: store somewhere else? safer?
+    return this._context.cloudflare.env.CACHE?.get?.('tesla-refresh-token').then((data) => {
+      if (!data) {
+        throw new Error('Tesla refresh token not set');
+      }
+
+      return Buffer.from(data, 'base64').toString('utf-8');
+    });
   }
 
   private get accessToken() {
@@ -63,7 +72,10 @@ export class Tesla {
     const data = await response.json<{ access_token: string; refresh_token: string }>();
 
     this._accessToken = data.access_token;
-    this._context.cloudflare.env.CACHE?.put?.('TESLA_REFRESH_TOKEN', data.refresh_token);
+    this._context.cloudflare.env.CACHE?.put?.(
+      'tesla-refresh-token',
+      Buffer.from(data.refresh_token).toString('base64'),
+    );
 
     return this;
   }
@@ -103,7 +115,7 @@ export class Tesla {
       },
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+    await new Promise((resolve) => setTimeout(resolve, 10_000));
 
     return this;
   }
