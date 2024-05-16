@@ -18,7 +18,12 @@ type TeslaRecord = {
   wake: boolean;
 };
 
-export const loader = async ({ context }: LoaderFunctionArgs) => {
+export const loader = async ({ request, context }: LoaderFunctionArgs) => {
+  const query = new URL(request.url).searchParams;
+  if (query.get('token') !== context.cloudflare.env.API_AUTH_TOKEN) {
+    return json({ error: 'unauthorized' }, { status: 403 });
+  }
+
   const raw = await context.cloudflare.env.CACHE?.get?.('tesla');
   const values: TeslaRecord[] = raw ? JSON.parse(raw) : [];
   const last = values[values.length - 1];
