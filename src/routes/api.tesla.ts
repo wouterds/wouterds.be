@@ -4,7 +4,7 @@ import { differenceInMinutes, fromUnixTime, getUnixTime } from 'date-fns';
 import { Tesla } from '~/lib/tesla';
 
 const SYNC_INTERVAL_MINUTES = 15; // 15 minutes
-const WAKE_INTERVAL_MINUTES = 60 * 2; // 2 hours
+const WAKE_INTERVAL_MINUTES = 60 * 3; // 3 hours
 const DRAIN_RATE_DAY = 1 / 100; // 1% per day
 const DRAIN_RATE_MINUTES = DRAIN_RATE_DAY / 24 / 60;
 const DRAIN_RATE_SYNC_INTERVAL = 1 - DRAIN_RATE_MINUTES * SYNC_INTERVAL_MINUTES;
