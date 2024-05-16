@@ -426,7 +426,7 @@ export default function Experiments() {
         <ul className="gap-1.5 text-center">
           <li className="border border-black dark:border-white">
             <div className="py-2">
-              <span className="font-semibold">{teslaRecord.battery}</span>%
+              <span className="font-semibold">{teslaRecord.battery?.toFixed(0)}</span>%
             </div>
             <div className="relative aspect-[8/1] sm:aspect-[10/1] -mt-1">
               <ResponsiveContainer>
@@ -463,7 +463,7 @@ export default function Experiments() {
           title={format(fromUnixTime(teslaRecord.time), 'HH:mm')}>
           <span>last updated: {lastTeslaUpdate}</span>
           <span>
-            last charged: {lastCharge.battery}% @{' '}
+            last charged: {lastCharge.battery?.toFixed(0)}% @{' '}
             {format(fromUnixTime(peak.time), 'dd.MM.yyyy, HH:mm')}
           </span>
         </p>
