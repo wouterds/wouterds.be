@@ -16,6 +16,7 @@ type TeslaRecord = {
   distance?: number;
   time: number;
   wake: boolean;
+  woken: boolean;
 };
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
@@ -41,6 +42,8 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   // get data
   let data = await tesla.getData();
 
+  let woken = false;
+
   if (
     (!lastAwake ||
       (lastAwake &&
@@ -49,6 +52,8 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   ) {
     // try to wake
     await tesla.wakeUp();
+
+    woken = true;
 
     // then try again
     data = await tesla.getData();
@@ -72,8 +77,8 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   const time = getUnixTime(new Date());
 
   // store in KV
-  values.push({ name, version, battery, distance, time, wake });
+  values.push({ name, version, battery, distance, time, wake, woken });
   await context.cloudflare.env.CACHE?.put?.('tesla', JSON.stringify(values));
 
-  return json({ name, version, battery, distance, time, wake });
+  return json({ name, version, battery, distance, time, wake, woken });
 };
