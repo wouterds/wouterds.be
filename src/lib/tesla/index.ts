@@ -70,6 +70,9 @@ export class Tesla {
     });
 
     const data = await response.json<{ access_token: string; refresh_token: string }>();
+    if (!data.access_token) {
+      throw new Error('Tesla auth failed');
+    }
 
     this._accessToken = data.access_token;
     this._context.cloudflare.env.CACHE?.put?.(
