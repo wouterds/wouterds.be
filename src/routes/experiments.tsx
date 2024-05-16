@@ -386,7 +386,7 @@ export default function Experiments() {
             <div
               className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
               style={{ margin: 1 }}>
-              power usage (daily total)
+              power usage (last 90 days)
             </div>
           </li>
         </ul>
