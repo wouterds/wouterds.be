@@ -6,7 +6,7 @@ import { Bar, BarChart, Line, LineChart, ResponsiveContainer, YAxis } from 'rech
 
 import { useInterval } from '~/hooks/use-interval';
 import { useIsDarkMode } from '~/hooks/use-is-dark-mode';
-import { AranetRecord, P1HistoryRecord, P1Record } from '~/lib/kv';
+import { AranetRecord, P1HistoryRecord, P1Record, TeslaRecord } from '~/lib/kv';
 
 export const loader = async ({
   context: {
@@ -61,7 +61,18 @@ export const loader = async ({
     }),
   ).slice(-90);
 
-  return { aranetRecords, P1Records, peak, P1HistoryRecords };
+  const teslaHistoryRecords: TeslaRecord[] = [];
+  try {
+    teslaHistoryRecords.push(
+      ...(await env.CACHE.get('tesla').then((value) => {
+        return JSON.parse(value || '');
+      })),
+    );
+  } catch {
+    // noop
+  }
+
+  return { aranetRecords, P1Records, peak, P1HistoryRecords, teslaHistoryRecords };
 };
 
 export const meta: MetaFunction = () => {
@@ -75,10 +86,13 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Experiments() {
-  const { aranetRecords, P1Records, P1HistoryRecords, peak } = useLoaderData<typeof loader>();
+  const { aranetRecords, P1Records, P1HistoryRecords, peak, teslaHistoryRecords } =
+    useLoaderData<typeof loader>();
   const aranetRecord = aranetRecords[aranetRecords.length - 1];
   const P1Record = P1Records[P1Records.length - 1];
   const P1HistoryRecord = P1HistoryRecords[P1HistoryRecords.length - 1];
+  const teslaRecord = teslaHistoryRecords[teslaHistoryRecords.length - 1];
+
   const { revalidate } = useRevalidator();
   const isDarkMode = useIsDarkMode();
 
@@ -99,6 +113,13 @@ export default function Experiments() {
   const [lastP1HistoryUpdate, setLastP1HistoryUpdate] = useState(
     P1HistoryRecord?.time
       ? formatDistanceToNowStrict(fromUnixTime(P1HistoryRecord?.time), {
+          addSuffix: true,
+        })
+      : null,
+  );
+  const [lastTeslaUpdate, setLastTeslaUpdate] = useState(
+    teslaRecord?.time
+      ? formatDistanceToNowStrict(fromUnixTime(teslaRecord?.time), {
           addSuffix: true,
         })
       : null,
@@ -126,6 +147,14 @@ export default function Experiments() {
     if (P1HistoryRecord) {
       setLastP1HistoryUpdate(
         formatDistanceToNowStrict(fromUnixTime(P1HistoryRecord.time), {
+          addSuffix: true,
+        }),
+      );
+    }
+
+    if (teslaRecord) {
+      setLastTeslaUpdate(
+        formatDistanceToNowStrict(fromUnixTime(teslaRecord.time), {
           addSuffix: true,
         }),
       );
@@ -326,7 +355,7 @@ export default function Experiments() {
             <div
               className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
               style={{ margin: 1 }}>
-              power usage
+              power usage (last 24 hours)
             </div>
           </li>
         </ul>
@@ -372,6 +401,58 @@ export default function Experiments() {
           </span>
         )}
       </p>
+
+      <h2 className="text-lg font-medium mb-2 mt-6">Tesla battery</h2>
+      <p className="mb-4">
+        Every 15 minutes Raspberry Pi polls Tesla Model 3 data OTA to{' '}
+        <a className="underline" href="https://developers.cloudflare.com/kv/">
+          Cloudflare Workers KV
+        </a>
+        .
+      </p>
+
+      {teslaRecord && (
+        <ul className="gap-1.5 text-center">
+          <li className="border border-black dark:border-white">
+            <div className="py-2">
+              <span className="font-semibold">{teslaRecord.battery}</span>%
+            </div>
+            <div className="relative aspect-[8/1] sm:aspect-[10/1] -mt-1">
+              <ResponsiveContainer>
+                <LineChart data={teslaHistoryRecords}>
+                  <Line
+                    type="monotone"
+                    dataKey="battery"
+                    stroke={isDarkMode ? '#fff' : '#000'}
+                    strokeWidth={1.5}
+                    dot={false}
+                  />
+                  <YAxis
+                    hide
+                    domain={[
+                      Math.min(...teslaHistoryRecords.map((record) => record.battery!)) * 1.3,
+                      Math.max(...teslaHistoryRecords.map((record) => record.battery!)) * 0.7,
+                    ]}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <div
+              className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
+              style={{ margin: 1 }}>
+              battery capacity (last 7 days)
+            </div>
+          </li>
+        </ul>
+      )}
+
+      {teslaRecord && (
+        <p
+          className="flex justify-between mt-2"
+          title={format(fromUnixTime(teslaRecord.time), 'HH:mm')}>
+          <span>last updated: {lastTeslaUpdate}</span>
+        </p>
+      )}
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { json, LoaderFunctionArgs } from '@remix-run/cloudflare';
 import { differenceInMinutes, fromUnixTime, getUnixTime } from 'date-fns';
 
+import { TeslaRecord } from '~/lib/kv';
 import { Tesla } from '~/lib/tesla';
 
 const SYNC_INTERVAL_MINUTES = 15; // 15 minutes
@@ -8,16 +9,6 @@ const WAKE_INTERVAL_MINUTES = 60 * 3; // 3 hours
 const DRAIN_RATE_DAY = 1 / 100; // 1% per day
 const DRAIN_RATE_MINUTES = DRAIN_RATE_DAY / 24 / 60;
 const DRAIN_RATE_SYNC_INTERVAL = 1 - DRAIN_RATE_MINUTES * SYNC_INTERVAL_MINUTES;
-
-type TeslaRecord = {
-  name?: string;
-  version?: string;
-  battery?: number;
-  distance?: number;
-  time: number;
-  wake: boolean;
-  woken: boolean;
-};
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   // const query = new URL(request.url).searchParams;
