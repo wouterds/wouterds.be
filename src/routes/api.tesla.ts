@@ -69,7 +69,9 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
 
   // format & return data
   const batteryRaw = data?.response?.charge_state?.battery_level || last?.battery || 0;
-  const battery = wake ? batteryRaw : batteryRaw * DRAIN_RATE_SYNC_INTERVAL;
+  const battery = parseFloat(
+    (wake ? batteryRaw : batteryRaw * DRAIN_RATE_SYNC_INTERVAL).toFixed(3),
+  );
   const distanceInMiles = data?.response?.vehicle_state?.odometer || 0;
   const distance = distanceInMiles
     ? parseFloat((distanceInMiles * 1.60934).toFixed(3))
