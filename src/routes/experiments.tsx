@@ -464,7 +464,7 @@ export default function Experiments() {
           <span>last updated: {lastTeslaUpdate}</span>
           <span>
             last charged: {lastCharge.battery?.toFixed(0)}% @{' '}
-            {format(fromUnixTime(peak.time), 'dd.MM.yyyy, HH:mm')}
+            {format(fromUnixTime(lastCharge.time), 'dd.MM.yyyy, HH:mm')}
           </span>
         </p>
       )}
