@@ -57,6 +57,9 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
 
     // then try again
     data = await tesla.getData();
+
+    // still some other unknown error?
+    if (data.error) return json(data.error, { status: 500 });
   }
 
   let wake = false;
@@ -64,16 +67,15 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
     wake = true;
   }
 
-  // still some other unknown error?
-  if (data.error) return json(data.error, { status: 500 });
-
   // format & return data
-  const batteryRaw = data?.response?.charge_state?.battery_level || 0;
+  const batteryRaw = data?.response?.charge_state?.battery_level || last?.battery || 0;
   const battery = wake ? batteryRaw : batteryRaw * DRAIN_RATE_SYNC_INTERVAL;
   const distanceInMiles = data?.response?.vehicle_state?.odometer || 0;
-  const distance = parseFloat((distanceInMiles * 1.60934).toFixed(3));
-  const name = data?.response?.vehicle_state?.vehicle_name;
-  const version = data?.response?.vehicle_state?.car_version;
+  const distance = distanceInMiles
+    ? parseFloat((distanceInMiles * 1.60934).toFixed(3))
+    : last?.distance || 0;
+  const name = data?.response?.vehicle_state?.vehicle_name || last.name;
+  const version = data?.response?.vehicle_state?.car_version || last.version;
   const time = getUnixTime(new Date());
 
   // store in KV
