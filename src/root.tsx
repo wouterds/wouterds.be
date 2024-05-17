@@ -20,6 +20,7 @@ export const links: LinksFunction = () => [{ rel: 'stylesheet', href: stylesheet
 
 export const loader = async ({ request, context }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
+  const searchParams = new URLSearchParams(url.search);
   const baseUrl = `${url.protocol}//${url.host}`;
 
   if (url.pathname.endsWith('/') && url.pathname !== '/') {
@@ -32,6 +33,8 @@ export const loader = async ({ request, context }: LoaderFunctionArgs) => {
       headers: { Location: `${url.pathname.slice(0, -1)}${url.search}` },
     });
   }
+
+  context.inPreviewMode = typeof searchParams.get('preview') !== 'undefined';
 
   const cfRayId = request.headers.get('cf-ray') || '';
 
