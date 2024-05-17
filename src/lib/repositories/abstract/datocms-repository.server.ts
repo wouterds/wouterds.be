@@ -12,6 +12,23 @@ export abstract class DatoCMSRepository {
     return this._context.cloudflare.env.DATOCMS_API_KEY;
   }
 
+  private get inPreviewMode() {
+    return this._context.inPreviewMode;
+  }
+
+  private get headers() {
+    const headers = new Headers();
+
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', `Bearer ${this.apiKey}`);
+
+    if (this.inPreviewMode) {
+      headers.append('X-Include-Drafts', 'true');
+    }
+
+    return headers;
+  }
+
   protected fetch = async <TData, TVariables = Record<string, string>>(
     query: ASTNode,
     options: {
@@ -20,7 +37,7 @@ export abstract class DatoCMSRepository {
   ) => {
     const response = await fetch('https://graphql.datocms.com', {
       method: 'POST',
-      headers: { Authorization: `Bearer ${this.apiKey}` },
+      headers: this.headers,
       body: JSON.stringify({ query: print(query), variables: options.variables }),
     });
 
