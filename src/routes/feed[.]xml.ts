@@ -9,9 +9,8 @@ import { PostRepository } from '~/lib/repositories/post.server';
 export const loader = async ({ request, context }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const baseUrl = `${url.protocol}//${url.host}`;
-  const repository = new PostRepository(context.cloudflare.env.DATOCMS_API_KEY);
 
-  const posts = await repository.getPosts();
+  const posts = await PostRepository.create(context).getPosts();
 
   const feed = new Feed({
     title: "Wouter's blog",

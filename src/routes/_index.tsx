@@ -5,9 +5,7 @@ import { Posts } from '~/components/posts';
 import { PostRepository } from '~/lib/repositories/post.server';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
-  const repository = new PostRepository(context.cloudflare.env.DATOCMS_API_KEY);
-
-  const posts = await repository.getPosts(3);
+  const posts = await PostRepository.create(context).getPosts(3);
 
   return { posts };
 };
