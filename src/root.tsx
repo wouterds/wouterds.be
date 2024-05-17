@@ -36,6 +36,7 @@ export const loader = async ({ request, context }: LoaderFunctionArgs) => {
   const cfRayId = request.headers.get('cf-ray') || '';
 
   return {
+    inPreviewMode: context.inPreviewMode,
     url,
     ray: `${cfRayId}${cfRayId && '-'}${context.cloudflare.cf.colo}`,
     canonical: new URL(url.pathname, baseUrl).href,
@@ -96,7 +97,7 @@ const App = () => {
           />
         )}
       </head>
-      <body>
+      <body suppressHydrationWarning className="relative">
         <div className="mx-auto" style={{ maxWidth: '768px' }}>
           <Header />
           <main className="my-8 sm:my-12">
@@ -105,6 +106,27 @@ const App = () => {
           <Footer ray={data?.ray} />
         </div>
         <div id="modal-portal" />
+
+        {data.inPreviewMode && (
+          <div className="fixed bottom-2 left-2 z-50 group">
+            <p className="flex items-center text-white font-semibold py-2 px-2.5 rounded bg-rose-500 transition w-fit pointer-events-none">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="1em"
+                width="1em"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="text-base relative"
+                style={{ bottom: -1 }}>
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 1.67c.955 0 1.845 .467 2.39 1.247l.105 .16l8.114 13.548a2.914 2.914 0 0 1 -2.307 4.363l-.195 .008h-16.225a2.914 2.914 0 0 1 -2.582 -4.2l.099 -.185l8.11 -13.538a2.914 2.914 0 0 1 2.491 -1.403zm.01 13.33l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007zm-.01 -7a1 1 0 0 0 -.993 .883l-.007 .117v4l.007 .117a1 1 0 0 0 1.986 0l.007 -.117v-4l-.007 -.117a1 1 0 0 0 -.993 -.883z" />
+              </svg>
+              <span className="text-xs transition w-0 opacity-0 group-hover:w-auto group-hover:opacity-100 block whitespace-nowrap">
+                <span className="pl-2 block">preview mode</span>
+              </span>
+            </p>
+          </div>
+        )}
         <ScrollRestoration />
         <Scripts />
       </body>

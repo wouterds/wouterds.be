@@ -6,11 +6,13 @@ import { sentryVitePlugin } from '@sentry/vite-plugin';
 import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
+import { getLoadContext } from './load-context';
+
 export default defineConfig({
   server: { port: 3000 },
   build: { sourcemap: true },
   plugins: [
-    remixCloudflareDevProxy(),
+    remixCloudflareDevProxy({ getLoadContext }),
     remix({
       ignoredRouteFiles: ['**/*.css'],
       appDirectory: 'src',

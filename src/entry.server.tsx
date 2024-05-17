@@ -25,11 +25,7 @@ export default async function handleRequest(
   remixContext: EntryContext,
   loadContext: AppLoadContext,
 ) {
-  const url = new URL(request.url);
-  const searchParams = new URLSearchParams(url.search);
-
-  loadContext.inPreviewMode = searchParams.get('preview') !== null;
-  if (url.host.includes('.pages.dev') || loadContext.inPreviewMode) {
+  if (request.url.includes('.pages.dev') || loadContext.inPreviewMode) {
     responseHeaders.set('X-Robots-Tag', 'noindex');
   }
 
