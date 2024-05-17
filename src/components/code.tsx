@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BundledLanguage, codeToHtml } from 'shiki';
+import { BundledLanguage, LanguageInput, ThemeInput } from 'shiki';
 
 export interface CodeProps {
   children?: string;
@@ -15,7 +15,37 @@ export const Code = (props: CodeProps) => {
       return;
     }
 
-    codeToHtml(code, { lang, theme: 'dracula' }).then(setHighlightedCode);
+    // https://shiki.style/guide/install#fine-grained-bundle
+    import('shiki/core').then(async ({ getHighlighterCore }) => {
+      const langs: LanguageInput[] = [];
+      switch (lang) {
+        case 'javascript':
+          langs.push(import('shiki/langs/javascript.mjs'));
+          break;
+        case 'typescript':
+          langs.push(import('shiki/langs/typescript.mjs'));
+          break;
+        case 'json':
+          langs.push(import('shiki/langs/json.mjs'));
+          break;
+        case 'bash':
+          langs.push(import('shiki/langs/bash.mjs'));
+          break;
+        default:
+          langs.push(import('shiki/langs/console.mjs'));
+          break;
+      }
+
+      const themes: ThemeInput[] = [import('shiki/themes/dracula.mjs')];
+
+      const highlighter = await getHighlighterCore({
+        themes,
+        langs,
+        loadWasm: await import('shiki/wasm'),
+      });
+
+      setHighlightedCode(highlighter.codeToHtml(code, { lang, theme: 'dracula' }));
+    });
   }, [code, lang]);
 
   if (!code) {
