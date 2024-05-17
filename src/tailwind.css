@@ -39,3 +39,7 @@ textarea {
 p {
   @apply break-words;
 }
+
+blockquote footer {
+  @apply opacity-50 not-italic;
+}
