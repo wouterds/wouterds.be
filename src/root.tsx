@@ -33,9 +33,11 @@ export const loader = async ({ request, context }: LoaderFunctionArgs) => {
     });
   }
 
+  const cfRayId = request.headers.get('cf-ray') || '';
+
   return {
     url,
-    ray: `${request.headers.get('cf-ray')}-${context.cloudflare.cf.colo}`,
+    ray: `${cfRayId}${cfRayId && '-'}${context.cloudflare.cf.colo}`,
     canonical: new URL(url.pathname, baseUrl).href,
   };
 };
