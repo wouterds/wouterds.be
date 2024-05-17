@@ -23,7 +23,7 @@ export default function ExampleCodeBlock() {
       <p className="mb-2">
         Below is a simple code block with the source of a hook to detect dark mode changes.
       </p>
-      <Code>{code}</Code>
+      <Code lang="typescript">{code}</Code>
     </>
   );
 }

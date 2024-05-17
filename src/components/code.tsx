@@ -1,17 +1,34 @@
+import { useEffect, useState } from 'react';
+import { BundledLanguage, codeToHtml } from 'shiki';
+
 export interface CodeProps {
   children?: string;
+  lang: BundledLanguage;
 }
 
 export const Code = (props: CodeProps) => {
-  const { children } = props;
+  const { children: code, lang } = props;
 
-  if (!children) {
+  const [highlightedCode, setHighlightedCode] = useState<string>();
+  useEffect(() => {
+    if (!code) {
+      return;
+    }
+
+    codeToHtml(code, { lang, theme: 'dracula' }).then(setHighlightedCode);
+  }, [code, lang]);
+
+  if (!code) {
     return null;
   }
 
   return (
     <pre className="bg-slate-800 text-slate-400 p-4 rounded overflow-x-auto">
-      <code>{children}</code>
+      {highlightedCode ? (
+        <code dangerouslySetInnerHTML={{ __html: highlightedCode }} />
+      ) : (
+        <code>{code}</code>
+      )}
     </pre>
   );
 };
