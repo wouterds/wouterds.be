@@ -23,12 +23,13 @@ export default async function handleRequest(
   responseStatusCode: number,
   responseHeaders: Headers,
   remixContext: EntryContext,
-  // This is ignored so we can keep it in the template for visibility.  Feel
-  // free to delete this parameter in your app if you're not using it!
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _loadContext: AppLoadContext,
+  loadContext: AppLoadContext,
 ) {
-  if (request.url.includes('.pages.dev')) {
+  const url = new URL(request.url);
+  const searchParams = new URLSearchParams(url.search);
+
+  loadContext.inPreviewMode = searchParams.get('preview') === 'true';
+  if (url.host.includes('.pages.dev') || loadContext.inPreviewMode) {
     responseHeaders.set('X-Robots-Tag', 'noindex');
   }
 
