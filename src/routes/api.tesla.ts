@@ -5,17 +5,9 @@ import { TeslaRecord } from '~/lib/kv';
 import { Tesla } from '~/lib/tesla';
 
 const SYNC_INTERVAL_MINUTES = 15; // 15 minutes
-const WAKE_INTERVAL_MINUTES = 60 * 3; // 3 hours
-const DRAIN_RATE_DAY = 1 / 100; // 1% per day
-const DRAIN_RATE_MINUTES = DRAIN_RATE_DAY / 24 / 60;
-const DRAIN_RATE_SYNC_INTERVAL = 1 - DRAIN_RATE_MINUTES * SYNC_INTERVAL_MINUTES;
+const WAKE_INTERVAL_MINUTES = 60 * 2; // 2 hours
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
-  // const query = new URL(request.url).searchParams;
-  // if (query.get('token') !== context.cloudflare.env.API_AUTH_TOKEN) {
-  //   return json({ error: 'unauthorized' }, { status: 403 });
-  // }
-
   const raw = await context.cloudflare.env.CACHE?.get?.('tesla');
   const values: TeslaRecord[] = raw ? JSON.parse(raw) : [];
   const last = values[values.length - 1];
@@ -32,48 +24,43 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
 
   // get data
   let data = await tesla.getData();
-
   let woken = false;
 
   if (
+    // never woken up yet
     (!lastAwake ||
+      // last woken up has been some time ago
       (lastAwake &&
         differenceInMinutes(new Date(), fromUnixTime(lastAwake.time)) > WAKE_INTERVAL_MINUTES)) &&
+    // and asleep right now
     data?.error?.includes('offline or asleep')
   ) {
     // try to wake
     await tesla.wakeUp();
-
     woken = true;
 
-    // then try again
+    // then try to fetch data again
     data = await tesla.getData();
 
     // still some other unknown error?
     if (data.error) return json(data.error, { status: 500 });
   }
 
-  let wake = false;
-  if (data.response) {
-    wake = true;
-  }
-
-  // format & return data
-  const batteryRaw = data?.response?.charge_state?.battery_level || last?.battery || 0;
-  const battery = parseFloat(
-    (wake ? batteryRaw : batteryRaw * DRAIN_RATE_SYNC_INTERVAL).toFixed(3),
-  );
-  const distanceInMiles = data?.response?.vehicle_state?.odometer || 0;
-  const distance = distanceInMiles
-    ? parseFloat((distanceInMiles * 1.60934).toFixed(3))
-    : last?.distance || 0;
-  const name = data?.response?.vehicle_state?.vehicle_name || last.name;
-  const version = data?.response?.vehicle_state?.car_version || last.version;
-  const time = getUnixTime(new Date());
+  const record: TeslaRecord = {
+    name: data?.response?.vehicle_state?.vehicle_name || last?.name,
+    version: data?.response?.vehicle_state?.car_version || last?.version,
+    battery: data?.response?.charge_state?.battery_level || last?.battery || 0,
+    distance: parseFloat(
+      ((data?.response?.vehicle_state?.odometer || 0) * 1.60934 || last?.distance || 0).toFixed(3),
+    ),
+    time: getUnixTime(new Date()),
+    wake: !!data.response,
+    woken,
+  };
 
   // store in KV
-  values.push({ name, version, battery, distance, time, wake, woken });
+  values.push(record);
   await context.cloudflare.env.CACHE?.put?.('tesla', JSON.stringify(values));
 
-  return json({ name, version, battery, distance, time, wake, woken });
+  return json(record);
 };
