@@ -467,7 +467,7 @@ export default function Experiments() {
         )}
       </p>
 
-      <h2 className="text-lg font-medium mb-2 mt-6">Tesla battery</h2>
+      <h2 className="text-lg font-medium mb-2 mt-6">Tesla</h2>
       <p className="mb-4">
         Every 15 minutes a Raspberry Pi polls Tesla Model 3 data OTA to{' '}
         <a className="underline" href="https://developers.cloudflare.com/kv/">
@@ -522,15 +522,6 @@ export default function Experiments() {
           </span>
         </p>
       )}
-
-      <h2 className="text-lg font-medium mb-2 mt-6">Tesla distance</h2>
-      <p className="mb-4">
-        Every 15 minutes a Raspberry Pi polls Tesla Model 3 data OTA to{' '}
-        <a className="underline" href="https://developers.cloudflare.com/kv/">
-          Cloudflare Workers KV
-        </a>
-        .
-      </p>
 
       {teslaDistancePerDayLast90Days.length > 0 && (
         <ul className="gap-1.5 text-center mt-4">
