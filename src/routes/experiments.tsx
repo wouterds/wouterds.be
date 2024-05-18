@@ -1,6 +1,13 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData, useRevalidator } from '@remix-run/react';
-import { format, formatDistanceToNowStrict, fromUnixTime } from 'date-fns';
+import {
+  addDays,
+  format,
+  formatDistanceToNowStrict,
+  fromUnixTime,
+  isSameDay,
+  subDays,
+} from 'date-fns';
 import { useState } from 'react';
 import { Bar, BarChart, Line, LineChart, ResponsiveContainer, YAxis } from 'recharts';
 
@@ -72,7 +79,47 @@ export const loader = async ({
     // noop
   }
 
-  return { aranetRecords, P1Records, peak, P1HistoryRecords, teslaHistoryRecords };
+  const teslaDistancePerDayLast90Days = Array.from({ length: 90 }, (_, index) => {
+    const date = subDays(new Date(), index);
+    const dateString = format(date, 'yyyy-MM-dd');
+
+    const distanceDayBefore =
+      teslaHistoryRecords.find((record) => isSameDay(fromUnixTime(record.time), addDays(date, 1)))
+        ?.distance || 0;
+    const distanceToday =
+      teslaHistoryRecords.find((record) => isSameDay(fromUnixTime(record.time), date))?.distance ||
+      0;
+
+    // filter out incorrect value last day
+    const distance = Math.max(distanceDayBefore - distanceToday, 0);
+
+    return {
+      date: dateString,
+      // filter out incorrect value initial diff
+      distance: distance > 2000 ? 0 : distance,
+    };
+  }).reverse();
+
+  const longestDistanceDay = teslaDistancePerDayLast90Days.reduce(
+    (acc, record) => {
+      if (record.distance > acc.distance) {
+        return record;
+      }
+
+      return acc;
+    },
+    { distance: 0 } as { date: string; distance: number },
+  );
+
+  return {
+    aranetRecords,
+    P1Records,
+    peak,
+    P1HistoryRecords,
+    teslaHistoryRecords,
+    longestDistanceDay,
+    teslaDistancePerDayLast90Days,
+  };
 };
 
 export const meta: MetaFunction = () => {
@@ -86,8 +133,15 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Experiments() {
-  const { aranetRecords, P1Records, P1HistoryRecords, peak, teslaHistoryRecords } =
-    useLoaderData<typeof loader>();
+  const {
+    aranetRecords,
+    P1Records,
+    P1HistoryRecords,
+    peak,
+    teslaHistoryRecords,
+    teslaDistancePerDayLast90Days,
+    longestDistanceDay,
+  } = useLoaderData<typeof loader>();
   const aranetRecord = aranetRecords[aranetRecords.length - 1];
   const P1Record = P1Records[P1Records.length - 1];
   const P1HistoryRecord = P1HistoryRecords[P1HistoryRecords.length - 1];
@@ -465,6 +519,54 @@ export default function Experiments() {
           <span>
             charge: {lastCharge.battery?.toFixed(0)}% @{' '}
             {format(fromUnixTime(lastCharge.time), 'dd.MM.yyyy, HH:mm')}
+          </span>
+        </p>
+      )}
+
+      <h2 className="text-lg font-medium mb-2 mt-6">Tesla distance</h2>
+      <p className="mb-4">
+        Every 15 minutes a Raspberry Pi polls Tesla Model 3 data OTA to{' '}
+        <a className="underline" href="https://developers.cloudflare.com/kv/">
+          Cloudflare Workers KV
+        </a>
+        .
+      </p>
+
+      {teslaDistancePerDayLast90Days.length > 0 && (
+        <ul className="gap-1.5 text-center mt-4">
+          <li className="border border-black dark:border-white">
+            <div className="py-2">
+              <span className="font-semibold">
+                {teslaDistancePerDayLast90Days[
+                  teslaDistancePerDayLast90Days.length - 1
+                ].distance.toFixed(2)}
+              </span>{' '}
+              km
+            </div>
+            <div className="relative aspect-[8/1] sm:aspect-[10/1] -mt-1">
+              <ResponsiveContainer>
+                <BarChart data={teslaDistancePerDayLast90Days}>
+                  <YAxis hide />
+                  <Bar dataKey="distance" fill={isDarkMode ? '#fff' : '#000'} minPointSize={1} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div
+              className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
+              style={{ margin: 1 }}>
+              distance driven (last 90 days)
+            </div>
+          </li>
+        </ul>
+      )}
+      {teslaRecord && longestDistanceDay && (
+        <p
+          className="flex flex-col sm:flex-row gap-1 justify-start sm:justify-between mt-2"
+          title={format(fromUnixTime(teslaRecord.time), 'HH:mm')}>
+          <span>last updated: {lastTeslaUpdate}</span>
+          <span>
+            longest distance: {longestDistanceDay.distance?.toFixed(2)} km @{' '}
+            {format(longestDistanceDay.date, 'dd.MM.yyyy')}
           </span>
         </p>
       )}
