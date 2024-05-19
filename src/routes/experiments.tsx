@@ -466,7 +466,7 @@ export default function Experiments() {
         )}
       </p>
 
-      <h2 className="text-lg font-medium mb-2 mt-6">Tesla</h2>
+      <h2 className="text-lg font-medium mb-2 mt-6">Tesla data</h2>
       <p className="mb-4">
         Every 15 minutes a Raspberry Pi polls Tesla Model 3 data OTA to{' '}
         <a className="underline" href="https://developers.cloudflare.com/kv/">
