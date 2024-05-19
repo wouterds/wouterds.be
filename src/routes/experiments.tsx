@@ -1,13 +1,6 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData, useRevalidator } from '@remix-run/react';
-import {
-  addDays,
-  format,
-  formatDistanceToNowStrict,
-  fromUnixTime,
-  isSameDay,
-  subDays,
-} from 'date-fns';
+import { format, formatDistanceToNowStrict, fromUnixTime, isSameDay, subDays } from 'date-fns';
 import { useState } from 'react';
 import { Bar, BarChart, Line, LineChart, ResponsiveContainer, YAxis } from 'recharts';
 
@@ -80,24 +73,30 @@ export const loader = async ({
   }
 
   const teslaDistancePerDayLast90Days = Array.from({ length: 90 }, (_, index) => {
-    const date = subDays(new Date(), index);
-    const dateString = format(date, 'yyyy-MM-dd');
+    const date = subDays(new Date(), index - 1);
 
-    const distanceDayBefore =
-      teslaHistoryRecords.find((record) => isSameDay(fromUnixTime(record.time), addDays(date, 1)))
-        ?.distance || 0;
-    const distanceToday =
-      teslaHistoryRecords.find((record) => isSameDay(fromUnixTime(record.time), date))?.distance ||
-      0;
+    const lastRecordCurrentDay = teslaHistoryRecords.reduceRight((acc, record) => {
+      if (isSameDay(fromUnixTime(record.time), date)) {
+        return record;
+      }
 
-    // filter out incorrect value last day
-    const distance = Math.max(distanceDayBefore - distanceToday, 0);
+      return acc;
+    }, {} as TeslaRecord);
 
-    return {
-      date: dateString,
-      // filter out incorrect value initial diff
-      distance: distance > 2000 ? 0 : distance,
-    };
+    const lastRecordDayBefore = teslaHistoryRecords.reduceRight((acc, record) => {
+      if (isSameDay(fromUnixTime(record.time), subDays(date, 1))) {
+        return record;
+      }
+
+      return acc;
+    }, {} as TeslaRecord);
+
+    const distance =
+      lastRecordCurrentDay?.distance && lastRecordDayBefore.distance
+        ? lastRecordCurrentDay?.distance - lastRecordDayBefore.distance
+        : 0;
+
+    return { date, distance };
   }).reverse();
 
   const longestDistanceDay = teslaDistancePerDayLast90Days.reduce(
@@ -108,7 +107,7 @@ export const loader = async ({
 
       return acc;
     },
-    { distance: 0 } as { date: string; distance: number },
+    { distance: 0 } as { date: Date; distance: number },
   );
 
   return {
