@@ -70,23 +70,33 @@ export const loader = async ({
     );
   } catch {
     // noop
+    // teslaHistoryRecords.push(...(await import('~/data/tesla.json')).default);
   }
 
-  const teslaDistancePerDayLast90Days = Array.from({ length: 90 }, (_, index) => {
-    const date = subDays(new Date(), index - 1);
+  const lastCharged = teslaHistoryRecords.reduceRight(
+    (acc, record) => {
+      if (record.battery && record.battery > acc.battery!) {
+        return record;
+      }
 
-    // by time
-    const lastRecord = teslaHistoryRecords.reduceRight((acc, record) => {
-      if (fromUnixTime(record.time) < date) {
+      return acc;
+    },
+    { battery: 0 } as TeslaRecord,
+  );
+
+  const teslaDistancePerDayLast90Days = Array.from({ length: 90 }, (_, index) => {
+    const date = subDays(new Date(), index);
+
+    const firstRecord = teslaHistoryRecords.reduceRight((acc, record) => {
+      if (isSameDay(date, fromUnixTime(record.time))) {
         return record;
       }
 
       return acc;
     }, {} as TeslaRecord);
 
-    // by time
-    const firstRecord = teslaHistoryRecords.reduce((acc, record) => {
-      if (fromUnixTime(record.time) > date) {
+    const lastRecord = teslaHistoryRecords.reduce((acc, record) => {
+      if (isSameDay(date, fromUnixTime(record.time))) {
         return record;
       }
 
@@ -119,6 +129,7 @@ export const loader = async ({
     P1HistoryRecords,
     teslaHistoryRecords,
     longestDistanceDay,
+    lastCharged,
     teslaDistancePerDayLast90Days,
   };
 };
@@ -142,22 +153,12 @@ export default function Experiments() {
     teslaHistoryRecords,
     teslaDistancePerDayLast90Days,
     longestDistanceDay,
+    lastCharged,
   } = useLoaderData<typeof loader>();
   const aranetRecord = aranetRecords[aranetRecords.length - 1];
   const P1Record = P1Records[P1Records.length - 1];
   const P1HistoryRecord = P1HistoryRecords[P1HistoryRecords.length - 1];
   const teslaRecord = teslaHistoryRecords[teslaHistoryRecords.length - 1];
-
-  const lastCharge = teslaHistoryRecords.reduceRight(
-    (acc, record) => {
-      if (record.battery && record.battery > acc.battery!) {
-        return record;
-      }
-
-      return acc;
-    },
-    { battery: 0 } as TeslaRecord,
-  );
 
   const { revalidate } = useRevalidator();
   const isDarkMode = useIsDarkMode();
@@ -518,8 +519,8 @@ export default function Experiments() {
           title={format(fromUnixTime(teslaRecord.time), 'HH:mm')}>
           <span>last updated: {lastTeslaUpdate}</span>
           <span>
-            charge: {lastCharge.battery?.toFixed(0)}% @{' '}
-            {format(fromUnixTime(lastCharge.time), 'dd.MM.yyyy, HH:mm')}
+            charge: {lastCharged.battery?.toFixed(0)}% @{' '}
+            {format(fromUnixTime(lastCharged.time), 'dd.MM.yyyy, HH:mm')}
           </span>
         </p>
       )}
