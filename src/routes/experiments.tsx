@@ -75,16 +75,18 @@ export const loader = async ({
   const teslaDistancePerDayLast90Days = Array.from({ length: 90 }, (_, index) => {
     const date = subDays(new Date(), index - 1);
 
-    const lastRecordCurrentDay = teslaHistoryRecords.reduceRight((acc, record) => {
-      if (isSameDay(fromUnixTime(record.time), date)) {
+    // by time
+    const lastRecord = teslaHistoryRecords.reduceRight((acc, record) => {
+      if (fromUnixTime(record.time) < date) {
         return record;
       }
 
       return acc;
     }, {} as TeslaRecord);
 
-    const lastRecordDayBefore = teslaHistoryRecords.reduceRight((acc, record) => {
-      if (isSameDay(fromUnixTime(record.time), subDays(date, 1))) {
+    // by time
+    const firstRecord = teslaHistoryRecords.reduce((acc, record) => {
+      if (fromUnixTime(record.time) > date) {
         return record;
       }
 
@@ -92,8 +94,8 @@ export const loader = async ({
     }, {} as TeslaRecord);
 
     const distance =
-      lastRecordCurrentDay?.distance && lastRecordDayBefore.distance
-        ? lastRecordCurrentDay?.distance - lastRecordDayBefore.distance
+      lastRecord?.distance && firstRecord.distance
+        ? lastRecord?.distance - firstRecord.distance
         : 0;
 
     return { date, distance };
