@@ -253,7 +253,9 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
               </p>
               {image.alt && (
                 <div className="hidden lg:flex absolute left-0 right-0 items-center justify-center">
-                  <p title={image.alt} className="text-center truncate max-w-xl xl:max-w-4xl">
+                  <p
+                    title={image.alt}
+                    className="text-center text-white truncate max-w-xl xl:max-w-4xl">
                     {image.alt}
                   </p>
                 </div>
