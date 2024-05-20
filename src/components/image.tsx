@@ -226,10 +226,19 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
                 </span>
                 {loading && <Loader />}
               </p>
-              {images.length > 1 && (
+              {image.alt && (
+                <div className="hidden lg:flex absolute left-0 right-0 items-center justify-center">
+                  <p title={image.alt} className="text-center truncate max-w-xl xl:max-w-4xl">
+                    {image.alt}
+                  </p>
+                </div>
+              )}
+              {images.length > 1 ? (
                 <p>
                   {activeIndex + 1}/{images.length}
                 </p>
+              ) : (
+                <div />
               )}
             </footer>
           </div>,
