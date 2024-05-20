@@ -260,7 +260,7 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
                 </span>
                 {loading && <Loader />}
               </p>
-              {image.alt && (
+              {/* {image.alt && (
                 <div className="hidden lg:flex absolute left-0 right-0 items-center justify-center">
                   <p
                     title={image.alt}
@@ -268,7 +268,7 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
                     {image.alt}
                   </p>
                 </div>
-              )}
+              )} */}
               {images.length > 1 && (
                 <p>
                   {activeIndex + 1}/{images.length}
