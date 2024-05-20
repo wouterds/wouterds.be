@@ -265,12 +265,10 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
                   </p>
                 </div>
               )}
-              {images.length > 1 ? (
+              {images.length > 1 && (
                 <p>
                   {activeIndex + 1}/{images.length}
                 </p>
-              ) : (
-                <div />
               )}
             </footer>
           </div>,
