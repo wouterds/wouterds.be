@@ -13,7 +13,7 @@
     "codegen": "graphql-codegen"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.3.4",
+    "@hookform/resolvers": "^3.4.0",
     "@marsidev/react-turnstile": "^0.6.1",
     "@remix-run/cloudflare": "^2.9.2",
     "@remix-run/cloudflare-pages": "^2.9.2",
