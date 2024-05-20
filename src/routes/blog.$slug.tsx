@@ -48,7 +48,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
   const image = images.find((image) => image.id === params.get('image'));
 
   const ogImage = image?.url
-    ? `/thumb${new URL(image.url).pathname}`
+    ? `/1024${new URL(image.url).pathname}`
     : post?.poster?.url
       ? new URL(post.poster.url).pathname
       : '';

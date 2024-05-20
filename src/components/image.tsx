@@ -102,7 +102,8 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
         <img
           className="cursor-pointer relative z-10 w-full"
           loading="lazy"
-          src={`/images/thumb${new URL(url).pathname}`}
+          srcSet={`/images/768${new URL(url).pathname} 1x, /images/1024${new URL(url).pathname} 2x`}
+          src={`/images/768${new URL(url).pathname}`}
           alt={alt!}
         />
       </a>
@@ -237,7 +238,10 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
                 key={`${image.id}-lowres`}
                 className="max-w-full max-h-full flex-1 object-contain absolute w-full"
                 style={{ aspectRatio: `${image.width! / image.height!}` }}
-                src={`/images/thumb${new URL(image.url).pathname}`}
+                srcSet={`/images/768${new URL(image.url).pathname} 1x, /images/1024${
+                  new URL(image.url).pathname
+                } 2x`}
+                src={`/images/768${new URL(image.url).pathname}`}
                 alt={image.alt!}
               />
               <img
