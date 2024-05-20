@@ -1,4 +1,4 @@
-import { useSearchParams } from '@remix-run/react';
+import { useLocation, useSearchParams } from '@remix-run/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -12,6 +12,7 @@ interface Props extends FileField {
 }
 
 export const Image = ({ id, width, height, responsiveImage, url, alt, images }: Props) => {
+  const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [expanded, setExpanded] = useState(searchParams.get('image') === id);
   const [loading, setLoading] = useState(false);
@@ -87,31 +88,35 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
 
   return (
     <>
-      <div
-        className="bg-zinc-50 dark:bg-zinc-800 dark:bg-opacity-25 relative overflow-hidden rounded-sm w-full"
+      <a
+        onClick={(e) => {
+          e.preventDefault();
+          setExpanded(!expanded);
+        }}
+        href={`${location.pathname}?image=${id}`}
+        className="m-0 p-0 block bg-zinc-50 dark:bg-zinc-800 dark:bg-opacity-25 relative overflow-hidden rounded-sm w-full"
         style={{ aspectRatio: `${width! / height!}` }}>
         {responsiveImage?.base64 && (
           <img className="absolute inset-0 w-full h-full" src={responsiveImage.base64} />
         )}
         <img
-          onClick={() => setExpanded(!expanded)}
           className="cursor-pointer relative z-10 w-full"
           loading="lazy"
           src={`/images/thumb${new URL(url).pathname}`}
           alt={alt!}
         />
-      </div>
+      </a>
 
       {expanded &&
         typeof document !== 'undefined' &&
         createPortal(
           <div className="fixed inset-0 z-50 bg-black bg-opacity-95 backdrop-blur-sm flex">
             <header className="absolute z-20 top-3 left-3 right-3 flex items-center justify-end gap-2">
-              {typeof navigator !== 'undefined' && typeof navigator.share !== 'undefined' && (
+              {typeof window !== 'undefined' && typeof window?.navigator?.share !== 'undefined' && (
                 <button
                   title="Share"
                   className="text-white text-opacity-90 hover:text-opacity-100 rounded-sm hover:bg-zinc-300 hover:bg-opacity-10 aspect-square w-7 h-7 text-lg inline-flex items-center justify-center"
-                  onClick={() => navigator.share({ url: window.location.href })}>
+                  onClick={() => window.navigator.share({ url: window.location.href })}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     height="1em"
