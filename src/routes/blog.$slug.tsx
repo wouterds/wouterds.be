@@ -19,7 +19,7 @@ export const loader = async ({ request, context, params }: LoaderFunctionArgs) =
   const url = new URL(request.url);
   const baseUrl = `${url.protocol}//${url.host}`;
 
-  const post = await PostRepository.create(context).getPostBySlug(params.slug as string);
+  const post = await PostRepository.create(context).getPost(params.slug as string);
   if (!post) {
     throw new Response(null, {
       status: 404,

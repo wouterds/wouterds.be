@@ -1,5 +1,5 @@
-query PostsGetAll ($limit: IntType) {
-  allPosts(orderBy: [date_DESC], first: $limit) {
+query GetPost($slug: String!) {
+  post(filter: { slug: { eq: $slug } }) {
     __typename
     id
     title
@@ -29,6 +29,7 @@ query PostsGetAll ($limit: IntType) {
             id
             url
             alt
+            size
             width
             height
             responsiveImage { base64 }
