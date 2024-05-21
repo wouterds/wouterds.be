@@ -1,0 +1,9 @@
+query GetPreviousPost($date: DateTime!, $slug: String!) {
+  post (filter: { date: { lte: $date }, slug: { neq: $slug } }, orderBy: date_DESC) {
+    __typename
+    id
+    title
+    slug
+    date
+  }
+}

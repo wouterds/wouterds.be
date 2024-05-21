@@ -1,20 +1,25 @@
 import { AppLoadContext } from '@remix-run/cloudflare';
 
 import {
+  GetNextPostDocument,
+  GetNextPostQuery,
+  GetNextPostQueryVariables,
   GetPostDocument,
   GetPostQuery,
   GetPostQueryVariables,
   GetPostsDocument,
   GetPostsQuery,
   GetPostsQueryVariables,
+  GetPreviousPostDocument,
+  GetPreviousPostQuery,
+  GetPreviousPostQueryVariables,
 } from '~/graphql';
 import { excerptFromContent } from '~/lib/datocms/structured-text-utils';
 
 import { DatoCMSRepository } from './abstract/datocms-repository.server';
 
-type _Post = NonNullable<GetPostsQuery['allPosts'][number]>;
-
-export type Post = _Post & { excerpt: string };
+export type Posts = NonNullable<Awaited<ReturnType<PostRepository['getPosts']>>>;
+export type Post = Posts[number];
 
 export class PostRepository extends DatoCMSRepository {
   public static create = (context: AppLoadContext) => new PostRepository(context);
@@ -24,7 +29,10 @@ export class PostRepository extends DatoCMSRepository {
       variables: { limit },
     });
 
-    return data.allPosts.map(this.mapPost);
+    return data.allPosts.map((post) => ({
+      ...post,
+      excerpt: excerptFromContent(post.content),
+    }));
   };
 
   public getPost = async (slug: string) => {
@@ -35,8 +43,21 @@ export class PostRepository extends DatoCMSRepository {
     return data.post;
   };
 
-  private mapPost = (post: _Post): Post => ({
-    ...post,
-    excerpt: excerptFromContent(post.content),
-  });
+  public getPreviousPost = async (slug: string, date: string) => {
+    const data = await this.fetch<GetPreviousPostQuery, GetPreviousPostQueryVariables>(
+      GetPreviousPostDocument,
+      { variables: { slug, date } },
+    );
+
+    return data.post || null;
+  };
+
+  public getNextPost = async (slug: string, date: string) => {
+    const data = await this.fetch<GetNextPostQuery, GetNextPostQueryVariables>(
+      GetNextPostDocument,
+      { variables: { slug, date } },
+    );
+
+    return data.post || null;
+  };
 }

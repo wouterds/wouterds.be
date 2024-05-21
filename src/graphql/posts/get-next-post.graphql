@@ -1,0 +1,9 @@
+query GetNextPost($date: DateTime!, $slug: String!) {
+  post (filter: { date: { gte: $date }, slug: { neq: $slug } }, orderBy: date_ASC) {
+    __typename
+    id
+    title
+    slug
+    date
+  }
+}
