@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
-import { useLoaderData } from '@remix-run/react';
+import { Link, useLoaderData } from '@remix-run/react';
 import clsx from 'clsx';
 import { format } from 'date-fns';
 import { isCode } from 'datocms-structured-text-utils';
@@ -137,14 +137,14 @@ export default function BlogSlug() {
           'justify-end': previousPost && !nextPost,
         })}>
         {nextPost && (
-          <a href={`/blog/${nextPost.slug}`} title={nextPost.title}>
+          <Link to={`/blog/${nextPost.slug}`} title={nextPost.title}>
             &laquo; next post
-          </a>
+          </Link>
         )}
         {previousPost && (
-          <a href={`/blog/${previousPost.slug}`} title={previousPost.title}>
+          <Link to={`/blog/${previousPost.slug}`} title={previousPost.title}>
             previous post &raquo;
-          </a>
+          </Link>
         )}
       </nav>
     </>
