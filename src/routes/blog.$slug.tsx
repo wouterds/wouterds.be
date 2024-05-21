@@ -1,5 +1,6 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
-import { useLoaderData } from '@remix-run/react';
+import { Link, useLoaderData } from '@remix-run/react';
+import clsx from 'clsx';
 import { format } from 'date-fns';
 import { isCode } from 'datocms-structured-text-utils';
 import { useEffect, useRef } from 'react';
@@ -27,10 +28,15 @@ export const loader = async ({ request, context, params }: LoaderFunctionArgs) =
     });
   }
 
+  const [previousPost, nextPost] = await Promise.all([
+    PostRepository.create(context).getPreviousPost(post.slug, post.date),
+    PostRepository.create(context).getNextPost(post.slug, post.date),
+  ]);
+
   const content = post.content.value as unknown as StructuredTextDocument;
   const containsCodeBlocks = content.document.children.some(isCode);
 
-  return { url: baseUrl, post, containsCodeBlocks };
+  return { url: baseUrl, post, containsCodeBlocks, previousPost, nextPost };
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
@@ -80,7 +86,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
 };
 
 export default function BlogSlug() {
-  const { post, containsCodeBlocks } = useLoaderData<typeof loader>();
+  const { post, nextPost, previousPost, containsCodeBlocks } = useLoaderData<typeof loader>();
 
   const isDarkMode = useIsDarkMode();
   const ref = useRef<HTMLElement | null>(null);
@@ -107,21 +113,41 @@ export default function BlogSlug() {
   }, [isDarkMode, containsCodeBlocks]);
 
   return (
-    <article
-      ref={ref}
-      className="prose prose-zinc dark:prose-dark dark:prose-invert prose-sm max-w-none text-xs leading-relaxed">
-      <header className="mb-4">
-        <time className="text-xs text-zinc-400 dark:text-zinc-500 mb-2 block" dateTime={post.date}>
-          {format(post.date, 'MMMM do, yyyy')}
-        </time>
-        <h1 className="text-xl font-medium my-0">{post.title}</h1>
-      </header>
+    <>
+      <article
+        ref={ref}
+        className="prose prose-zinc dark:prose-dark dark:prose-invert prose-sm max-w-none text-xs leading-relaxed">
+        <header className="mb-4">
+          <time
+            className="text-xs text-zinc-400 dark:text-zinc-500 mb-2 block"
+            dateTime={post.date}>
+            {format(post.date, 'MMMM do, yyyy')}
+          </time>
+          <h1 className="text-xl font-medium my-0">{post.title}</h1>
+        </header>
 
-      <StructuredText
-        data={post.content as unknown as StructuredTextDocument}
-        renderBlock={renderBlock}
-      />
-    </article>
+        <StructuredText
+          data={post.content as unknown as StructuredTextDocument}
+          renderBlock={renderBlock}
+        />
+      </article>
+      <nav
+        className={clsx('mt-8 flex', {
+          'justify-between': previousPost && nextPost,
+          'justify-end': previousPost && !nextPost,
+        })}>
+        {nextPost && (
+          <Link to={`/blog/${nextPost.slug}`} title={nextPost.title}>
+            &laquo; next post
+          </Link>
+        )}
+        {previousPost && (
+          <Link to={`/blog/${previousPost.slug}`} title={previousPost.title}>
+            previous post &raquo;
+          </Link>
+        )}
+      </nav>
+    </>
   );
 }
 
