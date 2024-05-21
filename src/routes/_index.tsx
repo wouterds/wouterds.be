@@ -36,13 +36,8 @@ export default function Index() {
 
       <Posts posts={posts} />
 
-      <div className="text-left items-start mt-6">
-        <Link
-          to="/blog"
-          className="relative inline-flex items-center justify-center font-medium gap-1.5 text-xs">
-          <span>read more</span>
-          <span className="text-sm">&raquo;</span>
-        </Link>
+      <div className="mt-6">
+        <Link to="/blog">read more &raquo;</Link>
       </div>
     </>
   );
