@@ -1,13 +1,13 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData, useRevalidator } from '@remix-run/react';
-import { format, formatDistanceToNowStrict, fromUnixTime } from 'date-fns';
-import { useState } from 'react';
+import { format, fromUnixTime } from 'date-fns';
 import { Bar, BarChart, Line, LineChart, ResponsiveContainer, YAxis } from 'recharts';
 
 import { AranetRepository } from '~/data/repositories/aranet-repository';
 import { TeslaRepository } from '~/data/repositories/tesla-repository';
 import { useInterval } from '~/hooks/use-interval';
 import { useIsDarkMode } from '~/hooks/use-is-dark-mode';
+import { useTimeDistance } from '~/hooks/use-time-distance';
 import { P1HistoryRecord, P1Record } from '~/lib/kv';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
@@ -93,78 +93,20 @@ export default function Experiments() {
     teslaLongestDistanceDay,
     teslaLastCharged,
   } = useLoaderData<typeof loader>();
+  const isDarkMode = useIsDarkMode();
+
   const aranetRecord = aranet[aranet.length - 1];
   const P1Record = P1Records[P1Records.length - 1];
   const P1HistoryRecord = P1HistoryRecords[P1HistoryRecords.length - 1];
   const teslaRecord = tesla[tesla.length - 1];
 
+  const lastAranetUpdate = useTimeDistance(aranetRecord.time);
+  const lastP1Update = useTimeDistance(P1Record.time);
+  const lastP1HistoryUpdate = useTimeDistance(P1HistoryRecord.time);
+  const lastTeslaUpdate = useTimeDistance(teslaRecord.time);
+
   const { revalidate } = useRevalidator();
-  const isDarkMode = useIsDarkMode();
-
-  const [lastAranetUpdate, setLastAranetUpdate] = useState(
-    aranetRecord?.time
-      ? formatDistanceToNowStrict(fromUnixTime(aranetRecord?.time), {
-          addSuffix: true,
-        })
-      : null,
-  );
-  const [lastP1Update, setLastP1Update] = useState(
-    P1Record?.time
-      ? formatDistanceToNowStrict(fromUnixTime(P1Record?.time), {
-          addSuffix: true,
-        })
-      : null,
-  );
-  const [lastP1HistoryUpdate, setLastP1HistoryUpdate] = useState(
-    P1HistoryRecord?.time
-      ? formatDistanceToNowStrict(fromUnixTime(P1HistoryRecord?.time), {
-          addSuffix: true,
-        })
-      : null,
-  );
-  const [lastTeslaUpdate, setLastTeslaUpdate] = useState(
-    teslaRecord?.time
-      ? formatDistanceToNowStrict(fromUnixTime(teslaRecord?.time), {
-          addSuffix: true,
-        })
-      : null,
-  );
-
   useInterval(revalidate, 1000 * 30);
-
-  useInterval(() => {
-    if (aranetRecord) {
-      setLastAranetUpdate(
-        formatDistanceToNowStrict(fromUnixTime(aranetRecord.time), {
-          addSuffix: true,
-        }),
-      );
-    }
-
-    if (P1Record) {
-      setLastP1Update(
-        formatDistanceToNowStrict(fromUnixTime(P1Record.time), {
-          addSuffix: true,
-        }),
-      );
-    }
-
-    if (P1HistoryRecord) {
-      setLastP1HistoryUpdate(
-        formatDistanceToNowStrict(fromUnixTime(P1HistoryRecord.time), {
-          addSuffix: true,
-        }),
-      );
-    }
-
-    if (teslaRecord) {
-      setLastTeslaUpdate(
-        formatDistanceToNowStrict(fromUnixTime(teslaRecord.time), {
-          addSuffix: true,
-        }),
-      );
-    }
-  }, 1000);
 
   return (
     <>
