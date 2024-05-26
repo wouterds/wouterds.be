@@ -6,6 +6,7 @@ import { Tesla } from '~/lib/tesla';
 
 const SYNC_INTERVAL_MINUTES = 15; // 15 minutes
 const WAKE_INTERVAL_MINUTES = 60 * 2; // 2 hours
+const VIN = 'LRW3E7EKXMC324303';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   const raw = await context.cloudflare.env.CACHE?.get?.('tesla');
@@ -20,7 +21,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   }
 
   // init & get auth token + refresh
-  const tesla = await Tesla.create(context).setVin('LRW3E7EKXMC324303').auth();
+  const tesla = await Tesla.create(context).setVin(VIN).auth();
 
   // get data
   let data = await tesla.getData();
