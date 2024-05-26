@@ -1,4 +1,5 @@
 import { AppLoadContext } from '@remix-run/cloudflare';
+import { fromUnixTime, isSameDay, subDays } from 'date-fns';
 
 import { KVRepository } from './abstract-kv-repository';
 
@@ -38,6 +39,38 @@ export class TeslaRepository extends KVRepository {
       }
 
       return last || null;
+    });
+  };
+
+  public distancePerDay = async (days: number) => {
+    return this.getAll().then((data) => {
+      return Array.from({ length: days }, (_, index) => {
+        const date = subDays(new Date(), index);
+
+        const firstRecord = data.reduceRight((acc, record) => {
+          if (isSameDay(date, fromUnixTime(record.time))) {
+            return record;
+          }
+
+          return acc;
+        }, {} as TeslaRecord);
+
+        const lastRecord = data.reduce((acc, record) => {
+          if (isSameDay(date, fromUnixTime(record.time))) {
+            return record;
+          }
+
+          return acc;
+        }, {} as TeslaRecord);
+
+        return {
+          date,
+          distance:
+            lastRecord?.distance && firstRecord.distance
+              ? lastRecord?.distance - firstRecord.distance
+              : 0,
+        };
+      }).reverse();
     });
   };
 }

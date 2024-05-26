@@ -52,39 +52,13 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
     }),
   ).slice(-90);
 
-  const [tesla, teslaLastCharged] = await Promise.all([
+  const [tesla, teslaLastCharged, teslaDistanceLast90Days] = await Promise.all([
     TeslaRepository.create(context).getAll(),
     TeslaRepository.create(context).getLastCharge(),
+    TeslaRepository.create(context).distancePerDay(90),
   ]);
 
-  const teslaDistancePerDayLast90Days = Array.from({ length: 90 }, (_, index) => {
-    const date = subDays(new Date(), index);
-
-    const firstRecord = tesla.reduceRight((acc, record) => {
-      if (isSameDay(date, fromUnixTime(record.time))) {
-        return record;
-      }
-
-      return acc;
-    }, {} as TeslaRecord);
-
-    const lastRecord = tesla.reduce((acc, record) => {
-      if (isSameDay(date, fromUnixTime(record.time))) {
-        return record;
-      }
-
-      return acc;
-    }, {} as TeslaRecord);
-
-    const distance =
-      lastRecord?.distance && firstRecord.distance
-        ? lastRecord?.distance - firstRecord.distance
-        : 0;
-
-    return { date, distance };
-  }).reverse();
-
-  const longestDistanceDay = teslaDistancePerDayLast90Days.reduce(
+  const longestDistanceDay = teslaDistanceLast90Days.reduce(
     (acc, record) => {
       if (record.distance > acc.distance) {
         return record;
@@ -103,7 +77,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
     tesla,
     longestDistanceDay,
     teslaLastCharged,
-    teslaDistancePerDayLast90Days,
+    teslaDistanceLast90Days,
   };
 };
 
@@ -124,7 +98,7 @@ export default function Experiments() {
     P1HistoryRecords,
     peak,
     tesla,
-    teslaDistancePerDayLast90Days,
+    teslaDistanceLast90Days,
     longestDistanceDay,
     teslaLastCharged,
   } = useLoaderData<typeof loader>();
@@ -498,20 +472,18 @@ export default function Experiments() {
         </p>
       )}
 
-      {teslaDistancePerDayLast90Days.length > 0 && (
+      {teslaDistanceLast90Days.length > 0 && (
         <ul className="gap-1.5 text-center mt-4">
           <li className="border border-black dark:border-white">
             <div className="py-2">
               <span className="font-semibold">
-                {teslaDistancePerDayLast90Days[
-                  teslaDistancePerDayLast90Days.length - 1
-                ].distance.toFixed(2)}
+                {teslaDistanceLast90Days[teslaDistanceLast90Days.length - 1].distance.toFixed(2)}
               </span>{' '}
               km
             </div>
             <div className="relative aspect-[8/1] sm:aspect-[10/1] -mt-1">
               <ResponsiveContainer>
-                <BarChart data={teslaDistancePerDayLast90Days}>
+                <BarChart data={teslaDistanceLast90Days}>
                   <YAxis hide />
                   <Bar dataKey="distance" fill={isDarkMode ? '#fff' : '#000'} minPointSize={1} />
                 </BarChart>
