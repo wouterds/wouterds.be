@@ -23,8 +23,8 @@ export class AranetRepository extends KVRepository {
     return this.get<AranetRecord[]>('aranet').then((data) => data || []);
   };
 
-  public getLastPush = async () => {
-    return this.getAll().then((records) => fromUnixTime(records[records.length - 1]?.time ?? 0));
+  public getLast = async () => {
+    return this.getAll().then((records) => records[records.length - 1]);
   };
 }
 

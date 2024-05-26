@@ -1,5 +1,5 @@
 import { ActionFunctionArgs, json } from '@remix-run/cloudflare';
-import { differenceInMinutes } from 'date-fns';
+import { differenceInMinutes, fromUnixTime } from 'date-fns';
 
 import { AranetRepository } from '~/data/repositories/aranet-repository';
 
@@ -9,7 +9,8 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
     return json({ success: false }, { status: 403 });
   }
 
-  if (differenceInMinutes(new Date(), await AranetRepository.create(context).getLastPush()) < 5) {
+  const lastPush = await AranetRepository.create(context).getLast();
+  if (differenceInMinutes(new Date(), fromUnixTime(lastPush?.time || 0)) < 5) {
     return json({ success: false }, { status: 429 });
   }
 
