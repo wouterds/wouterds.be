@@ -5,9 +5,10 @@ import { useState } from 'react';
 import { Bar, BarChart, Line, LineChart, ResponsiveContainer, YAxis } from 'recharts';
 
 import { AranetRepository } from '~/data/repositories/aranet-repository';
+import { TeslaRecord, TeslaRepository } from '~/data/repositories/tesla-repository';
 import { useInterval } from '~/hooks/use-interval';
 import { useIsDarkMode } from '~/hooks/use-is-dark-mode';
-import { P1HistoryRecord, P1Record, TeslaRecord } from '~/lib/kv';
+import { P1HistoryRecord, P1Record } from '~/lib/kv';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   const env = context.cloudflare.env;
@@ -51,19 +52,9 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
     }),
   ).slice(-90);
 
-  const teslaHistoryRecords: TeslaRecord[] = [];
-  try {
-    teslaHistoryRecords.push(
-      ...(await env.CACHE.get('tesla').then((value) => {
-        return JSON.parse(value || '');
-      })),
-    );
-  } catch {
-    // noop
-    // teslaHistoryRecords.push(...(await import('~/data/tesla.json')).default);
-  }
+  const tesla = await TeslaRepository.create(context).getAll();
 
-  const lastCharged = teslaHistoryRecords.reduceRight(
+  const lastCharged = tesla.reduceRight(
     (acc, record) => {
       if (record.battery && record.battery > acc.battery!) {
         return record;
@@ -77,7 +68,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   const teslaDistancePerDayLast90Days = Array.from({ length: 90 }, (_, index) => {
     const date = subDays(new Date(), index);
 
-    const firstRecord = teslaHistoryRecords.reduceRight((acc, record) => {
+    const firstRecord = tesla.reduceRight((acc, record) => {
       if (isSameDay(date, fromUnixTime(record.time))) {
         return record;
       }
@@ -85,7 +76,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
       return acc;
     }, {} as TeslaRecord);
 
-    const lastRecord = teslaHistoryRecords.reduce((acc, record) => {
+    const lastRecord = tesla.reduce((acc, record) => {
       if (isSameDay(date, fromUnixTime(record.time))) {
         return record;
       }
@@ -113,11 +104,11 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   );
 
   return {
-    aranetRecords: aranet,
+    aranet,
     P1Records,
     peak,
     P1HistoryRecords,
-    teslaHistoryRecords,
+    tesla,
     longestDistanceDay,
     lastCharged,
     teslaDistancePerDayLast90Days,
@@ -136,11 +127,11 @@ export const meta: MetaFunction = () => {
 
 export default function Experiments() {
   const {
-    aranetRecords,
+    aranet: aranetRecords,
     P1Records,
     P1HistoryRecords,
     peak,
-    teslaHistoryRecords,
+    tesla: teslaHistoryRecords,
     teslaDistancePerDayLast90Days,
     longestDistanceDay,
     lastCharged,

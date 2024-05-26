@@ -28,7 +28,7 @@ export class AranetRepository extends KVRepository {
   };
 }
 
-type AranetRecord = {
+export type AranetRecord = {
   time: number;
   co2: number;
   temperature: number;
