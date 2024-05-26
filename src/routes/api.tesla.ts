@@ -1,7 +1,7 @@
 import { json, LoaderFunctionArgs } from '@remix-run/cloudflare';
 import { differenceInMinutes, fromUnixTime, getUnixTime } from 'date-fns';
 
-import { TeslaRepository } from '~/lib/repositories/tesla-repository';
+import { TeslaRepository } from '~/data/repositories/tesla-repository';
 import { Tesla } from '~/lib/tesla';
 
 const SYNC_INTERVAL_MINUTES = 15; // 15 minutes

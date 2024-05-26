@@ -3,8 +3,8 @@ import { render, StructuredTextDocument } from 'datocms-structured-text-to-html-
 import { isStructuredText } from 'datocms-structured-text-utils';
 import { Feed } from 'feed';
 
-import { GalleryRecord, VideoRecord } from '~/graphql';
-import { PostRepository } from '~/lib/repositories/post-repository';
+import { GalleryRecord, VideoRecord } from '~/data/graphql';
+import { PostRepository } from '~/data/repositories/post-repository';
 
 export const loader = async ({ request, context }: LoaderFunctionArgs) => {
   const url = new URL(request.url);

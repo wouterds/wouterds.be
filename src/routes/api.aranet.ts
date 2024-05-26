@@ -1,7 +1,7 @@
 import { ActionFunctionArgs, json } from '@remix-run/cloudflare';
 import { differenceInMinutes } from 'date-fns';
 
-import { AranetRepository } from '~/lib/repositories/aranet-repository';
+import { AranetRepository } from '~/data/repositories/aranet-repository';
 
 export const action = async ({ request, context }: ActionFunctionArgs) => {
   const query = new URL(request.url).searchParams;

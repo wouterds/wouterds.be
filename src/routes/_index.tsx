@@ -2,7 +2,7 @@ import { LoaderFunctionArgs } from '@remix-run/cloudflare';
 import { Link, useLoaderData } from '@remix-run/react';
 
 import { Posts } from '~/components/posts';
-import { PostRepository } from '~/lib/repositories/post-repository';
+import { PostRepository } from '~/data/repositories/post-repository';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   const posts = await PostRepository.create(context).getPosts(3);

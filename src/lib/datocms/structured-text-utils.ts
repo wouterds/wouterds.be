@@ -1,6 +1,6 @@
 import { render, StructuredTextDocument } from 'datocms-structured-text-to-plain-text';
 
-import { GalleryRecord, Scalars } from '~/graphql';
+import { GalleryRecord, Scalars } from '~/data/graphql';
 
 type Content = {
   value: Scalars['JsonField']['output'];

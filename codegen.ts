@@ -9,15 +9,15 @@ const config: CodegenConfig = {
     {
       'https://graphql.datocms.com': {
         headers: {
-          Authorization: `Bearer ${process.env.DATOCMS_API_KEY as string}`,
+          Authorization: `Bearer ${process.env.DATOCMS_API_KEY}`,
           'X-Exclude-Invalid': 'true',
         },
       },
     },
   ],
-  documents: ['./src/graphql/**/*.graphql'],
+  documents: ['./src/data/graphql/**/*.graphql'],
   generates: {
-    './src/graphql/types.ts': {
+    './src/data/graphql/types.ts': {
       plugins: [
         'typescript',
         'typescript-operations',

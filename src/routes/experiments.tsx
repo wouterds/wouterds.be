@@ -4,10 +4,10 @@ import { format, formatDistanceToNowStrict, fromUnixTime, isSameDay, subDays } f
 import { useState } from 'react';
 import { Bar, BarChart, Line, LineChart, ResponsiveContainer, YAxis } from 'recharts';
 
+import { AranetRepository } from '~/data/repositories/aranet-repository';
 import { useInterval } from '~/hooks/use-interval';
 import { useIsDarkMode } from '~/hooks/use-is-dark-mode';
 import { P1HistoryRecord, P1Record, TeslaRecord } from '~/lib/kv';
-import { AranetRepository } from '~/lib/repositories/aranet-repository';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   const env = context.cloudflare.env;

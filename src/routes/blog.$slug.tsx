@@ -7,14 +7,14 @@ import { useEffect, useRef } from 'react';
 import { RenderBlockContext, StructuredText, StructuredTextDocument } from 'react-datocms';
 
 import { Image } from '~/components/image';
-import { GalleryRecord, VideoRecord } from '~/graphql';
+import { GalleryRecord, VideoRecord } from '~/data/graphql';
+import { PostRepository } from '~/data/repositories/post-repository';
 import { useIsDarkMode } from '~/hooks/use-is-dark-mode';
 import {
   excerptFromContent,
   imagesFromContent,
   plainTextFromContent,
 } from '~/lib/datocms/structured-text-utils';
-import { PostRepository } from '~/lib/repositories/post-repository';
 
 export const loader = async ({ request, context, params }: LoaderFunctionArgs) => {
   const url = new URL(request.url);

@@ -13,7 +13,7 @@ import {
   GetPreviousPostDocument,
   GetPreviousPostQuery,
   GetPreviousPostQueryVariables,
-} from '~/graphql';
+} from '~/data/graphql';
 import { excerptFromContent } from '~/lib/datocms/structured-text-utils';
 
 import { DatoCMSRepository } from './abstract-datocms-repository';
