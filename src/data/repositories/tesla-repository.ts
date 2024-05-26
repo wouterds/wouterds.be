@@ -1,3 +1,5 @@
+import { Buffer } from 'node:buffer';
+
 import { AppLoadContext } from '@remix-run/cloudflare';
 import { fromUnixTime, isSameDay, subDays } from 'date-fns';
 
@@ -18,6 +20,22 @@ export class TeslaRepository extends KVRepository {
 
   public getAll = async () => {
     return this.get<TeslaRecord[]>('tesla').then((data) => data || []);
+  };
+
+  // todo: move to CF env vars
+  public getRefreshToken = async () => {
+    return this.get<string>('tesla-refresh-token').then((data) => {
+      if (!data) {
+        return null;
+      }
+
+      return Buffer.from(data, 'base64').toString('utf-8');
+    });
+  };
+
+  // todo: move to CF env vars
+  public updateRefreshToken = async (refreshToken: string) => {
+    return this.put('tesla-refresh-token', Buffer.from(refreshToken).toString('base64'));
   };
 
   public getLast = async () => {
