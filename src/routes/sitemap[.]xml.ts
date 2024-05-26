@@ -1,6 +1,6 @@
 import { LoaderFunctionArgs } from '@remix-run/cloudflare';
 
-import { PostRepository } from '~/lib/repositories/post.server';
+import { PostRepository } from '~/lib/repositories/post-repository';
 
 export const loader = async ({ request, context }: LoaderFunctionArgs) => {
   const url = new URL(request.url);

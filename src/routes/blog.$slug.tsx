@@ -14,7 +14,7 @@ import {
   imagesFromContent,
   plainTextFromContent,
 } from '~/lib/datocms/structured-text-utils';
-import { PostRepository } from '~/lib/repositories/post.server';
+import { PostRepository } from '~/lib/repositories/post-repository';
 
 export const loader = async ({ request, context, params }: LoaderFunctionArgs) => {
   const url = new URL(request.url);

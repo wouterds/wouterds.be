@@ -16,7 +16,7 @@ import {
 } from '~/graphql';
 import { excerptFromContent } from '~/lib/datocms/structured-text-utils';
 
-import { DatoCMSRepository } from './abstract/datocms-repository.server';
+import { DatoCMSRepository } from './abstract-datocms-repository';
 
 export type Posts = NonNullable<Awaited<ReturnType<PostRepository['getPosts']>>>;
 export type Post = Posts[number];

@@ -4,7 +4,7 @@ import { isStructuredText } from 'datocms-structured-text-utils';
 import { Feed } from 'feed';
 
 import { GalleryRecord, VideoRecord } from '~/graphql';
-import { PostRepository } from '~/lib/repositories/post.server';
+import { PostRepository } from '~/lib/repositories/post-repository';
 
 export const loader = async ({ request, context }: LoaderFunctionArgs) => {
   const url = new URL(request.url);

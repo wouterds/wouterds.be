@@ -1,7 +1,7 @@
 import { Link } from '@remix-run/react';
 import { format } from 'date-fns';
 
-import { type Post } from '~/lib/repositories/post.server';
+import { type Post } from '~/lib/repositories/post-repository';
 
 export interface PostsProps {
   posts: Post[];
