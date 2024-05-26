@@ -37,7 +37,7 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
   }
 
   const ip = request.headers.get('cf-connecting-ip')!;
-  const validator = TurnstileValidator.fromContext(context).setIp(ip);
+  const validator = TurnstileValidator.create(context).setIp(ip);
   if (!(await validator.validate(form.get('cf-turnstile-response')?.toString()))) {
     return json({ success: false }, { status: 403 });
   }
@@ -46,7 +46,7 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
     context.cloudflare.cf.region ? `${context.cloudflare.cf.region}, ` : ''
   }${context.cloudflare.cf.country || 'Unknown'}`;
 
-  const mailer = MailjetMailer.fromContext(context);
+  const mailer = MailjetMailer.create(context);
   mailer.setSender({ email: 'noreply@wouterds.be' });
   mailer.setReplyTo({ name: data.name, email: data.email });
   mailer.setReceiver({ name: 'Wouter De Schuyter', email: 'wouter.de.schuyter@gmail.com' });

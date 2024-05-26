@@ -12,7 +12,7 @@ export class Tesla {
     this._context = context;
   }
 
-  public static fromContext(context: AppLoadContext) {
+  public static create(context: AppLoadContext) {
     return new Tesla(context);
   }
 

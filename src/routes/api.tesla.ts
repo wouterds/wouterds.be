@@ -20,7 +20,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   }
 
   // init & get auth token + refresh
-  const tesla = await Tesla.fromContext(context).setVin('LRW3E7EKXMC324303').auth();
+  const tesla = await Tesla.create(context).setVin('LRW3E7EKXMC324303').auth();
 
   // get data
   let data = await tesla.getData();
