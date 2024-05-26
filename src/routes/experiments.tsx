@@ -1,11 +1,11 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData, useRevalidator } from '@remix-run/react';
-import { format, formatDistanceToNowStrict, fromUnixTime, isSameDay, subDays } from 'date-fns';
+import { format, formatDistanceToNowStrict, fromUnixTime } from 'date-fns';
 import { useState } from 'react';
 import { Bar, BarChart, Line, LineChart, ResponsiveContainer, YAxis } from 'recharts';
 
 import { AranetRepository } from '~/data/repositories/aranet-repository';
-import { TeslaRecord, TeslaRepository } from '~/data/repositories/tesla-repository';
+import { TeslaRepository } from '~/data/repositories/tesla-repository';
 import { useInterval } from '~/hooks/use-interval';
 import { useIsDarkMode } from '~/hooks/use-is-dark-mode';
 import { P1HistoryRecord, P1Record } from '~/lib/kv';
@@ -40,7 +40,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   const peakRecord = P1HistoryRecordsData.find(
     (record) => record.peak === Math.max(...P1HistoryRecordsData.map((r) => r.peak)),
   );
-  const peak = {
+  const P1Peak = {
     usage: peakRecord?.peak || 0,
     time: peakRecord?.peakTime || 0,
   };
@@ -58,7 +58,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
     TeslaRepository.create(context).distancePerDay(90),
   ]);
 
-  const longestDistanceDay = teslaDistanceLast90Days.reduce(
+  const teslaLongestDistanceDay = teslaDistanceLast90Days.reduce(
     (acc, record) => {
       if (record.distance > acc.distance) {
         return record;
@@ -72,10 +72,10 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   return {
     aranet,
     P1Records,
-    peak,
+    P1Peak,
     P1HistoryRecords,
     tesla,
-    longestDistanceDay,
+    teslaLongestDistanceDay,
     teslaLastCharged,
     teslaDistanceLast90Days,
   };
@@ -96,10 +96,10 @@ export default function Experiments() {
     aranet,
     P1Records,
     P1HistoryRecords,
-    peak,
+    P1Peak,
     tesla,
     teslaDistanceLast90Days,
-    longestDistanceDay,
+    teslaLongestDistanceDay,
     teslaLastCharged,
   } = useLoaderData<typeof loader>();
   const aranetRecord = aranet[aranet.length - 1];
@@ -408,10 +408,10 @@ export default function Experiments() {
 
       <p className="flex flex-col sm:flex-row gap-1 justify-start sm:justify-between mt-2">
         {lastP1HistoryUpdate && <span>last updated: {lastP1HistoryUpdate}</span>}
-        {!!peak?.usage && (
+        {!!P1Peak?.usage && (
           <span>
-            peak: {(peak.usage / 1000).toFixed(2)} kWh @{' '}
-            {format(fromUnixTime(peak.time), 'dd.MM.yyyy, HH:mm')}
+            peak: {(P1Peak.usage / 1000).toFixed(2)} kWh @{' '}
+            {format(fromUnixTime(P1Peak.time), 'dd.MM.yyyy, HH:mm')}
           </span>
         )}
       </p>
@@ -497,14 +497,14 @@ export default function Experiments() {
           </li>
         </ul>
       )}
-      {teslaRecord && longestDistanceDay && (
+      {teslaRecord && teslaLongestDistanceDay && (
         <p
           className="flex flex-col sm:flex-row gap-1 justify-start sm:justify-between mt-2"
           title={format(fromUnixTime(teslaRecord.time), 'HH:mm')}>
           <span>last updated: {lastTeslaUpdate}</span>
           <span>
-            longest distance: {longestDistanceDay.distance?.toFixed(2)} km @{' '}
-            {format(longestDistanceDay.date, 'dd.MM.yyyy')}
+            longest distance: {teslaLongestDistanceDay.distance?.toFixed(2)} km @{' '}
+            {format(teslaLongestDistanceDay.date, 'dd.MM.yyyy')}
           </span>
         </p>
       )}
