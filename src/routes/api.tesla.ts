@@ -28,13 +28,8 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   let woken = false;
 
   if (
-    // never woken up yet
-    (!lastAwake ||
-      // last woken up has been some time ago
-      (lastAwake &&
-        differenceInMinutes(new Date(), fromUnixTime(lastAwake.time)) > WAKE_INTERVAL_MINUTES)) &&
-    // and asleep right now
-    data?.error?.includes('offline or asleep')
+    data?.error?.includes('offline or asleep') &&
+    differenceInMinutes(new Date(), fromUnixTime(lastAwake?.time || 0)) > WAKE_INTERVAL_MINUTES
   ) {
     // try to wake
     await tesla.wakeUp();
