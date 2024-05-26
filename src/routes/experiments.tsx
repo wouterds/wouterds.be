@@ -6,23 +6,13 @@ import { Bar, BarChart, Line, LineChart, ResponsiveContainer, YAxis } from 'rech
 
 import { useInterval } from '~/hooks/use-interval';
 import { useIsDarkMode } from '~/hooks/use-is-dark-mode';
-import { AranetRecord, P1HistoryRecord, P1Record, TeslaRecord } from '~/lib/kv';
+import { P1HistoryRecord, P1Record, TeslaRecord } from '~/lib/kv';
+import { AranetRepository } from '~/lib/repositories/aranet-repository';
 
-export const loader = async ({
-  context: {
-    cloudflare: { env },
-  },
-}: LoaderFunctionArgs) => {
-  const aranetRecords: AranetRecord[] = [];
-  try {
-    aranetRecords.push(
-      ...(await env.CACHE.get('aranet').then((value) => {
-        return JSON.parse(value || '');
-      })),
-    );
-  } catch {
-    // noop
-  }
+export const loader = async ({ context }: LoaderFunctionArgs) => {
+  const env = context.cloudflare.env;
+
+  const aranet = await AranetRepository.create(context).getAll();
 
   const P1Records: P1Record[] = [];
   try {
@@ -123,7 +113,7 @@ export const loader = async ({
   );
 
   return {
-    aranetRecords,
+    aranetRecords: aranet,
     P1Records,
     peak,
     P1HistoryRecords,
