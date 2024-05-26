@@ -1,6 +1,7 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData, useRevalidator } from '@remix-run/react';
 import { format, fromUnixTime } from 'date-fns';
+import { useMemo } from 'react';
 import { Bar, BarChart, Line, LineChart, ResponsiveContainer, YAxis } from 'recharts';
 
 import { AranetRepository } from '~/data/repositories/aranet-repository';
@@ -93,8 +94,6 @@ export default function Experiments() {
     teslaLongestDistanceDay,
     teslaLastCharged,
   } = useLoaderData<typeof loader>();
-  const isDarkMode = useIsDarkMode();
-
   const aranetRecord = aranet[aranet.length - 1];
   const P1Record = P1Records[P1Records.length - 1];
   const P1HistoryRecord = P1HistoryRecords[P1HistoryRecords.length - 1];
@@ -104,6 +103,9 @@ export default function Experiments() {
   const lastP1Update = useTimeDistance(P1Record.time);
   const lastP1HistoryUpdate = useTimeDistance(P1HistoryRecord.time);
   const lastTeslaUpdate = useTimeDistance(teslaRecord.time);
+
+  const isDarkMode = useIsDarkMode();
+  const chartColor = useMemo(() => (isDarkMode ? '#fff' : '#000'), [isDarkMode]);
 
   const { revalidate } = useRevalidator();
   useInterval(revalidate, 1000 * 30);
@@ -138,7 +140,7 @@ export default function Experiments() {
                   <Line
                     type="monotone"
                     dataKey="co2"
-                    stroke={isDarkMode ? '#fff' : '#000'}
+                    stroke={chartColor}
                     strokeWidth={1.5}
                     dot={false}
                   />
@@ -169,7 +171,7 @@ export default function Experiments() {
                   <Line
                     type="monotone"
                     dataKey="temperature"
-                    stroke={isDarkMode ? '#fff' : '#000'}
+                    stroke={chartColor}
                     strokeWidth={1.5}
                     dot={false}
                   />
@@ -199,7 +201,7 @@ export default function Experiments() {
                   <Line
                     type="monotone"
                     dataKey="humidity"
-                    stroke={isDarkMode ? '#fff' : '#000'}
+                    stroke={chartColor}
                     strokeWidth={1.5}
                     dot={false}
                   />
@@ -229,7 +231,7 @@ export default function Experiments() {
                   <Line
                     type="monotone"
                     dataKey="pressure"
-                    stroke={isDarkMode ? '#fff' : '#000'}
+                    stroke={chartColor}
                     strokeWidth={1.5}
                     dot={false}
                   />
@@ -285,7 +287,7 @@ export default function Experiments() {
                   <Line
                     type="monotone"
                     dataKey="active"
-                    stroke={isDarkMode ? '#fff' : '#000'}
+                    stroke={chartColor}
                     strokeWidth={1.5}
                     dot={false}
                   />
@@ -326,7 +328,7 @@ export default function Experiments() {
               <ResponsiveContainer>
                 <BarChart data={P1HistoryRecords}>
                   <YAxis hide />
-                  <Bar dataKey="usage" fill={isDarkMode ? '#fff' : '#000'} />
+                  <Bar dataKey="usage" fill={chartColor} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -370,7 +372,7 @@ export default function Experiments() {
                   <Line
                     type="monotone"
                     dataKey="battery"
-                    stroke={isDarkMode ? '#fff' : '#000'}
+                    stroke={chartColor}
                     strokeWidth={1.5}
                     dot={false}
                   />
@@ -418,7 +420,7 @@ export default function Experiments() {
               <ResponsiveContainer>
                 <BarChart data={teslaDistanceLast90Days}>
                   <YAxis hide />
-                  <Bar dataKey="distance" fill={isDarkMode ? '#fff' : '#000'} minPointSize={1} />
+                  <Bar dataKey="distance" fill={chartColor} minPointSize={1} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
