@@ -16,7 +16,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
 
   // synced not too long ago
   if (last && differenceInMinutes(new Date(), fromUnixTime(last.time)) < SYNC_INTERVAL_MINUTES) {
-    return json(last);
+    return json(last, { status: 429 });
   }
 
   // init & get auth token + refresh
