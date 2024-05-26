@@ -52,22 +52,13 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
     }),
   ).slice(-90);
 
-  const [tesla, teslaLastCharged, teslaDistanceLast90Days] = await Promise.all([
-    TeslaRepository.create(context).getAll(),
-    TeslaRepository.create(context).getLastCharge(),
-    TeslaRepository.create(context).distancePerDay(90),
-  ]);
-
-  const teslaLongestDistanceDay = teslaDistanceLast90Days.reduce(
-    (acc, record) => {
-      if (record.distance > acc.distance) {
-        return record;
-      }
-
-      return acc;
-    },
-    { distance: 0 } as { date: Date; distance: number },
-  );
+  const [tesla, teslaLastCharged, teslaDistanceLast90Days, teslaLongestDistanceDay] =
+    await Promise.all([
+      TeslaRepository.create(context).getAll(),
+      TeslaRepository.create(context).getLastCharge(),
+      TeslaRepository.create(context).distancePerDay(90),
+      TeslaRepository.create(context).longestDayDistanceInRange(90),
+    ]);
 
   return {
     aranet,
