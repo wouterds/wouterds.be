@@ -52,18 +52,10 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
     }),
   ).slice(-90);
 
-  const tesla = await TeslaRepository.create(context).getAll();
-
-  const lastCharged = tesla.reduceRight(
-    (acc, record) => {
-      if (record.battery && record.battery > acc.battery!) {
-        return record;
-      }
-
-      return acc;
-    },
-    { battery: 0 } as TeslaRecord,
-  );
+  const [tesla, teslaLastCharged] = await Promise.all([
+    TeslaRepository.create(context).getAll(),
+    TeslaRepository.create(context).getLastCharge(),
+  ]);
 
   const teslaDistancePerDayLast90Days = Array.from({ length: 90 }, (_, index) => {
     const date = subDays(new Date(), index);
@@ -110,7 +102,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
     P1HistoryRecords,
     tesla,
     longestDistanceDay,
-    lastCharged,
+    teslaLastCharged,
     teslaDistancePerDayLast90Days,
   };
 };
@@ -127,19 +119,19 @@ export const meta: MetaFunction = () => {
 
 export default function Experiments() {
   const {
-    aranet: aranetRecords,
+    aranet,
     P1Records,
     P1HistoryRecords,
     peak,
-    tesla: teslaHistoryRecords,
+    tesla,
     teslaDistancePerDayLast90Days,
     longestDistanceDay,
-    lastCharged,
+    teslaLastCharged,
   } = useLoaderData<typeof loader>();
-  const aranetRecord = aranetRecords[aranetRecords.length - 1];
+  const aranetRecord = aranet[aranet.length - 1];
   const P1Record = P1Records[P1Records.length - 1];
   const P1HistoryRecord = P1HistoryRecords[P1HistoryRecords.length - 1];
-  const teslaRecord = teslaHistoryRecords[teslaHistoryRecords.length - 1];
+  const teslaRecord = tesla[tesla.length - 1];
 
   const { revalidate } = useRevalidator();
   const isDarkMode = useIsDarkMode();
@@ -235,7 +227,7 @@ export default function Experiments() {
             </div>
             <div className="relative aspect-[4/1] -my-1">
               <ResponsiveContainer>
-                <LineChart data={aranetRecords}>
+                <LineChart data={aranet}>
                   <Line
                     type="monotone"
                     dataKey="co2"
@@ -246,8 +238,8 @@ export default function Experiments() {
                   <YAxis
                     hide
                     domain={[
-                      Math.min(...aranetRecords.map((record) => record.co2)) * 0.7,
-                      Math.max(...aranetRecords.map((record) => record.co2)),
+                      Math.min(...aranet.map((record) => record.co2)) * 0.7,
+                      Math.max(...aranet.map((record) => record.co2)),
                     ]}
                   />
                 </LineChart>
@@ -266,7 +258,7 @@ export default function Experiments() {
             </div>
             <div className="relative aspect-[4/1] -my-1">
               <ResponsiveContainer>
-                <LineChart data={aranetRecords}>
+                <LineChart data={aranet}>
                   <Line
                     type="monotone"
                     dataKey="temperature"
@@ -277,8 +269,8 @@ export default function Experiments() {
                   <YAxis
                     hide
                     domain={[
-                      Math.min(...aranetRecords.map((record) => record.temperature)) * 0.85,
-                      Math.max(...aranetRecords.map((record) => record.temperature)),
+                      Math.min(...aranet.map((record) => record.temperature)) * 0.85,
+                      Math.max(...aranet.map((record) => record.temperature)),
                     ]}
                   />
                 </LineChart>
@@ -296,7 +288,7 @@ export default function Experiments() {
             </div>
             <div className="relative aspect-[4/1] -my-1">
               <ResponsiveContainer>
-                <LineChart data={aranetRecords}>
+                <LineChart data={aranet}>
                   <Line
                     type="monotone"
                     dataKey="humidity"
@@ -307,8 +299,8 @@ export default function Experiments() {
                   <YAxis
                     hide
                     domain={[
-                      Math.min(...aranetRecords.map((record) => record.humidity)) * 0.9,
-                      Math.max(...aranetRecords.map((record) => record.humidity)) * 0.8,
+                      Math.min(...aranet.map((record) => record.humidity)) * 0.9,
+                      Math.max(...aranet.map((record) => record.humidity)) * 0.8,
                     ]}
                   />
                 </LineChart>
@@ -326,7 +318,7 @@ export default function Experiments() {
             </div>
             <div className="relative aspect-[4/1] -my-1">
               <ResponsiveContainer>
-                <LineChart data={aranetRecords}>
+                <LineChart data={aranet}>
                   <Line
                     type="monotone"
                     dataKey="pressure"
@@ -337,8 +329,8 @@ export default function Experiments() {
                   <YAxis
                     hide
                     domain={[
-                      Math.min(...aranetRecords.map((record) => record.pressure)) * 0.995,
-                      Math.max(...aranetRecords.map((record) => record.pressure)) * 1.001,
+                      Math.min(...aranet.map((record) => record.pressure)) * 0.995,
+                      Math.max(...aranet.map((record) => record.pressure)) * 1.001,
                     ]}
                   />
                 </LineChart>
@@ -467,7 +459,7 @@ export default function Experiments() {
             </div>
             <div className="relative aspect-[8/1] sm:aspect-[10/1] -mt-1">
               <ResponsiveContainer>
-                <LineChart data={teslaHistoryRecords}>
+                <LineChart data={tesla}>
                   <Line
                     type="monotone"
                     dataKey="battery"
@@ -478,8 +470,8 @@ export default function Experiments() {
                   <YAxis
                     hide
                     domain={[
-                      Math.min(...teslaHistoryRecords.map((record) => record.battery!)) * 1.3,
-                      Math.max(...teslaHistoryRecords.map((record) => record.battery!)) * 0.7,
+                      Math.min(...tesla.map((record) => record.battery!)) * 1.3,
+                      Math.max(...tesla.map((record) => record.battery!)) * 0.7,
                     ]}
                   />
                 </LineChart>
@@ -500,8 +492,8 @@ export default function Experiments() {
           title={format(fromUnixTime(teslaRecord.time), 'HH:mm')}>
           <span>last updated: {lastTeslaUpdate}</span>
           <span>
-            charge: {lastCharged.battery?.toFixed(0)}% @{' '}
-            {format(fromUnixTime(lastCharged.time), 'dd.MM.yyyy, HH:mm')}
+            charge: {teslaLastCharged?.battery?.toFixed(0)}% @{' '}
+            {format(fromUnixTime(teslaLastCharged?.time || 0), 'dd.MM.yyyy, HH:mm')}
           </span>
         </p>
       )}

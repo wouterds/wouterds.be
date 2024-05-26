@@ -26,6 +26,20 @@ export class TeslaRepository extends KVRepository {
   public getLastAwake = async () => {
     return this.getAll().then((data) => data.filter((v) => v.wake).pop());
   };
+
+  public getLastCharge = async () => {
+    return this.getAll().then((data) => {
+      let last = data.pop();
+      let previous = data.pop();
+
+      while (previous && last && previous?.battery >= last?.battery) {
+        last = previous;
+        previous = data.pop();
+      }
+
+      return last || null;
+    });
+  };
 }
 
 export type TeslaRecord = {
