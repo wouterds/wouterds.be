@@ -12,13 +12,13 @@ export abstract class KVRepository {
   }
 
   protected get = async <T = unknown>(key: string) => {
-    try {
-      const data = await this.KV.get<string>(key);
-      if (!data) return null;
+    const data = await this.KV.get<string>(key);
+    if (!data) return null;
 
+    try {
       return JSON.parse(data) as T;
     } catch {
-      return null;
+      return data as T;
     }
   };
 

@@ -5,7 +5,6 @@ import { TeslaRepository } from '~/data/repositories/tesla-repository';
 export class Tesla {
   private _context: AppLoadContext;
   private _accessToken?: string;
-  private _refreshToken?: string;
   private _vin?: string;
 
   public constructor(context: AppLoadContext) {
@@ -21,25 +20,12 @@ export class Tesla {
     return this;
   }
 
-  public setRefreshToken(refreshToken: string) {
-    this._refreshToken = refreshToken;
-    return this;
-  }
-
   private get vin() {
     if (!this._vin) {
       throw new Error('Tesla VIN not set');
     }
 
     return this._vin;
-  }
-
-  private get refreshToken() {
-    if (this._refreshToken) {
-      return this._refreshToken;
-    }
-
-    return TeslaRepository.create(this._context).getRefreshToken();
   }
 
   private get accessToken() {
@@ -57,7 +43,7 @@ export class Tesla {
       body: JSON.stringify({
         grant_type: 'refresh_token',
         client_id: 'ownerapi',
-        refresh_token: await this.refreshToken,
+        refresh_token: await TeslaRepository.create(this._context).getRefreshToken(),
         scope: 'openid email offline_access vehicle_device_data',
       }),
     });
