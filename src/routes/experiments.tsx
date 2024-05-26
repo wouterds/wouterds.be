@@ -492,7 +492,7 @@ export default function Experiments() {
           title={format(fromUnixTime(teslaRecord.time), 'HH:mm')}>
           <span>last updated: {lastTeslaUpdate}</span>
           <span>
-            charge: {teslaLastCharged?.battery?.toFixed(0)}% @{' '}
+            last charged: {teslaLastCharged?.battery?.toFixed(0)}% @{' '}
             {format(fromUnixTime(teslaLastCharged?.time || 0), 'dd.MM.yyyy, HH:mm')}
           </span>
         </p>
