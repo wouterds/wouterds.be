@@ -21,4 +21,8 @@ export abstract class KVRepository {
       return null;
     }
   };
+
+  protected put = async <T = unknown>(key: string, value: T) => {
+    return this.KV.put(key, JSON.stringify(value));
+  };
 }
