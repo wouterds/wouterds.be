@@ -8,7 +8,6 @@ type Env = {
   MAILJET_API_SECRET: string;
   CLOUDFLARE_TURNSTILE_KEY: string;
   CLOUDFLARE_TURNSTILE_SECRET: string;
-  POSTHOG_API_KEY: string;
   API_AUTH_TOKEN: string;
   CACHE: KVNamespace;
 };
