@@ -1,7 +1,7 @@
 import { json, LoaderFunctionArgs } from '@remix-run/cloudflare';
 import { differenceInMinutes, fromUnixTime, getUnixTime } from 'date-fns';
 
-import { TeslaRecord } from '~/lib/kv';
+import { TeslaRepository } from '~/lib/repositories/tesla-repository';
 import { Tesla } from '~/lib/tesla';
 
 const SYNC_INTERVAL_MINUTES = 15; // 15 minutes
@@ -9,54 +9,40 @@ const WAKE_INTERVAL_MINUTES = 60 * 2; // 2 hours
 const VIN = 'LRW3E7EKXMC324303';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
-  const raw = await context.cloudflare.env.CACHE?.get?.('tesla');
-  const values: TeslaRecord[] = raw ? JSON.parse(raw) : [];
-  const last = values[values.length - 1];
-  const awakeValues = values.filter((v) => v.wake);
-  const lastAwake = awakeValues[awakeValues.length - 1];
-
-  // synced not too long ago
-  if (last && differenceInMinutes(new Date(), fromUnixTime(last.time)) < SYNC_INTERVAL_MINUTES) {
+  const last = await TeslaRepository.create(context).getLast();
+  if (differenceInMinutes(new Date(), fromUnixTime(last?.time || 0)) < SYNC_INTERVAL_MINUTES) {
     return json(last, { status: 429 });
   }
 
-  // init & get auth token + refresh
   const tesla = await Tesla.create(context).setVin(VIN).auth();
 
-  // get data
   let data = await tesla.getData();
   let woken = false;
-
-  if (
-    data?.error?.includes('offline or asleep') &&
-    differenceInMinutes(new Date(), fromUnixTime(lastAwake?.time || 0)) > WAKE_INTERVAL_MINUTES
-  ) {
-    // try to wake
+  const isSleeping = data?.error?.includes('offline or asleep');
+  const lastAwake = fromUnixTime((await TeslaRepository.create(context).getLastAwake())?.time || 0);
+  if (isSleeping && differenceInMinutes(new Date(), lastAwake) > WAKE_INTERVAL_MINUTES) {
     await tesla.wakeUp();
-    woken = true;
-
-    // then try to fetch data again
     data = await tesla.getData();
 
-    // still some other unknown error?
-    if (data.error) return json(data.error, { status: 500 });
+    if (data.error) {
+      return json(data.error, { status: 500 });
+    }
+
+    woken = true;
   }
 
-  const record: TeslaRecord = {
-    name: data?.response?.vehicle_state?.vehicle_name || last?.name,
-    version: data?.response?.vehicle_state?.car_version || last?.version,
-    battery: data?.response?.charge_state?.battery_level || last?.battery || 0,
+  const response = data?.response;
+  const record = await TeslaRepository.create(context).add({
+    name: (response?.vehicle_state?.vehicle_name || last?.name) as string,
+    version: (response?.vehicle_state?.car_version || last?.version) as string,
+    battery: (response?.charge_state?.battery_level || last?.battery) as number,
     distance: parseFloat(
-      ((data?.response?.vehicle_state?.odometer || 0) * 1.60934 || last?.distance || 0).toFixed(3),
+      (((response?.vehicle_state?.odometer || 0) * 1.60934 || last?.distance) as number).toFixed(3),
     ),
     time: getUnixTime(new Date()),
-    wake: !!data.response,
+    wake: !!response,
     woken,
-  };
-
-  // store in KV
-  values.push(record);
-  await context.cloudflare.env.CACHE?.put?.('tesla', JSON.stringify(values));
+  });
 
   return json(record);
 };

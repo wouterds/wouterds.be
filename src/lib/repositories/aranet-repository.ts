@@ -7,13 +7,15 @@ export class AranetRepository extends KVRepository {
   public static create = (context: AppLoadContext) => new AranetRepository(context);
 
   public add = async (record: AranetRecord) => {
-    return this.getAll().then((records) => {
+    return this.getAll().then(async (records) => {
       records.push(record);
       if (records.length > (24 * 60) / 5) {
         records.shift();
       }
 
-      return this.put<AranetRecord[]>('aranet', records);
+      await this.put('aranet', records);
+
+      return record;
     });
   };
 
