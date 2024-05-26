@@ -113,21 +113,9 @@ export default function Experiments() {
   return (
     <>
       <h1 className="text-xl font-medium mb-2">Experiments</h1>
-      <p className="mb-6">
-        This page is just a playground for random experiments. Not much to see here!
-      </p>
-      <h2 className="text-lg font-medium mb-2">Aranet readings</h2>
-      <p className="mb-4">
-        Every 5 minutes a Raspberry Pi pushes{' '}
-        <a className="underline" href="https://aranet.com/products/aranet4">
-          Aranet4
-        </a>{' '}
-        readings to{' '}
-        <a className="underline" href="https://developers.cloudflare.com/kv/">
-          Cloudflare Workers KV
-        </a>
-        .
-      </p>
+      <p className="mb-6">Playground with random experiments, not much to see here!</p>
+
+      <h2 className="text-lg font-medium mb-4">Aranet readings</h2>
       {aranetRecord && (
         <ul className="gap-1.5 grid grid-cols-2 sm:grid-cols-4 text-center">
           <li className="border border-black dark:border-white">
@@ -262,19 +250,7 @@ export default function Experiments() {
         </p>
       )}
 
-      <h2 className="text-lg font-medium mb-2 mt-6">Energy usage</h2>
-      <p className="mb-4">
-        Every 10 minutes a Raspberry Pi pushes{' '}
-        <a className="underline" href="https://www.homewizard.com/p1-meter/">
-          P1 meter
-        </a>{' '}
-        readings to{' '}
-        <a className="underline" href="https://developers.cloudflare.com/kv/">
-          Cloudflare Workers KV
-        </a>
-        .
-      </p>
-
+      <h2 className="text-lg font-medium mb-4 mt-6">Energy usage</h2>
       {P1Record && (
         <ul className="gap-1.5 text-center">
           <li className="border border-black dark:border-white">
@@ -351,15 +327,7 @@ export default function Experiments() {
         )}
       </p>
 
-      <h2 className="text-lg font-medium mb-2 mt-6">Tesla data</h2>
-      <p className="mb-4">
-        Every 15 minutes a Raspberry Pi polls Tesla Model 3 data OTA to{' '}
-        <a className="underline" href="https://developers.cloudflare.com/kv/">
-          Cloudflare Workers KV
-        </a>
-        .
-      </p>
-
+      <h2 className="text-lg font-medium mb-2 mt-4">Tesla data</h2>
       {teslaRecord && (
         <ul className="gap-1.5 text-center">
           <li className="border border-black dark:border-white">
