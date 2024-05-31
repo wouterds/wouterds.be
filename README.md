@@ -5,7 +5,7 @@
 [![Better Stack Badge](https://uptime.betterstack.com/status-badges/v2/monitor/za5r.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
 ![code-size](https://img.shields.io/github/languages/code-size/wouterds/wouterds.be)
 
-My personal website, built in React/TypeScript with Remix & Cloudflare Workers and DatoCMS as headless CMS.
+Personal website, made with React, Remix, TypeScript, Cloudflare Pages and DatoCMS as headless CMS.
 
 ## Development
 
