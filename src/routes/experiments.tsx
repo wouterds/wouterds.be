@@ -2,8 +2,9 @@ import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData, useRevalidator } from '@remix-run/react';
 import { format, fromUnixTime } from 'date-fns';
 import { useMemo } from 'react';
-import { Bar, BarChart, Line, LineChart, ResponsiveContainer, YAxis } from 'recharts';
+import { Line, LineChart, ResponsiveContainer, YAxis } from 'recharts';
 
+import { BarChart } from '~/components/charts/bar-chart';
 import { AranetRepository } from '~/data/repositories/aranet-repository';
 import { TeslaRepository } from '~/data/repositories/tesla-repository';
 import { useInterval } from '~/hooks/use-interval';
@@ -285,7 +286,6 @@ export default function Experiments() {
           </li>
         </ul>
       )}
-
       {lastP1Update && (
         <p
           className="flex justify-between mt-2"
@@ -295,28 +295,14 @@ export default function Experiments() {
       )}
 
       {P1HistoryRecord && (
-        <ul className="gap-1.5 text-center mt-4">
-          <li className="border border-black dark:border-white">
-            <div className="py-2">
-              <span className="font-semibold">{P1HistoryRecord.usage.toFixed(2)}</span> kWh
-            </div>
-            <div className="relative aspect-[8/1] sm:aspect-[10/1] -mt-1">
-              <ResponsiveContainer>
-                <BarChart data={P1HistoryRecords}>
-                  <YAxis hide />
-                  <Bar dataKey="usage" fill={chartColor} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-            <div
-              className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
-              style={{ margin: 1 }}>
-              power usage (last 90 days)
-            </div>
-          </li>
-        </ul>
+        <BarChart
+          data={P1HistoryRecords}
+          key="usage"
+          unit=" kWh"
+          label="power usage (last 90 days)"
+          className="mt-4"
+        />
       )}
-
       <p className="flex flex-col sm:flex-row gap-1 justify-start sm:justify-between mt-2">
         {lastP1HistoryUpdate && <span>last updated: {lastP1HistoryUpdate}</span>}
         {!!P1Peak?.usage && (
@@ -376,29 +362,13 @@ export default function Experiments() {
       )}
 
       {teslaDistanceLast90Days.length > 0 && (
-        <ul className="gap-1.5 text-center mt-4">
-          <li className="border border-black dark:border-white">
-            <div className="py-2">
-              <span className="font-semibold">
-                {teslaDistanceLast90Days[teslaDistanceLast90Days.length - 1].distance.toFixed(2)}
-              </span>{' '}
-              km
-            </div>
-            <div className="relative aspect-[8/1] sm:aspect-[10/1] -mt-1">
-              <ResponsiveContainer>
-                <BarChart data={teslaDistanceLast90Days}>
-                  <YAxis hide />
-                  <Bar dataKey="distance" fill={chartColor} minPointSize={1} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-            <div
-              className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
-              style={{ margin: 1 }}>
-              distance driven (last 90 days)
-            </div>
-          </li>
-        </ul>
+        <BarChart
+          data={teslaDistanceLast90Days}
+          key="distance"
+          unit=" km"
+          label="distance driven (last 90 days)"
+          className="mt-4"
+        />
       )}
       {teslaRecord && teslaLongestDistanceDay && (
         <p
