@@ -299,6 +299,7 @@ export default function Experiments() {
           data={P1HistoryRecords}
           key="usage"
           unit=" kWh"
+          header={`${P1HistoryRecord.usage.toFixed(2)} kWh`}
           label="power usage (last 90 days)"
           className="mt-4"
         />
