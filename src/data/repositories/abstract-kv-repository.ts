@@ -8,11 +8,11 @@ export abstract class KVRepository {
   }
 
   private get KV() {
-    return this._context.cloudflare.env.CACHE;
+    return this._context.cloudflare?.env?.CACHE;
   }
 
   protected get = async <T = unknown>(key: string) => {
-    const data = await this.KV.get<string>(key);
+    const data = await this.KV?.get<string>(key);
     if (!data) return null;
 
     try {
@@ -23,6 +23,6 @@ export abstract class KVRepository {
   };
 
   protected put = async <T = unknown>(key: string, value: T) => {
-    return this.KV.put(key, JSON.stringify(value));
+    return this.KV?.put(key, JSON.stringify(value));
   };
 }

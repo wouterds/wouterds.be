@@ -99,10 +99,10 @@ export default function Experiments() {
   const P1HistoryRecord = P1HistoryRecords[P1HistoryRecords.length - 1];
   const teslaRecord = tesla[tesla.length - 1];
 
-  const lastAranetUpdate = useTimeDistance(aranetRecord.time);
-  const lastP1Update = useTimeDistance(P1Record.time);
-  const lastP1HistoryUpdate = useTimeDistance(P1HistoryRecord.time);
-  const lastTeslaUpdate = useTimeDistance(teslaRecord.time);
+  const lastAranetUpdate = useTimeDistance(aranetRecord?.time);
+  const lastP1Update = useTimeDistance(P1Record?.time);
+  const lastP1HistoryUpdate = useTimeDistance(P1HistoryRecord?.time);
+  const lastTeslaUpdate = useTimeDistance(teslaRecord?.time);
 
   const isDarkMode = useIsDarkMode();
   const chartColor = useMemo(() => (isDarkMode ? '#fff' : '#000'), [isDarkMode]);
@@ -244,9 +244,9 @@ export default function Experiments() {
       {lastAranetUpdate && (
         <p
           className="flex justify-between mt-2"
-          title={format(fromUnixTime(aranetRecord.time), 'HH:mm')}>
+          title={format(fromUnixTime(aranetRecord?.time), 'HH:mm')}>
           <span>last updated: {lastAranetUpdate}</span>
-          <span>battery: {aranetRecord.battery}%</span>
+          <span>battery: {aranetRecord?.battery}%</span>
         </p>
       )}
 
