@@ -2,6 +2,7 @@ import { AppLoadContext } from '@remix-run/cloudflare';
 
 export abstract class KVRepository {
   private _context: AppLoadContext;
+  private _cache: Record<string, unknown> = {};
 
   public constructor(context: AppLoadContext) {
     this._context = context;
@@ -12,14 +13,18 @@ export abstract class KVRepository {
   }
 
   protected get = async <T = unknown>(key: string) => {
+    if (this._cache[key]) return this._cache[key] as T;
+
     const data = await this.KV?.get<string>(key);
     if (!data) return null;
 
     try {
-      return JSON.parse(data) as T;
+      this._cache[key] = JSON.parse(data);
     } catch {
-      return data as T;
+      this._cache[key] = data;
     }
+
+    return this._cache[key] as T;
   };
 
   protected put = async <T = unknown>(key: string, value: T) => {
