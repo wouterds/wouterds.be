@@ -110,7 +110,7 @@ export default function Experiments() {
   const chartColor = useMemo(() => (isDarkMode ? '#fff' : '#000'), [isDarkMode]);
 
   const { revalidate } = useRevalidator();
-  useInterval(revalidate, 1000 * 30);
+  useInterval(revalidate, 1000 * 60);
 
   return (
     <>
@@ -305,7 +305,7 @@ export default function Experiments() {
           className="mt-4"
           footer={[
             lastP1HistoryUpdate && <span>last updated: {lastP1HistoryUpdate}</span>,
-            !!P1Peak?.usage && (
+            P1Peak?.usage && P1Peak.time && (
               <span>
                 peak: {(P1Peak.usage / 1000).toFixed(2)} kWh @{' '}
                 {format(fromUnixTime(P1Peak.time), 'dd.MM.yyyy, HH:mm')}
@@ -350,7 +350,6 @@ export default function Experiments() {
           </li>
         </ul>
       )}
-
       {teslaRecord && (
         <p
           className="flex flex-col sm:flex-row gap-1 justify-start sm:justify-between mt-2"
@@ -372,9 +371,9 @@ export default function Experiments() {
           className="mt-4"
           footer={[
             lastTeslaUpdate && <span>last updated: {lastTeslaUpdate}</span>,
-            teslaLongestDistanceDay && (
+            teslaLongestDistanceDay?.distance && teslaLongestDistanceDay?.date && (
               <span>
-                longest distance: {teslaLongestDistanceDay.distance?.toFixed(2)} km @{' '}
+                longest distance: {teslaLongestDistanceDay.distance.toFixed(2)} km @{' '}
                 {format(teslaLongestDistanceDay.date, 'dd.MM.yyyy')}
               </span>
             ),
