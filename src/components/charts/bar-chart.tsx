@@ -17,6 +17,7 @@ type Props = {
 export const BarChart = ({ data, dataKey, unit, label, header, className, footer }: Props) => {
   const isDarkMode = useIsDarkMode();
   const chartColor = useMemo(() => (isDarkMode ? '#fff' : '#000'), [isDarkMode]);
+  const filteredComponents = footer?.filter(Boolean);
 
   return (
     <>
@@ -41,9 +42,9 @@ export const BarChart = ({ data, dataKey, unit, label, header, className, footer
           {label}
         </div>
       </div>
-      {footer && (
+      {filteredComponents && (
         <p className="flex flex-col sm:flex-row gap-1 justify-start sm:justify-between mt-2">
-          {footer}
+          {filteredComponents}
         </p>
       )}
     </>
