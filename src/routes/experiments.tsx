@@ -303,17 +303,17 @@ export default function Experiments() {
           header={`${P1HistoryRecord.usage.toFixed(2)} kWh`}
           label="power usage (last 90 days)"
           className="mt-4"
+          footer={[
+            lastP1HistoryUpdate && <span>last updated: {lastP1HistoryUpdate}</span>,
+            !!P1Peak?.usage && (
+              <span>
+                peak: {(P1Peak.usage / 1000).toFixed(2)} kWh @{' '}
+                {format(fromUnixTime(P1Peak.time), 'dd.MM.yyyy, HH:mm')}
+              </span>
+            ),
+          ]}
         />
       )}
-      <p className="flex flex-col sm:flex-row gap-1 justify-start sm:justify-between mt-2">
-        {lastP1HistoryUpdate && <span>last updated: {lastP1HistoryUpdate}</span>}
-        {!!P1Peak?.usage && (
-          <span>
-            peak: {(P1Peak.usage / 1000).toFixed(2)} kWh @{' '}
-            {format(fromUnixTime(P1Peak.time), 'dd.MM.yyyy, HH:mm')}
-          </span>
-        )}
-      </p>
 
       <h2 className="text-lg font-medium mb-2 mt-4">Tesla data</h2>
       {teslaRecord && (
@@ -370,18 +370,16 @@ export default function Experiments() {
           unit=" km"
           label="distance driven (last 90 days)"
           className="mt-4"
+          footer={[
+            lastTeslaUpdate && <span>last updated: {lastTeslaUpdate}</span>,
+            teslaLongestDistanceDay && (
+              <span>
+                longest distance: {teslaLongestDistanceDay.distance?.toFixed(2)} km @{' '}
+                {format(teslaLongestDistanceDay.date, 'dd.MM.yyyy')}
+              </span>
+            ),
+          ]}
         />
-      )}
-      {teslaRecord && teslaLongestDistanceDay && (
-        <p
-          className="flex flex-col sm:flex-row gap-1 justify-start sm:justify-between mt-2"
-          title={format(fromUnixTime(teslaRecord.time), 'HH:mm')}>
-          <span>last updated: {lastTeslaUpdate}</span>
-          <span>
-            longest distance: {teslaLongestDistanceDay.distance?.toFixed(2)} km @{' '}
-            {format(teslaLongestDistanceDay.date, 'dd.MM.yyyy')}
-          </span>
-        </p>
       )}
     </>
   );
