@@ -298,7 +298,7 @@ export default function Experiments() {
       {P1HistoryRecord && (
         <BarChart
           data={P1HistoryRecords}
-          key="usage"
+          dataKey="usage"
           unit=" kWh"
           header={`${P1HistoryRecord.usage.toFixed(2)} kWh`}
           label="power usage (last 90 days)"
@@ -366,7 +366,7 @@ export default function Experiments() {
       {teslaDistanceLast90Days.length > 0 && (
         <BarChart
           data={teslaDistanceLast90Days}
-          key="distance"
+          dataKey="distance"
           unit=" km"
           label="distance driven (last 90 days)"
           className="mt-4"
