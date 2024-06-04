@@ -1,17 +1,18 @@
+import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 
 import { useIsDarkMode } from '~/hooks/use-is-dark-mode';
 
 export interface CodeProps {
+  className?: string;
   children?: string;
   lang: string;
 }
 
-export const Code = (props: CodeProps) => {
-  const { children: code, lang } = props;
+export const Code = ({ children: code, lang, className }: CodeProps) => {
   const isDarkMode = useIsDarkMode();
-
   const [highlightedCode, setHighlightedCode] = useState<string>();
+
   useEffect(() => {
     if (!code) {
       return;
@@ -30,7 +31,7 @@ export const Code = (props: CodeProps) => {
   }
 
   return (
-    <pre className="text-slate-700 dark:text-slate-300 rounded overflow-x-auto">
+    <pre className={clsx('text-slate-700 dark:text-slate-300 rounded overflow-x-auto', className)}>
       {highlightedCode ? (
         <code dangerouslySetInnerHTML={{ __html: highlightedCode }} />
       ) : (

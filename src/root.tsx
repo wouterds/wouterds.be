@@ -161,11 +161,13 @@ export const ErrorBoundary = () => {
             <p>
               {isRouteErrorResponse(error) && error.status === 404
                 ? 'The page you were looking for could not be found.'
-                : error instanceof Error && !error.stack
-                  ? 'Unknown error occured'
-                  : null}
+                : (error instanceof Error && error.message) || 'Unknown error occured'}
             </p>
-            {error instanceof Error && error.stack && <Code lang="log">{error.stack}</Code>}
+            {error instanceof Error && error.stack && (
+              <Code className="mt-1" lang="log">
+                {error.stack}
+              </Code>
+            )}
           </main>
           <Footer />
         </div>
