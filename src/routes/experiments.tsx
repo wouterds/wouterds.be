@@ -127,8 +127,8 @@ export default function Experiments() {
           <LineChart
             data={aranet}
             dataKey="temperature"
-            unit="ºC"
-            header={`${aranetRecord.temperature}ºC`}
+            unit=" ºC"
+            header={`${aranetRecord.temperature} ºC`}
             label="temperature"
             scale={{ min: 0.95, max: 1 }}
             compact
@@ -168,7 +168,7 @@ export default function Experiments() {
           unit=" hPa"
           header={`${P1Record.active} Wh`}
           label="power usage (last 24 hours)"
-          scale={{ min: 1.4, max: 0.7 }}
+          scale={{ min: 1.3, max: 0.7 }}
           footer={[lastP1Update && <span>last updated: {lastP1Update}</span>]}
         />
       )}
@@ -200,7 +200,7 @@ export default function Experiments() {
           unit=" %"
           header={`${teslaRecord.battery.toFixed(0)}%`}
           label="battery capacity (last 7 days)"
-          scale={{ min: 1.4, max: 0.8 }}
+          scale={{ min: 1.3, max: 0.7 }}
           footer={[
             lastTeslaUpdate && <span>last updated: {lastTeslaUpdate}</span>,
             teslaLastCharged && (
