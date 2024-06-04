@@ -6,6 +6,8 @@ import { fromUnixTime, isSameDay, subDays } from 'date-fns';
 import { KVRepository } from './abstract-kv-repository';
 
 export class TeslaRepository extends KVRepository {
+  private _data: TeslaRecord[] = [];
+
   public static create = (context: AppLoadContext) => new TeslaRepository(context);
 
   public add = async (record: TeslaRecord) => {
@@ -19,7 +21,11 @@ export class TeslaRepository extends KVRepository {
   };
 
   public getAll = async () => {
-    return this.get<TeslaRecord[]>('tesla').then((data) => data || []);
+    if (!this._data.length) {
+      this._data = await this.get<TeslaRecord[]>('tesla').then((data) => data || []);
+    }
+
+    return this._data;
   };
 
   // todo: move to CF env vars

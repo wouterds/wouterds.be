@@ -54,12 +54,13 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
     }),
   ).slice(-90);
 
+  const teslaRepository = TeslaRepository.create(context);
   const [tesla, teslaLastCharged, teslaDistanceLast90Days, teslaLongestDistanceDay] =
     await Promise.all([
-      TeslaRepository.create(context).getAll(),
-      TeslaRepository.create(context).getLastCharge(),
-      TeslaRepository.create(context).distancePerDay(90),
-      TeslaRepository.create(context).longestDayDistanceInRange(90),
+      teslaRepository.getAll(),
+      teslaRepository.getLastCharge(),
+      teslaRepository.distancePerDay(90),
+      teslaRepository.longestDayDistanceInRange(90),
     ]);
 
   return {
