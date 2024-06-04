@@ -1,14 +1,12 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData, useRevalidator } from '@remix-run/react';
 import { format, fromUnixTime } from 'date-fns';
-import { useMemo } from 'react';
-import { Line, LineChart, ResponsiveContainer, YAxis } from 'recharts';
 
 import { BarChart } from '~/components/charts/bar-chart';
+import { LineChart } from '~/components/charts/line-chart';
 import { AranetRepository } from '~/data/repositories/aranet-repository';
 import { TeslaRepository } from '~/data/repositories/tesla-repository';
 import { useInterval } from '~/hooks/use-interval';
-import { useIsDarkMode } from '~/hooks/use-is-dark-mode';
 import { useTimeDistance } from '~/hooks/use-time-distance';
 import { P1HistoryRecord, P1Record } from '~/lib/kv';
 
@@ -106,9 +104,6 @@ export default function Experiments() {
   const lastP1HistoryUpdate = useTimeDistance(P1HistoryRecord?.time);
   const lastTeslaUpdate = useTimeDistance(teslaRecord?.time);
 
-  const isDarkMode = useIsDarkMode();
-  const chartColor = useMemo(() => (isDarkMode ? '#fff' : '#000'), [isDarkMode]);
-
   const { revalidate } = useRevalidator();
   useInterval(revalidate, 1000 * 60);
 
@@ -119,134 +114,47 @@ export default function Experiments() {
 
       <h2 className="text-lg font-medium mb-4">Aranet readings</h2>
       {aranetRecord && (
-        <ul className="gap-1.5 grid grid-cols-2 sm:grid-cols-4 text-center">
-          <li className="border border-black dark:border-white">
-            <div className="py-2">
-              <span className="font-semibold">{aranetRecord.co2}</span> ppm
-            </div>
-            <div className="relative aspect-[4/1] -my-1">
-              <ResponsiveContainer>
-                <LineChart data={aranet}>
-                  <Line
-                    type="monotone"
-                    dataKey="co2"
-                    stroke={chartColor}
-                    strokeWidth={1.5}
-                    dot={false}
-                  />
-                  <YAxis
-                    hide
-                    domain={[
-                      Math.min(...aranet.map((record) => record.co2)) * 0.7,
-                      Math.max(...aranet.map((record) => record.co2)),
-                    ]}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-            <div
-              className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
-              style={{ margin: 1 }}>
-              co2
-            </div>
-          </li>
-          <li className="border border-black dark:border-white">
-            <div className="py-2">
-              <span className="font-semibold">{aranetRecord.temperature}</span>
-              ºC
-            </div>
-            <div className="relative aspect-[4/1] -my-1">
-              <ResponsiveContainer>
-                <LineChart data={aranet}>
-                  <Line
-                    type="monotone"
-                    dataKey="temperature"
-                    stroke={chartColor}
-                    strokeWidth={1.5}
-                    dot={false}
-                  />
-                  <YAxis
-                    hide
-                    domain={[
-                      Math.min(...aranet.map((record) => record.temperature)) * 0.85,
-                      Math.max(...aranet.map((record) => record.temperature)),
-                    ]}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-            <div
-              className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
-              style={{ margin: 1 }}>
-              temperature
-            </div>
-          </li>
-          <li className="border border-black dark:border-white">
-            <div className="py-2">
-              <span className="font-semibold">{aranetRecord.humidity}</span>%
-            </div>
-            <div className="relative aspect-[4/1] -my-1">
-              <ResponsiveContainer>
-                <LineChart data={aranet}>
-                  <Line
-                    type="monotone"
-                    dataKey="humidity"
-                    stroke={chartColor}
-                    strokeWidth={1.5}
-                    dot={false}
-                  />
-                  <YAxis
-                    hide
-                    domain={[
-                      Math.min(...aranet.map((record) => record.humidity)) * 0.9,
-                      Math.max(...aranet.map((record) => record.humidity)) * 0.8,
-                    ]}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-            <div
-              className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
-              style={{ margin: 1 }}>
-              humidity
-            </div>
-          </li>
-          <li className="border border-black dark:border-white">
-            <div className="py-2">
-              <span className="font-semibold">{aranetRecord.pressure}</span> hPa
-            </div>
-            <div className="relative aspect-[4/1] -my-1">
-              <ResponsiveContainer>
-                <LineChart data={aranet}>
-                  <Line
-                    type="monotone"
-                    dataKey="pressure"
-                    stroke={chartColor}
-                    strokeWidth={1.5}
-                    dot={false}
-                  />
-                  <YAxis
-                    hide
-                    domain={[
-                      Math.min(...aranet.map((record) => record.pressure)) * 0.995,
-                      Math.max(...aranet.map((record) => record.pressure)) * 1.001,
-                    ]}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-            <div
-              className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
-              style={{ margin: 1 }}>
-              pressure
-            </div>
-          </li>
-        </ul>
+        <div className="gap-1.5 grid grid-cols-2 sm:grid-cols-4 text-center">
+          <LineChart
+            data={aranet}
+            dataKey="co2"
+            unit=" ppm"
+            header={`${aranetRecord.co2} ppm`}
+            label="co2"
+            scale={{ min: 0.8, max: 1 }}
+            compact
+          />
+          <LineChart
+            data={aranet}
+            dataKey="temperature"
+            unit="ºC"
+            header={`${aranetRecord.temperature}ºC`}
+            label="temperature"
+            scale={{ min: 0.95, max: 1 }}
+            compact
+          />
+          <LineChart
+            data={aranet}
+            dataKey="humidity"
+            unit="%"
+            header={`${aranetRecord.humidity}%`}
+            label="humidity"
+            scale={{ min: 0.95, max: 1 }}
+            compact
+          />
+          <LineChart
+            data={aranet}
+            dataKey="pressure"
+            unit=" hPa"
+            header={`${aranetRecord.pressure} hPa`}
+            label="pressure"
+            scale={{ min: 0.998, max: 1.002 }}
+            compact
+          />
+        </div>
       )}
       {lastAranetUpdate && (
-        <p
-          className="flex justify-between mt-2"
-          title={format(fromUnixTime(aranetRecord?.time), 'HH:mm')}>
+        <p className="flex flex-col sm:flex-row gap-1 justify-start sm:justify-between mt-2">
           <span>last updated: {lastAranetUpdate}</span>
           <span>battery: {aranetRecord?.battery}%</span>
         </p>
@@ -254,47 +162,16 @@ export default function Experiments() {
 
       <h2 className="text-lg font-medium mb-4 mt-6">Energy usage</h2>
       {P1Record && (
-        <ul className="gap-1.5 text-center">
-          <li className="border border-black dark:border-white">
-            <div className="py-2">
-              <span className="font-semibold">{P1Record.active}</span> Wh
-            </div>
-            <div className="relative aspect-[8/1] sm:aspect-[10/1] -mt-1">
-              <ResponsiveContainer>
-                <LineChart data={P1Records}>
-                  <Line
-                    type="monotone"
-                    dataKey="active"
-                    stroke={chartColor}
-                    strokeWidth={1.5}
-                    dot={false}
-                  />
-                  <YAxis
-                    hide
-                    domain={[
-                      Math.min(...P1Records.map((record) => record.active)) * 1.3,
-                      Math.max(...P1Records.map((record) => record.active)) * 0.7,
-                    ]}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-            <div
-              className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
-              style={{ margin: 1 }}>
-              power usage (last 24 hours)
-            </div>
-          </li>
-        </ul>
+        <LineChart
+          data={P1Records}
+          dataKey="active"
+          unit=" hPa"
+          header={`${P1Record.active} Wh`}
+          label="power usage (last 24 hours)"
+          scale={{ min: 1.4, max: 0.7 }}
+          footer={[lastP1Update && <span>last updated: {lastP1Update}</span>]}
+        />
       )}
-      {lastP1Update && (
-        <p
-          className="flex justify-between mt-2"
-          title={format(fromUnixTime(P1Record.time), 'HH:mm')}>
-          <span>last updated: {lastP1Update}</span>
-        </p>
-      )}
-
       {P1HistoryRecord && (
         <BarChart
           data={P1HistoryRecords}
@@ -317,51 +194,24 @@ export default function Experiments() {
 
       <h2 className="text-lg font-medium mb-2 mt-4">Tesla data</h2>
       {teslaRecord && (
-        <ul className="gap-1.5 text-center">
-          <li className="border border-black dark:border-white">
-            <div className="py-2">
-              <span className="font-semibold">{teslaRecord.battery?.toFixed(0)}</span>%
-            </div>
-            <div className="relative aspect-[8/1] sm:aspect-[10/1] -mt-1">
-              <ResponsiveContainer>
-                <LineChart data={tesla}>
-                  <Line
-                    type="monotone"
-                    dataKey="battery"
-                    stroke={chartColor}
-                    strokeWidth={1.5}
-                    dot={false}
-                  />
-                  <YAxis
-                    hide
-                    domain={[
-                      Math.min(...tesla.map((record) => record.battery!)) * 1.3,
-                      Math.max(...tesla.map((record) => record.battery!)) * 0.7,
-                    ]}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-            <div
-              className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
-              style={{ margin: 1 }}>
-              battery capacity (last 7 days)
-            </div>
-          </li>
-        </ul>
+        <LineChart
+          data={tesla}
+          dataKey="battery"
+          unit=" %"
+          header={`${teslaRecord.battery.toFixed(0)}%`}
+          label="battery capacity (last 7 days)"
+          scale={{ min: 1.4, max: 0.8 }}
+          footer={[
+            lastTeslaUpdate && <span>last updated: {lastTeslaUpdate}</span>,
+            teslaLastCharged && (
+              <span>
+                last charged: {teslaLastCharged?.battery?.toFixed(0)}% @{' '}
+                {format(fromUnixTime(teslaLastCharged?.time || 0), 'dd.MM.yyyy, HH:mm')}
+              </span>
+            ),
+          ]}
+        />
       )}
-      {teslaRecord && (
-        <p
-          className="flex flex-col sm:flex-row gap-1 justify-start sm:justify-between mt-2"
-          title={format(fromUnixTime(teslaRecord.time), 'HH:mm')}>
-          <span>last updated: {lastTeslaUpdate}</span>
-          <span>
-            last charged: {teslaLastCharged?.battery?.toFixed(0)}% @{' '}
-            {format(fromUnixTime(teslaLastCharged?.time || 0), 'dd.MM.yyyy, HH:mm')}
-          </span>
-        </p>
-      )}
-
       {teslaDistanceLast90Days.length > 0 && (
         <BarChart
           data={teslaDistanceLast90Days}
