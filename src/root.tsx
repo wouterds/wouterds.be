@@ -13,6 +13,7 @@ import { captureRemixErrorBoundaryError, withSentry } from '@sentry/remix';
 
 import stylesheet from '~/tailwind.css?url';
 
+import { Code } from './components/code';
 import Footer from './components/footer';
 import Header from './components/header';
 
@@ -160,11 +161,11 @@ export const ErrorBoundary = () => {
             <p>
               {isRouteErrorResponse(error) && error.status === 404
                 ? 'The page you were looking for could not be found.'
-                : error instanceof Error
-                  ? error.message
-                  : 'Unknown error occured'}
+                : error instanceof Error && !error.stack
+                  ? 'Unknown error occured'
+                  : null}
             </p>
-            {error instanceof Error && <code>{error.stack}</code>}
+            {error instanceof Error && error.stack && <Code lang="log">{error.stack}</Code>}
           </main>
           <Footer />
         </div>
