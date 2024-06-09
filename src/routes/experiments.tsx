@@ -82,7 +82,7 @@ export default function Experiments() {
             unit=" ppm"
             header={`${aranetRecord.co2} ppm`}
             label="co2"
-            scale={{ min: 0.95, max: 1.05 }}
+            scale={{ min: 0.8, max: 1 }}
             compact
           />
           <LineChart
@@ -91,7 +91,7 @@ export default function Experiments() {
             unit=" ºC"
             header={`${aranetRecord.temperature} ºC`}
             label="temperature"
-            scale={{ min: 0.9, max: 1.1 }}
+            scale={{ min: 0.9, max: 1 }}
             compact
           />
           <LineChart
@@ -100,7 +100,7 @@ export default function Experiments() {
             unit="%"
             header={`${aranetRecord.humidity}%`}
             label="humidity"
-            scale={{ min: 0.9, max: 1.1 }}
+            scale={{ min: 0.8, max: 1 }}
             compact
           />
           <LineChart
@@ -109,7 +109,7 @@ export default function Experiments() {
             unit=" hPa"
             header={`${aranetRecord.pressure} hPa`}
             label="pressure"
-            scale={{ min: 0.995, max: 1.005 }}
+            scale={{ min: 0.999, max: 1 }}
             compact
           />
         </div>
