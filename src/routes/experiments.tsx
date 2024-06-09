@@ -28,14 +28,6 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
     // noop
   }
 
-  const peakRecord = P1HistoryRecordsData.find(
-    (record) => record.peak === Math.max(...P1HistoryRecordsData.map((r) => r.peak)),
-  );
-  const P1Peak = {
-    usage: peakRecord?.peak || 0,
-    time: peakRecord?.peakTime || 0,
-  };
-
   const P1HistoryRecords: Array<{ usage: number; time: number }> = P1HistoryRecordsData.map(
     (record, index) => ({
       usage: index === 0 ? 0 : record.total - P1HistoryRecordsData[index - 1].total,
@@ -57,7 +49,6 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   return {
     aranet,
     p1Records,
-    P1Peak,
     P1HistoryRecords,
     tesla,
     teslaLongestDistanceDay,
@@ -81,7 +72,6 @@ export default function Experiments() {
     aranet,
     p1Records,
     P1HistoryRecords,
-    P1Peak,
     tesla,
     teslaDistanceLast90Days,
     teslaLongestDistanceDay,
@@ -167,15 +157,7 @@ export default function Experiments() {
           header={`${P1HistoryRecord.usage.toFixed(2)} kWh`}
           label="power usage (last 90 days)"
           className="mt-4"
-          footer={[
-            lastP1HistoryUpdate && <span>last updated: {lastP1HistoryUpdate}</span>,
-            P1Peak?.usage && P1Peak.time && (
-              <span>
-                peak: {(P1Peak.usage / 1000).toFixed(2)} kWh @{' '}
-                {format(fromUnixTime(P1Peak.time), 'dd.MM.yyyy, HH:mm')}
-              </span>
-            ),
-          ]}
+          footer={[lastP1HistoryUpdate && <span>last updated: {lastP1HistoryUpdate}</span>]}
         />
       )}
 
