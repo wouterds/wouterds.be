@@ -13,8 +13,6 @@ import { P1HistoryRecord, P1Record } from '~/lib/kv';
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   const env = context.cloudflare.env;
 
-  const aranet = await AranetRepository.create(context).getAll();
-
   const P1Records: P1Record[] = [];
   try {
     P1Records.push(
@@ -52,9 +50,11 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
     }),
   ).slice(-90);
 
+  const aranetRepository = AranetRepository.create(context);
   const teslaRepository = TeslaRepository.create(context);
-  const [tesla, teslaLastCharged, teslaDistanceLast90Days, teslaLongestDistanceDay] =
+  const [aranet, tesla, teslaLastCharged, teslaDistanceLast90Days, teslaLongestDistanceDay] =
     await Promise.all([
+      aranetRepository.getAll(),
       teslaRepository.getAll(),
       teslaRepository.getLastCharge(),
       teslaRepository.distancePerDay(90),
