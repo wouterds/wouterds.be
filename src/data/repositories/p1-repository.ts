@@ -6,7 +6,7 @@ export class P1Repository extends KVRepository {
   public static create = (context: AppLoadContext) => new P1Repository(context);
 
   public getAll = async () => {
-    return this.get<P1Record[]>('aranet').then((data) => data || []);
+    return this.get<P1Record[]>('p1').then((data) => data || []);
   };
 
   public getLast = async () => {
