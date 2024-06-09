@@ -5,24 +5,16 @@ import { format, fromUnixTime } from 'date-fns';
 import { BarChart } from '~/components/charts/bar-chart';
 import { LineChart } from '~/components/charts/line-chart';
 import { AranetRepository } from '~/data/repositories/aranet-repository';
+import { P1HistoryRecord, P1Repository } from '~/data/repositories/p1-repository';
 import { TeslaRepository } from '~/data/repositories/tesla-repository';
 import { useInterval } from '~/hooks/use-interval';
 import { useTimeAgo } from '~/hooks/use-time-ago';
-import { P1HistoryRecord, P1Record } from '~/lib/kv';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   const env = context.cloudflare.env;
 
-  const P1Records: P1Record[] = [];
-  try {
-    P1Records.push(
-      ...(await env.CACHE.get('p1').then((value) => {
-        return JSON.parse(value || '');
-      })),
-    );
-  } catch {
-    // noop
-  }
+  const p1Repository = P1Repository.create(context);
+  const p1Records = await p1Repository.getAll();
 
   const P1HistoryRecordsData: P1HistoryRecord[] = [];
   try {
@@ -63,7 +55,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
 
   return {
     aranet,
-    P1Records,
+    p1Records,
     P1Peak,
     P1HistoryRecords,
     tesla,
@@ -86,7 +78,7 @@ export const meta: MetaFunction = () => {
 export default function Experiments() {
   const {
     aranet,
-    P1Records,
+    p1Records,
     P1HistoryRecords,
     P1Peak,
     tesla,
@@ -95,7 +87,7 @@ export default function Experiments() {
     teslaLastCharged,
   } = useLoaderData<typeof loader>();
   const aranetRecord = aranet[aranet.length - 1];
-  const P1Record = P1Records[P1Records.length - 1];
+  const P1Record = p1Records[p1Records.length - 1];
   const P1HistoryRecord = P1HistoryRecords[P1HistoryRecords.length - 1];
   const teslaRecord = tesla[tesla.length - 1];
 
@@ -163,7 +155,7 @@ export default function Experiments() {
       <h2 className="text-lg font-medium mb-4 mt-6">Energy usage</h2>
       {P1Record && (
         <LineChart
-          data={P1Records}
+          data={p1Records}
           dataKey="active"
           unit=" hPa"
           header={`${P1Record.active} Wh`}
