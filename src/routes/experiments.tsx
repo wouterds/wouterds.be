@@ -15,6 +15,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   const p1Repository = P1Repository.create(context);
   const aranetRepository = AranetRepository.create(context);
   const teslaRepository = TeslaRepository.create(context);
+
   const [
     aranet,
     p1Records,
@@ -47,10 +48,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
 export const meta: MetaFunction = () => {
   return [
     { title: 'Experiments' },
-    {
-      name: 'description',
-      content: 'Playground with random experiments, not much to see here!',
-    },
+    { name: 'description', content: 'Playground with random experiments, not much to see here!' },
   ];
 };
 
@@ -68,6 +66,7 @@ export default function Experiments() {
   const p1Record = p1Records[p1Records.length - 1];
   const p1HistoryRecord = p1HistoryRecords[p1HistoryRecords.length - 1];
   const teslaRecord = tesla[tesla.length - 1];
+
   const lastAranetUpdate = useTimeAgo(aranetRecord?.time);
   const lastP1Update = useTimeAgo(p1Record?.time);
   const lastP1HistoryUpdate = useTimeAgo(p1HistoryRecord?.time);
@@ -79,7 +78,6 @@ export default function Experiments() {
   return (
     <>
       <h1 className="text-xl font-medium mb-4">Experiments</h1>
-
       <h2 className="text-lg font-medium mb-4">Aranet readings</h2>
       {aranetRecord && (
         <div className="gap-1.5 grid grid-cols-2 sm:grid-cols-4 text-center">
