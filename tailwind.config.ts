@@ -5,7 +5,7 @@ const css = {
   h2: { fontWeight: '600' },
   h3: { fontWeight: '600' },
   blockquote: { fontWeight: 'inherit' },
-  pre: { fontSize: '1.1em', color: '#F8F8F3', background: '#282A36' },
+  pre: { fontSize: '1.1em', color: '#202021', background: '#F9FBFC !important' },
   'p > code': {
     color: '#db2756',
     padding: '0.15em 0.3em',
@@ -47,6 +47,7 @@ export default {
               backgroundColor: '#2e2124',
               color: '#f24e79',
             },
+            pre: { fontSize: '1.1em', color: '#F9FBFC', background: '#202021 !important' },
           },
         },
       },

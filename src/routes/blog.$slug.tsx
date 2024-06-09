@@ -107,7 +107,10 @@ export default function BlogSlug() {
 
       // @ts-expect-error: import from esm.sh to avoid a too large bundle size for CF Workers
       import('https://esm.sh/shiki@1.5.2').then(async ({ codeToHtml }) => {
-        pre.outerHTML = await codeToHtml(code, { lang, theme: 'dracula' });
+        pre.outerHTML = await codeToHtml(code, {
+          lang,
+          theme: isDarkMode ? 'github-dark' : 'github-light',
+        });
       });
     }
   }, [isDarkMode, containsCodeBlocks]);
