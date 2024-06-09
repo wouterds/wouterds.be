@@ -1,7 +1,7 @@
 import { ActionFunctionArgs } from '@remix-run/cloudflare';
 import { differenceInMinutes, endOfYesterday, fromUnixTime, getUnixTime } from 'date-fns';
 
-import { P1HistoryRecord, P1Record } from '~/lib/kv';
+import { P1HistoryRecord, P1Record } from '~/data/repositories/p1-repository';
 
 export const action = async ({ request, response, context }: ActionFunctionArgs) => {
   const query = new URL(request.url).searchParams;
@@ -32,7 +32,7 @@ export const action = async ({ request, response, context }: ActionFunctionArgs)
   const time = getUnixTime(new Date());
 
   const raw = await context.cloudflare.env.CACHE.get('p1');
-  const values: P1Record[] = raw ? JSON.parse(raw) : [];
+  const values: Omit<P1Record, 'peak_timestamp'>[] = raw ? JSON.parse(raw) : [];
 
   const lastPush = fromUnixTime(values[values.length - 1]?.time ?? 0);
   if (differenceInMinutes(new Date(), lastPush) < 10) {
