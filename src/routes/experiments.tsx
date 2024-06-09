@@ -1,6 +1,7 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData, useRevalidator } from '@remix-run/react';
 import { format, fromUnixTime } from 'date-fns';
+import ms from 'ms';
 
 import { BarChart } from '~/components/charts/bar-chart';
 import { LineChart } from '~/components/charts/line-chart';
@@ -97,7 +98,7 @@ export default function Experiments() {
   const lastTeslaUpdate = useTimeAgo(teslaRecord?.time);
 
   const { revalidate } = useRevalidator();
-  useInterval(revalidate, 1000 * 60);
+  useInterval(revalidate, ms('30 seconds'));
 
   return (
     <>
