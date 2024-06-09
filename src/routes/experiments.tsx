@@ -70,7 +70,7 @@ export const meta: MetaFunction = () => {
     { title: 'Experiments' },
     {
       name: 'description',
-      content: 'My playground with random experiments, not much to see here!',
+      content: 'Playground with random experiments, not much to see here!',
     },
   ];
 };
@@ -101,8 +101,7 @@ export default function Experiments() {
 
   return (
     <>
-      <h1 className="text-xl font-medium mb-2">Experiments</h1>
-      <p className="mb-6">Playground with random experiments, not much to see here!</p>
+      <h1 className="text-xl font-medium mb-4">Experiments</h1>
 
       <h2 className="text-lg font-medium mb-4">Aranet readings</h2>
       {aranetRecord && (
