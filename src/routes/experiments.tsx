@@ -6,50 +6,37 @@ import ms from 'ms';
 import { BarChart } from '~/components/charts/bar-chart';
 import { LineChart } from '~/components/charts/line-chart';
 import { AranetRepository } from '~/data/repositories/aranet-repository';
-import { P1HistoryRecord, P1Repository } from '~/data/repositories/p1-repository';
+import { P1Repository } from '~/data/repositories/p1-repository';
 import { TeslaRepository } from '~/data/repositories/tesla-repository';
 import { useInterval } from '~/hooks/use-interval';
 import { useTimeAgo } from '~/hooks/use-time-ago';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
-  const env = context.cloudflare.env;
-
   const p1Repository = P1Repository.create(context);
-  const p1Records = await p1Repository.getAll();
-
-  const P1HistoryRecordsData: P1HistoryRecord[] = [];
-  try {
-    P1HistoryRecordsData.push(
-      ...(await env.CACHE.get('p1-history').then((value) => {
-        return JSON.parse(value || '');
-      })),
-    );
-  } catch {
-    // noop
-  }
-
-  const P1HistoryRecords: Array<{ usage: number; time: number }> = P1HistoryRecordsData.map(
-    (record, index) => ({
-      usage: index === 0 ? 0 : record.total - P1HistoryRecordsData[index - 1].total,
-      time: record.time,
-    }),
-  ).slice(-90);
-
   const aranetRepository = AranetRepository.create(context);
   const teslaRepository = TeslaRepository.create(context);
-  const [aranet, tesla, teslaLastCharged, teslaDistanceLast90Days, teslaLongestDistanceDay] =
-    await Promise.all([
-      aranetRepository.getAll(),
-      teslaRepository.getAll(),
-      teslaRepository.getLastCharge(),
-      teslaRepository.distancePerDay(90),
-      teslaRepository.longestDayDistanceInRange(90),
-    ]);
+  const [
+    aranet,
+    p1Records,
+    p1HistoryRecords,
+    tesla,
+    teslaLastCharged,
+    teslaDistanceLast90Days,
+    teslaLongestDistanceDay,
+  ] = await Promise.all([
+    aranetRepository.getAll(),
+    p1Repository.getAll(),
+    p1Repository.getHistory(),
+    teslaRepository.getAll(),
+    teslaRepository.getLastCharge(),
+    teslaRepository.distancePerDay(90),
+    teslaRepository.longestDayDistanceInRange(90),
+  ]);
 
   return {
     aranet,
     p1Records,
-    P1HistoryRecords,
+    p1HistoryRecords,
     tesla,
     teslaLongestDistanceDay,
     teslaLastCharged,
@@ -71,20 +58,19 @@ export default function Experiments() {
   const {
     aranet,
     p1Records,
-    P1HistoryRecords,
+    p1HistoryRecords,
     tesla,
     teslaDistanceLast90Days,
     teslaLongestDistanceDay,
     teslaLastCharged,
   } = useLoaderData<typeof loader>();
   const aranetRecord = aranet[aranet.length - 1];
-  const P1Record = p1Records[p1Records.length - 1];
-  const P1HistoryRecord = P1HistoryRecords[P1HistoryRecords.length - 1];
+  const p1Record = p1Records[p1Records.length - 1];
+  const p1HistoryRecord = p1HistoryRecords[p1HistoryRecords.length - 1];
   const teslaRecord = tesla[tesla.length - 1];
-
   const lastAranetUpdate = useTimeAgo(aranetRecord?.time);
-  const lastP1Update = useTimeAgo(P1Record?.time);
-  const lastP1HistoryUpdate = useTimeAgo(P1HistoryRecord?.time);
+  const lastP1Update = useTimeAgo(p1Record?.time);
+  const lastP1HistoryUpdate = useTimeAgo(p1HistoryRecord?.time);
   const lastTeslaUpdate = useTimeAgo(teslaRecord?.time);
 
   const { revalidate } = useRevalidator();
@@ -139,22 +125,22 @@ export default function Experiments() {
       )}
 
       <h2 className="text-lg font-medium mb-4 mt-6">Energy usage</h2>
-      {P1Record && (
+      {p1Record && (
         <LineChart
           data={p1Records}
           dataKey="active"
-          unit=" hPa"
-          header={`${P1Record.active} Wh`}
+          unit=" Wh"
+          header={`${p1Record.active} Wh`}
           label="power usage (last 24 hours)"
           footer={[lastP1Update && <span>last updated: {lastP1Update}</span>]}
         />
       )}
-      {P1HistoryRecord && (
+      {p1HistoryRecord && (
         <BarChart
-          data={P1HistoryRecords}
+          data={p1HistoryRecords}
           dataKey="usage"
           unit=" kWh"
-          header={`${P1HistoryRecord.usage.toFixed(2)} kWh`}
+          header={`${p1HistoryRecord.usage.toFixed(2)} kWh`}
           label="power usage (last 90 days)"
           className="mt-4"
           footer={[lastP1HistoryUpdate && <span>last updated: {lastP1HistoryUpdate}</span>]}
