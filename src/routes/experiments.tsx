@@ -113,7 +113,6 @@ export default function Experiments() {
             unit=" ppm"
             header={`${aranetRecord.co2} ppm`}
             label="co2"
-            scale={{ min: 0.8, max: 1 }}
             compact
           />
           <LineChart
@@ -122,7 +121,6 @@ export default function Experiments() {
             unit=" ºC"
             header={`${aranetRecord.temperature} ºC`}
             label="temperature"
-            scale={{ min: 0.95, max: 1 }}
             compact
           />
           <LineChart
@@ -131,7 +129,6 @@ export default function Experiments() {
             unit="%"
             header={`${aranetRecord.humidity}%`}
             label="humidity"
-            scale={{ min: 0.95, max: 1 }}
             compact
           />
           <LineChart
@@ -140,7 +137,6 @@ export default function Experiments() {
             unit=" hPa"
             header={`${aranetRecord.pressure} hPa`}
             label="pressure"
-            scale={{ min: 0.998, max: 1.002 }}
             compact
           />
         </div>
@@ -160,7 +156,6 @@ export default function Experiments() {
           unit=" hPa"
           header={`${P1Record.active} Wh`}
           label="power usage (last 24 hours)"
-          scale={{ min: 1.3, max: 0.7 }}
           footer={[lastP1Update && <span>last updated: {lastP1Update}</span>]}
         />
       )}
@@ -192,7 +187,6 @@ export default function Experiments() {
           unit=" %"
           header={`${teslaRecord.battery.toFixed(0)}%`}
           label="battery capacity (last 7 days)"
-          scale={{ min: 1.3, max: 0.7 }}
           footer={[
             lastTeslaUpdate && <span>last updated: {lastTeslaUpdate}</span>,
             teslaLastCharged && (
