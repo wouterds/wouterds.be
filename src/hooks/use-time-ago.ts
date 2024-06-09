@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import { useInterval } from './use-interval';
 
-export const useRelativeTimeAgo = (timestamp?: number) => {
+export const useTimeAgo = (timestamp?: number) => {
   const [distance, setDistance] = useState(
     timestamp
       ? formatDistanceToNowStrict(fromUnixTime(timestamp), {
