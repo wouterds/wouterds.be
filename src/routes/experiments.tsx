@@ -1,14 +1,12 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
-import { useLoaderData, useRevalidator } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
 import { format, fromUnixTime } from 'date-fns';
-import ms from 'ms';
 
 import { BarChart } from '~/components/charts/bar-chart';
 import { LineChart } from '~/components/charts/line-chart';
 import { AranetRepository } from '~/data/repositories/aranet-repository';
 import { P1Repository } from '~/data/repositories/p1-repository';
 import { TeslaRepository } from '~/data/repositories/tesla-repository';
-import { useInterval } from '~/hooks/use-interval';
 import { useTimeAgo } from '~/hooks/use-time-ago';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
@@ -71,9 +69,6 @@ export default function Experiments() {
   const lastP1Update = useTimeAgo(p1Record?.time);
   const lastP1HistoryUpdate = useTimeAgo(p1HistoryRecord?.time);
   const lastTeslaUpdate = useTimeAgo(teslaRecord?.time);
-
-  const { revalidate } = useRevalidator();
-  useInterval(revalidate, ms('30 seconds'));
 
   return (
     <>
