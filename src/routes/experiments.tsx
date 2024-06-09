@@ -122,7 +122,7 @@ export default function Experiments() {
         </p>
       )}
 
-      <h2 className="text-lg font-medium mb-4 mt-6">Energy usage</h2>
+      <h2 className="text-lg font-medium mb-4 mt-4">Energy usage</h2>
       {p1Record && (
         <LineChart
           data={p1Records}
