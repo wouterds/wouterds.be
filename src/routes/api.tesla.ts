@@ -17,7 +17,6 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   const tesla = await Tesla.create(context).setVin(VIN).auth();
 
   let data = await tesla.getData();
-  let woken = false;
   const isSleeping = data?.error?.includes('offline or asleep');
   const lastAwake = fromUnixTime((await TeslaRepository.create(context).getLastAwake())?.time || 0);
   if (isSleeping && differenceInMinutes(new Date(), lastAwake) > WAKE_INTERVAL_MINUTES) {
@@ -27,21 +26,16 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
     if (data.error) {
       return json(data.error, { status: 500 });
     }
-
-    woken = true;
   }
 
   const response = data?.response;
   const record = await TeslaRepository.create(context).add({
-    name: (response?.vehicle_state?.vehicle_name || last?.name) as string,
-    version: (response?.vehicle_state?.car_version || last?.version) as string,
     battery: (response?.charge_state?.battery_level || last?.battery) as number,
     distance: parseFloat(
       (((response?.vehicle_state?.odometer || 0) * 1.60934 || last?.distance) as number).toFixed(3),
     ),
     time: getUnixTime(new Date()),
     wake: !!response,
-    woken,
   });
 
   return json(record);
