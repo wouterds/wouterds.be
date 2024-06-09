@@ -7,7 +7,7 @@ import { LineChart } from '~/components/charts/line-chart';
 import { AranetRepository } from '~/data/repositories/aranet-repository';
 import { TeslaRepository } from '~/data/repositories/tesla-repository';
 import { useInterval } from '~/hooks/use-interval';
-import { useTimeDistance } from '~/hooks/use-time-distance';
+import { useTimeAgo } from '~/hooks/use-time-ago';
 import { P1HistoryRecord, P1Record } from '~/lib/kv';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
@@ -99,10 +99,10 @@ export default function Experiments() {
   const P1HistoryRecord = P1HistoryRecords[P1HistoryRecords.length - 1];
   const teslaRecord = tesla[tesla.length - 1];
 
-  const lastAranetUpdate = useTimeDistance(aranetRecord?.time);
-  const lastP1Update = useTimeDistance(P1Record?.time);
-  const lastP1HistoryUpdate = useTimeDistance(P1HistoryRecord?.time);
-  const lastTeslaUpdate = useTimeDistance(teslaRecord?.time);
+  const lastAranetUpdate = useTimeAgo(aranetRecord?.time);
+  const lastP1Update = useTimeAgo(P1Record?.time);
+  const lastP1HistoryUpdate = useTimeAgo(P1HistoryRecord?.time);
+  const lastTeslaUpdate = useTimeAgo(teslaRecord?.time);
 
   const { revalidate } = useRevalidator();
   useInterval(revalidate, 1000 * 60);
