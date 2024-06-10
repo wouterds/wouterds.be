@@ -12,6 +12,13 @@ export class TeslaRepository extends KVRepository {
     return this.getAll().then(async (data) => {
       data.push(record);
 
+      // keep max 90 days of data
+      for (const record of data) {
+        if (fromUnixTime(record.time) < subDays(new Date(), 90)) {
+          data.shift();
+        }
+      }
+
       await this.put('tesla', data);
 
       return record;
