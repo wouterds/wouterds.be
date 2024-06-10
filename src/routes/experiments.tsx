@@ -1,6 +1,7 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData } from '@remix-run/react';
 import { format, fromUnixTime } from 'date-fns';
+import { useMemo } from 'react';
 
 import { BarChart } from '~/components/charts/bar-chart';
 import { LineChart } from '~/components/charts/line-chart';
@@ -14,23 +15,20 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   const aranetRepository = AranetRepository.create(context);
   const teslaRepository = TeslaRepository.create(context);
 
-  const [aranet, p1Records, p1HistoryRecords, tesla, teslaLastCharged, teslaDistanceHistory] =
-    await Promise.all([
-      aranetRepository.getAll(),
-      p1Repository.getAll(),
-      p1Repository.getHistory(90),
-      teslaRepository.getAll(),
-      teslaRepository.getLastCharge(),
-      teslaRepository.distancePerDay(90),
-    ]);
+  const [aranet, p1, p1History, tesla, teslaDistance] = await Promise.all([
+    aranetRepository.getAll(),
+    p1Repository.getAll(),
+    p1Repository.getHistory(90),
+    teslaRepository.getAll(),
+    teslaRepository.distancePerDay(90),
+  ]);
 
   return {
     aranet,
-    p1Records,
-    p1HistoryRecords,
+    p1,
+    p1History,
     tesla,
-    teslaLastCharged,
-    teslaDistanceHistory,
+    teslaDistance,
   };
 };
 
@@ -42,27 +40,42 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Experiments() {
-  const { aranet, p1Records, p1HistoryRecords, tesla, teslaDistanceHistory, teslaLastCharged } =
-    useLoaderData<typeof loader>();
-  const aranetRecord = aranet[aranet.length - 1];
-  const p1Record = p1Records[p1Records.length - 1];
-  const p1HistoryRecord = p1HistoryRecords[p1HistoryRecords.length - 1];
-  const teslaRecord = tesla[tesla.length - 1];
-  const teslaLongestDistanceDay = teslaDistanceHistory?.reduce(
-    (acc, record) => {
-      if (record.distance > acc.distance) {
-        return record;
-      }
+  const { aranet, p1, p1History, tesla, teslaDistance } = useLoaderData<typeof loader>();
 
-      return acc;
-    },
-    { distance: 0 } as { date: Date; distance: number },
-  );
+  const aranetRecord = aranet[aranet.length - 1];
+  const p1Record = p1[p1.length - 1];
+  const p1HistoryRecord = p1History[p1History.length - 1];
+  const teslaRecord = tesla[tesla.length - 1];
 
   const lastAranetUpdate = useTimeAgo(aranetRecord?.time);
   const lastP1Update = useTimeAgo(p1Record?.time);
   const lastP1HistoryUpdate = useTimeAgo(p1HistoryRecord?.time);
   const lastTeslaUpdate = useTimeAgo(teslaRecord?.time);
+
+  const teslaLastCharged = useMemo(() => {
+    let last = tesla.pop();
+    let previous = tesla.pop();
+
+    while (previous && last && previous?.battery >= last?.battery) {
+      last = previous;
+      previous = tesla.pop();
+    }
+
+    return last || null;
+  }, [tesla]);
+
+  const teslaLongestDistanceDay = useMemo(() => {
+    return teslaDistance?.reduce(
+      (acc, record) => {
+        if (record.distance > acc.distance) {
+          return record;
+        }
+
+        return acc;
+      },
+      { distance: 0 } as { date: Date; distance: number },
+    );
+  }, [teslaDistance]);
 
   return (
     <>
@@ -118,7 +131,7 @@ export default function Experiments() {
       <h2 className="text-lg font-medium mb-4 mt-4">Energy usage</h2>
       {p1Record && (
         <LineChart
-          data={p1Records}
+          data={p1}
           dataKey="active"
           unit=" Wh"
           header={`${p1Record.active} Wh`}
@@ -128,7 +141,7 @@ export default function Experiments() {
       )}
       {p1HistoryRecord && (
         <BarChart
-          data={p1HistoryRecords}
+          data={p1History}
           dataKey="usage"
           unit=" kWh"
           header={`${p1HistoryRecord.usage.toFixed(2)} kWh`}
@@ -157,9 +170,9 @@ export default function Experiments() {
           ]}
         />
       )}
-      {teslaDistanceHistory.length > 0 && (
+      {teslaDistance.length > 0 && (
         <BarChart
-          data={teslaDistanceHistory}
+          data={teslaDistance}
           dataKey="distance"
           unit=" km"
           label="distance driven (last 90 days)"
