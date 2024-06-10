@@ -25,7 +25,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   ] = await Promise.all([
     aranetRepository.getAll(),
     p1Repository.getAll(),
-    p1Repository.getHistory(),
+    p1Repository.getHistory(90),
     teslaRepository.getAll(),
     teslaRepository.getLastCharge(),
     teslaRepository.distancePerDay(90),
