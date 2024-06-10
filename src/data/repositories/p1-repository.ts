@@ -13,7 +13,12 @@ export class P1Repository extends KVRepository {
     return this.getAll().then((records) => records[records.length - 1]);
   };
 
-  public getHistory = async (limit?: number) => {
+  public getHistory = async (options?: { days?: number }) => {
+    const days = options?.days || 0;
+    if (!days) {
+      return [];
+    }
+
     return this.get<P1HistoryRecord[]>('p1-history').then((data) => {
       const records =
         data?.map((record, index) => ({
@@ -21,8 +26,8 @@ export class P1Repository extends KVRepository {
           time: record.time,
         })) || [];
 
-      if (limit) {
-        return records.slice(-limit);
+      if (days) {
+        return records.slice(-days);
       }
 
       return records;

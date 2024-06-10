@@ -15,19 +15,21 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   const aranetRepository = AranetRepository.create(context);
   const teslaRepository = TeslaRepository.create(context);
 
-  const [aranet, p1, p1History, tesla, teslaDistance] = await Promise.all([
+  const [aranet, p1, p1History, teslaLast24h, teslaLast90d, teslaDistance] = await Promise.all([
     aranetRepository.getAll(),
     p1Repository.getAll(),
-    p1Repository.getHistory(90),
-    teslaRepository.getAll(),
-    teslaRepository.distancePerDay(90),
+    p1Repository.getHistory({ days: 90 }),
+    teslaRepository.getAll({ days: 1 }),
+    teslaRepository.getAll({ days: 90 }),
+    teslaRepository.distancePerDay({ days: 90 }),
   ]);
 
   return {
     aranet,
     p1,
     p1History,
-    tesla,
+    teslaLast24h,
+    teslaLast90d,
     teslaDistance,
   };
 };
@@ -40,12 +42,13 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Experiments() {
-  const { aranet, p1, p1History, tesla, teslaDistance } = useLoaderData<typeof loader>();
+  const { aranet, p1, p1History, teslaLast24h, teslaLast90d, teslaDistance } =
+    useLoaderData<typeof loader>();
 
   const aranetRecord = aranet[aranet.length - 1];
   const p1Record = p1[p1.length - 1];
   const p1HistoryRecord = p1History[p1History.length - 1];
-  const teslaRecord = tesla[tesla.length - 1];
+  const teslaRecord = teslaLast24h[teslaLast24h.length - 1];
 
   const lastAranetUpdate = useTimeAgo(aranetRecord?.time);
   const lastP1Update = useTimeAgo(p1Record?.time);
@@ -53,16 +56,16 @@ export default function Experiments() {
   const lastTeslaUpdate = useTimeAgo(teslaRecord?.time);
 
   const teslaLastCharged = useMemo(() => {
-    let last = tesla.pop();
-    let previous = tesla.pop();
+    let last = teslaLast90d.pop();
+    let previous = teslaLast90d.pop();
 
     while (previous && last && previous?.battery >= last?.battery) {
       last = previous;
-      previous = tesla.pop();
+      previous = teslaLast90d.pop();
     }
 
     return last || null;
-  }, [tesla]);
+  }, [teslaLast90d]);
 
   const teslaLongestDistanceDay = useMemo(() => {
     return teslaDistance?.reduce(
@@ -154,11 +157,11 @@ export default function Experiments() {
       <h2 className="text-lg font-medium mb-2 mt-4">Tesla data</h2>
       {teslaRecord && (
         <LineChart
-          data={tesla}
+          data={teslaLast24h}
           dataKey="battery"
           unit=" %"
           header={`${teslaRecord.battery.toFixed(0)}%`}
-          label="battery capacity (last 7 days)"
+          label="battery capacity (last 24 hours)"
           footer={[
             lastTeslaUpdate && <span>last updated: {lastTeslaUpdate}</span>,
             teslaLastCharged && (

@@ -25,8 +25,14 @@ export class TeslaRepository extends KVRepository {
     });
   };
 
-  public getAll = async () => {
-    return this.get<TeslaRecord[]>('tesla').then((data) => data || []);
+  public getAll = async (options?: { days?: number }) => {
+    const data = await this.get<TeslaRecord[]>('tesla').then((data) => data || []);
+
+    if (options?.days) {
+      return data.filter((v) => fromUnixTime(v.time) > subDays(new Date(), options.days!));
+    }
+
+    return data;
   };
 
   // todo: move to CF env vars
@@ -53,7 +59,12 @@ export class TeslaRepository extends KVRepository {
     return this.getAll().then((data) => data.filter((v) => v.wake).pop());
   };
 
-  public distancePerDay = async (days: number) => {
+  public distancePerDay = async (options?: { days?: number }) => {
+    const days = options?.days || 0;
+    if (!days) {
+      return [];
+    }
+
     return this.getAll().then((data) => {
       return Array.from({ length: days }, (_, index) => {
         const date = subDays(new Date(), index);
