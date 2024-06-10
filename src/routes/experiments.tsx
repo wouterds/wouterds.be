@@ -14,32 +14,23 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   const aranetRepository = AranetRepository.create(context);
   const teslaRepository = TeslaRepository.create(context);
 
-  const [
-    aranet,
-    p1Records,
-    p1HistoryRecords,
-    tesla,
-    teslaLastCharged,
-    teslaDistanceLast90Days,
-    teslaLongestDistanceDay,
-  ] = await Promise.all([
-    aranetRepository.getAll(),
-    p1Repository.getAll(),
-    p1Repository.getHistory(90),
-    teslaRepository.getAll(),
-    teslaRepository.getLastCharge(),
-    teslaRepository.distancePerDay(90),
-    teslaRepository.longestDayDistanceInRange(90),
-  ]);
+  const [aranet, p1Records, p1HistoryRecords, tesla, teslaLastCharged, teslaDistanceHistory] =
+    await Promise.all([
+      aranetRepository.getAll(),
+      p1Repository.getAll(),
+      p1Repository.getHistory(90),
+      teslaRepository.getAll(),
+      teslaRepository.getLastCharge(),
+      teslaRepository.distancePerDay(90),
+    ]);
 
   return {
     aranet,
     p1Records,
     p1HistoryRecords,
     tesla,
-    teslaLongestDistanceDay,
     teslaLastCharged,
-    teslaDistanceLast90Days,
+    teslaDistanceHistory,
   };
 };
 
@@ -51,19 +42,22 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Experiments() {
-  const {
-    aranet,
-    p1Records,
-    p1HistoryRecords,
-    tesla,
-    teslaDistanceLast90Days,
-    teslaLongestDistanceDay,
-    teslaLastCharged,
-  } = useLoaderData<typeof loader>();
+  const { aranet, p1Records, p1HistoryRecords, tesla, teslaDistanceHistory, teslaLastCharged } =
+    useLoaderData<typeof loader>();
   const aranetRecord = aranet[aranet.length - 1];
   const p1Record = p1Records[p1Records.length - 1];
   const p1HistoryRecord = p1HistoryRecords[p1HistoryRecords.length - 1];
   const teslaRecord = tesla[tesla.length - 1];
+  const teslaLongestDistanceDay = teslaDistanceHistory?.reduce(
+    (acc, record) => {
+      if (record.distance > acc.distance) {
+        return record;
+      }
+
+      return acc;
+    },
+    { distance: 0 } as { date: Date; distance: number },
+  );
 
   const lastAranetUpdate = useTimeAgo(aranetRecord?.time);
   const lastP1Update = useTimeAgo(p1Record?.time);
@@ -163,9 +157,9 @@ export default function Experiments() {
           ]}
         />
       )}
-      {teslaDistanceLast90Days.length > 0 && (
+      {teslaDistanceHistory.length > 0 && (
         <BarChart
-          data={teslaDistanceLast90Days}
+          data={teslaDistanceHistory}
           dataKey="distance"
           unit=" km"
           label="distance driven (last 90 days)"

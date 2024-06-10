@@ -91,21 +91,6 @@ export class TeslaRepository extends KVRepository {
       }).reverse();
     });
   };
-
-  public longestDayDistanceInRange = async (days: number) => {
-    return this.distancePerDay(days).then((data) => {
-      return data.reduce(
-        (acc, record) => {
-          if (record.distance > acc.distance) {
-            return record;
-          }
-
-          return acc;
-        },
-        { distance: 0 } as { date: Date; distance: number },
-      );
-    });
-  };
 }
 
 export type TeslaRecord = {
