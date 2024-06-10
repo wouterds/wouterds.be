@@ -15,14 +15,16 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   const aranetRepository = AranetRepository.create(context);
   const teslaRepository = TeslaRepository.create(context);
 
-  const [aranet, p1, p1History, teslaLast24h, teslaLast90d, teslaDistance] = await Promise.all([
-    aranetRepository.getAll(),
-    p1Repository.getAll(),
-    p1Repository.getHistory({ days: 90 }),
-    teslaRepository.getAll({ days: 1 }),
-    teslaRepository.getAll({ days: 90 }),
-    teslaRepository.distancePerDay({ days: 90 }),
-  ]);
+  const [aranet, p1, p1History, teslaLast24h, teslaLast90d, teslaDistance, teslaBattery] =
+    await Promise.all([
+      aranetRepository.getAll(),
+      p1Repository.getAll(),
+      p1Repository.getHistory({ days: 90 }),
+      teslaRepository.getAll({ days: 1 }),
+      teslaRepository.getAll({ days: 90 }),
+      teslaRepository.distancePerDay({ days: 90 }),
+      teslaRepository.batteryPerDay({ days: 90 }),
+    ]);
 
   return {
     aranet,
@@ -31,6 +33,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
     teslaLast24h,
     teslaLast90d,
     teslaDistance,
+    teslaBattery,
   };
 };
 
@@ -42,7 +45,7 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Experiments() {
-  const { aranet, p1, p1History, teslaLast24h, teslaLast90d, teslaDistance } =
+  const { aranet, p1, p1History, teslaLast24h, teslaLast90d, teslaDistance, teslaBattery } =
     useLoaderData<typeof loader>();
 
   const aranetRecord = aranet[aranet.length - 1];
@@ -54,6 +57,13 @@ export default function Experiments() {
   const lastP1Update = useTimeAgo(p1Record?.time);
   const lastP1HistoryUpdate = useTimeAgo(p1HistoryRecord?.time);
   const lastTeslaUpdate = useTimeAgo(teslaRecord?.time);
+
+  const teslaBatteryUsageToday = useMemo(() => {
+    const first = teslaLast24h[0];
+    const last = teslaLast24h[teslaLast24h.length - 1];
+
+    return last?.battery - first?.battery || 0;
+  }, [teslaLast24h]);
 
   const teslaLastCharged = useMemo(() => {
     let last = teslaLast90d.pop();
@@ -162,6 +172,21 @@ export default function Experiments() {
           unit=" %"
           header={`${teslaRecord.battery.toFixed(0)}%`}
           label="battery capacity (last 24 hours)"
+          footer={[
+            lastTeslaUpdate && <span>last updated: {lastTeslaUpdate}</span>,
+            teslaLastCharged && (
+              <span>battery used today: {teslaBatteryUsageToday.toFixed(0)}%</span>
+            ),
+          ]}
+        />
+      )}
+      {teslaBattery.length > 0 && (
+        <BarChart
+          data={teslaBattery}
+          dataKey="battery"
+          unit=" %"
+          label="battery capacity (last 90 days)"
+          className="mt-4"
           footer={[
             lastTeslaUpdate && <span>last updated: {lastTeslaUpdate}</span>,
             teslaLastCharged && (

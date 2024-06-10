@@ -95,6 +95,43 @@ export class TeslaRepository extends KVRepository {
       }).reverse();
     });
   };
+
+  public batteryPerDay = async (options?: { days?: number }) => {
+    const days = options?.days || 0;
+    if (!days) {
+      return [];
+    }
+
+    return this.getAll().then((data) => {
+      return Array.from({ length: days }, (_, index) => {
+        const date = subDays(new Date(), index);
+
+        const firstRecord = data.reduceRight((acc, record) => {
+          if (isSameDay(date, fromUnixTime(record.time))) {
+            return record;
+          }
+
+          return acc;
+        }, {} as TeslaRecord);
+
+        const lastRecord = data.reduce((acc, record) => {
+          if (isSameDay(date, fromUnixTime(record.time))) {
+            return record;
+          }
+
+          return acc;
+        }, {} as TeslaRecord);
+
+        return {
+          date,
+          battery:
+            lastRecord?.battery && firstRecord.battery
+              ? lastRecord?.battery - firstRecord.battery
+              : 0,
+        };
+      }).reverse();
+    });
+  };
 }
 
 export type TeslaRecord = {
