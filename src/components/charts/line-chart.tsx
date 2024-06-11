@@ -1,6 +1,7 @@
 import clsx from 'clsx';
-import { ReactNode, useMemo } from 'react';
-import { Line, LineChart as Chart, ResponsiveContainer, YAxis } from 'recharts';
+import { ReactNode, useMemo, useState } from 'react';
+import { Line, LineChart as Chart, ResponsiveContainer, Tooltip, YAxis } from 'recharts';
+import colors from 'tailwindcss/colors';
 
 import { useIsDarkMode } from '~/hooks/use-is-dark-mode';
 
@@ -10,6 +11,7 @@ type Props = {
   label: string;
   header?: string;
   unit: string;
+  rounding?: number;
   className?: string;
   compact?: boolean;
   footer?: ReactNode[];
@@ -22,6 +24,7 @@ export const LineChart = ({
   scale,
   dataKey,
   unit,
+  rounding = 2,
   compact,
   label,
   header,
@@ -32,24 +35,52 @@ export const LineChart = ({
   const isDarkMode = useIsDarkMode();
   const chartColor = useMemo(() => (isDarkMode ? '#fff' : '#000'), [isDarkMode]);
   const filteredComponents = footer?.filter(Boolean);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
     <>
       <div className={clsx('border border-black dark:border-white text-center', className)}>
         <div className="py-2">
-          <span className="font-semibold">
-            {header ||
-              `${((data?.[data.length - 1]?.[dataKey] as number) || 0)?.toFixed(2)} ${unit}`}
+          <span
+            className={clsx('font-semibold', {
+              'text-rose-500': typeof activeIndex === 'number',
+            })}>
+            {typeof activeIndex === 'number' || !header
+              ? `${((data?.[activeIndex || data.length - 1]?.[dataKey] as number) || 0)?.toFixed(
+                  rounding,
+                )}${unit}`
+              : header}
           </span>
         </div>
         <div
-          className={clsx('relative', {
-            'aspect-[8/1] sm:aspect-[10/1] -mt-1': !compact,
+          className={clsx('relative -mt-2', {
+            'aspect-[8/1] sm:aspect-[10/1]': !compact,
             'aspect-[4/1] -my-1': compact,
           })}>
           <ResponsiveContainer>
             <Chart data={data} syncId={syncId}>
-              <Line dataKey={dataKey} stroke={chartColor} strokeWidth={1.5} dot={false} />
+              <Line
+                dataKey={dataKey}
+                stroke={chartColor}
+                strokeWidth={1.5}
+                dot={false}
+                activeDot={{
+                  fill: colors.rose['500'],
+                  r: 2.5,
+                  strokeWidth: 0,
+                }}
+              />
+              <Tooltip
+                cursor={false}
+                content={(args) => {
+                  if (args.active) {
+                    setActiveIndex(args.label);
+                  } else {
+                    setActiveIndex(null);
+                  }
+                  return null;
+                }}
+              />
               <YAxis
                 hide
                 domain={

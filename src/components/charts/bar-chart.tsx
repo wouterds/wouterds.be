@@ -1,6 +1,7 @@
 import clsx from 'clsx';
-import { ReactNode, useMemo } from 'react';
-import { Bar, BarChart as Chart, ResponsiveContainer, YAxis } from 'recharts';
+import { ReactNode, useMemo, useState } from 'react';
+import { Bar, BarChart as Chart, ResponsiveContainer, Tooltip, YAxis } from 'recharts';
+import colors from 'tailwindcss/colors';
 
 import { useIsDarkMode } from '~/hooks/use-is-dark-mode';
 
@@ -30,21 +31,44 @@ export const BarChart = ({
   const isDarkMode = useIsDarkMode();
   const chartColor = useMemo(() => (isDarkMode ? '#fff' : '#000'), [isDarkMode]);
   const filteredComponents = footer?.filter(Boolean);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
     <>
       <div className={clsx('border border-black dark:border-white text-center', className)}>
         <div className="py-2">
-          <span className="font-semibold">
-            {header ||
-              `${((data?.[data.length - 1]?.[dataKey] as number) || 0)?.toFixed(rounding)}${unit}`}
+          <span
+            className={clsx('font-semibold', {
+              'text-rose-500': typeof activeIndex === 'number',
+            })}>
+            {typeof activeIndex === 'number' || !header
+              ? `${((data?.[activeIndex || data.length - 1]?.[dataKey] as number) || 0)?.toFixed(
+                  rounding,
+                )}${unit}`
+              : header}
           </span>
         </div>
-        <div className="relative aspect-[8/1] sm:aspect-[10/1] -mt-1">
+        <div className="relative aspect-[8/1] sm:aspect-[10/1] -mt-2">
           <ResponsiveContainer>
             <Chart data={data} syncId={syncId}>
               <YAxis hide />
-              <Bar dataKey={dataKey} fill={chartColor} minPointSize={1} />
+              <Bar
+                dataKey={dataKey}
+                fill={chartColor}
+                minPointSize={1}
+                activeBar={{ fill: colors.rose['500'] }}
+              />
+              <Tooltip
+                cursor={false}
+                content={(args) => {
+                  if (args.active) {
+                    setActiveIndex(args.label);
+                  } else {
+                    setActiveIndex(null);
+                  }
+                  return null;
+                }}
+              />
             </Chart>
           </ResponsiveContainer>
         </div>
