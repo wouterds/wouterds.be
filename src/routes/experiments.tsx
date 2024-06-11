@@ -71,7 +71,7 @@ export default function Experiments() {
   }, [teslaDistance]);
 
   const { revalidate } = useRevalidator();
-  useInterval(revalidate, ms('30 seconds'));
+  useInterval(revalidate, ms('1.5 minutes'));
 
   return (
     <>
