@@ -56,7 +56,7 @@ export const BarChart = ({
                 dataKey={dataKey}
                 fill={chartColor}
                 minPointSize={1}
-                activeBar={{ fill: colors.rose['500'] }}
+                activeBar={{ fill: colors.rose['500'], strokeWidth: 0 }}
               />
               <Tooltip
                 cursor={false}
