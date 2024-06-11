@@ -17,25 +17,18 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   const aranetRepository = AranetRepository.create(context);
   const teslaRepository = TeslaRepository.create(context);
 
-  const [aranet, p1, p1History, teslaLast24h, teslaLast90d, teslaDistance, teslaBattery] =
-    await Promise.all([
-      aranetRepository.getAll(),
-      p1Repository.getAll(),
-      p1Repository.getHistory({ days: 90 }),
-      teslaRepository.getAll({ days: 1 }),
-      teslaRepository.getAll({ days: 90 }),
-      teslaRepository.distancePerDay({ days: 90 }),
-      teslaRepository.batteryPerDay({ days: 90 }),
-    ]);
+  await Promise.all([p1Repository.getAll(), aranetRepository.getAll(), teslaRepository.getAll()]);
 
   return {
-    aranet,
-    p1,
-    p1History,
-    teslaLast24h,
-    teslaLast90d,
-    teslaDistance,
-    teslaBattery,
+    aranet: await aranetRepository.getAll(),
+    p1: await p1Repository.getAll(),
+    p1History: await p1Repository.getHistory({ days: 90 }),
+    teslaBatteryConsumedToday: await teslaRepository.batteryConsumedToday(),
+    teslaBatteryChargedToday: await teslaRepository.batteryChargedToday(),
+    teslaLastCharged: await teslaRepository.lastCharged(),
+    teslaLast24h: await teslaRepository.getAll({ days: 1 }),
+    teslaDistance: await teslaRepository.distancePerDay({ days: 90 }),
+    teslaBatteryConsumptionPerDay: await teslaRepository.batteryConsumptionPerDay({ days: 90 }),
   };
 };
 
@@ -47,37 +40,22 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Experiments() {
-  const { aranet, p1, p1History, teslaLast24h, teslaLast90d, teslaDistance, teslaBattery } =
-    useLoaderData<typeof loader>();
+  const {
+    aranet,
+    p1,
+    p1History,
+    teslaLast24h,
+    teslaDistance,
+    teslaBatteryConsumptionPerDay,
+    teslaBatteryConsumedToday,
+    teslaBatteryChargedToday,
+    teslaLastCharged,
+  } = useLoaderData<typeof loader>();
 
-  const aranetRecord = aranet[aranet.length - 1];
-  const p1Record = p1[p1.length - 1];
-  const p1HistoryRecord = p1History[p1History.length - 1];
-  const teslaRecord = teslaLast24h[teslaLast24h.length - 1];
-
-  const lastAranetUpdate = useTimeAgo(aranetRecord?.time);
-  const lastP1Update = useTimeAgo(p1Record?.time);
-  const lastP1HistoryUpdate = useTimeAgo(p1HistoryRecord?.time);
-  const lastTeslaUpdate = useTimeAgo(teslaRecord?.time);
-
-  const teslaBatteryUsageToday = useMemo(() => {
-    const first = teslaLast24h[0];
-    const last = teslaLast24h[teslaLast24h.length - 1];
-
-    return last?.battery - first?.battery || 0;
-  }, [teslaLast24h]);
-
-  const teslaLastCharged = useMemo(() => {
-    let last = teslaLast90d.pop();
-    let previous = teslaLast90d.pop();
-
-    while (previous && last && previous?.battery >= last?.battery) {
-      last = previous;
-      previous = teslaLast90d.pop();
-    }
-
-    return last || null;
-  }, [teslaLast90d]);
+  const lastAranetUpdate = useTimeAgo(aranet[aranet.length - 1]?.time);
+  const lastP1Update = useTimeAgo(p1[p1.length - 1]?.time);
+  const lastP1HistoryUpdate = useTimeAgo(p1History[p1History.length - 1]?.time);
+  const lastTeslaUpdate = useTimeAgo(teslaLast24h[teslaLast24h.length - 1]?.time);
 
   const teslaLongestDistanceDay = useMemo(() => {
     return teslaDistance?.reduce(
@@ -99,13 +77,13 @@ export default function Experiments() {
     <>
       <h1 className="text-xl font-medium mb-4">Experiments</h1>
       <h2 className="text-lg font-medium mb-4">Aranet readings</h2>
-      {aranetRecord && (
+      {aranet[aranet.length - 1] && (
         <div className="gap-1.5 grid grid-cols-2 sm:grid-cols-4 text-center">
           <LineChart
             data={aranet}
             dataKey="co2"
             unit=" ppm"
-            header={`${aranetRecord.co2} ppm`}
+            header={`${aranet[aranet.length - 1].co2} ppm`}
             label="co2"
             scale={{ min: 0.8, max: 1 }}
             compact
@@ -114,7 +92,7 @@ export default function Experiments() {
             data={aranet}
             dataKey="temperature"
             unit=" ºC"
-            header={`${aranetRecord.temperature} ºC`}
+            header={`${aranet[aranet.length - 1].temperature} ºC`}
             label="temperature"
             scale={{ min: 0.9, max: 1 }}
             compact
@@ -123,7 +101,7 @@ export default function Experiments() {
             data={aranet}
             dataKey="humidity"
             unit="%"
-            header={`${aranetRecord.humidity}%`}
+            header={`${aranet[aranet.length - 1].humidity}%`}
             label="humidity"
             scale={{ min: 0.8, max: 1 }}
             compact
@@ -132,7 +110,7 @@ export default function Experiments() {
             data={aranet}
             dataKey="pressure"
             unit=" hPa"
-            header={`${aranetRecord.pressure} hPa`}
+            header={`${aranet[aranet.length - 1].pressure} hPa`}
             label="pressure"
             scale={{ min: 0.999, max: 1 }}
             compact
@@ -142,27 +120,27 @@ export default function Experiments() {
       {lastAranetUpdate && (
         <p className="flex flex-col sm:flex-row gap-1 justify-start sm:justify-between mt-2">
           <span>last updated: {lastAranetUpdate}</span>
-          <span>battery: {aranetRecord?.battery}%</span>
+          <span>battery: {aranet[aranet.length - 1]?.battery}%</span>
         </p>
       )}
 
       <h2 className="text-lg font-medium mb-4 mt-4">Energy usage</h2>
-      {p1Record && (
+      {p1[p1.length - 1] && (
         <LineChart
           data={p1}
           dataKey="active"
           unit=" Wh"
-          header={`${p1Record.active} Wh`}
+          header={`${p1[p1.length - 1].active} Wh`}
           label="power usage (last 24 hours)"
           footer={[lastP1Update && <span>last updated: {lastP1Update}</span>]}
         />
       )}
-      {p1HistoryRecord && (
+      {p1History[p1History.length - 1] && (
         <BarChart
           data={p1History}
           dataKey="usage"
           unit=" kWh"
-          header={`${p1HistoryRecord.usage.toFixed(2)} kWh`}
+          header={`${p1History[p1History.length - 1].usage.toFixed(2)} kWh`}
           label="power usage (last 90 days)"
           className="mt-4"
           footer={[lastP1HistoryUpdate && <span>last updated: {lastP1HistoryUpdate}</span>]}
@@ -170,33 +148,40 @@ export default function Experiments() {
       )}
 
       <h2 className="text-lg font-medium mb-2 mt-4">Tesla data</h2>
-      {teslaRecord && (
+      {teslaLast24h[teslaLast24h.length - 1] && (
         <LineChart
           data={teslaLast24h}
           dataKey="battery"
-          unit=" %"
-          header={`${teslaRecord.battery.toFixed(0)}%`}
+          unit="%"
+          header={`${teslaLast24h[teslaLast24h.length - 1].battery.toFixed(0)}%`}
           label="battery capacity (last 24 hours)"
+          scale={{ min: 0.99, max: 1.01 }}
           footer={[
             lastTeslaUpdate && <span>last updated: {lastTeslaUpdate}</span>,
             teslaLastCharged && (
-              <span>battery used today: {teslaBatteryUsageToday.toFixed(0)}%</span>
+              <span>
+                consumed today: {teslaBatteryConsumedToday.toFixed(0)}%
+                {teslaBatteryChargedToday
+                  ? `, charged today: ${teslaBatteryChargedToday.toFixed(0)}%`
+                  : ''}
+              </span>
             ),
           ]}
         />
       )}
-      {teslaBattery.length > 0 && (
+      {teslaBatteryConsumptionPerDay.length > 0 && (
         <BarChart
-          data={teslaBattery}
+          data={teslaBatteryConsumptionPerDay}
           dataKey="battery"
-          unit=" %"
-          label="battery capacity (last 90 days)"
+          unit="%"
+          rounding={0}
+          label="battery consumption (last 90 days)"
           className="mt-4"
           footer={[
             lastTeslaUpdate && <span>last updated: {lastTeslaUpdate}</span>,
             teslaLastCharged && (
               <span>
-                last charged: {teslaLastCharged?.battery?.toFixed(0)}% @{' '}
+                last charged to: {teslaLastCharged?.battery?.toFixed(0)}% @{' '}
                 {format(fromUnixTime(teslaLastCharged?.time || 0), 'dd.MM.yyyy, HH:mm')}
               </span>
             ),

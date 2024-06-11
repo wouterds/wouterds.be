@@ -10,11 +10,21 @@ type Props = {
   label: string;
   header?: string;
   unit: string;
+  rounding?: number;
   className?: string;
   footer?: ReactNode[];
 };
 
-export const BarChart = ({ data, dataKey, unit, label, header, className, footer }: Props) => {
+export const BarChart = ({
+  data,
+  dataKey,
+  unit,
+  rounding = 2,
+  label,
+  header,
+  className,
+  footer,
+}: Props) => {
   const isDarkMode = useIsDarkMode();
   const chartColor = useMemo(() => (isDarkMode ? '#fff' : '#000'), [isDarkMode]);
   const filteredComponents = footer?.filter(Boolean);
@@ -25,7 +35,7 @@ export const BarChart = ({ data, dataKey, unit, label, header, className, footer
         <div className="py-2">
           <span className="font-semibold">
             {header ||
-              `${((data?.[data.length - 1]?.[dataKey] as number) || 0)?.toFixed(2)} ${unit}`}
+              `${((data?.[data.length - 1]?.[dataKey] as number) || 0)?.toFixed(rounding)}${unit}`}
           </span>
         </div>
         <div className="relative aspect-[8/1] sm:aspect-[10/1] -mt-1">
