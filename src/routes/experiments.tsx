@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
+import { json, LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { useLoaderData, useRevalidator } from '@remix-run/react';
 import { format, fromUnixTime } from 'date-fns';
 import ms from 'ms';
@@ -19,7 +19,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
 
   await Promise.all([p1Repository.getAll(), aranetRepository.getAll(), teslaRepository.getAll()]);
 
-  return {
+  return json({
     aranet: await aranetRepository.getAll(),
     p1: await p1Repository.getAll(),
     p1History: await p1Repository.getHistory({ days: 90 }),
@@ -29,7 +29,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
     teslaLast24h: await teslaRepository.getAll({ days: 1 }),
     teslaDistance: await teslaRepository.distancePerDay({ days: 90 }),
     teslaBatteryConsumptionPerDay: await teslaRepository.batteryConsumptionPerDay({ days: 90 }),
-  };
+  });
 };
 
 export const meta: MetaFunction = () => {
@@ -66,7 +66,7 @@ export default function Experiments() {
 
         return acc;
       },
-      { distance: 0 } as { date: Date; distance: number },
+      { distance: 0 } as { date: string; distance: number },
     );
   }, [teslaDistance]);
 

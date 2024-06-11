@@ -1,19 +1,17 @@
-import { ActionFunctionArgs } from '@remix-run/cloudflare';
+import { ActionFunctionArgs, json } from '@remix-run/cloudflare';
 import { differenceInMinutes, endOfYesterday, fromUnixTime, getUnixTime } from 'date-fns';
 
 import { P1HistoryRecord, P1Record } from '~/data/repositories/p1-repository';
 
-export const action = async ({ request, response, context }: ActionFunctionArgs) => {
+export const action = async ({ request, context }: ActionFunctionArgs) => {
   const query = new URL(request.url).searchParams;
   if (query.get('token') !== context.cloudflare.env.API_AUTH_TOKEN) {
-    response!.status = 403;
-    return { success: false };
+    return json({ success: false }, { status: 403 });
   }
 
   const body = (await request.text()) || '';
   if (!body) {
-    response!.status = 400;
-    return { success: false };
+    return json({ success: false }, { status: 400 });
   }
 
   const data: Array<{
@@ -36,8 +34,7 @@ export const action = async ({ request, response, context }: ActionFunctionArgs)
 
   const lastPush = fromUnixTime(values[values.length - 1]?.time ?? 0);
   if (differenceInMinutes(new Date(), lastPush) < 10) {
-    response!.status = 429;
-    return { success: false };
+    return json({ success: false }, { status: 429 });
   }
 
   values.push({ active, total, time });
