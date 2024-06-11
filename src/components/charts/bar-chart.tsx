@@ -13,6 +13,7 @@ type Props = {
   rounding?: number;
   className?: string;
   footer?: ReactNode[];
+  syncId?: string;
 };
 
 export const BarChart = ({
@@ -24,6 +25,7 @@ export const BarChart = ({
   header,
   className,
   footer,
+  syncId,
 }: Props) => {
   const isDarkMode = useIsDarkMode();
   const chartColor = useMemo(() => (isDarkMode ? '#fff' : '#000'), [isDarkMode]);
@@ -40,7 +42,7 @@ export const BarChart = ({
         </div>
         <div className="relative aspect-[8/1] sm:aspect-[10/1] -mt-1">
           <ResponsiveContainer>
-            <Chart data={data}>
+            <Chart data={data} syncId={syncId}>
               <YAxis hide />
               <Bar dataKey={dataKey} fill={chartColor} minPointSize={1} />
             </Chart>

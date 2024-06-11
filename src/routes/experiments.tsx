@@ -80,6 +80,7 @@ export default function Experiments() {
       {aranet[aranet.length - 1] && (
         <div className="gap-1.5 grid grid-cols-2 sm:grid-cols-4 text-center">
           <LineChart
+            syncId="aranet"
             data={aranet}
             dataKey="co2"
             unit=" ppm"
@@ -89,6 +90,7 @@ export default function Experiments() {
             compact
           />
           <LineChart
+            syncId="aranet"
             data={aranet}
             dataKey="temperature"
             unit=" ºC"
@@ -98,6 +100,7 @@ export default function Experiments() {
             compact
           />
           <LineChart
+            syncId="aranet"
             data={aranet}
             dataKey="humidity"
             unit="%"
@@ -107,6 +110,7 @@ export default function Experiments() {
             compact
           />
           <LineChart
+            syncId="aranet"
             data={aranet}
             dataKey="pressure"
             unit=" hPa"
@@ -171,6 +175,7 @@ export default function Experiments() {
       )}
       {teslaBatteryConsumptionPerDay.length > 0 && (
         <BarChart
+          syncId="tesla"
           data={teslaBatteryConsumptionPerDay}
           dataKey="battery"
           unit="%"
@@ -190,6 +195,7 @@ export default function Experiments() {
       )}
       {teslaDistance.length > 0 && (
         <BarChart
+          syncId="tesla"
           data={teslaDistance}
           dataKey="distance"
           unit=" km"

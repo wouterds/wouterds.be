@@ -14,6 +14,7 @@ type Props = {
   compact?: boolean;
   footer?: ReactNode[];
   scale?: { min: number; max: number };
+  syncId?: string;
 };
 
 export const LineChart = ({
@@ -26,6 +27,7 @@ export const LineChart = ({
   header,
   className,
   footer,
+  syncId,
 }: Props) => {
   const isDarkMode = useIsDarkMode();
   const chartColor = useMemo(() => (isDarkMode ? '#fff' : '#000'), [isDarkMode]);
@@ -46,7 +48,7 @@ export const LineChart = ({
             'aspect-[4/1] -my-1': compact,
           })}>
           <ResponsiveContainer>
-            <Chart data={data}>
+            <Chart data={data} syncId={syncId}>
               <Line dataKey={dataKey} stroke={chartColor} strokeWidth={1.5} dot={false} />
               <YAxis
                 hide
