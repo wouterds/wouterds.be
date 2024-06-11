@@ -101,7 +101,7 @@ const App = () => {
       <body suppressHydrationWarning className="relative">
         <div className="mx-auto" style={{ maxWidth: '768px' }}>
           <Header />
-          <main className="my-8 sm:my-12">
+          <main className="my-6 sm:my-10">
             <Outlet />
           </main>
           <Footer ray={data?.ray} />
@@ -153,7 +153,7 @@ export const ErrorBoundary = () => {
       <body>
         <div className="mx-auto" style={{ maxWidth: '768px' }}>
           <Header />
-          <main className="my-8 sm:my-12">
+          <main className="my-6 sm:my-10">
             <h1 className="text-xl font-medium mb-4">
               {(isRouteErrorResponse(error) && `${error.status} ${error.statusText}`) ||
                 'Oops, something went wrong!'}
