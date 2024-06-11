@@ -104,6 +104,7 @@ export default function Experiments() {
             data={aranet}
             dataKey="humidity"
             unit="%"
+            rounding={0}
             header={`${aranet[aranet.length - 1].humidity}%`}
             label="humidity"
             scale={{ min: 0.8, max: 1 }}
@@ -134,6 +135,7 @@ export default function Experiments() {
           data={p1}
           dataKey="active"
           unit=" Wh"
+          rounding={0}
           header={`${p1[p1.length - 1].active} Wh`}
           label="power usage (last 24 hours)"
           footer={[lastP1Update && <span>last updated: {lastP1Update}</span>]}
@@ -157,6 +159,7 @@ export default function Experiments() {
           data={teslaLast24h}
           dataKey="battery"
           unit="%"
+          rounding={0}
           header={`${teslaLast24h[teslaLast24h.length - 1].battery.toFixed(0)}%`}
           label="battery capacity (last 24 hours)"
           scale={{ min: 0.99, max: 1.01 }}
