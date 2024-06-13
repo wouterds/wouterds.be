@@ -68,6 +68,32 @@ export default function Experiments() {
     );
   }, [teslaDistance]);
 
+  const p1Peak = useMemo(() => {
+    return p1.reduce(
+      (acc, record) => {
+        if (record.active > acc.active) {
+          return record;
+        }
+
+        return acc;
+      },
+      { active: 0 } as { time: number; active: number },
+    );
+  }, [p1]);
+
+  const p1HistoryPeak = useMemo(() => {
+    return p1History.reduce(
+      (acc, record) => {
+        if (record.usage > acc.usage) {
+          return record;
+        }
+
+        return acc;
+      },
+      { usage: 0 } as { time: number; usage: number },
+    );
+  }, [p1History]);
+
   return (
     <>
       <h1 className="text-xl font-medium mb-4">Experiments</h1>
@@ -133,7 +159,14 @@ export default function Experiments() {
           rounding={0}
           header={`${p1[p1.length - 1].active} Wh`}
           label="power usage (last 24 hours)"
-          footer={[lastP1Update && <span>last updated: {lastP1Update}</span>]}
+          footer={[
+            lastP1Update && <span>last updated: {lastP1Update}</span>,
+            p1Peak && (
+              <span>
+                peak usage: {p1Peak.active} Wh @ {format(fromUnixTime(p1Peak.time), 'HH:mm')}
+              </span>
+            ),
+          ]}
         />
       )}
       {p1History[p1History.length - 1] && (
@@ -144,7 +177,15 @@ export default function Experiments() {
           header={`${p1History[p1History.length - 1].usage.toFixed(2)} kWh`}
           label="power usage (last 90 days)"
           className="mt-4"
-          footer={[lastP1HistoryUpdate && <span>last updated: {lastP1HistoryUpdate}</span>]}
+          footer={[
+            lastP1HistoryUpdate && <span>last updated: {lastP1HistoryUpdate}</span>,
+            p1HistoryPeak && (
+              <span>
+                peak usage: {p1HistoryPeak.usage.toFixed(2)} kWh @{' '}
+                {format(fromUnixTime(p1HistoryPeak.time), 'dd.MM.yyyy')}
+              </span>
+            ),
+          ]}
         />
       )}
 
