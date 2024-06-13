@@ -162,9 +162,9 @@ export default function Experiments() {
             lastTeslaUpdate && <span>last updated: {lastTeslaUpdate}</span>,
             teslaLastCharged && (
               <span>
-                consumed today: {teslaBatteryConsumedToday.toFixed(0)}%
+                consumed last 24h: {teslaBatteryConsumedToday.toFixed(0)}%
                 {teslaBatteryChargedToday
-                  ? `, charged today: ${teslaBatteryChargedToday.toFixed(0)}%`
+                  ? `, charged last 24h: ${teslaBatteryChargedToday.toFixed(0)}%`
                   : ''}
               </span>
             ),
