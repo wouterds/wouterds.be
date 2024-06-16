@@ -204,7 +204,7 @@ export default function Experiments() {
             teslaLastCharged && (
               <span>
                 consumed last 24h: {teslaBatteryConsumedToday.toFixed(0)}%
-                {teslaBatteryChargedToday
+                {teslaBatteryChargedToday > 1
                   ? `, charged last 24h: ${teslaBatteryChargedToday.toFixed(0)}%`
                   : ''}
               </span>

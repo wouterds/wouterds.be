@@ -152,7 +152,7 @@ export class TeslaRepository extends KVRepository {
       let previous: TeslaRecord | null = null;
 
       for (const record of data.reverse()) {
-        if (previous && previous.battery > record?.battery) {
+        if (previous && previous.battery > record?.battery + 1) {
           return previous;
         }
 
