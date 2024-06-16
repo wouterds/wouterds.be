@@ -21,7 +21,7 @@
     "@sentry/remix": "^8.9.2",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
-    "datocms-structured-text-to-html-string": "^4.0.0",
+    "datocms-structured-text-to-html-string": "^4.0.1",
     "datocms-structured-text-to-plain-text": "^4.0.0",
     "datocms-structured-text-utils": "^4.0.0",
     "feed": "^4.2.2",
