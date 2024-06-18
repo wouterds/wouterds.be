@@ -105,6 +105,7 @@ export default function Experiments() {
             data={aranet}
             dataKey="co2"
             unit=" ppm"
+            rounding={0}
             header={`${aranet[aranet.length - 1].co2} ppm`}
             label="co2"
             scale={{ min: 0.8, max: 1 }}
@@ -115,6 +116,7 @@ export default function Experiments() {
             data={aranet}
             dataKey="temperature"
             unit=" ºC"
+            rounding={1}
             header={`${aranet[aranet.length - 1].temperature} ºC`}
             label="temperature"
             scale={{ min: 0.9, max: 1 }}
@@ -136,6 +138,7 @@ export default function Experiments() {
             data={aranet}
             dataKey="pressure"
             unit=" hPa"
+            rounding={1}
             header={`${aranet[aranet.length - 1].pressure} hPa`}
             label="pressure"
             scale={{ min: 0.999, max: 1 }}
