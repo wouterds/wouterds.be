@@ -6,8 +6,8 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
+import { CloudflareTurnstileValidator } from '~/lib/cloudflare';
 import { MailjetMailer } from '~/lib/mailjet';
-import { TurnstileValidator } from '~/lib/turnstile';
 
 export const loader = ({ context }: LoaderFunctionArgs) => {
   return {
@@ -37,7 +37,7 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
   }
 
   const ip = request.headers.get('cf-connecting-ip')!;
-  const validator = TurnstileValidator.create(context).setIp(ip);
+  const validator = CloudflareTurnstileValidator.create(context).setIp(ip);
   if (!(await validator.validate(form.get('cf-turnstile-response')?.toString()))) {
     return json({ success: false }, { status: 403 });
   }

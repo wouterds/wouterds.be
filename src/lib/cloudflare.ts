@@ -1,6 +1,6 @@
 import { AppLoadContext } from '@remix-run/cloudflare';
 
-export class TurnstileValidator {
+export class CloudflareTurnstileValidator {
   private _context: AppLoadContext;
   private _ip?: string;
 
@@ -9,7 +9,7 @@ export class TurnstileValidator {
   }
 
   public static create(context: AppLoadContext) {
-    return new TurnstileValidator(context);
+    return new CloudflareTurnstileValidator(context);
   }
 
   private get apiSecret() {

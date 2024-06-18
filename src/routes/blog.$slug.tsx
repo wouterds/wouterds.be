@@ -10,11 +10,7 @@ import { Image } from '~/components/image';
 import { GalleryRecord, VideoRecord } from '~/data/graphql';
 import { PostRepository } from '~/data/repositories/post-repository';
 import { useIsDarkMode } from '~/hooks/use-is-dark-mode';
-import {
-  excerptFromContent,
-  imagesFromContent,
-  plainTextFromContent,
-} from '~/lib/datocms/structured-text-utils';
+import { excerptFromContent, imagesFromContent, plainTextFromContent } from '~/lib/datocms';
 
 export const loader = async ({ request, context, params }: LoaderFunctionArgs) => {
   const url = new URL(request.url);

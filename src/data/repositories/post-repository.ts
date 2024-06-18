@@ -14,7 +14,7 @@ import {
   GetPreviousPostQuery,
   GetPreviousPostQueryVariables,
 } from '~/data/graphql';
-import { excerptFromContent } from '~/lib/datocms/structured-text-utils';
+import { excerptFromContent } from '~/lib/datocms';
 
 import { DatoCMSRepository } from './abstract-datocms-repository';
 
