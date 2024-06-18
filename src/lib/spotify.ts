@@ -92,4 +92,44 @@ export class Spotify {
       name: data.display_name,
     };
   }
+
+  public async getCurrentlyPlaying() {
+    const response = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
+      headers: {
+        Authorization: `Bearer ${this._accessToken}`,
+      },
+    });
+
+    if (response.status === 204) {
+      return null;
+    }
+
+    return response.json<{ item: SpotifySong }>().then(({ item }) => mapSong(item));
+  }
 }
+
+type SpotifySong = {
+  id: string;
+  name: string;
+  explicit: boolean;
+  external_urls: { spotify: string };
+  artists: {
+    id: string;
+    name: string;
+    external_urls: { spotify: string };
+  }[];
+};
+
+const mapSong = (data: SpotifySong) => {
+  return {
+    id: data.id,
+    url: data.external_urls.spotify,
+    explicit: data.explicit,
+    name: data.name,
+    artist: data.artists.map((artist) => ({
+      id: artist.id,
+      name: artist.name,
+      url: artist.external_urls.spotify,
+    })),
+  };
+};
