@@ -16,7 +16,12 @@ export default defineConfig({
     remix({
       ignoredRouteFiles: ['**/*.css'],
       appDirectory: 'src',
-      future: { unstable_singleFetch: true },
+      future: {
+        unstable_singleFetch: true,
+        v3_fetcherPersist: true,
+        v3_relativeSplatPath: true,
+        v3_throwAbortReason: true,
+      },
     }),
     tsconfigPaths(),
     sentryVitePlugin({
