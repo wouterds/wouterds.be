@@ -6,6 +6,8 @@ type Env = {
   DATOCMS_API_KEY: string;
   MAILJET_API_KEY: string;
   MAILJET_API_SECRET: string;
+  SPOTIFY_CLIENT_ID: string;
+  SPOTIFY_CLIENT_SECRET: string;
   CLOUDFLARE_TURNSTILE_KEY: string;
   CLOUDFLARE_TURNSTILE_SECRET: string;
   API_AUTH_TOKEN: string;
