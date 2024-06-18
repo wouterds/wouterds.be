@@ -1,0 +1,95 @@
+import { Buffer } from 'node:buffer';
+
+import { AppLoadContext } from '@remix-run/cloudflare';
+
+export class Spotify {
+  private _context: AppLoadContext;
+  private _accessToken: string | null = null;
+  private _refreshToken: string | null = null;
+
+  public constructor(context: AppLoadContext) {
+    this._context = context;
+  }
+
+  public static create(context: AppLoadContext) {
+    return new Spotify(context);
+  }
+
+  private get clientId() {
+    return this._context.cloudflare.env.SPOTIFY_CLIENT_ID;
+  }
+
+  private get clientSecret() {
+    return this._context.cloudflare.env.SPOTIFY_CLIENT_SECRET;
+  }
+
+  public get accessToken() {
+    return this._accessToken;
+  }
+
+  public get refreshToken() {
+    return this._refreshToken;
+  }
+
+  public set accessToken(value: string | null) {
+    this._accessToken = value;
+  }
+
+  public set refreshToken(value: string | null) {
+    this._refreshToken = value;
+  }
+
+  public authorizeUrl(redirectUri: string) {
+    return new URL(
+      `/authorize?${new URLSearchParams({
+        response_type: 'code',
+        client_id: this.clientId,
+        redirect_uri: redirectUri,
+        scope: 'user-read-recently-played user-read-currently-playing',
+      })}`,
+      'https://accounts.spotify.com',
+    ).toString();
+  }
+
+  public async authorize(code: string, redirectUri: string) {
+    const response = await fetch('https://accounts.spotify.com/api/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Basic ${Buffer.from(`${this.clientId}:${this.clientSecret}`).toString(
+          'base64',
+        )}`,
+      },
+      body: new URLSearchParams({
+        grant_type: 'authorization_code',
+        code,
+        redirect_uri: redirectUri,
+      }),
+    });
+
+    const data = await response.json<{ access_token: string; refresh_token: string }>();
+
+    this._accessToken = data.access_token;
+    this._refreshToken = data.refresh_token;
+
+    return data;
+  }
+
+  public async getMe() {
+    const response = await fetch('https://api.spotify.com/v1/me', {
+      headers: {
+        Authorization: `Bearer ${this._accessToken}`,
+      },
+    });
+
+    const data = await response.json<{
+      id: string;
+      display_name: string;
+    }>();
+
+    return {
+      id: data.id,
+      name: data.display_name,
+    };
+  }
+}
