@@ -64,6 +64,7 @@ export class TeslaRepository extends KVRepository {
       }
 
       tokens.tesla.refresh_token = refreshToken;
+      tokens.tesla.refreshToken = refreshToken;
 
       return this.put('tokens', Buffer.from(JSON.stringify(tokens)).toString('base64'));
     });
