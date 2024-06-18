@@ -106,6 +106,21 @@ export class Spotify {
 
     return response.json<{ item: SpotifySong }>().then(({ item }) => mapSong(item));
   }
+
+  public async getRecentlyPlayed(tracks = 3) {
+    const response = await fetch(
+      `https://api.spotify.com/v1/me/player/recently-played?limit=${tracks}`,
+      {
+        headers: {
+          Authorization: `Bearer ${this._accessToken}`,
+        },
+      },
+    );
+
+    return response
+      .json<{ items: Array<{ track: SpotifySong }> }>()
+      .then((songs) => songs.items.map(({ track }) => mapSong(track)));
+  }
 }
 
 type SpotifySong = {
