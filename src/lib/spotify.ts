@@ -40,12 +40,14 @@ export class Spotify {
   }
 
   public authorizeUrl(redirectUri: string) {
+    const scopes = ['user-read-recently-played', 'user-read-currently-playing'];
+
     return new URL(
       `/authorize?${new URLSearchParams({
         response_type: 'code',
         client_id: this.clientId,
         redirect_uri: redirectUri,
-        scope: 'user-read-recently-played user-read-currently-playing',
+        scope: scopes.join(' '),
       })}`,
       'https://accounts.spotify.com',
     ).toString();
@@ -77,9 +79,7 @@ export class Spotify {
 
   public async getMe() {
     const response = await fetch('https://api.spotify.com/v1/me', {
-      headers: {
-        Authorization: `Bearer ${this._accessToken}`,
-      },
+      headers: { Authorization: `Bearer ${this._accessToken}` },
     });
 
     const data = await response.json<{
@@ -95,9 +95,7 @@ export class Spotify {
 
   public async getCurrentlyPlaying() {
     const response = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
-      headers: {
-        Authorization: `Bearer ${this._accessToken}`,
-      },
+      headers: { Authorization: `Bearer ${this._accessToken}` },
     });
 
     if (response.status === 204) {
@@ -110,11 +108,7 @@ export class Spotify {
   public async getRecentlyPlayed(tracks = 3) {
     const response = await fetch(
       `https://api.spotify.com/v1/me/player/recently-played?limit=${tracks}`,
-      {
-        headers: {
-          Authorization: `Bearer ${this._accessToken}`,
-        },
-      },
+      { headers: { Authorization: `Bearer ${this._accessToken}` } },
     );
 
     return response
