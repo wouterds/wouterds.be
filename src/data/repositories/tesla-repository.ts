@@ -37,20 +37,32 @@ export class TeslaRepository extends KVRepository {
     return data;
   };
 
-  // todo: move to CF env vars
   public getRefreshToken = async () => {
-    return this.get<string>('tesla-refresh-token').then((data) => {
+    return this.get<string>('tokens').then((data) => {
       if (!data) {
         return null;
       }
 
-      return Buffer.from(data, 'base64').toString('utf-8');
+      return JSON.parse(Buffer.from(data, 'base64').toString('utf-8'))?.tesla?.refresh_token;
     });
   };
 
-  // todo: move to CF env vars
   public updateRefreshToken = async (refreshToken: string) => {
-    return this.put('tesla-refresh-token', Buffer.from(refreshToken).toString('base64'));
+    return this.get<string>('tokens').then((data) => {
+      if (!data) {
+        return this.put(
+          'tokens',
+          Buffer.from(JSON.stringify({ tesla: { refresh_token: refreshToken } })).toString(
+            'base64',
+          ),
+        );
+      }
+
+      const tokens = JSON.parse(Buffer.from(data, 'base64').toString('utf-8'));
+      tokens.tesla.refresh_token = refreshToken;
+
+      return this.put('tokens', Buffer.from(JSON.stringify(tokens)).toString('base64'));
+    });
   };
 
   public getLast = async () => {
