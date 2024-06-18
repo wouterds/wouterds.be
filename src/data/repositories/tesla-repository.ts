@@ -43,7 +43,7 @@ export class TeslaRepository extends KVRepository {
         return null;
       }
 
-      return JSON.parse(Buffer.from(data, 'base64').toString('utf-8'))?.tesla?.refresh_token;
+      return JSON.parse(Buffer.from(data, 'base64').toString('utf-8'))?.tesla?.refreshToken;
     });
   };
 
@@ -52,9 +52,7 @@ export class TeslaRepository extends KVRepository {
       if (!data) {
         return this.put(
           'tokens',
-          Buffer.from(JSON.stringify({ tesla: { refresh_token: refreshToken } })).toString(
-            'base64',
-          ),
+          Buffer.from(JSON.stringify({ tesla: { refreshToken } })).toString('base64'),
         );
       }
 
@@ -63,7 +61,6 @@ export class TeslaRepository extends KVRepository {
         tokens.tesla = {};
       }
 
-      tokens.tesla.refresh_token = refreshToken;
       tokens.tesla.refreshToken = refreshToken;
 
       return this.put('tokens', Buffer.from(JSON.stringify(tokens)).toString('base64'));
