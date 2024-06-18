@@ -2,41 +2,66 @@ import { Buffer } from 'node:buffer';
 
 import { AppLoadContext } from '@remix-run/cloudflare';
 
-export class Spotify {
-  private _context: AppLoadContext;
+import { KVRepository } from '~/data/repositories/abstract-kv-repository';
+
+export class Spotify extends KVRepository {
   private _accessToken: string | null = null;
   private _refreshToken: string | null = null;
-
-  public constructor(context: AppLoadContext) {
-    this._context = context;
-  }
 
   public static create(context: AppLoadContext) {
     return new Spotify(context);
   }
 
   private get clientId() {
-    return this._context.cloudflare.env.SPOTIFY_CLIENT_ID;
+    return this.context.cloudflare.env.SPOTIFY_CLIENT_ID;
   }
 
   private get clientSecret() {
-    return this._context.cloudflare.env.SPOTIFY_CLIENT_SECRET;
+    return this.context.cloudflare.env.SPOTIFY_CLIENT_SECRET;
   }
 
-  public get accessToken() {
-    return this._accessToken;
+  public async getAccessToken() {
+    if (this._accessToken) {
+      return this._accessToken;
+    }
+
+    return this.get<string>('tokens').then((data) => {
+      if (!data) {
+        return null;
+      }
+
+      return JSON.parse(Buffer.from(data, 'base64').toString('utf-8'))?.spotify?.accessToken;
+    });
   }
 
-  public get refreshToken() {
-    return this._refreshToken;
+  public async getRefreshToken() {
+    if (this._refreshToken) {
+      return this._refreshToken;
+    }
+
+    return this.get<string>('tokens').then((data) => {
+      if (!data) {
+        return null;
+      }
+
+      return JSON.parse(Buffer.from(data, 'base64').toString('utf-8'))?.spotify?.refreshToken;
+    });
   }
 
-  public set accessToken(value: string | null) {
-    this._accessToken = value;
-  }
+  public async updateTokens(accessToken: string, refreshToken: string) {
+    this._accessToken = accessToken;
+    this._refreshToken = refreshToken;
 
-  public set refreshToken(value: string | null) {
-    this._refreshToken = value;
+    const data = await this.get<string>('tokens');
+    const tokens = JSON.parse(Buffer.from(data!, 'base64').toString('utf-8'));
+    if (!tokens?.spotify) {
+      tokens.spotify = {};
+    }
+
+    tokens.spotify.accessToken = accessToken;
+    tokens.spotify.refreshToken = refreshToken;
+
+    return this.put('tokens', Buffer.from(JSON.stringify(tokens)).toString('base64'));
   }
 
   public authorizeUrl(redirectUri: string) {
@@ -71,15 +96,12 @@ export class Spotify {
 
     const data = await response.json<{ access_token: string; refresh_token: string }>();
 
-    this._accessToken = data.access_token;
-    this._refreshToken = data.refresh_token;
-
-    return data;
+    await this.updateTokens(data.access_token, data.refresh_token);
   }
 
   public async getMe() {
     const response = await fetch('https://api.spotify.com/v1/me', {
-      headers: { Authorization: `Bearer ${this._accessToken}` },
+      headers: { Authorization: `Bearer ${await this.getAccessToken()}` },
     });
 
     const data = await response.json<{
@@ -95,7 +117,7 @@ export class Spotify {
 
   public async getCurrentlyPlaying() {
     const response = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
-      headers: { Authorization: `Bearer ${this._accessToken}` },
+      headers: { Authorization: `Bearer ${await this.getAccessToken()}` },
     });
 
     if (response.status === 204) {
@@ -108,7 +130,7 @@ export class Spotify {
   public async getRecentlyPlayed(tracks = 3) {
     const response = await fetch(
       `https://api.spotify.com/v1/me/player/recently-played?limit=${tracks}`,
-      { headers: { Authorization: `Bearer ${this._accessToken}` } },
+      { headers: { Authorization: `Bearer ${await this.getAccessToken()}` } },
     );
 
     return response

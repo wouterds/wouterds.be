@@ -8,6 +8,10 @@ export abstract class KVRepository {
     this._context = context;
   }
 
+  protected get context() {
+    return this._context;
+  }
+
   private get KV() {
     return this._context.cloudflare?.env?.CACHE;
   }
