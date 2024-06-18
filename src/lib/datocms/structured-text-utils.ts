@@ -1,18 +1,13 @@
-import { render, StructuredTextDocument } from 'datocms-structured-text-to-plain-text';
+import { render } from 'datocms-structured-text-to-plain-text';
+import { StructuredText } from 'datocms-structured-text-utils';
 
-import { GalleryRecord, Scalars } from '~/data/graphql';
+import { GalleryRecord } from '~/data/graphql';
 
-type Content = {
-  value: Scalars['JsonField']['output'];
-  links?: unknown[];
-  blocks?: unknown[];
+export const plainTextFromContent = (content: StructuredText) => {
+  return render(content)?.trim();
 };
 
-export const plainTextFromContent = (content: Content) => {
-  return render(content as unknown as StructuredTextDocument)?.trim();
-};
-
-export const excerptFromContent = (content: Content, length = 240) => {
+export const excerptFromContent = (content: StructuredText, length = 240) => {
   return (
     plainTextFromContent(content)
       ?.slice(0, Math.max(length - 2, 0))
@@ -23,7 +18,7 @@ export const excerptFromContent = (content: Content, length = 240) => {
   );
 };
 
-export const imagesFromContent = (content?: Content) => {
+export const imagesFromContent = (content?: StructuredText) => {
   const images: GalleryRecord['images'] = [];
 
   const blocks = (content?.blocks || []) as GalleryRecord[];

@@ -1,8 +1,5 @@
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
-import {
-  type Record as StructuredTextGraphQlResponseRecord,
-  type StructuredText as StructuredTextGraphQlResponse,
-} from 'datocms-structured-text-utils';
+import { type StructuredText } from 'datocms-structured-text-utils';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -27,16 +24,7 @@ export type Scalars = {
   FloatType: { input: number; output: number };
   IntType: { input: number; output: number };
   ItemId: { input: string; output: string };
-  JsonField: {
-    input: StructuredTextGraphQlResponse<
-      StructuredTextGraphQlResponseRecord,
-      StructuredTextGraphQlResponseRecord
-    >;
-    output: StructuredTextGraphQlResponse<
-      StructuredTextGraphQlResponseRecord,
-      StructuredTextGraphQlResponseRecord
-    >;
-  };
+  JsonField: { input: StructuredText; output: StructuredText };
   MetaTagAttributes: { input: Record<string, string>; output: Record<string, string> };
   UploadId: { input: string; output: string };
 };
@@ -2769,10 +2757,7 @@ export type GetPostQuery = {
     poster: { __typename: 'FileField'; url: string };
     content: {
       __typename: 'PostModelContentField';
-      value: StructuredTextGraphQlResponse<
-        StructuredTextGraphQlResponseRecord,
-        StructuredTextGraphQlResponseRecord
-      >;
+      value: StructuredText;
       blocks: Array<
         | {
             __typename: 'GalleryRecord';
@@ -2819,10 +2804,7 @@ export type GetPostsQuery = {
     poster: { __typename: 'FileField'; url: string };
     content: {
       __typename: 'PostModelContentField';
-      value: StructuredTextGraphQlResponse<
-        StructuredTextGraphQlResponseRecord,
-        StructuredTextGraphQlResponseRecord
-      >;
+      value: StructuredText;
       blocks: Array<
         | {
             __typename: 'GalleryRecord';

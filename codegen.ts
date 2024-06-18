@@ -24,8 +24,7 @@ const config: CodegenConfig = {
         'typed-document-node',
         {
           add: {
-            content:
-              "import { type Record as StructuredTextGraphQlResponseRecord, type StructuredText as StructuredTextGraphQlResponse } from 'datocms-structured-text-utils';",
+            content: "import { type StructuredText } from 'datocms-structured-text-utils';",
           },
         },
       ],
@@ -39,8 +38,7 @@ const config: CodegenConfig = {
           FloatType: 'number',
           IntType: 'number',
           ItemId: 'string',
-          JsonField:
-            'StructuredTextGraphQlResponse<StructuredTextGraphQlResponseRecord,StructuredTextGraphQlResponseRecord>',
+          JsonField: 'StructuredText',
           MetaTagAttributes: 'Record<string, string>',
           UploadId: 'string',
         },
