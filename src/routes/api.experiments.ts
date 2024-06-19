@@ -10,14 +10,11 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   const aranet = AranetRepository.create(context);
   const spotify = Spotify.create(context);
 
-  await spotify.refreshAccessToken().catch(() => null);
+  await spotify.refreshAccessToken();
 
   const [lastSong, recentlyPlayed] = await Promise.all([
-    spotify.getCurrentlyPlaying().catch(() => null),
-    spotify
-      .getRecentlyPlayed(1, subMinutes(new Date(), 5))
-      .then((tracks) => tracks?.[0])
-      .catch(() => null),
+    spotify.getCurrentlyPlaying(),
+    spotify.getRecentlyPlayed(1, subMinutes(new Date(), 5)).then((tracks) => tracks?.[0]),
   ]);
 
   return json(

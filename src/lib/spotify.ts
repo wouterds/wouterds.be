@@ -22,31 +22,33 @@ export class Spotify extends KVRepository {
   }
 
   public async getAccessToken() {
-    if (this._accessToken) {
-      return this._accessToken;
+    if (!this._accessToken) {
+      await this.get<string>('tokens').then((data) => {
+        if (!data) {
+          return null;
+        }
+
+        this._accessToken = JSON.parse(Buffer.from(data, 'base64').toString('utf-8'))?.spotify
+          ?.accessToken;
+      });
     }
 
-    return this.get<string>('tokens').then((data) => {
-      if (!data) {
-        return null;
-      }
-
-      return JSON.parse(Buffer.from(data, 'base64').toString('utf-8'))?.spotify?.accessToken;
-    });
+    return this._accessToken || null;
   }
 
   public async getRefreshToken() {
-    if (this._refreshToken) {
-      return this._refreshToken;
+    if (!this._refreshToken) {
+      await this.get<string>('tokens').then((data) => {
+        if (!data) {
+          return null;
+        }
+
+        this._refreshToken = JSON.parse(Buffer.from(data, 'base64').toString('utf-8'))?.spotify
+          ?.refreshToken;
+      });
     }
 
-    return this.get<string>('tokens').then((data) => {
-      if (!data) {
-        return null;
-      }
-
-      return JSON.parse(Buffer.from(data, 'base64').toString('utf-8'))?.spotify?.refreshToken;
-    });
+    return this._refreshToken || null;
   }
 
   public async storeTokens() {
