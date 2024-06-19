@@ -10,7 +10,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   const aranet = AranetRepository.create(context);
   const spotify = Spotify.create(context);
 
-  await spotify.refreshAccessToken();
+  await spotify.refreshAccessToken().catch(() => null);
 
   const [lastSong, recentlyPlayed] = await Promise.all([
     spotify.getCurrentlyPlaying().catch(() => null),
