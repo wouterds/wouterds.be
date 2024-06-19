@@ -29,7 +29,7 @@ export const Experiments = () => {
   return (
     <div
       aria-hidden
-      className="flex items-center gap-2 pb-2 text-zinc-400 dark:text-zinc-500"
+      className="items-center gap-2 pb-2 text-zinc-400 dark:text-zinc-500 hidden md:flex"
       title="Yo, this is what I'm listening to right now ツ">
       <span className="inline-flex overflow-hidden h-4 items-center gap-1.5">
         <style type="text/css">{`
