@@ -1,6 +1,7 @@
 import { Buffer } from 'node:buffer';
 
 import { AppLoadContext } from '@remix-run/cloudflare';
+import { getUnixTime } from 'date-fns';
 
 import { KVRepository } from '~/data/repositories/abstract-kv-repository';
 
@@ -127,11 +128,14 @@ export class Spotify extends KVRepository {
     return response.json<{ item: SpotifySong }>().then(({ item }) => mapSong(item));
   }
 
-  public async getRecentlyPlayed(tracks = 3) {
-    const response = await fetch(
-      `https://api.spotify.com/v1/me/player/recently-played?limit=${tracks}`,
-      { headers: { Authorization: `Bearer ${await this.getAccessToken()}` } },
-    );
+  public async getRecentlyPlayed(tracks = 3, after?: Date) {
+    const params = new URLSearchParams({});
+    if (tracks) params.append('limit', tracks.toString());
+    if (after) params.append('after', (getUnixTime(after) * 1000).toString());
+
+    const response = await fetch(`https://api.spotify.com/v1/me/player/recently-played?${params}`, {
+      headers: { Authorization: `Bearer ${await this.getAccessToken()}` },
+    });
 
     return response
       .json<{ items: Array<{ track: SpotifySong }> }>()
