@@ -20,5 +20,7 @@ export const loader = async ({ request, context }: LoaderFunctionArgs) => {
     return json({ error: 'You are not allowed to access this application' }, { status: 403 });
   }
 
+  await spotify.storeTokens();
+
   return json({ message: 'Authorized Spotify' });
 };

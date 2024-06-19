@@ -49,18 +49,15 @@ export class Spotify extends KVRepository {
     });
   }
 
-  public async updateTokens(accessToken: string, refreshToken: string) {
-    this._accessToken = accessToken;
-    this._refreshToken = refreshToken;
-
+  public async storeTokens() {
     const data = await this.get<string>('tokens');
     const tokens = JSON.parse(Buffer.from(data!, 'base64').toString('utf-8'));
     if (!tokens?.spotify) {
       tokens.spotify = {};
     }
 
-    tokens.spotify.accessToken = accessToken;
-    tokens.spotify.refreshToken = refreshToken;
+    tokens.spotify.accessToken = this._accessToken;
+    tokens.spotify.refreshToken = this._refreshToken;
 
     return this.put('tokens', Buffer.from(JSON.stringify(tokens)).toString('base64'));
   }
@@ -97,7 +94,8 @@ export class Spotify extends KVRepository {
 
     const data = await response.json<{ access_token: string; refresh_token: string }>();
 
-    await this.updateTokens(data.access_token, data.refresh_token);
+    this._accessToken = data.access_token;
+    this._refreshToken = data.refresh_token;
   }
 
   public async getMe() {
