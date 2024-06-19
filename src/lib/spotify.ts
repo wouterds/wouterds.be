@@ -118,7 +118,7 @@ export class Spotify extends KVRepository {
     const data = await response.json<{ access_token: string; refresh_token: string }>();
 
     this._accessToken = data.access_token;
-    this._refreshToken = data.refresh_token;
+    // this._refreshToken = data.refresh_token;
 
     await this.storeTokens();
   }
