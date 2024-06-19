@@ -26,6 +26,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
     {
       headers: {
         'Cache-Control': 'public, max-age=60, must-revalidate',
+        'Access-Control-Allow-Origin': '*',
       },
     },
   );
