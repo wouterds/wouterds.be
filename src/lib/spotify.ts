@@ -98,6 +98,31 @@ export class Spotify extends KVRepository {
     this._refreshToken = data.refresh_token;
   }
 
+  public async refreshAccessToken() {
+    const refreshToken = await this.getRefreshToken();
+
+    const response = await fetch('https://accounts.spotify.com/api/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Basic ${Buffer.from(`${this.clientId}:${this.clientSecret}`).toString(
+          'base64',
+        )}`,
+      },
+      body: new URLSearchParams({
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
+      }),
+    });
+
+    const data = await response.json<{ access_token: string; refresh_token: string }>();
+
+    this._accessToken = data.access_token;
+    this._refreshToken = data.refresh_token;
+
+    await this.storeTokens();
+  }
+
   public async getMe() {
     const response = await fetch('https://api.spotify.com/v1/me', {
       headers: { Authorization: `Bearer ${await this.getAccessToken()}` },
