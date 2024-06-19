@@ -113,7 +113,7 @@ export class Spotify extends KVRepository {
       },
       body: new URLSearchParams({
         grant_type: 'refresh_token',
-        refresh_token: refreshToken,
+        refresh_token: refreshToken!,
       }),
     });
 
