@@ -10,19 +10,15 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   const aranet = AranetRepository.create(context);
   const spotify = Spotify.create(context);
 
-  await spotify
-    .refreshAccessToken()
-    .catch((e) => console.error('Failed to refresh Spotify token', e));
+  await spotify.refreshAccessToken().catch(() => null);
 
   const [lastSong, recentlyPlayed] = await Promise.all([
-    spotify.getCurrentlyPlaying().catch((e) => console.error('Failed to get current song', e)),
+    spotify.getCurrentlyPlaying().catch(() => null),
     spotify
       .getRecentlyPlayed(1, subMinutes(new Date(), 5))
       .then((tracks) => tracks?.[0])
-      .catch((e) => console.error('Failed to get recently played', e)),
+      .catch(() => null),
   ]);
-
-  console.log({ lastSong, recentlyPlayed });
 
   return json(
     {
