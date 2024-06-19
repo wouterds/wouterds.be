@@ -1,13 +1,14 @@
 import { Buffer } from 'node:buffer';
 
 import { AppLoadContext } from '@remix-run/cloudflare';
-import { getUnixTime } from 'date-fns';
+import { addSeconds, getUnixTime, isPast } from 'date-fns';
 
 import { KVRepository } from '~/data/repositories/abstract-kv-repository';
 
 export class Spotify extends KVRepository {
   private _accessToken: string | null = null;
   private _refreshToken: string | null = null;
+  private _expiry: Date | null = null;
 
   public static create(context: AppLoadContext) {
     return new Spotify(context);
@@ -21,34 +22,20 @@ export class Spotify extends KVRepository {
     return this.context.cloudflare.env.SPOTIFY_CLIENT_SECRET;
   }
 
-  public async getAccessToken() {
-    if (!this._accessToken) {
-      await this.get<string>('tokens').then((data) => {
-        if (!data) {
-          return null;
-        }
-
-        this._accessToken = JSON.parse(Buffer.from(data, 'base64').toString('utf-8'))?.spotify
-          ?.accessToken;
-      });
+  public async loadTokens() {
+    const data = await this.get<string>('tokens');
+    if (!data) {
+      return;
     }
 
-    return this._accessToken || null;
-  }
-
-  public async getRefreshToken() {
-    if (!this._refreshToken) {
-      await this.get<string>('tokens').then((data) => {
-        if (!data) {
-          return null;
-        }
-
-        this._refreshToken = JSON.parse(Buffer.from(data, 'base64').toString('utf-8'))?.spotify
-          ?.refreshToken;
-      });
+    const tokens = JSON.parse(Buffer.from(data, 'base64').toString('utf-8'))?.spotify;
+    if (!tokens) {
+      return;
     }
 
-    return this._refreshToken || null;
+    this._accessToken = tokens.accessToken || null;
+    this._refreshToken = tokens.refreshToken || null;
+    this._expiry = new Date(tokens.expiry) || null;
   }
 
   public async storeTokens() {
@@ -60,6 +47,7 @@ export class Spotify extends KVRepository {
 
     tokens.spotify.accessToken = this._accessToken;
     tokens.spotify.refreshToken = this._refreshToken;
+    tokens.spotify.expiry = this._expiry;
 
     return this.put('tokens', Buffer.from(JSON.stringify(tokens)).toString('base64'));
   }
@@ -94,14 +82,30 @@ export class Spotify extends KVRepository {
       }),
     });
 
-    const data = await response.json<{ access_token: string; refresh_token: string }>();
+    const data = await response.json<{
+      access_token: string;
+      refresh_token: string;
+      expires_in: number;
+    }>();
 
     this._accessToken = data.access_token;
     this._refreshToken = data.refresh_token;
+    this._expiry = addSeconds(new Date(), data.expires_in);
   }
 
   public async refreshAccessToken() {
-    const refreshToken = await this.getRefreshToken();
+    if (!this._refreshToken) {
+      await this.loadTokens();
+
+      if (!this._refreshToken) {
+        return;
+      }
+    }
+
+    // not expired yet?
+    if (!isPast(this._expiry!)) {
+      return;
+    }
 
     const response = await fetch('https://accounts.spotify.com/api/token', {
       method: 'POST',
@@ -113,27 +117,29 @@ export class Spotify extends KVRepository {
       },
       body: new URLSearchParams({
         grant_type: 'refresh_token',
-        refresh_token: refreshToken!,
+        refresh_token: this._refreshToken,
       }),
     });
 
-    const data = await response.json<{ access_token: string; refresh_token: string }>();
+    const data = await response.json<{
+      access_token: string;
+      refresh_token: string;
+      expires_in: number;
+    }>();
 
     this._accessToken = data.access_token;
-    // this._refreshToken = data.refresh_token;
+    this._refreshToken = data.refresh_token;
+    this._expiry = addSeconds(new Date(), data.expires_in);
 
     await this.storeTokens();
   }
 
   public async getMe() {
     const response = await fetch('https://api.spotify.com/v1/me', {
-      headers: { Authorization: `Bearer ${await this.getAccessToken()}` },
+      headers: { Authorization: `Bearer ${this._accessToken}` },
     });
 
-    const data = await response.json<{
-      id: string;
-      display_name: string;
-    }>();
+    const data = await response.json<{ id: string; display_name: string }>();
 
     return {
       id: data.id,
@@ -143,7 +149,7 @@ export class Spotify extends KVRepository {
 
   public async getCurrentlyPlaying() {
     const response = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
-      headers: { Authorization: `Bearer ${await this.getAccessToken()}` },
+      headers: { Authorization: `Bearer ${this._accessToken}` },
     });
 
     if (response.status === 204) {
@@ -159,7 +165,7 @@ export class Spotify extends KVRepository {
     if (after) params.append('after', (getUnixTime(after) * 1000).toString());
 
     const response = await fetch(`https://api.spotify.com/v1/me/player/recently-played?${params}`, {
-      headers: { Authorization: `Bearer ${await this.getAccessToken()}` },
+      headers: { Authorization: `Bearer ${this._accessToken}` },
     });
 
     return response
