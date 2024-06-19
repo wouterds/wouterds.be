@@ -150,7 +150,7 @@ export class Spotify extends KVRepository {
       return null;
     }
 
-    return response.json<{ item: SpotifySong }>().then(({ item }) => mapSong(item));
+    return response.json<{ item: SpotifyRawDataTrack }>().then(({ item }) => mapSong(item));
   }
 
   public async getRecentlyPlayed(tracks = 3, after?: Date) {
@@ -163,12 +163,12 @@ export class Spotify extends KVRepository {
     });
 
     return response
-      .json<{ items: Array<{ track: SpotifySong }> }>()
+      .json<{ items: Array<{ track: SpotifyRawDataTrack }> }>()
       .then((songs) => songs.items.map(({ track }) => mapSong(track)));
   }
 }
 
-type SpotifySong = {
+type SpotifyRawDataTrack = {
   id: string;
   name: string;
   explicit: boolean;
@@ -180,7 +180,7 @@ type SpotifySong = {
   }[];
 };
 
-const mapSong = (data: SpotifySong) => {
+const mapSong = (data: SpotifyRawDataTrack) => {
   if (!data?.id) {
     return null;
   }
@@ -197,3 +197,5 @@ const mapSong = (data: SpotifySong) => {
     })),
   };
 };
+
+export type SpotifyTrack = ReturnType<typeof mapSong>;
