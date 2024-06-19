@@ -179,6 +179,10 @@ type SpotifySong = {
 };
 
 const mapSong = (data: SpotifySong) => {
+  if (!data?.id) {
+    return null;
+  }
+
   return {
     id: data.id,
     url: data.external_urls.spotify,
