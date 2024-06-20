@@ -14,9 +14,9 @@ import { captureRemixErrorBoundaryError, withSentry } from '@sentry/remix';
 import stylesheet from '~/tailwind.css?url';
 
 import { Code } from './components/code';
-import { Experiments } from './components/experiments';
 import Footer from './components/footer';
 import Header from './components/header';
+import { NowPlaying } from './components/now-playing';
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: stylesheet }];
 
@@ -101,7 +101,7 @@ const App = () => {
       </head>
       <body suppressHydrationWarning className="relative">
         <div className="mx-auto" style={{ maxWidth: '768px' }}>
-          <Experiments />
+          <NowPlaying />
           <Header />
           <main className="my-6 sm:my-10">
             <Outlet />

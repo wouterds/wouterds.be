@@ -3,7 +3,7 @@ import { Fragment, useCallback, useEffect, useState } from 'react';
 import { useInterval } from '~/hooks/use-interval';
 import { SpotifyTrack } from '~/lib/spotify';
 
-export const Experiments = () => {
+export const NowPlaying = () => {
   const [nowPlaying, setNowPlaying] = useState<SpotifyTrack | null>(null);
 
   const fetchNowPlaying = useCallback(async () => {
