@@ -102,8 +102,8 @@ export class Spotify extends KVRepository {
       }
     }
 
-    // not expired yet?
-    if (!isPast(this._expiry!)) {
+    // token not yet expired
+    if (this._expiry && !isPast(this._expiry)) {
       return;
     }
 
@@ -123,12 +123,12 @@ export class Spotify extends KVRepository {
 
     const data = await response.json<{
       access_token: string;
-      refresh_token: string;
+      // refresh_token: string;
       expires_in: number;
     }>();
 
     this._accessToken = data.access_token;
-    this._refreshToken = data.refresh_token;
+    // this._refreshToken = data.refresh_token;
     this._expiry = addSeconds(new Date(), data.expires_in);
 
     await this.storeTokens();
@@ -168,8 +168,8 @@ export class Spotify extends KVRepository {
     });
 
     return response
-      .json<{ items: Array<{ track: SpotifyRawDataTrack }> }>()
-      .then((songs) => songs.items.map(({ track }) => mapSong(track)));
+      .json<{ items: Array<{ track: SpotifyRawDataTrack; played_at: string }> }>()
+      .then((songs) => songs.items.map(({ track, played_at }) => mapSong(track, played_at)));
   }
 }
 
@@ -186,7 +186,7 @@ type SpotifyRawDataTrack = {
   played_at: string;
 };
 
-const mapSong = (data: SpotifyRawDataTrack) => {
+const mapSong = (data: SpotifyRawDataTrack, playedAt?: string) => {
   if (!data?.id) {
     return null;
   }
@@ -201,7 +201,7 @@ const mapSong = (data: SpotifyRawDataTrack) => {
       name: artist.name,
       url: artist.external_urls.spotify,
     })),
-    playedAt: getUnixTime(data?.played_at || new Date()),
+    playedAt: getUnixTime(playedAt || new Date()),
   };
 };
 

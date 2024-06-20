@@ -1,5 +1,5 @@
 import { json, LoaderFunctionArgs } from '@remix-run/cloudflare';
-import { differenceInMinutes, fromUnixTime } from 'date-fns';
+import { differenceInMinutes } from 'date-fns';
 
 import { AranetRepository } from '~/data/repositories/aranet-repository';
 import { TeslaRepository } from '~/data/repositories/tesla-repository';
@@ -14,12 +14,10 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
 
   let track: SpotifyTrack | null = await spotify.getCurrentlyPlaying();
   if (!track) {
-    const recentlyPlayed = await spotify.getRecentlyPlayed();
-    track = recentlyPlayed?.[0] || null;
-  }
-
-  if (track && differenceInMinutes(new Date(), fromUnixTime(track.playedAt)) > 3) {
-    track = null;
+    const recentlyPlayed = await spotify.getRecentlyPlayed(1)?.then((tracks) => tracks?.[0]);
+    if (recentlyPlayed && differenceInMinutes(new Date(), recentlyPlayed.playedAt) > 10) {
+      track = recentlyPlayed;
+    }
   }
 
   return json(

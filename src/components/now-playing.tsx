@@ -7,7 +7,7 @@ export const NowPlaying = () => {
   const [nowPlaying, setNowPlaying] = useState<SpotifyTrack | null>(null);
 
   const fetchNowPlaying = useCallback(async () => {
-    const response = await fetch('/api/experiments');
+    const response = await fetch('https://wouterds.be/api/experiments');
     if (!response.ok) {
       return;
     }
@@ -16,7 +16,7 @@ export const NowPlaying = () => {
     setNowPlaying(data.spotify);
   }, []);
 
-  useInterval(fetchNowPlaying, 10_000);
+  useInterval(fetchNowPlaying, 5_000);
 
   useEffect(() => {
     fetchNowPlaying();
@@ -29,9 +29,9 @@ export const NowPlaying = () => {
   return (
     <div
       aria-hidden
-      className="items-center gap-2 pb-2 text-zinc-400 dark:text-zinc-500 hidden md:flex"
+      className="flex items-center gap-2 pb-2 text-zinc-400 dark:text-zinc-500 text-nowrap flex-nowrap w-full overflow-hidden"
       title="Yo, this is what I'm listening to right now ツ">
-      <span className="inline-flex overflow-hidden h-4 items-center gap-1.5">
+      <span className="inline-flex h-4 items-center gap-1.5 shrink-0">
         <style type="text/css">{`
           .sound-bars {
             position: relative;
@@ -49,7 +49,7 @@ export const NowPlaying = () => {
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
             transform-origin: bottom;
-            animation: bounce 2.2s ease infinite alternate;
+            animation: bounce 3s ease infinite alternate;
             content: '';
           }
 
@@ -69,7 +69,7 @@ export const NowPlaying = () => {
             100% { transform: scaleY(0.6); }
           }
         `}</style>
-        <span className="sound-bars mr-0.5">
+        <span className="sound-bars mr-0.5 shrink-0">
           <span className="bg-zinc-400 dark:bg-zinc-500" />
           <span className="bg-zinc-400 dark:bg-zinc-500" />
           <span className="bg-zinc-400 dark:bg-zinc-500" />
@@ -78,12 +78,14 @@ export const NowPlaying = () => {
         {nowPlaying.name}
       </span>
       {' - '}
-      {nowPlaying.artist.map((artist, index) => (
-        <Fragment key={artist.id}>
-          {artist.name}
-          {index < nowPlaying.artist.length - 1 ? ', ' : ''}
-        </Fragment>
-      ))}
+      <span className="truncate block">
+        {nowPlaying.artist.map((artist, index) => (
+          <Fragment key={artist.id}>
+            {artist.name}
+            {index < nowPlaying.artist.length - 1 ? ', ' : ''}
+          </Fragment>
+        ))}
+      </span>
     </div>
   );
 };
