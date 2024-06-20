@@ -1,9 +1,9 @@
 import { json, LoaderFunctionArgs } from '@remix-run/cloudflare';
-import { subMinutes } from 'date-fns';
+import { differenceInMinutes, fromUnixTime } from 'date-fns';
 
 import { AranetRepository } from '~/data/repositories/aranet-repository';
 import { TeslaRepository } from '~/data/repositories/tesla-repository';
-import { Spotify } from '~/lib/spotify';
+import { Spotify, SpotifyTrack } from '~/lib/spotify';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   const tesla = TeslaRepository.create(context);
@@ -12,16 +12,21 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
 
   await spotify.refreshAccessToken();
 
-  const [lastSong, recentlyPlayed] = await Promise.all([
-    spotify.getCurrentlyPlaying(),
-    spotify.getRecentlyPlayed(1, subMinutes(new Date(), 5)).then((tracks) => tracks?.[0]),
-  ]);
+  let track: SpotifyTrack | null = await spotify.getCurrentlyPlaying();
+  if (!track) {
+    const recentlyPlayed = await spotify.getRecentlyPlayed();
+    track = recentlyPlayed?.[0] || null;
+  }
+
+  if (track && differenceInMinutes(new Date(), fromUnixTime(track.playedAt)) > 3) {
+    track = null;
+  }
 
   return json(
     {
       aranet: await aranet.getLast(),
       tesla: await tesla.getLast(),
-      spotify: lastSong || recentlyPlayed || null,
+      spotify: track,
     },
     {
       headers: {

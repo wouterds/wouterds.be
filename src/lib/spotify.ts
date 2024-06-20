@@ -159,10 +159,9 @@ export class Spotify extends KVRepository {
     return response.json<{ item: SpotifyRawDataTrack }>().then(({ item }) => mapSong(item));
   }
 
-  public async getRecentlyPlayed(tracks = 3, after?: Date) {
+  public async getRecentlyPlayed(tracks = 3) {
     const params = new URLSearchParams({});
     if (tracks) params.append('limit', tracks.toString());
-    if (after) params.append('after', (getUnixTime(after) * 1000).toString());
 
     const response = await fetch(`https://api.spotify.com/v1/me/player/recently-played?${params}`, {
       headers: { Authorization: `Bearer ${this._accessToken}` },
@@ -184,6 +183,7 @@ type SpotifyRawDataTrack = {
     name: string;
     external_urls: { spotify: string };
   }[];
+  played_at: string;
 };
 
 const mapSong = (data: SpotifyRawDataTrack) => {
@@ -201,6 +201,7 @@ const mapSong = (data: SpotifyRawDataTrack) => {
       name: artist.name,
       url: artist.external_urls.spotify,
     })),
+    playedAt: getUnixTime(data?.played_at || new Date()),
   };
 };
 
