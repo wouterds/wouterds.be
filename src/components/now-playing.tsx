@@ -39,7 +39,7 @@ export const NowPlaying = () => {
             justify-content: space-between;
             width: 13px;
             height: 12px;
-            margin-top: -2px;
+            margin-top: -1px;
           }
 
           .sound-bars span {
