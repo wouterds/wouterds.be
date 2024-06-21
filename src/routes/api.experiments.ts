@@ -15,7 +15,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   let track: SpotifyTrack | null = await spotify.getCurrentlyPlaying();
   if (!track) {
     const recentlyPlayed = await spotify.getRecentlyPlayed(1)?.then((tracks) => tracks?.[0]);
-    if (recentlyPlayed && differenceInMinutes(recentlyPlayed.playedAt, new Date()) > 10) {
+    if (recentlyPlayed && differenceInMinutes(recentlyPlayed.playedAt, new Date()) <= 5) {
       track = recentlyPlayed;
     }
   }
