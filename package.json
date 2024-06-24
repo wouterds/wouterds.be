@@ -43,7 +43,7 @@
     "@graphql-codegen/cli": "^5.0.2",
     "@graphql-codegen/client-preset": "^4.3.0",
     "@remix-run/dev": "^2.9.2",
-    "@sentry/vite-plugin": "^2.18.0",
+    "@sentry/vite-plugin": "^2.19.0",
     "@tailwindcss/typography": "^0.5.13",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
