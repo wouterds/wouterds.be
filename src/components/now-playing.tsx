@@ -7,7 +7,7 @@ export const NowPlaying = () => {
   const [nowPlaying, setNowPlaying] = useState<SpotifyTrack | null>(null);
 
   const fetchNowPlaying = useCallback(async () => {
-    const response = await fetch('https://wouterds.be/api/experiments');
+    const response = await fetch('/api/experiments');
     if (!response.ok) {
       return;
     }
