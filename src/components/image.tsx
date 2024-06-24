@@ -22,7 +22,6 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
   const image = useMemo(() => images[activeIndex]!, [activeIndex, images]);
 
   const onResetIndex = useCallback(() => {
-    console.log('resetting index', originalImageIndex);
     setActiveIndex(originalImageIndex);
   }, [originalImageIndex]);
 
