@@ -7,7 +7,7 @@ node_modules
 .wrangler
 
 # Generated
-src/graphql/types.ts
+src/data/graphql/types.ts
 
 # Sentry Config File
 .sentryclirc
