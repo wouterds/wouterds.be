@@ -16,6 +16,7 @@ export default defineConfig({
       appDirectory: 'src',
       future: {
         unstable_singleFetch: true,
+        unstable_fogOfWar: true,
         v3_fetcherPersist: true,
         v3_relativeSplatPath: true,
         v3_throwAbortReason: true,
