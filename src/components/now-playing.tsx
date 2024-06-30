@@ -29,27 +29,23 @@ export const NowPlaying = () => {
   return (
     <div
       aria-hidden
-      className="flex items-center gap-2 pb-2 text-zinc-400 dark:text-zinc-500 text-nowrap flex-nowrap w-full overflow-hidden"
-      title="Yo, this is what I'm listening to right now ツ">
+      className="flex items-center gap-2 pb-2 text-zinc-400 dark:text-zinc-500 hover:text-emerald-600 dark:hover:text-emerald-400 text-nowrap flex-nowrap w-full group relative cursor-pointer">
       <span className="inline-flex h-4 items-center gap-1.5 shrink-0">
         <style type="text/css">{`
           .sound-bars {
             position: relative;
             display: flex;
             justify-content: space-between;
-            width: 13px;
             height: 12px;
             margin-top: -1px;
+            gap: 1.5px;
           }
 
           .sound-bars span {
-            width: 3px;
+            width: 2.5px;
             height: 100%;
-            border-radius: 2px;
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
             transform-origin: bottom;
-            animation: bounce 3s ease infinite alternate;
+            animation: bounce 2.5s ease infinite alternate;
             content: '';
           }
 
@@ -61,6 +57,10 @@ export const NowPlaying = () => {
             animation-delay: -3.7s;
           }
 
+          .sound-bars span:nth-of-type(4) {
+            animation-delay: -5.2s;
+          }
+
           @keyframes bounce {
             10% { transform: scaleY(0.3); }
             30% { transform: scaleY(1); }
@@ -70,9 +70,10 @@ export const NowPlaying = () => {
           }
         `}</style>
         <span className="sound-bars mr-0.5 shrink-0">
-          <span className="bg-zinc-400 dark:bg-zinc-500" />
-          <span className="bg-zinc-400 dark:bg-zinc-500" />
-          <span className="bg-zinc-400 dark:bg-zinc-500" />
+          <span className="bg-zinc-400 dark:bg-zinc-500 group-hover:bg-emerald-500 dark:group-hover:bg-emerald-400" />
+          <span className="bg-zinc-400 dark:bg-zinc-500 group-hover:bg-emerald-500 dark:group-hover:bg-emerald-400" />
+          <span className="bg-zinc-400 dark:bg-zinc-500 group-hover:bg-emerald-500 dark:group-hover:bg-emerald-400" />
+          {/* <span className="bg-zinc-400 dark:bg-zinc-500 group-hover:bg-emerald-500 dark:group-hover:bg-emerald-400" /> */}
         </span>
         {nowPlaying.explicit && <span className="font-sans text-lg leading-none">🅴</span>}
         {nowPlaying.name}
@@ -86,6 +87,21 @@ export const NowPlaying = () => {
           </Fragment>
         ))}
       </span>
+      <div className="absolute left-0 top-1.5 pt-4 z-10 hidden group-hover:block">
+        <div className="bg-black/90 rounded p-3 text-xs text-white leading-relaxed relative cursor-auto">
+          <div className="absolute w-0 h-0 border-4 border-transparent border-b-black/90 -top-2 left-2" />
+          <p>
+            Yo, this is what I&apos;m listening to right now ツ<br />
+            <a
+              href={nowPlaying.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline hover:text-emerald-400 hover:bg-transparent">
+              {nowPlaying.url}
+            </a>
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
