@@ -6,16 +6,8 @@
 
 import type { AppLoadContext, EntryContext } from '@remix-run/cloudflare';
 import { RemixServer } from '@remix-run/react';
-import * as Sentry from '@sentry/remix';
 import { isbot } from 'isbot';
 import { renderToReadableStream } from 'react-dom/server';
-
-Sentry.init({
-  enabled: process.env.NODE_ENV === 'production',
-  dsn: 'https://41ad59484a5981cf167f53707e36e9f3@o308818.ingest.us.sentry.io/4507349805236224',
-});
-
-export const handleError = Sentry.wrapRemixHandleError;
 
 export default async function handleRequest(
   request: Request,

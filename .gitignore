@@ -8,6 +8,3 @@ node_modules
 
 # Generated
 src/data/graphql/types.ts
-
-# Sentry Config File
-.sentryclirc

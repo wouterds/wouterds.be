@@ -9,7 +9,6 @@ import {
   useLoaderData,
   useRouteError,
 } from '@remix-run/react';
-import { captureRemixErrorBoundaryError, withSentry } from '@sentry/remix';
 
 import stylesheet from '~/tailwind.css?url';
 
@@ -137,11 +136,10 @@ const App = () => {
   );
 };
 
-export default withSentry(App, { wrapWithErrorBoundary: false });
+export default App;
 
 export const ErrorBoundary = () => {
   const error = useRouteError();
-  captureRemixErrorBoundaryError(error);
 
   return (
     <html lang="en">
