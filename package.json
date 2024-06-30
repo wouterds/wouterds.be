@@ -15,7 +15,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.6.0",
     "@marsidev/react-turnstile": "^0.7.1",
-    "@remix-run/cloudflare": "^2.9.2",
+    "@remix-run/cloudflare": "^2.10.0",
     "@remix-run/cloudflare-pages": "^2.9.2",
     "@remix-run/react": "^2.9.2",
     "@sentry/remix": "^8.13.0",
