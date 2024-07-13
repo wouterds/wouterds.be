@@ -3,7 +3,6 @@
 ![code-review](https://github.com/wouterds/wouterds.be/actions/workflows/code-review.yml/badge.svg?branch=main)
 ![tests](https://github.com/wouterds/wouterds.be/actions/workflows/tests.yml/badge.svg?branch=main)
 ![deploy](https://github.com/wouterds/wouterds.be/actions/workflows/deploy.yml/badge.svg?branch=main)
-[![Better Stack Badge](https://uptime.betterstack.com/status-badges/v2/monitor/za5r.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
 ![code-size](https://img.shields.io/github/languages/code-size/wouterds/wouterds.be)
 
 Personal website, made with React, Remix, TypeScript, Cloudflare Pages and DatoCMS as headless CMS.
