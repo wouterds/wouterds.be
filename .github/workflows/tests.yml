@@ -1,5 +1,8 @@
 name: tests
 
+permissions:
+  contents: write
+
 on:
   push:
     branches: ['**']
@@ -21,3 +24,4 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run test
+      - uses: wouterds/github-coverage-badge-action@main
