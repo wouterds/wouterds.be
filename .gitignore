@@ -5,6 +5,7 @@ node_modules
 /build
 .dev.vars
 .wrangler
+.vite
 
 # Generated
 src/data/graphql/types.ts
