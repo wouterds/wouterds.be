@@ -23,5 +23,5 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-      - run: npm run test
-      - uses: wouterds/github-coverage-badge-action@main
+      - run: npm test
+      - uses: wouterds/github-coverage-badge-action@v1
