@@ -3,6 +3,7 @@ name: code-review
 on:
   push:
     branches: ['**']
+    paths: [src/**, package.json]
   workflow_call:
 
 concurrency:
