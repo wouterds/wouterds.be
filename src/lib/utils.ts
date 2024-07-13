@@ -1,5 +1,5 @@
 export const humanReadableSize = (size?: number) => {
-  if (!size) {
+  if (typeof size !== 'number') {
     return null;
   }
 
