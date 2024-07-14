@@ -1,6 +1,6 @@
 import { StructuredText } from 'datocms-structured-text-utils';
 
-import { excerptFromContent, plainTextFromContent } from './datocms';
+import { excerptFromContent, imagesFromContent, plainTextFromContent } from './datocms';
 
 describe('datocms', () => {
   describe('plainTextFromContent', () => {
@@ -69,6 +69,51 @@ describe('datocms', () => {
 
       // then
       expect(result).toEqual('Hello, world!\nThis is test…');
+    });
+  });
+
+  describe('imagesFromContent', () => {
+    it('should return images from content', () => {
+      // given
+      const content = {
+        blocks: [
+          {
+            __typename: 'GalleryRecord',
+            images: [
+              {
+                url: 'https://example.com/image1.jpg',
+              },
+              {
+                url: 'https://example.com/image2.jpg',
+              },
+            ],
+          },
+          {
+            __typename: 'GalleryRecord',
+            images: [
+              {
+                url: 'https://example.com/image3.jpg',
+              },
+            ],
+          },
+        ],
+      } as unknown as StructuredText;
+
+      // when
+      const result = imagesFromContent(content);
+
+      // then
+      expect(result).toEqual([
+        {
+          url: 'https://example.com/image1.jpg',
+        },
+        {
+          url: 'https://example.com/image2.jpg',
+        },
+        {
+          url: 'https://example.com/image3.jpg',
+        },
+      ]);
     });
   });
 });
