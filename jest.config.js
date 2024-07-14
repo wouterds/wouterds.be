@@ -5,5 +5,5 @@ export default {
   transform: {
     '^.+.tsx?$': ['ts-jest', {}],
   },
-  coverageReporters: ['json-summary'],
+  coverageReporters: ['json-summary', 'text-summary'],
 };
