@@ -115,5 +115,16 @@ describe('datocms', () => {
         },
       ]);
     });
+
+    it('should return empty array when no blocks are defined', () => {
+      // given
+      const content = {} as StructuredText;
+
+      // when
+      const result = imagesFromContent(content);
+
+      // then
+      expect(result).toEqual([]);
+    });
   });
 });
