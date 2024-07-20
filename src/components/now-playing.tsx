@@ -27,9 +27,13 @@ export const NowPlaying = () => {
   }
 
   return (
-    <div
+    <a
       aria-hidden
-      className="flex items-center gap-2 pb-2 text-zinc-400 dark:text-zinc-500 hover:text-emerald-500 dark:hover:text-emerald-400 text-nowrap flex-nowrap w-full group relative cursor-pointer">
+      className="flex items-center gap-2 pb-2 text-zinc-400 dark:text-zinc-500 hover:text-emerald-500 dark:hover:text-emerald-400 text-nowrap flex-nowrap w-full group relative cursor-pointer hover:bg-transparent"
+      href={nowPlaying.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      title="Now playing on Spotify">
       <span className="inline-flex h-4 items-center gap-1.5 shrink-0">
         <style type="text/css">{`
           .sound-bars {
@@ -86,21 +90,6 @@ export const NowPlaying = () => {
           </Fragment>
         ))}
       </span>
-      <div className="absolute -right-6 sm:right-auto -left-6 sm:left-0 top-2 sm:top-1.5 pt-4 z-10 hidden group-hover:block">
-        <div className="bg-black/90 sm:rounded px-6 sm:px-3 p-3 text-xs text-white leading-relaxed relative cursor-auto">
-          <div className="absolute w-0 h-0 border-4 border-transparent border-b-black/90 -top-2 left-8 sm:left-2" />
-          <p className="truncate">
-            Yo, this is what I&apos;m listening to right now ツ<br />
-            <a
-              href={nowPlaying.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline hover:text-emerald-400 hover:bg-transparent truncate">
-              {nowPlaying.url}
-            </a>
-          </p>
-        </div>
-      </div>
-    </div>
+    </a>
   );
 };
