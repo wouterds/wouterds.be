@@ -112,7 +112,7 @@ export default function Contact() {
         <div className="flex gap-4 flex-col sm:flex-row">
           <div className="flex-1">
             <label className="font-semibold inline-block mb-1" htmlFor="name">
-              Name
+              name
             </label>
             <input
               type="text"
@@ -128,7 +128,7 @@ export default function Contact() {
           </div>
           <div className="flex-1">
             <label className="font-semibold inline-block mb-1" htmlFor="email">
-              Email
+              email
             </label>
             <input
               type="text"
@@ -145,7 +145,7 @@ export default function Contact() {
         </div>
         <div>
           <label className="font-semibold inline-block mb-1" htmlFor="message">
-            Message
+            message
           </label>
           <textarea
             id="message"
