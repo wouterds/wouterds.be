@@ -34,6 +34,10 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
     distance: parseFloat(
       (((response?.vehicle_state?.odometer || 0) * 1.60934 || last?.distance) as number).toFixed(3),
     ),
+    temperature: {
+      inside: response?.climate_state?.inside_temp || (last?.temperature.inside as number),
+      outside: response?.climate_state?.outside_temp || (last?.temperature.outside as number),
+    },
     time: getUnixTime(new Date()),
     wake: !!response,
   });

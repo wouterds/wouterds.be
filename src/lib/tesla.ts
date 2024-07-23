@@ -81,6 +81,10 @@ export class Tesla {
           vehicle_name?: string;
           car_version?: string;
         };
+        climate_state?: {
+          inside_temp?: number;
+          outside_temp?: number;
+        };
       };
     }>();
   }

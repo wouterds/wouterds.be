@@ -214,6 +214,10 @@ export class TeslaRepository extends KVRepository {
 export type TeslaRecord = {
   battery: number;
   distance: number;
+  temperature: {
+    inside: number;
+    outside: number;
+  };
   time: number;
   wake: boolean;
 };
