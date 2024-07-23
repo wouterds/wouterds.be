@@ -26,6 +26,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
     teslaLastCharged: await teslaRepository.lastCharged(),
     teslaLast24h: await teslaRepository.getAll({ days: 1 }),
     teslaDistance: await teslaRepository.distancePerDay({ days: 90 }),
+    teslaChargedPerDay: await teslaRepository.chargedPerDay({ days: 90 }),
     teslaBatteryConsumptionPerDay: await teslaRepository.batteryConsumptionPerDay({ days: 90 }),
   });
 };
@@ -44,6 +45,7 @@ export default function Experiments() {
     p1History,
     teslaLast24h,
     teslaDistance,
+    teslaChargedPerDay,
     teslaBatteryConsumptionPerDay,
     teslaBatteryConsumedToday,
     teslaBatteryChargedToday,
@@ -67,6 +69,19 @@ export default function Experiments() {
       { distance: 0 } as { date: string; distance: number },
     );
   }, [teslaDistance]);
+
+  const mostChargedDay = useMemo(() => {
+    return teslaChargedPerDay?.reduce(
+      (acc, record) => {
+        if (record.battery > acc.battery) {
+          return record;
+        }
+
+        return acc;
+      },
+      { battery: 0 } as { date: string; battery: number },
+    );
+  }, [teslaChargedPerDay]);
 
   const p1Peak = useMemo(() => {
     return p1.reduce(
@@ -230,6 +245,26 @@ export default function Experiments() {
               <span>
                 last charged to: {teslaLastCharged?.battery?.toFixed(0)}% @{' '}
                 {format(fromUnixTime(teslaLastCharged?.time || 0), 'dd.MM.yyyy, HH:mm')}
+              </span>
+            ),
+          ]}
+        />
+      )}
+      {teslaChargedPerDay.length > 0 && (
+        <BarChart
+          syncId="tesla"
+          data={teslaChargedPerDay}
+          dataKey="battery"
+          unit="%"
+          rounding={0}
+          label="battery charging (last 90 days)"
+          className="mt-4"
+          footer={[
+            lastTeslaUpdate && <span>last updated: {lastTeslaUpdate}</span>,
+            mostChargedDay && (
+              <span>
+                most charging: {mostChargedDay.battery.toFixed(0)}% @{' '}
+                {format(mostChargedDay?.date, 'dd.MM.yyyy')}
               </span>
             ),
           ]}

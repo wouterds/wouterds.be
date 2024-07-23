@@ -129,6 +129,35 @@ export class TeslaRepository extends KVRepository {
     });
   };
 
+  public chargedPerDay = async (options?: { days?: number }) => {
+    const days = options?.days || 0;
+    if (!days) {
+      return [];
+    }
+
+    return this.getAll({ days }).then((data) => {
+      return Array.from({ length: days }, (_, index) => {
+        const date = subDays(new Date(), index);
+
+        let battery = 0;
+        let previous: TeslaRecord | null = null;
+        for (const record of data) {
+          if (!isSameDay(date, fromUnixTime(record.time))) {
+            continue;
+          }
+
+          if (previous && record.battery > previous?.battery) {
+            battery += record.battery - previous.battery;
+          }
+
+          previous = record;
+        }
+
+        return { date, battery };
+      }).reverse();
+    });
+  };
+
   public batteryConsumedToday = async () => {
     return this.getAll({ days: 1 }).then((data) => {
       let battery = 0;
