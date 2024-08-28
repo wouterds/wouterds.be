@@ -43,7 +43,7 @@
     "@graphql-codegen/cli": "^5.0.2",
     "@graphql-codegen/client-preset": "^4.3.3",
     "@remix-run/dev": "^2.11.2",
-    "@tailwindcss/typography": "^0.5.14",
+    "@tailwindcss/typography": "^0.5.15",
     "@types/jest": "^29.5.12",
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
