@@ -39,7 +39,7 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240909.0",
     "@commitlint/cli": "^19.5.0",
-    "@commitlint/config-conventional": "^19.4.1",
+    "@commitlint/config-conventional": "^19.5.0",
     "@graphql-codegen/cli": "^5.0.2",
     "@graphql-codegen/client-preset": "^4.3.3",
     "@remix-run/dev": "^2.11.2",
