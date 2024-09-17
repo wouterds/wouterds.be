@@ -5,7 +5,6 @@
     "types": [
       "@remix-run/cloudflare",
       "vite/client",
-      "@remix-run/react/future/single-fetch.d.ts",
       "node",
       "jest"
     ],

@@ -7,6 +7,12 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 import { getLoadContext } from './load-context';
 
+declare module '@remix-run/server-runtime' {
+  interface Future {
+    unstable_singleFetch: true;
+  }
+}
+
 export default defineConfig({
   server: { port: 3000 },
   plugins: [
@@ -17,6 +23,7 @@ export default defineConfig({
       future: {
         unstable_singleFetch: true,
         unstable_lazyRouteDiscovery: true,
+        unstable_optimizeDeps: true,
         v3_fetcherPersist: true,
         v3_relativeSplatPath: true,
         v3_throwAbortReason: true,
