@@ -18,7 +18,7 @@
     "@marsidev/react-turnstile": "^1.0.2",
     "@remix-run/react": "^2.12.0",
     "@remix-run/cloudflare-pages": "^2.12.0",
-    "@remix-run/cloudflare": "^2.12.0",
+    "@remix-run/cloudflare": "^2.12.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "datocms-structured-text-to-html-string": "^4.0.1",
