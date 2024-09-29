@@ -1,6 +1,6 @@
 import { float, int, mysqlTable, timestamp } from 'drizzle-orm/mysql-core';
 
-export const AranetModel = mysqlTable('aranet-readings', {
+export const AranetReadingsModel = mysqlTable('aranet-readings', {
   id: int('id').autoincrement().primaryKey(),
   temperature: float('temperature').notNull(),
   humidity: int('humidity').notNull(),
