@@ -12,7 +12,8 @@
     "typecheck": "tsc",
     "test": "jest --coverage",
     "codegen": "graphql-codegen",
-    "database:migrations:generate": "drizzle-kit generate"
+    "database:migrations": "drizzle-kit generate",
+    "database:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
