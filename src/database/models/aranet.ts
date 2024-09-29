@@ -7,5 +7,5 @@ export const AranetModel = mysqlTable('aranet-readings', {
   co2: int('co2').notNull(),
   pressure: float('pressure').notNull(),
   battery: int('battery').notNull(),
-  timestamp: timestamp('timestamp').notNull().defaultNow(),
+  created_at: timestamp('created_at').notNull().defaultNow(),
 });
