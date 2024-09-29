@@ -11,7 +11,8 @@
     "lint:fix": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint --ext .js,.jsx,.ts,.tsx --fix ./src",
     "typecheck": "tsc",
     "test": "jest --coverage",
-    "codegen": "graphql-codegen"
+    "codegen": "graphql-codegen",
+    "database:migrations:generate": "drizzle-kit generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
