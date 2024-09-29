@@ -1,12 +1,9 @@
-import { AppLoadContext } from '@remix-run/cloudflare';
-
 type Contact = {
   name?: string;
   email: string;
 };
 
 export class MailjetMailer {
-  private _context: AppLoadContext;
   private _sender?: Contact;
   private _replyTo?: Contact;
   private _receiver?: Contact;
@@ -14,20 +11,12 @@ export class MailjetMailer {
   private _textMessage?: string;
   private _htmlMessage?: string;
 
-  public constructor(context: AppLoadContext) {
-    this._context = context;
-  }
-
-  public static create(context: AppLoadContext) {
-    return new MailjetMailer(context);
-  }
-
   private get apiKey() {
-    return this._context.cloudflare.env.MAILJET_API_KEY;
+    return process.env.MAILJET_API_KEY;
   }
 
   private get apiSecret() {
-    return this._context.cloudflare.env.MAILJET_API_SECRET;
+    return process.env.MAILJET_API_SECRET;
   }
 
   private get auth() {

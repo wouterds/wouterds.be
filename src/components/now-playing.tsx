@@ -12,7 +12,7 @@ export const NowPlaying = () => {
       return;
     }
 
-    const data = await response.json<{ spotify: SpotifyTrack | null }>();
+    const data: { spotify: SpotifyTrack | null } = await response.json();
     setNowPlaying(data.spotify);
   }, []);
 

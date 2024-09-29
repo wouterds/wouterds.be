@@ -1,4 +1,4 @@
-import { json, LoaderFunctionArgs, redirect } from '@remix-run/cloudflare';
+import { json, LoaderFunctionArgs, redirect } from '@remix-run/node';
 
 import { Spotify } from '~/lib/spotify';
 

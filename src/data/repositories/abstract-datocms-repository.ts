@@ -1,19 +1,8 @@
-import { AppLoadContext } from '@remix-run/cloudflare';
 import { ASTNode, print } from 'graphql';
 
 export abstract class DatoCMSRepository {
-  private _context: AppLoadContext;
-
-  public constructor(context: AppLoadContext) {
-    this._context = context;
-  }
-
   private get apiKey() {
-    return this._context.cloudflare.env.DATOCMS_API_KEY;
-  }
-
-  private get inPreviewMode() {
-    return this._context.inPreviewMode;
+    return process.env.DATOCMS_API_KEY;
   }
 
   private get headers() {
@@ -22,9 +11,9 @@ export abstract class DatoCMSRepository {
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', `Bearer ${this.apiKey}`);
 
-    if (this.inPreviewMode) {
-      headers.append('X-Include-Drafts', 'true');
-    }
+    // if (this.inPreviewMode) {
+    //   headers.append('X-Include-Drafts', 'true');
+    // }
 
     return headers;
   }
@@ -41,6 +30,6 @@ export abstract class DatoCMSRepository {
       body: JSON.stringify({ query: print(query), variables: options.variables }),
     });
 
-    return response.json<{ data: TData }>().then(({ data }) => data);
+    return response.json().then(({ data }) => data as TData);
   };
 }

@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
+import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import clsx from 'clsx';
 import { format } from 'date-fns';
@@ -12,11 +12,11 @@ import { PostRepository } from '~/data/repositories/post-repository';
 import { useIsDarkMode } from '~/hooks/use-is-dark-mode';
 import { excerptFromContent, imagesFromContent, plainTextFromContent } from '~/lib/datocms';
 
-export const loader = async ({ request, context, params }: LoaderFunctionArgs) => {
+export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const baseUrl = `${url.protocol}//${url.host}`;
 
-  const post = await PostRepository.create(context).getPost(params.slug as string);
+  const post = await new PostRepository().getPost(params.slug as string);
   if (!post) {
     throw new Response(null, {
       status: 404,
@@ -25,8 +25,8 @@ export const loader = async ({ request, context, params }: LoaderFunctionArgs) =
   }
 
   const [previousPost, nextPost] = await Promise.all([
-    PostRepository.create(context).getPreviousPost(post.slug, post.date),
-    PostRepository.create(context).getNextPost(post.slug, post.date),
+    new PostRepository().getPreviousPost(post.slug, post.date),
+    new PostRepository().getNextPost(post.slug, post.date),
   ]);
 
   const content = post.content.value as unknown as StructuredTextDocument;

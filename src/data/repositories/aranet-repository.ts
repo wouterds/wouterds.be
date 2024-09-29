@@ -1,4 +1,4 @@
-import { AppLoadContext } from '@remix-run/cloudflare';
+import { AppLoadContext } from '@remix-run/node';
 
 import { KVRepository } from './abstract-kv-repository';
 

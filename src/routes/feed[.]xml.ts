@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs } from '@remix-run/cloudflare';
+import { LoaderFunctionArgs } from '@remix-run/node';
 import { render, StructuredTextDocument } from 'datocms-structured-text-to-html-string';
 import { isStructuredText } from 'datocms-structured-text-utils';
 import { Feed } from 'feed';
@@ -6,11 +6,11 @@ import { Feed } from 'feed';
 import { GalleryRecord, VideoRecord } from '~/data/graphql';
 import { PostRepository } from '~/data/repositories/post-repository';
 
-export const loader = async ({ request, context }: LoaderFunctionArgs) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const baseUrl = `${url.protocol}//${url.host}`;
 
-  const posts = await PostRepository.create(context).getPosts();
+  const posts = await new PostRepository().getPosts();
 
   const feed = new Feed({
     title: "Wouter's blog",

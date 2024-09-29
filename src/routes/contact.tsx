@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Turnstile } from '@marsidev/react-turnstile';
-import { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
+import { ActionFunctionArgs, MetaFunction } from '@remix-run/node';
 import { Form, json, useActionData, useLoaderData } from '@remix-run/react';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -9,9 +9,9 @@ import * as z from 'zod';
 import { CloudflareTurnstileValidator } from '~/lib/cloudflare';
 import { MailjetMailer } from '~/lib/mailjet';
 
-export const loader = ({ context }: LoaderFunctionArgs) => {
+export const loader = () => {
   return {
-    CLOUDFLARE_TURNSTILE_KEY: context.cloudflare.env.CLOUDFLARE_TURNSTILE_KEY,
+    CLOUDFLARE_TURNSTILE_KEY: process.env.CLOUDFLARE_TURNSTILE_KEY,
   };
 };
 
@@ -26,7 +26,7 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const action = async ({ request, context }: ActionFunctionArgs) => {
+export const action = async ({ request }: ActionFunctionArgs) => {
   const form = await request.formData();
   const data = Object.fromEntries(form) as Schema;
 
@@ -37,16 +37,17 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
   }
 
   const ip = request.headers.get('cf-connecting-ip')!;
-  const validator = CloudflareTurnstileValidator.create(context).setIp(ip);
+  const validator = new CloudflareTurnstileValidator().setIp(ip);
   if (!(await validator.validate(form.get('cf-turnstile-response')?.toString()))) {
     return json({ success: false }, { status: 403 });
   }
 
-  const location = `${context.cloudflare.cf.city ? `${context.cloudflare.cf.city}, ` : ''}${
-    context.cloudflare.cf.region ? `${context.cloudflare.cf.region}, ` : ''
-  }${context.cloudflare.cf.country || 'Unknown'}`;
+  const location = 'Unknown';
+  // const location = `${context.cloudflare.cf.city ? `${context.cloudflare.cf.city}, ` : ''}${
+  //   context.cloudflare.cf.region ? `${context.cloudflare.cf.region}, ` : ''
+  // }${context.cloudflare.cf.country || 'Unknown'}`;
 
-  const mailer = MailjetMailer.create(context);
+  const mailer = new MailjetMailer();
   mailer.setSender({ email: 'noreply@wouterds.be' });
   mailer.setReplyTo({ name: data.name, email: data.email });
   mailer.setReceiver({ name: 'Wouter De Schuyter', email: 'wouter.de.schuyter@gmail.com' });
@@ -183,7 +184,7 @@ export default function Contact() {
             </button>
           </div>
           <div>
-            <Turnstile siteKey={CLOUDFLARE_TURNSTILE_KEY} />
+            <Turnstile siteKey={CLOUDFLARE_TURNSTILE_KEY!} />
           </div>
         </div>
       </Form>

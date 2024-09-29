@@ -1,11 +1,11 @@
-import { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
+import { MetaFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 
 import { Posts } from '~/components/posts';
 import { Post, PostRepository } from '~/data/repositories/post-repository';
 
-export const loader = async ({ context }: LoaderFunctionArgs) => {
-  const posts = await PostRepository.create(context).getPosts(100);
+export const loader = async () => {
+  const posts = await new PostRepository().getPosts(100);
 
   return { posts };
 };

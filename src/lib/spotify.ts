@@ -1,6 +1,6 @@
 import { Buffer } from 'node:buffer';
 
-import { AppLoadContext } from '@remix-run/cloudflare';
+import { AppLoadContext } from '@remix-run/node';
 import { addSeconds, getUnixTime, isPast } from 'date-fns';
 
 import { KVRepository } from '~/data/repositories/abstract-kv-repository';
@@ -15,11 +15,11 @@ export class Spotify extends KVRepository {
   }
 
   private get clientId() {
-    return this.context.cloudflare.env.SPOTIFY_CLIENT_ID;
+    return process.env.SPOTIFY_CLIENT_ID!;
   }
 
   private get clientSecret() {
-    return this.context.cloudflare.env.SPOTIFY_CLIENT_SECRET;
+    return process.env.SPOTIFY_CLIENT_SECRET!;
   }
 
   public async loadTokens() {
@@ -82,11 +82,11 @@ export class Spotify extends KVRepository {
       }),
     });
 
-    const data = await response.json<{
+    const data: {
       access_token: string;
       refresh_token: string;
       expires_in: number;
-    }>();
+    } = await response.json();
 
     this._accessToken = data.access_token;
     this._refreshToken = data.refresh_token;
@@ -121,11 +121,11 @@ export class Spotify extends KVRepository {
       }),
     });
 
-    const data = await response.json<{
+    const data: {
       access_token: string;
       // refresh_token: string;
       expires_in: number;
-    }>();
+    } = await response.json();
 
     this._accessToken = data.access_token;
     // this._refreshToken = data.refresh_token;
@@ -139,7 +139,7 @@ export class Spotify extends KVRepository {
       headers: { Authorization: `Bearer ${this._accessToken}` },
     });
 
-    const data = await response.json<{ id: string; display_name: string }>();
+    const data: { id: string; display_name: string } = await response.json();
 
     return {
       id: data.id,
@@ -156,7 +156,7 @@ export class Spotify extends KVRepository {
       return null;
     }
 
-    return response.json<{ item: SpotifyRawDataTrack }>().then(({ item }) => mapSong(item));
+    return response.json().then(({ item }: { item: SpotifyRawDataTrack }) => mapSong(item));
   }
 
   public async getRecentlyPlayed(tracks = 3) {
@@ -168,8 +168,10 @@ export class Spotify extends KVRepository {
     });
 
     return response
-      .json<{ items: Array<{ track: SpotifyRawDataTrack; played_at: string }> }>()
-      .then((songs) => songs.items.map(({ track, played_at }) => mapSong(track, played_at)));
+      .json()
+      .then((songs: { items: Array<{ track: SpotifyRawDataTrack; played_at: string }> }) =>
+        songs.items.map(({ track, played_at }) => mapSong(track, played_at)),
+      );
   }
 }
 

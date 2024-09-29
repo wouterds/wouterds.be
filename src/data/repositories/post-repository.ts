@@ -1,5 +1,3 @@
-import { AppLoadContext } from '@remix-run/cloudflare';
-
 import {
   GetNextPostDocument,
   GetNextPostQuery,
@@ -22,8 +20,6 @@ export type Posts = NonNullable<Awaited<ReturnType<PostRepository['getPosts']>>>
 export type Post = Posts[number];
 
 export class PostRepository extends DatoCMSRepository {
-  public static create = (context: AppLoadContext) => new PostRepository(context);
-
   public getPosts = async (limit: number = 100) => {
     const data = await this.fetch<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, {
       variables: { limit },

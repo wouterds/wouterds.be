@@ -1,4 +1,4 @@
-import { json, LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
+import { json, LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { format, fromUnixTime } from 'date-fns';
 import { useMemo } from 'react';

@@ -1,4 +1,4 @@
-import { json, LoaderFunctionArgs } from '@remix-run/cloudflare';
+import { json, LoaderFunctionArgs } from '@remix-run/node';
 import { differenceInMinutes } from 'date-fns';
 
 import { AranetRepository } from '~/data/repositories/aranet-repository';

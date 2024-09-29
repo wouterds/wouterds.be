@@ -1,4 +1,4 @@
-import { AppLoadContext } from '@remix-run/cloudflare';
+import { AppLoadContext } from '@remix-run/node';
 
 import { TeslaRepository } from '~/data/repositories/tesla-repository';
 
@@ -48,7 +48,7 @@ export class Tesla {
       }),
     });
 
-    const data = await response.json<{ access_token: string; refresh_token: string }>();
+    const data: { access_token: string; refresh_token: string } = await response.json();
     if (!data.access_token) {
       throw new Error('Tesla auth failed');
     }
@@ -70,7 +70,7 @@ export class Tesla {
       },
     );
 
-    return response.json<{
+    return response.json() as Promise<{
       error?: string;
       response?: {
         charge_state?: {
@@ -86,7 +86,7 @@ export class Tesla {
           outside_temp?: number;
         };
       };
-    }>();
+    }>;
   }
 
   public async wakeUp() {

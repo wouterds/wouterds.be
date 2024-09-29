@@ -1,9 +1,9 @@
-.DS_Store
-node_modules/
+node_modules
+
+/.cache
 /build
-.dev.vars
-.cache/
-.vite/
-.wrangler/
+.env
+.DS_Store
+
 coverage/
 src/data/graphql/types.ts

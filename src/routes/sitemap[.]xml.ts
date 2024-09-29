@@ -1,12 +1,12 @@
-import { LoaderFunctionArgs } from '@remix-run/cloudflare';
+import { LoaderFunctionArgs } from '@remix-run/node';
 
 import { PostRepository } from '~/data/repositories/post-repository';
 
-export const loader = async ({ request, context }: LoaderFunctionArgs) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const baseUrl = `${url.protocol}//${url.host}`;
 
-  const posts = await PostRepository.create(context).getPosts();
+  const posts = await new PostRepository().getPosts();
 
   let sitemap = '<?xml version="1.0" encoding="UTF-8"?>';
   sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';

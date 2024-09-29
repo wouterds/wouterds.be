@@ -1,4 +1,6 @@
-import type { LinksFunction, LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
+import './tailwind.css';
+
+import type { LinksFunction, LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import {
   isRouteErrorResponse,
   Links,
@@ -10,37 +12,31 @@ import {
   useRouteError,
 } from '@remix-run/react';
 
-import stylesheet from '~/tailwind.css?url';
-
 import { Code } from './components/code';
 import Footer from './components/footer';
 import Header from './components/header';
 import { NowPlaying } from './components/now-playing';
 
-export const links: LinksFunction = () => [{ rel: 'stylesheet', href: stylesheet }];
+export const links: LinksFunction = () => [
+  { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+  {
+    rel: 'preconnect',
+    href: 'https://fonts.gstatic.com',
+    crossOrigin: 'anonymous',
+  },
+  {
+    rel: 'stylesheet',
+    href: 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap',
+  },
+];
 
-export const loader = async ({ request, context }: LoaderFunctionArgs) => {
+export const loader = async ({ request, context: _context }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
-  const baseUrl = `${url.protocol}//${url.host}`;
-
-  if (url.pathname.endsWith('/') && url.pathname !== '/') {
-    if (url.pathname === '//') {
-      throw new Response(null, { status: 301, headers: { Location: `/` } });
-    }
-
-    throw new Response(null, {
-      status: 301,
-      headers: { Location: `${url.pathname.slice(0, -1)}${url.search}` },
-    });
-  }
-
-  const cfRayId = request.headers.get('cf-ray') || '';
 
   return {
-    inPreviewMode: context.inPreviewMode,
     url,
-    ray: `${cfRayId}${cfRayId && '-'}${context.cloudflare.cf.colo}`,
-    canonical: new URL(url.pathname, baseUrl).href,
+    ray: request.headers.get('cf-ray'),
+    canonical: new URL(url.pathname, `${url.protocol}//${url.host}`).href,
   };
 };
 
@@ -109,7 +105,8 @@ const App = () => {
         </div>
         <div id="modal-portal" />
 
-        {data.inPreviewMode && (
+        {false && (
+          // todo
           <div className="fixed bottom-2 left-2 z-50 group">
             <p className="flex items-center text-white font-semibold py-2 px-2.5 rounded bg-rose-500 transition w-fit pointer-events-none">
               <svg

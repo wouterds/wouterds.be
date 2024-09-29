@@ -1,4 +1,4 @@
-import { json, LoaderFunctionArgs } from '@remix-run/cloudflare';
+import { json, LoaderFunctionArgs } from '@remix-run/node';
 import { differenceInMinutes, fromUnixTime, getUnixTime } from 'date-fns';
 
 import { TeslaRepository } from '~/data/repositories/tesla-repository';

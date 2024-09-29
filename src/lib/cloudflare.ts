@@ -1,20 +1,5 @@
-import { AppLoadContext } from '@remix-run/cloudflare';
-
 export class CloudflareTurnstileValidator {
-  private _context: AppLoadContext;
   private _ip?: string;
-
-  public constructor(context: AppLoadContext) {
-    this._context = context;
-  }
-
-  public static create(context: AppLoadContext) {
-    return new CloudflareTurnstileValidator(context);
-  }
-
-  private get apiSecret() {
-    return this._context.cloudflare.env.CLOUDFLARE_TURNSTILE_SECRET;
-  }
 
   public setIp(ip: string) {
     this._ip = ip;
@@ -37,14 +22,14 @@ export class CloudflareTurnstileValidator {
 
     try {
       const payload = new FormData();
-      payload.append('secret', this.apiSecret);
+      payload.append('secret', process.env.CLOUDFLARE_TURNSTILE_SECRET!);
       payload.append('response', value);
       payload.append('remoteip', this.ip);
 
       const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
         method: 'POST',
         body: payload,
-      }).then((response) => response.json<{ success: boolean }>());
+      }).then((response) => response.json() as Promise<{ success: boolean }>);
 
       if (!response.success) {
         return false;

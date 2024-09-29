@@ -1,11 +1,11 @@
-import { ActionFunctionArgs, json } from '@remix-run/cloudflare';
+import { ActionFunctionArgs, json } from '@remix-run/node';
 import { differenceInMinutes, fromUnixTime } from 'date-fns';
 
 import { AranetRepository } from '~/data/repositories/aranet-repository';
 
 export const action = async ({ request, context }: ActionFunctionArgs) => {
   const query = new URL(request.url).searchParams;
-  if (query.get('token') !== context.cloudflare.env.API_AUTH_TOKEN) {
+  if (query.get('token') !== process.env.API_AUTH_TOKEN) {
     return json({ success: false }, { status: 403 });
   }
 

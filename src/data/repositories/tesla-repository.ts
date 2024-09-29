@@ -1,6 +1,6 @@
 import { Buffer } from 'node:buffer';
 
-import { AppLoadContext } from '@remix-run/cloudflare';
+import { AppLoadContext } from '@remix-run/node';
 import { fromUnixTime, isSameDay, startOfDay, subDays } from 'date-fns';
 
 import { KVRepository } from './abstract-kv-repository';

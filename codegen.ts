@@ -1,7 +1,6 @@
-import { CodegenConfig } from '@graphql-codegen/cli';
-import dotenv from 'dotenv';
+import 'dotenv/config';
 
-dotenv.config({ path: '.dev.vars' });
+import { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   overwrite: true,
