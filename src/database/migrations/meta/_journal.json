@@ -8,6 +8,13 @@
       "when": 1727619854784,
       "tag": "0000_petite_lady_bullseye",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1727622321812,
+      "tag": "0001_milky_solo",
+      "breakpoints": true
     }
   ]
 }
