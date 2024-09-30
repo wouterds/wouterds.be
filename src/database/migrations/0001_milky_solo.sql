@@ -1,1 +1,0 @@
-ALTER TABLE `aranet-readings` RENAME COLUMN `timestamp` TO `created_at`;
