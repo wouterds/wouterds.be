@@ -1,24 +1,23 @@
 import { json, LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
-import { format, fromUnixTime } from 'date-fns';
+import { format, fromUnixTime, getUnixTime } from 'date-fns';
 import { useMemo } from 'react';
 
 import { BarChart } from '~/components/charts/bar-chart';
 import { LineChart } from '~/components/charts/line-chart';
-import { AranetRepository } from '~/data/repositories/aranet-repository';
 import { P1Repository } from '~/data/repositories/p1-repository';
 import { TeslaRepository } from '~/data/repositories/tesla-repository';
+import { AranetReadings } from '~/database/aranet-readings/repository';
 import { useTimeAgo } from '~/hooks/use-time-ago';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   const p1Repository = P1Repository.create(context);
-  const aranetRepository = AranetRepository.create(context);
   const teslaRepository = TeslaRepository.create(context);
 
-  await Promise.all([p1Repository.getAll(), aranetRepository.getAll(), teslaRepository.getAll()]);
+  await Promise.all([p1Repository.getAll(), teslaRepository.getAll()]);
 
   return json({
-    aranet: await aranetRepository.getAll(),
+    aranet: await AranetReadings.getAll(),
     p1: await p1Repository.getAll(),
     p1History: await p1Repository.getHistory({ days: 90 }),
     teslaBatteryConsumedToday: await teslaRepository.batteryConsumedToday(),
@@ -52,7 +51,9 @@ export default function Experiments() {
     teslaLastCharged,
   } = useLoaderData<typeof loader>();
 
-  const lastAranetUpdate = useTimeAgo(aranet[aranet.length - 1]?.time);
+  const lastAranetUpdate = useTimeAgo(
+    getUnixTime(new Date(aranet[aranet.length - 1]?.created_at || 0)),
+  );
   const lastP1Update = useTimeAgo(p1[p1.length - 1]?.time);
   const lastP1HistoryUpdate = useTimeAgo(p1History[p1History.length - 1]?.time);
   const lastTeslaUpdate = useTimeAgo(teslaLast24h[teslaLast24h.length - 1]?.time);

@@ -1,22 +1,22 @@
 import { ActionFunctionArgs, json } from '@remix-run/node';
 import { differenceInMinutes, fromUnixTime } from 'date-fns';
 
-import { AranetRepository } from '~/data/repositories/aranet-repository';
+import { AranetReadings } from '~/database/aranet-readings/repository';
 
-export const action = async ({ request, context }: ActionFunctionArgs) => {
+export const action = async ({ request }: ActionFunctionArgs) => {
   const query = new URL(request.url).searchParams;
   if (query.get('token') !== process.env.API_AUTH_TOKEN) {
     return json({ success: false }, { status: 403 });
   }
 
-  const lastPush = await AranetRepository.create(context).getLast();
-  if (differenceInMinutes(new Date(), fromUnixTime(lastPush?.time || 0)) < 5) {
+  const lastPush = await AranetReadings.getLast();
+  if (differenceInMinutes(new Date(), lastPush?.created_at || new Date()) < 5) {
     return json({ success: false }, { status: 429 });
   }
 
   const data = await request.formData();
-  await AranetRepository.create(context).add({
-    time: parseInt(data.get('time') as string),
+  await AranetReadings.add({
+    created_at: fromUnixTime(parseInt(data.get('time') as string)),
     co2: parseInt(data.get('co2') as string),
     temperature: parseFloat(data.get('temperature') as string),
     humidity: parseFloat(data.get('humidity') as string),
