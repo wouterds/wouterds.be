@@ -1,17 +1,16 @@
 import { Buffer } from 'node:buffer';
 
-import { AppLoadContext } from '@remix-run/node';
 import { addSeconds, getUnixTime, isPast } from 'date-fns';
 
-import { KVRepository } from '~/data/repositories/abstract-kv-repository';
+import { AuthTokens } from '~/database/auth-tokens/repository';
 
-export class Spotify extends KVRepository {
-  private _accessToken: string | null = null;
-  private _refreshToken: string | null = null;
-  private _expiry: Date | null = null;
+export class Spotify {
+  private _refreshToken: string | null;
+  private _accessToken: string | null;
 
-  public static create(context: AppLoadContext) {
-    return new Spotify(context);
+  public constructor(refreshToken?: string, accessToken?: string) {
+    this._refreshToken = refreshToken || null;
+    this._accessToken = accessToken || null;
   }
 
   private get clientId() {
@@ -22,34 +21,34 @@ export class Spotify extends KVRepository {
     return process.env.SPOTIFY_CLIENT_SECRET!;
   }
 
-  public async loadTokens() {
-    const data = await this.get<string>('tokens');
-    if (!data) {
-      return;
-    }
+  private get refreshToken() {
+    return (async () => {
+      if (this._refreshToken) {
+        return this._refreshToken!;
+      }
 
-    const tokens = JSON.parse(Buffer.from(data, 'base64').toString('utf-8'))?.spotify;
-    if (!tokens) {
-      return;
-    }
+      const authToken = await AuthTokens.get('SPOTIFY', 'REFRESH_TOKEN');
+      this._refreshToken = authToken?.token || null;
 
-    this._accessToken = tokens.accessToken || null;
-    this._refreshToken = tokens.refreshToken || null;
-    this._expiry = new Date(tokens.expiry) || null;
+      return this._refreshToken!;
+    })();
   }
 
-  public async storeTokens() {
-    const data = await this.get<string>('tokens');
-    const tokens = JSON.parse(Buffer.from(data!, 'base64').toString('utf-8'));
-    if (!tokens?.spotify) {
-      tokens.spotify = {};
-    }
+  private get accessToken() {
+    return (async () => {
+      if (this._accessToken) {
+        return this._accessToken;
+      }
 
-    tokens.spotify.accessToken = this._accessToken;
-    tokens.spotify.refreshToken = this._refreshToken;
-    tokens.spotify.expiry = this._expiry;
+      const authToken = await AuthTokens.get('SPOTIFY', 'ACCESS_TOKEN');
+      this._accessToken = authToken?.token || null;
 
-    return this.put('tokens', Buffer.from(JSON.stringify(tokens)).toString('base64'));
+      if (authToken && isPast(authToken.expires_at!)) {
+        await this.exchangeToken();
+      }
+
+      return this._accessToken!;
+    })();
   }
 
   public authorizeUrl(redirectUri: string) {
@@ -82,32 +81,24 @@ export class Spotify extends KVRepository {
       }),
     });
 
-    const data: {
-      access_token: string;
-      refresh_token: string;
-      expires_in: number;
-    } = await response.json();
+    const data = await response.json();
+
+    await Promise.all([
+      AuthTokens.upsert('SPOTIFY', 'ACCESS_TOKEN', {
+        token: data.access_token,
+        expires_at: addSeconds(new Date(), data.expires_in),
+      }),
+      AuthTokens.update('SPOTIFY', 'REFRESH_TOKEN', {
+        token: data.refresh_token,
+      }),
+    ]);
 
     this._accessToken = data.access_token;
     this._refreshToken = data.refresh_token;
-    this._expiry = addSeconds(new Date(), data.expires_in);
   }
 
-  public async refreshAccessToken() {
-    if (!this._refreshToken) {
-      await this.loadTokens();
-
-      if (!this._refreshToken) {
-        return;
-      }
-    }
-
-    // token not yet expired
-    if (this._expiry && !isPast(this._expiry)) {
-      return;
-    }
-
-    const response = await fetch('https://accounts.spotify.com/api/token', {
+  public async exchangeToken() {
+    const data = await fetch('https://accounts.spotify.com/api/token', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -117,26 +108,21 @@ export class Spotify extends KVRepository {
       },
       body: new URLSearchParams({
         grant_type: 'refresh_token',
-        refresh_token: this._refreshToken,
+        refresh_token: await this.refreshToken,
       }),
+    }).then((res) => res.json());
+
+    await AuthTokens.upsert('SPOTIFY', 'ACCESS_TOKEN', {
+      token: data.access_token,
+      expires_at: addSeconds(new Date(), data.expires_in),
     });
 
-    const data: {
-      access_token: string;
-      // refresh_token: string;
-      expires_in: number;
-    } = await response.json();
-
     this._accessToken = data.access_token;
-    // this._refreshToken = data.refresh_token;
-    this._expiry = addSeconds(new Date(), data.expires_in);
-
-    await this.storeTokens();
   }
 
   public async getMe() {
     const response = await fetch('https://api.spotify.com/v1/me', {
-      headers: { Authorization: `Bearer ${this._accessToken}` },
+      headers: { Authorization: `Bearer ${await this.accessToken}` },
     });
 
     const data: { id: string; display_name: string } = await response.json();

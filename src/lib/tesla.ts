@@ -1,18 +1,14 @@
-import { AppLoadContext } from '@remix-run/node';
+import { addSeconds, isPast } from 'date-fns';
 
-import { TeslaRepository } from '~/data/repositories/tesla-repository';
+import { AuthTokens } from '~/database/auth-tokens/repository';
 
 export class Tesla {
-  private _context: AppLoadContext;
-  private _accessToken?: string;
+  private _refreshToken?: string | null;
+  private _accessToken?: string | null;
   private _vin?: string;
 
-  public constructor(context: AppLoadContext) {
-    this._context = context;
-  }
-
-  public static create(context: AppLoadContext) {
-    return new Tesla(context);
+  public constructor(refreshToken?: string) {
+    this._refreshToken = refreshToken;
   }
 
   public setVin(vin: string) {
@@ -28,33 +24,60 @@ export class Tesla {
     return this._vin;
   }
 
-  private get accessToken() {
-    if (!this._accessToken) {
-      throw new Error('Tesla access token not set');
-    }
+  private get refreshToken() {
+    return (async () => {
+      if (this._refreshToken) {
+        return this._refreshToken!;
+      }
 
-    return this._accessToken;
+      const authToken = await AuthTokens.get('TESLA', 'REFRESH_TOKEN');
+      this._refreshToken = authToken?.token || null;
+
+      return this._refreshToken!;
+    })();
   }
 
-  public async auth() {
-    const response = await fetch('https://auth.tesla.com/oauth2/v3/token', {
+  private get accessToken() {
+    return (async () => {
+      if (this._accessToken) {
+        return this._accessToken;
+      }
+
+      const authToken = await AuthTokens.get('TESLA', 'ACCESS_TOKEN');
+      this._accessToken = authToken?.token || null;
+
+      if (authToken && isPast(authToken.expires_at!)) {
+        await this.exchangeToken();
+      }
+
+      return this._accessToken!;
+    })();
+  }
+
+  public async exchangeToken() {
+    const data = await fetch('https://auth.tesla.com/oauth2/v3/token', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         grant_type: 'refresh_token',
         client_id: 'ownerapi',
-        refresh_token: await TeslaRepository.create(this._context).getRefreshToken(),
+        refresh_token: await this.refreshToken,
         scope: 'openid email offline_access vehicle_device_data',
       }),
-    });
+    }).then((res) => res.json());
 
-    const data: { access_token: string; refresh_token: string } = await response.json();
-    if (!data.access_token) {
-      throw new Error('Tesla auth failed');
-    }
+    await Promise.all([
+      AuthTokens.upsert('TESLA', 'ACCESS_TOKEN', {
+        token: data.access_token,
+        expires_at: addSeconds(new Date(), data.expires_in),
+      }),
+      AuthTokens.update('TESLA', 'REFRESH_TOKEN', {
+        token: data.refresh_token,
+      }),
+    ]);
 
     this._accessToken = data.access_token;
-    await TeslaRepository.create(this._context).updateRefreshToken(data.refresh_token);
+    this._refreshToken = data.refresh_token;
 
     return this;
   }
@@ -65,7 +88,7 @@ export class Tesla {
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${this.accessToken}`,
+          Authorization: `Bearer ${await this.accessToken}`,
         },
       },
     );
@@ -94,7 +117,7 @@ export class Tesla {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.accessToken}`,
+        Authorization: `Bearer ${await this.accessToken}`,
       },
     });
 
