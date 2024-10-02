@@ -7,3 +7,5 @@ node_modules
 
 coverage/
 src/data/graphql/types.ts
+
+scripts/*/**.json
