@@ -15,6 +15,13 @@
       "when": 1728117655456,
       "tag": "0001_nostalgic_slapstick",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1728118226432,
+      "tag": "0002_hot_terror",
+      "breakpoints": true
     }
   ]
 }
