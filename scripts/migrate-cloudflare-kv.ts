@@ -51,20 +51,20 @@ const migrateP1 = async () => {
 
   for (const data of cf_p1) {
     let peak = 0;
-    let peaked_at = new Date(0);
+    let peaked_at = 0;
 
     for (const history of cf_p1_history) {
-      if (isSameDay(fromUnixTime(history.peakTime), fromUnixTime(data.time))) {
+      if (isSameDay(fromUnixTime(history.time), fromUnixTime(data.time))) {
         peak = history.peak;
-        peaked_at = fromUnixTime(history.peakTime);
+        peaked_at = history.peakTime;
       }
     }
 
     await P1Readings.add({
       active: data.active,
       total: data.total,
-      peak,
-      peaked_at,
+      peak: peak,
+      peaked_at: fromUnixTime(peaked_at),
       created_at: fromUnixTime(data.time),
     });
   }
