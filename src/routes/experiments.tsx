@@ -11,6 +11,8 @@ import { AranetReadings } from '~/database/aranet-readings/repository';
 import { useTimeAgo } from '~/hooks/use-time-ago';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
+  throw new Response('Not implemented', { status: 501 });
+
   const p1Repository = P1Repository.create(context);
   const teslaRepository = TeslaRepository.create(context);
 
