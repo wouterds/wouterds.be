@@ -1,3 +1,5 @@
+import { desc } from 'drizzle-orm';
+
 import { db } from '~/database/connection';
 
 import { P1Reading } from './model';
@@ -10,6 +12,12 @@ const getAll = async () => {
   return db.select().from(P1Reading);
 };
 
+const getLast = async () => {
+  const rows = await db.select().from(P1Reading).orderBy(desc(P1Reading.id)).limit(1);
+
+  return rows[0] || null;
+};
+
 const truncate = async () => {
   await db.delete(P1Reading);
 };
@@ -17,5 +25,6 @@ const truncate = async () => {
 export const P1Readings = {
   add,
   getAll,
+  getLast,
   truncate,
 };
