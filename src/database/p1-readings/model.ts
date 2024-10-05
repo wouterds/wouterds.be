@@ -9,6 +9,8 @@ export const P1Reading = mysqlTable(
     id: int('id').autoincrement().primaryKey(),
     active: int('active').notNull(),
     total: float('total').notNull(),
+    peak: int('peak').notNull(),
+    peaked_at: timestamp('peaked_at').notNull(),
     created_at: timestamp('created_at').notNull().defaultNow(),
   },
   (table) => {
