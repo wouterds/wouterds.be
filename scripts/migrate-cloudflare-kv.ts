@@ -4,11 +4,10 @@ import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { fromUnixTime } from 'date-fns';
+import { fromUnixTime, isSameDay } from 'date-fns';
 
 import { AranetReadings } from '~/database/aranet-readings/repository';
 import { AuthTokens } from '~/database/auth-tokens/repository';
-import { P1History } from '~/database/p1-history/repository';
 import { P1Readings } from '~/database/p1-readings/repository';
 import { TeslaData } from '~/database/tesla-data/repository';
 import { Spotify } from '~/lib/spotify';
@@ -51,31 +50,27 @@ const migrateP1 = async () => {
   console.log('Truncated p1 readings');
 
   for (const data of cf_p1) {
+    let peak = 0;
+    let peaked_at = new Date(0);
+
+    for (const history of cf_p1_history) {
+      if (isSameDay(fromUnixTime(history.peakTime), fromUnixTime(data.time))) {
+        peak = history.peak;
+        peaked_at = fromUnixTime(history.peakTime);
+      }
+    }
+
     await P1Readings.add({
       active: data.active,
       total: data.total,
+      peak,
+      peaked_at,
       created_at: fromUnixTime(data.time),
     });
   }
 
   const data = await P1Readings.getAll();
   console.log('Inserted', data.length, 'p1 readings');
-};
-
-const migrateP1History = async () => {
-  await P1History.truncate();
-  console.log('Truncated p1 history');
-
-  for (const data of cf_p1_history) {
-    await P1History.add({
-      total: data.total,
-      peak: data.peak,
-      peakTime: fromUnixTime(data.peakTime),
-    });
-  }
-
-  const data = await P1History.getAll();
-  console.log('Inserted', data.length, 'p1 history records');
 };
 
 const migrateTeslaData = async () => {
@@ -123,13 +118,7 @@ const migrateTokens = async () => {
 };
 
 (async () => {
-  await Promise.all([
-    migrateAranet(),
-    migrateP1(),
-    migrateP1History(),
-    migrateTeslaData(),
-    migrateTokens(),
-  ]);
+  await Promise.all([migrateAranet(), migrateP1(), migrateTeslaData(), migrateTokens()]);
 
   process.exit(0);
 })();
