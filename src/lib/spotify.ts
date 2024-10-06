@@ -7,6 +7,7 @@ import { AuthTokens } from '~/database/auth-tokens/repository';
 export class Spotify {
   private _refreshToken: string | null;
   private _accessToken: string | null;
+  private _expiresAt: Date | null = null;
 
   public constructor(refreshToken?: string, accessToken?: string) {
     this._refreshToken = refreshToken || null;
@@ -65,7 +66,9 @@ export class Spotify {
     ).toString();
   }
 
-  public async authorize(code: string, redirectUri: string) {
+  public async authorize(code: string, redirectUri: string, options?: { noStore?: boolean }) {
+    const noStore = options?.noStore || false;
+
     const response = await fetch('https://accounts.spotify.com/api/token', {
       method: 'POST',
       headers: {
@@ -83,18 +86,31 @@ export class Spotify {
 
     const data = await response.json();
 
+    this._refreshToken = data.refresh_token;
+    this._accessToken = data.access_token;
+    this._expiresAt = addSeconds(new Date(), data.expires_in);
+
+    if (!noStore) {
+      await this.storeTokens();
+    }
+  }
+
+  public async storeTokens() {
+    if (!this._accessToken || !this._refreshToken || !this._expiresAt) {
+      return false;
+    }
+
     await Promise.all([
       AuthTokens.upsert('SPOTIFY', 'ACCESS_TOKEN', {
-        token: data.access_token,
-        expires_at: addSeconds(new Date(), data.expires_in),
+        token: this._accessToken,
+        expires_at: this._expiresAt,
       }),
       AuthTokens.update('SPOTIFY', 'REFRESH_TOKEN', {
-        token: data.refresh_token,
+        token: this._refreshToken,
       }),
     ]);
 
-    this._accessToken = data.access_token;
-    this._refreshToken = data.refresh_token;
+    return true;
   }
 
   public async exchangeToken() {

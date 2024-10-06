@@ -3,19 +3,19 @@ import { StatusCodes } from 'http-status-codes';
 
 import { Spotify } from '~/lib/spotify';
 
-export const loader = async ({ request, context }: LoaderFunctionArgs) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const redirectUri = `${url.protocol}//${url.host}${url.pathname}`;
   const searchParams = new URLSearchParams(url.search);
 
-  const spotify = Spotify.create(context);
+  const spotify = new Spotify();
 
   const code = searchParams.get('code');
   if (!code) {
     return redirect(spotify.authorizeUrl(redirectUri));
   }
 
-  await spotify.authorize(code, redirectUri);
+  await spotify.authorize(code, redirectUri, { noStore: true });
   const user = await spotify.getMe();
   if (user.id !== 'wouterds') {
     return json(
@@ -23,8 +23,6 @@ export const loader = async ({ request, context }: LoaderFunctionArgs) => {
       { status: StatusCodes.FORBIDDEN },
     );
   }
-
-  await spotify.storeTokens();
 
   return json({ message: 'Authorized Spotify' });
 };
