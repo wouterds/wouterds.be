@@ -6,11 +6,9 @@ import { Spotify } from '~/lib/spotify';
 const redirectUri = 'https://wouterds.be/spotify/authorize';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const url = new URL(request.url);
-
   const spotify = new Spotify();
 
-  const code = new URLSearchParams(url.search).get('code');
+  const code = new URLSearchParams(new URL(request.url).search).get('code');
   if (!code) {
     throw redirect(spotify.authorizeUrl(redirectUri));
   }
