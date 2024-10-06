@@ -2,7 +2,7 @@ import { MetaFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 
 import { Posts } from '~/components/posts';
-import { Post, PostRepository } from '~/graphql/posts/repository';
+import { PostRepository } from '~/graphql/posts/repository';
 
 export const loader = async () => {
   const posts = await new PostRepository().getPosts(100);
@@ -23,7 +23,6 @@ export const meta: MetaFunction = () => {
 
 export default function Blog() {
   const data = useLoaderData<typeof loader>();
-  const posts = data.posts as Post[]; // Remix single fetch typing issues
 
-  return <Posts posts={posts} />;
+  return <Posts posts={data.posts} />;
 }

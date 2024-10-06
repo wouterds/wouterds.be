@@ -1,7 +1,7 @@
 import { Link, useLoaderData } from '@remix-run/react';
 
 import { Posts } from '~/components/posts';
-import { Post, PostRepository } from '~/graphql/posts/repository';
+import { PostRepository } from '~/graphql/posts/repository';
 
 export const loader = async () => {
   const posts = await new PostRepository().getPosts(3);
@@ -11,7 +11,6 @@ export const loader = async () => {
 
 export default function Index() {
   const data = useLoaderData<typeof loader>();
-  const posts = data.posts as Post[]; // Remix single fetch typing issues
 
   return (
     <>
@@ -34,7 +33,7 @@ export default function Index() {
         </h2>
       </header>
 
-      <Posts posts={posts} />
+      <Posts posts={data.posts} />
 
       <div className="mt-6">
         <Link to="/blog">read more &raquo;</Link>
