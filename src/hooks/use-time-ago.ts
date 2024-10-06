@@ -1,24 +1,16 @@
-import { formatDistanceToNowStrict, fromUnixTime } from 'date-fns';
+import { formatDistanceToNowStrict } from 'date-fns';
 import { useState } from 'react';
 
 import { useInterval } from './use-interval';
 
-export const useTimeAgo = (timestamp?: number) => {
+export const useTimeAgo = (date?: Date) => {
   const [distance, setDistance] = useState(
-    timestamp
-      ? formatDistanceToNowStrict(fromUnixTime(timestamp), {
-          addSuffix: true,
-        })
-      : null,
+    date ? formatDistanceToNowStrict(date, { addSuffix: true }) : null,
   );
 
   useInterval(() => {
-    if (timestamp) {
-      setDistance(
-        formatDistanceToNowStrict(fromUnixTime(timestamp), {
-          addSuffix: true,
-        }),
-      );
+    if (date) {
+      setDistance(formatDistanceToNowStrict(date, { addSuffix: true }));
     }
   }, 1000);
 
