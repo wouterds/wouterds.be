@@ -1,7 +1,7 @@
 import { Link, useLoaderData } from '@remix-run/react';
 
 import { Posts } from '~/components/posts';
-import { Post, PostRepository } from '~/data/graphql/posts/repository';
+import { Post, PostRepository } from '~/graphql/posts/repository';
 
 export const loader = async () => {
   const posts = await new PostRepository().getPosts(3);

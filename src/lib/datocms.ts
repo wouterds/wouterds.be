@@ -1,7 +1,7 @@
 import { render } from 'datocms-structured-text-to-plain-text';
 import { StructuredText } from 'datocms-structured-text-utils';
 
-import { GalleryRecord } from '~/data/graphql';
+import { GalleryRecord } from '~/graphql';
 
 export const plainTextFromContent = (content: StructuredText) => {
   return render(content)?.trim();

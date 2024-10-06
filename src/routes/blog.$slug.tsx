@@ -8,8 +8,8 @@ import { useEffect, useRef } from 'react';
 import { RenderBlockContext, StructuredText, StructuredTextDocument } from 'react-datocms';
 
 import { Image } from '~/components/image';
-import { GalleryRecord, VideoRecord } from '~/data/graphql';
-import { PostRepository } from '~/data/graphql/posts/repository';
+import { GalleryRecord, VideoRecord } from '~/graphql';
+import { PostRepository } from '~/graphql/posts/repository';
 import { useIsDarkMode } from '~/hooks/use-is-dark-mode';
 import { excerptFromContent, imagesFromContent, plainTextFromContent } from '~/lib/datocms';
 

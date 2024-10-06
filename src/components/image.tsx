@@ -2,7 +2,7 @@ import { useLocation, useSearchParams } from '@remix-run/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { FileField } from '~/data/graphql';
+import { FileField } from '~/graphql';
 import { humanReadableSize } from '~/lib/utils';
 
 import Loader from './loader';

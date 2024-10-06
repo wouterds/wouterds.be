@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs } from '@remix-run/node';
 import { StatusCodes } from 'http-status-codes';
 
-import { PostRepository } from '~/data/graphql/posts/repository';
+import { PostRepository } from '~/graphql/posts/repository';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
