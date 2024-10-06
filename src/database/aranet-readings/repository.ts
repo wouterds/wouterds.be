@@ -1,4 +1,5 @@
-import { desc } from 'drizzle-orm';
+import { subHours } from 'date-fns';
+import { desc, gte } from 'drizzle-orm';
 
 import { db } from '~/database/connection';
 
@@ -15,6 +16,16 @@ const getAll = async (limit?: number) => {
   }
 
   return query.orderBy(desc(AranetReading.createdAt));
+};
+
+const getLast24h = async () => {
+  const rows = await db
+    .select()
+    .from(AranetReading)
+    .where(gte(AranetReading.createdAt, subHours(new Date(), 24)))
+    .orderBy(desc(AranetReading.createdAt));
+
+  return rows;
 };
 
 const getLast = async () => {
@@ -34,6 +45,7 @@ const truncate = async () => {
 export const AranetReadings = {
   add,
   getAll,
+  getLast24h,
   getLast,
   truncate,
 };
