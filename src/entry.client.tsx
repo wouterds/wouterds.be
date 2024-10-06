@@ -10,6 +10,7 @@ import { startTransition, StrictMode, useEffect } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 
 Sentry.init({
+  enabled: import.meta.env.MODE === 'production',
   release: process.env.COMMIT_SHA,
   dsn: 'https://8807cc909fa73f02688d068b02808d71@o308818.ingest.us.sentry.io/4508076558843904',
   integrations: [
