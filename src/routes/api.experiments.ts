@@ -1,15 +1,12 @@
-import { json, LoaderFunctionArgs } from '@remix-run/node';
+import { json } from '@remix-run/node';
 import { differenceInMinutes } from 'date-fns';
 
-import { TeslaRepository } from '~/data/repositories/tesla-repository';
 import { AranetReadings } from '~/database/aranet-readings/repository';
+import { TeslaData } from '~/database/tesla-data/repository';
 import { Spotify, SpotifyTrack } from '~/lib/spotify';
 
-export const loader = async ({ context }: LoaderFunctionArgs) => {
-  const tesla = TeslaRepository.create(context);
-  const spotify = Spotify.create(context);
-
-  await spotify.refreshAccessToken();
+export const loader = async () => {
+  const spotify = new Spotify();
 
   let track: SpotifyTrack | null = await spotify.getCurrentlyPlaying();
   if (!track) {
@@ -22,7 +19,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   return json(
     {
       aranet: await AranetReadings.getLast(),
-      tesla: await tesla.getLast(),
+      tesla: await TeslaData.getLast(),
       spotify: track,
     },
     {
