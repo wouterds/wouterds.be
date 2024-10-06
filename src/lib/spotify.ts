@@ -151,7 +151,7 @@ export class Spotify {
 
   public async getCurrentlyPlaying() {
     const response = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
-      headers: { Authorization: `Bearer ${this._accessToken}` },
+      headers: { Authorization: `Bearer ${await this.accessToken}` },
     });
 
     if (response.status === 204) {
@@ -166,7 +166,7 @@ export class Spotify {
     if (tracks) params.append('limit', tracks.toString());
 
     const response = await fetch(`https://api.spotify.com/v1/me/player/recently-played?${params}`, {
-      headers: { Authorization: `Bearer ${this._accessToken}` },
+      headers: { Authorization: `Bearer ${await this.accessToken}` },
     });
 
     return response
