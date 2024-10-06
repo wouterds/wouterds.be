@@ -8,8 +8,13 @@ const add = async (data: P1Reading) => {
   await db.insert(P1Reading).values(data);
 };
 
-const getAll = async () => {
-  return db.select().from(P1Reading).orderBy(desc(P1Reading.createdAt));
+const getAll = async (limit?: number) => {
+  const query = db.select().from(P1Reading);
+  if (limit) {
+    query.limit(limit);
+  }
+
+  return query.orderBy(desc(P1Reading.createdAt));
 };
 
 const getLast = async () => {

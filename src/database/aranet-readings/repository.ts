@@ -8,8 +8,13 @@ const add = async (data: AranetReading) => {
   await db.insert(AranetReading).values(data);
 };
 
-const getAll = async () => {
-  return db.select().from(AranetReading).orderBy(desc(AranetReading.createdAt));
+const getAll = async (limit?: number) => {
+  const query = db.select().from(AranetReading);
+  if (limit) {
+    query.limit(limit);
+  }
+
+  return query.orderBy(desc(AranetReading.createdAt));
 };
 
 const getLast = async () => {
