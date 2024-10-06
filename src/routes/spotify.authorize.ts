@@ -19,5 +19,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     throw new Response(getReasonPhrase(StatusCodes.FORBIDDEN), { status: StatusCodes.FORBIDDEN });
   }
 
+  await spotify.storeTokens();
+
   return new Response(getReasonPhrase(StatusCodes.OK), { status: StatusCodes.OK });
 };
