@@ -15,6 +15,7 @@ export const TeslaDataRecord = mysqlTable(
   (table) => {
     return {
       createdAtIdx: index('created_at_idx').on(table.created_at),
+      wakeIdx: index('wake_idx').on(table.wake),
     };
   },
 );
