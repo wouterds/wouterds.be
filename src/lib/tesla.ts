@@ -46,7 +46,7 @@ export class Tesla {
       const authToken = await AuthTokens.get('TESLA', 'ACCESS_TOKEN');
       this._accessToken = authToken?.token || null;
 
-      if (authToken && isPast(authToken.expires_at!)) {
+      if (authToken && isPast(authToken.expiresAt!)) {
         await this.exchangeToken();
       }
 
@@ -69,7 +69,7 @@ export class Tesla {
     await Promise.all([
       AuthTokens.upsert('TESLA', 'ACCESS_TOKEN', {
         token: data.access_token,
-        expires_at: addSeconds(new Date(), data.expires_in),
+        expiresAt: addSeconds(new Date(), data.expires_in),
       }),
       AuthTokens.update('TESLA', 'REFRESH_TOKEN', {
         token: data.refresh_token,

@@ -15,7 +15,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   }
 
   const last = await TeslaData.getLast();
-  if (last && differenceInMinutes(new Date(), last.created_at) < SYNC_INTERVAL_MINUTES) {
+  if (last && differenceInMinutes(new Date(), last.createdAt) < SYNC_INTERVAL_MINUTES) {
     return json(last, { status: StatusCodes.TOO_MANY_REQUESTS });
   }
 
@@ -23,7 +23,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   let data = await tesla.getData();
   const isSleeping = data?.error?.includes('offline or asleep');
-  const lastAwake = (await TeslaData.getLastAwake()).created_at || new Date(0);
+  const lastAwake = (await TeslaData.getLastAwake()).createdAt || new Date(0);
   if (isSleeping && differenceInMinutes(new Date(), lastAwake) > WAKE_INTERVAL_MINUTES) {
     await tesla.wakeUp();
     data = await tesla.getData();
@@ -39,8 +39,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     distance: parseFloat(
       (((response?.vehicle_state?.odometer || 0) * 1.60934 || last?.distance) as number).toFixed(3),
     ),
-    temperature_inside: response?.climate_state?.inside_temp || last?.temperature_inside,
-    temperature_outside: response?.climate_state?.outside_temp || last?.temperature_outside,
+    temperatureInside: response?.climate_state?.inside_temp || last?.temperatureInside,
+    temperatureOutside: response?.climate_state?.outside_temp || last?.temperatureOutside,
     wake: !!response,
   });
 

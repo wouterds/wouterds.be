@@ -14,7 +14,7 @@ const getAll = async (limit?: number) => {
     query.limit(limit);
   }
 
-  return query.orderBy(desc(TeslaDataRecord.created_at));
+  return query.orderBy(desc(TeslaDataRecord.createdAt));
 };
 
 const getLast = async () => {

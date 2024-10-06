@@ -12,11 +12,11 @@ export const AranetReading = mysqlTable(
     co2: int('co2').notNull(),
     pressure: float('pressure').notNull(),
     battery: int('battery').notNull(),
-    created_at: timestamp('created_at').notNull().defaultNow(),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
   },
   (table) => {
     return {
-      createdAtIdx: index('created_at_idx').on(table.created_at),
+      createdAtIdx: index('created_at_idx').on(table.createdAt),
     };
   },
 );

@@ -15,7 +15,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   const lastPush = await P1Readings.getLast();
-  if (lastPush && differenceInMinutes(new Date(), lastPush.created_at) < 10) {
+  if (lastPush && differenceInMinutes(new Date(), lastPush.createdAt) < 10) {
     return json({ success: false }, { status: StatusCodes.TOO_MANY_REQUESTS });
   }
 
@@ -32,7 +32,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     active,
     total,
     peak,
-    peaked_at: peakedAt,
+    peakedAt,
   });
 
   return { success: true };

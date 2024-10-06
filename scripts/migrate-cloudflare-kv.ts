@@ -37,7 +37,7 @@ const migrateAranet = async () => {
       co2: data.co2,
       pressure: data.pressure,
       battery: data.battery,
-      created_at: fromUnixTime(data.time),
+      createdAt: fromUnixTime(data.time),
     });
   }
 
@@ -63,9 +63,9 @@ const migrateP1 = async () => {
     await P1Readings.add({
       active: data.active,
       total: data.total,
-      peak: peak,
-      peaked_at: fromUnixTime(peaked_at),
-      created_at: fromUnixTime(data.time),
+      peak,
+      peakedAt: fromUnixTime(peaked_at),
+      createdAt: fromUnixTime(data.time),
     });
   }
 
@@ -82,9 +82,9 @@ const migrateTeslaData = async () => {
       battery: data.battery,
       distance: data.distance,
       wake: data.wake,
-      temperature_inside: data.temperature?.inside || null,
-      temperature_outside: data.temperature?.outside || null,
-      created_at: fromUnixTime(data.time),
+      temperatureInside: data.temperature?.inside || null,
+      temperatureOutside: data.temperature?.outside || null,
+      createdAt: fromUnixTime(data.time),
     });
   }
 

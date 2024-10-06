@@ -11,13 +11,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   const lastPush = await AranetReadings.getLast();
-  if (differenceInMinutes(new Date(), lastPush?.created_at || new Date()) < 5) {
+  if (differenceInMinutes(new Date(), lastPush?.createdAt || new Date()) < 5) {
     return json({ success: false }, { status: StatusCodes.TOO_MANY_REQUESTS });
   }
 
   const data = await request.formData();
   await AranetReadings.add({
-    created_at: fromUnixTime(parseInt(data.get('time') as string)),
+    createdAt: fromUnixTime(parseInt(data.get('time') as string)),
     co2: parseInt(data.get('co2') as string),
     temperature: parseFloat(data.get('temperature') as string),
     humidity: parseFloat(data.get('humidity') as string),

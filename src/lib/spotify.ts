@@ -44,7 +44,7 @@ export class Spotify {
       const authToken = await AuthTokens.get('SPOTIFY', 'ACCESS_TOKEN');
       this._accessToken = authToken?.token || null;
 
-      if (authToken && isPast(authToken.expires_at!)) {
+      if (authToken?.expiresAt && isPast(authToken.expiresAt)) {
         await this.exchangeToken();
       }
 
@@ -103,7 +103,7 @@ export class Spotify {
     await Promise.all([
       AuthTokens.upsert('SPOTIFY', 'ACCESS_TOKEN', {
         token: this._accessToken,
-        expires_at: this._expiresAt,
+        expiresAt: this._expiresAt,
       }),
       AuthTokens.update('SPOTIFY', 'REFRESH_TOKEN', {
         token: this._refreshToken,
@@ -130,7 +130,7 @@ export class Spotify {
 
     await AuthTokens.upsert('SPOTIFY', 'ACCESS_TOKEN', {
       token: data.access_token,
-      expires_at: addSeconds(new Date(), data.expires_in),
+      expiresAt: addSeconds(new Date(), data.expires_in),
     });
 
     this._accessToken = data.access_token;

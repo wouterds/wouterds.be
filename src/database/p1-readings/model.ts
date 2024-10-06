@@ -10,12 +10,12 @@ export const P1Reading = mysqlTable(
     active: int('active').notNull(),
     total: float('total').notNull(),
     peak: int('peak').notNull(),
-    peaked_at: timestamp('peaked_at').notNull(),
-    created_at: timestamp('created_at').notNull().defaultNow(),
+    peakedAt: timestamp('peaked_at').notNull(),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
   },
   (table) => {
     return {
-      createdAtIdx: index('created_at_idx').on(table.created_at),
+      createdAtIdx: index('created_at_idx').on(table.createdAt),
     };
   },
 );

@@ -10,9 +10,9 @@ export const AuthToken = mysqlTable(
     vendor: mysqlEnum('vendor', ['SPOTIFY', 'TESLA']).notNull(),
     type: mysqlEnum('type', ['ACCESS_TOKEN', 'REFRESH_TOKEN']).notNull(),
     token: varchar('token', { length: 2048 }).notNull(),
-    expires_at: timestamp('expires_at'),
-    created_at: timestamp('created_at').notNull().defaultNow(),
-    updated_at: timestamp('updated_at').notNull().defaultNow().onUpdateNow(),
+    expiresAt: timestamp('expires_at'),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+    updatedAt: timestamp('updated_at').notNull().defaultNow().onUpdateNow(),
   },
   (table) => ({
     vendorTypeIdx: unique('vendor_type_idx').on(table.vendor, table.type),
