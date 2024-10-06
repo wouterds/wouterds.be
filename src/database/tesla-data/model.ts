@@ -9,6 +9,8 @@ export const TeslaDataRecord = mysqlTable(
     id: int('id').autoincrement().primaryKey(),
     battery: int('battery').notNull(),
     distance: float('distance').notNull(),
+    temperature_inside: float('temperature_inside'),
+    temperature_outside: float('temperature_outside'),
     wake: boolean('wake').notNull(),
     created_at: timestamp('created_at').notNull().defaultNow(),
   },
