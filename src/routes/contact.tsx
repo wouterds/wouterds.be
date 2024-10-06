@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Turnstile } from '@marsidev/react-turnstile';
 import { ActionFunctionArgs, MetaFunction } from '@remix-run/node';
 import { Form, json, useActionData } from '@remix-run/react';
+import { byInternet as lookupCountryByCode } from 'country-code-lookup';
 import { StatusCodes } from 'http-status-codes';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -32,15 +33,11 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   const ip = request.headers.get('cf-connecting-ip')!;
+  const location = lookupCountryByCode(request.headers.get('cf-ipcountry')!)?.country || 'Unknown';
   const validator = new CloudflareTurnstileValidator().setIp(ip);
   if (!(await validator.validate(form.get('cf-turnstile-response')?.toString()))) {
     return json({ success: false }, { status: StatusCodes.FORBIDDEN });
   }
-
-  const location = 'Unknown';
-  // const location = `${context.cloudflare.cf.city ? `${context.cloudflare.cf.city}, ` : ''}${
-  //   context.cloudflare.cf.region ? `${context.cloudflare.cf.region}, ` : ''
-  // }${context.cloudflare.cf.country || 'Unknown'}`;
 
   const mailer = new MailjetMailer();
   mailer.setSender({ email: 'noreply@wouterds.be' });
