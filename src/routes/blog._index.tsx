@@ -2,7 +2,7 @@ import { MetaFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 
 import { Posts } from '~/components/posts';
-import { Post, PostRepository } from '~/data/repositories/post-repository';
+import { Post, PostRepository } from '~/data/graphql/posts/repository';
 
 export const loader = async () => {
   const posts = await new PostRepository().getPosts(100);

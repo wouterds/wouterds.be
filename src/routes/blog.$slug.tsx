@@ -9,7 +9,7 @@ import { RenderBlockContext, StructuredText, StructuredTextDocument } from 'reac
 
 import { Image } from '~/components/image';
 import { GalleryRecord, VideoRecord } from '~/data/graphql';
-import { PostRepository } from '~/data/repositories/post-repository';
+import { PostRepository } from '~/data/graphql/posts/repository';
 import { useIsDarkMode } from '~/hooks/use-is-dark-mode';
 import { excerptFromContent, imagesFromContent, plainTextFromContent } from '~/lib/datocms';
 
