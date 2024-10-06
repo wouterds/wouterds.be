@@ -17,6 +17,12 @@ const getAll = async (limit?: number) => {
   return query.orderBy(desc(TeslaDataRecord.created_at));
 };
 
+const getLast = async () => {
+  const rows = await db.select().from(TeslaDataRecord).orderBy(desc(TeslaDataRecord.id)).limit(1);
+
+  return rows[0] || null;
+};
+
 const truncate = async () => {
   await db.delete(TeslaDataRecord);
 };
@@ -24,5 +30,6 @@ const truncate = async () => {
 export const TeslaData = {
   add,
   getAll,
+  getLast,
   truncate,
 };
