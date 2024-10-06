@@ -4,6 +4,7 @@ services:
     mem_limit: 128mb
     container_name: be.wouterds--node
     restart: unless-stopped
+    env_file: .env
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.wouterdsbe.rule=Host(`wouterds.be`)"
