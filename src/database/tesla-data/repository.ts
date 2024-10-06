@@ -1,4 +1,4 @@
-import { desc } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 
 import { db } from '~/database/connection';
 
@@ -23,6 +23,17 @@ const getLast = async () => {
   return rows[0] || null;
 };
 
+const getLastAwake = async () => {
+  const rows = await db
+    .select()
+    .from(TeslaDataRecord)
+    .where(eq(TeslaDataRecord.wake, true))
+    .orderBy(desc(TeslaDataRecord.id))
+    .limit(1);
+
+  return rows[0] || null;
+};
+
 const truncate = async () => {
   await db.delete(TeslaDataRecord);
 };
@@ -31,5 +42,6 @@ export const TeslaData = {
   add,
   getAll,
   getLast,
+  getLastAwake,
   truncate,
 };
