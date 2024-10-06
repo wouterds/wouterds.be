@@ -82,6 +82,8 @@ const migrateTeslaData = async () => {
       battery: data.battery,
       distance: data.distance,
       wake: data.wake,
+      temperature_inside: data.temperature?.inside || null,
+      temperature_outside: data.temperature?.outside || null,
       created_at: fromUnixTime(data.time),
     });
   }
