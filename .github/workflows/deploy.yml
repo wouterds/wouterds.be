@@ -26,7 +26,9 @@ jobs:
       REGISTRY_USER: ${{ github.actor }}
       REGISTRY_PASS: ${{ github.token }}
       COMMIT_SHA: ${{ github.sha }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
     steps:
+      - run: echo "COMMIT_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
       - uses: actions/checkout@v4
       - uses: docker/login-action@v3
         with:
@@ -39,6 +41,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=latest
+            type=raw,value=${{ env.COMMIT_SHA }}
       - uses: docker/setup-buildx-action@v3
       - uses: docker/build-push-action@v6
         with:
@@ -49,7 +52,9 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           build-args: |
+            VITE_CLOUDFLARE_TURNSTILE_KEY=${{ secrets.VITE_CLOUDFLARE_TURNSTILE_KEY }}
             COMMIT_SHA=${{ env.COMMIT_SHA }}
+            SENTRY_AUTH_TOKEN=${{ env.SENTRY_AUTH_TOKEN }}
 
   deploy:
     needs: build

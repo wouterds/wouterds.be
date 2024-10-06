@@ -11,6 +11,7 @@ import {
   useLoaderData,
   useRouteError,
 } from '@remix-run/react';
+import { captureRemixErrorBoundaryError, withSentry } from '@sentry/remix';
 
 import { Code } from './components/code';
 import Footer from './components/footer';
@@ -133,10 +134,12 @@ const App = () => {
   );
 };
 
-export default App;
+export default withSentry(App, { wrapWithErrorBoundary: false });
 
 export const ErrorBoundary = () => {
   const error = useRouteError();
+
+  captureRemixErrorBoundaryError(error);
 
   return (
     <html lang="en">

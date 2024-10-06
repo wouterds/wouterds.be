@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Turnstile } from '@marsidev/react-turnstile';
 import { ActionFunctionArgs, MetaFunction } from '@remix-run/node';
-import { Form, json, useActionData, useLoaderData } from '@remix-run/react';
+import { Form, json, useActionData } from '@remix-run/react';
 import { StatusCodes } from 'http-status-codes';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -9,12 +9,6 @@ import * as z from 'zod';
 
 import { CloudflareTurnstileValidator } from '~/lib/cloudflare';
 import { MailjetMailer } from '~/lib/mailjet';
-
-export const loader = () => {
-  return {
-    CLOUDFLARE_TURNSTILE_KEY: process.env.CLOUDFLARE_TURNSTILE_KEY,
-  };
-};
 
 export const meta: MetaFunction = () => {
   return [
@@ -73,7 +67,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function Contact() {
-  const { CLOUDFLARE_TURNSTILE_KEY } = useLoaderData<typeof loader>();
   const data = useActionData<typeof action>();
   const {
     register,
@@ -185,7 +178,7 @@ export default function Contact() {
             </button>
           </div>
           <div>
-            <Turnstile siteKey={CLOUDFLARE_TURNSTILE_KEY!} />
+            <Turnstile siteKey={import.meta.env.VITE_CLOUDFLARE_TURNSTILE_KEY} />
           </div>
         </div>
       </Form>
