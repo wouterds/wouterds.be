@@ -1,4 +1,7 @@
 import { MetaFunction } from '@remix-run/node';
+import { useRevalidator } from '@remix-run/react';
+import ms from 'ms';
+import { useEffect } from 'react';
 
 import { AranetReadings } from '~/database/aranet-readings/repository';
 
@@ -43,6 +46,16 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Experiments() {
+  const { revalidate } = useRevalidator();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      revalidate();
+    }, ms('30 seconds'));
+
+    return () => clearInterval(interval);
+  }, [revalidate]);
+
   return (
     <>
       <h1 className="text-xl font-medium mb-4">Experiments</h1>
