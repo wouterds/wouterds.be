@@ -1,43 +1,29 @@
-export class CloudflareTurnstileValidator {
-  private _ip?: string;
-
-  public setIp(ip: string) {
-    this._ip = ip;
-
-    return this;
+const validate = async (ip: string, value?: string) => {
+  if (!value) {
+    return false;
   }
 
-  private get ip() {
-    if (!this._ip) {
-      throw new Error('IP is missing');
-    }
+  try {
+    const payload = new FormData();
+    payload.append('secret', process.env.CLOUDFLARE_TURNSTILE_SECRET!);
+    payload.append('remoteip', ip);
+    payload.append('response', value);
 
-    return this._ip;
-  }
+    const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      body: payload,
+    }).then((response) => response.json() as Promise<{ success: boolean }>);
 
-  public async validate(value?: string) {
-    if (!value) {
+    if (!response.success) {
       return false;
     }
 
-    try {
-      const payload = new FormData();
-      payload.append('secret', process.env.CLOUDFLARE_TURNSTILE_SECRET!);
-      payload.append('response', value);
-      payload.append('remoteip', this.ip);
-
-      const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-        method: 'POST',
-        body: payload,
-      }).then((response) => response.json() as Promise<{ success: boolean }>);
-
-      if (!response.success) {
-        return false;
-      }
-
-      return true;
-    } catch {
-      return false;
-    }
+    return true;
+  } catch {
+    return false;
   }
-}
+};
+
+export const CloudflareTurnstileValidator = {
+  validate,
+};

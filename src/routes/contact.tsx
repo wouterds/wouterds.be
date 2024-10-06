@@ -34,8 +34,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   const ip = request.headers.get('cf-connecting-ip')!;
   const location = lookupCountryByCode(request.headers.get('cf-ipcountry')!)?.country || 'Unknown';
-  const validator = new CloudflareTurnstileValidator().setIp(ip);
-  if (!(await validator.validate(form.get('cf-turnstile-response')?.toString()))) {
+  const response = form.get('cf-turnstile-response')?.toString();
+
+  if (!(await CloudflareTurnstileValidator.validate(ip, response))) {
     return json({ success: false }, { status: StatusCodes.FORBIDDEN });
   }
 
