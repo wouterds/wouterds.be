@@ -3,9 +3,10 @@ import { getReasonPhrase, StatusCodes } from 'http-status-codes';
 
 import { Spotify } from '~/lib/spotify';
 
+const redirectUri = 'https://wouterds.be/spotify/authorize';
+
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
-  const redirectUri = `${url.protocol}//${url.host}${url.pathname}`;
 
   const spotify = new Spotify();
 
