@@ -2,6 +2,7 @@ import { LoaderFunctionArgs } from '@remix-run/node';
 import { render, StructuredTextDocument } from 'datocms-structured-text-to-html-string';
 import { isStructuredText } from 'datocms-structured-text-utils';
 import { Feed } from 'feed';
+import { StatusCodes } from 'http-status-codes';
 
 import { GalleryRecord, VideoRecord } from '~/data/graphql';
 import { PostRepository } from '~/data/repositories/post-repository';
@@ -87,7 +88,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   feed.addCategory('Personal');
 
   return new Response(feed.rss2(), {
-    status: 200,
+    status: StatusCodes.OK,
     headers: {
       'Content-Type': 'application/xml',
       'Cache-Control': 'public, max-age=86400, must-revalidate',

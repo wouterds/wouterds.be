@@ -1,17 +1,18 @@
 import { ActionFunctionArgs, json } from '@remix-run/node';
 import { differenceInMinutes, fromUnixTime } from 'date-fns';
+import { StatusCodes } from 'http-status-codes';
 
 import { AranetReadings } from '~/database/aranet-readings/repository';
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const query = new URL(request.url).searchParams;
   if (query.get('token') !== process.env.API_AUTH_TOKEN) {
-    return json({ success: false }, { status: 403 });
+    return json({ success: false }, { status: StatusCodes.FORBIDDEN });
   }
 
   const lastPush = await AranetReadings.getLast();
   if (differenceInMinutes(new Date(), lastPush?.created_at || new Date()) < 5) {
-    return json({ success: false }, { status: 429 });
+    return json({ success: false }, { status: StatusCodes.TOO_MANY_REQUESTS });
   }
 
   const data = await request.formData();
@@ -24,5 +25,5 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     battery: parseInt(data.get('battery') as string),
   });
 
-  return json({ success: true }, { status: 201 });
+  return json({ success: true }, { status: StatusCodes.CREATED });
 };

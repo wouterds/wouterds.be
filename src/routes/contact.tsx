@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Turnstile } from '@marsidev/react-turnstile';
 import { ActionFunctionArgs, MetaFunction } from '@remix-run/node';
 import { Form, json, useActionData, useLoaderData } from '@remix-run/react';
+import { StatusCodes } from 'http-status-codes';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -33,13 +34,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   try {
     schema.parse(data);
   } catch {
-    return json({ success: false }, { status: 400 });
+    return json({ success: false }, { status: StatusCodes.BAD_REQUEST });
   }
 
   const ip = request.headers.get('cf-connecting-ip')!;
   const validator = new CloudflareTurnstileValidator().setIp(ip);
   if (!(await validator.validate(form.get('cf-turnstile-response')?.toString()))) {
-    return json({ success: false }, { status: 403 });
+    return json({ success: false }, { status: StatusCodes.FORBIDDEN });
   }
 
   const location = 'Unknown';
@@ -68,7 +69,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return json({ success: true });
   }
 
-  return json({ success: false }, { status: 500 });
+  return json({ success: false }, { status: StatusCodes.INTERNAL_SERVER_ERROR });
 };
 
 export default function Contact() {

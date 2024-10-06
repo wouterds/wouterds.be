@@ -1,4 +1,5 @@
 import { LoaderFunctionArgs } from '@remix-run/node';
+import { StatusCodes } from 'http-status-codes';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
@@ -17,7 +18,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   robots += `Sitemap: ${new URL('/sitemap.xml', baseUrl)}\n`;
 
   return new Response(robots, {
-    status: 200,
+    status: StatusCodes.OK,
     headers: {
       'Content-Type': 'text/plain',
       'Cache-Control': 'public, max-age=86400, must-revalidate',

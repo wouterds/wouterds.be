@@ -3,6 +3,7 @@ import { useLoaderData } from '@remix-run/react';
 import clsx from 'clsx';
 import { format } from 'date-fns';
 import { isCode } from 'datocms-structured-text-utils';
+import { StatusCodes } from 'http-status-codes';
 import { useEffect, useRef } from 'react';
 import { RenderBlockContext, StructuredText, StructuredTextDocument } from 'react-datocms';
 
@@ -19,7 +20,7 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const post = await new PostRepository().getPost(params.slug as string);
   if (!post) {
     throw new Response(null, {
-      status: 404,
+      status: StatusCodes.NOT_FOUND,
       statusText: 'Not Found',
     });
   }

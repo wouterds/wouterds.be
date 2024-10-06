@@ -1,4 +1,5 @@
 import { LoaderFunctionArgs } from '@remix-run/node';
+import { StatusCodes } from 'http-status-codes';
 
 import { PostRepository } from '~/data/repositories/post-repository';
 
@@ -21,7 +22,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   sitemap += '</urlset>';
 
   return new Response(sitemap, {
-    status: 200,
+    status: StatusCodes.OK,
     headers: {
       'Content-Type': 'application/xml',
       'Cache-Control': 'public, max-age=86400, must-revalidate',

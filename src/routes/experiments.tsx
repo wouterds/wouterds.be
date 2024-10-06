@@ -1,6 +1,7 @@
 import { json, LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { format, fromUnixTime, getUnixTime } from 'date-fns';
+import { StatusCodes } from 'http-status-codes';
 import { useMemo } from 'react';
 
 import { BarChart } from '~/components/charts/bar-chart';
@@ -11,7 +12,7 @@ import { AranetReadings } from '~/database/aranet-readings/repository';
 import { useTimeAgo } from '~/hooks/use-time-ago';
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
-  throw new Response('Not implemented', { status: 501 });
+  throw new Response('Not implemented', { status: StatusCodes.NOT_IMPLEMENTED });
 
   const p1Repository = P1Repository.create(context);
   const teslaRepository = TeslaRepository.create(context);

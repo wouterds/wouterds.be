@@ -1,4 +1,5 @@
 import { LoaderFunctionArgs } from '@remix-run/node';
+import { StatusCodes } from 'http-status-codes';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { pathname } = new URL(request.url);
@@ -11,7 +12,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     );
 
     return new Response(body, {
-      status: 200,
+      status: StatusCodes.OK,
       headers: {
         'Content-Type': headers.get('Content-Type') as string,
         'Cache-Control': 'public, max-age=31536000, immutable',
@@ -27,7 +28,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     );
 
     return new Response(body, {
-      status: 200,
+      status: StatusCodes.OK,
       headers: {
         'Content-Type': headers.get('Content-Type') as string,
         'Cache-Control': 'public, max-age=31536000, immutable',
@@ -40,7 +41,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   );
 
   return new Response(body, {
-    status: 200,
+    status: StatusCodes.OK,
     headers: {
       'Content-Type': headers.get('Content-Type') as string,
       'Cache-Control': 'public, max-age=31536000, immutable',

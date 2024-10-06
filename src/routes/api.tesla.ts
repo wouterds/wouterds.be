@@ -1,5 +1,6 @@
 import { json } from '@remix-run/node';
 import { differenceInMinutes } from 'date-fns';
+import { StatusCodes } from 'http-status-codes';
 
 import { TeslaData } from '~/database/tesla-data/repository';
 import { Tesla } from '~/lib/tesla';
@@ -11,7 +12,7 @@ const VIN = 'LRW3E7EKXMC324303';
 export const loader = async () => {
   const last = await TeslaData.getLast();
   if (last && differenceInMinutes(new Date(), last.created_at) < SYNC_INTERVAL_MINUTES) {
-    return json(last, { status: 429 });
+    return json(last, { status: StatusCodes.TOO_MANY_REQUESTS });
   }
 
   const tesla = new Tesla().setVin(VIN);
@@ -24,7 +25,7 @@ export const loader = async () => {
     data = await tesla.getData();
 
     if (data.error) {
-      return json(data.error, { status: 500 });
+      return json(data.error, { status: StatusCodes.INTERNAL_SERVER_ERROR });
     }
   }
 
