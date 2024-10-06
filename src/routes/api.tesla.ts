@@ -1,4 +1,4 @@
-import { json } from '@remix-run/node';
+import { json, LoaderFunctionArgs } from '@remix-run/node';
 import { differenceInMinutes } from 'date-fns';
 import { StatusCodes } from 'http-status-codes';
 
@@ -9,7 +9,11 @@ const SYNC_INTERVAL_MINUTES = 15; // 15 minutes
 const WAKE_INTERVAL_MINUTES = 60 * 2; // 2 hours
 const VIN = 'LRW3E7EKXMC324303';
 
-export const loader = async () => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  if (request.headers.get('authorization') !== process.env.API_AUTH_TOKEN) {
+    return json({ success: false }, { status: StatusCodes.FORBIDDEN });
+  }
+
   const last = await TeslaData.getLast();
   if (last && differenceInMinutes(new Date(), last.created_at) < SYNC_INTERVAL_MINUTES) {
     return json(last, { status: StatusCodes.TOO_MANY_REQUESTS });
