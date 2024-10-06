@@ -17,7 +17,6 @@ import { excerptFromContent } from '~/lib/datocms';
 import { DatoCMSRepository } from '../abstract-datocms-repository';
 
 export type Posts = NonNullable<Awaited<ReturnType<PostRepository['getPosts']>>>;
-export type Post = Posts[number];
 
 export class PostRepository extends DatoCMSRepository {
   public getPosts = async (limit: number = 100) => {
