@@ -1,0 +1,22 @@
+services:
+  node:
+    image: ghcr.io/wouterds/wouterds.be
+    mem_limit: 128mb
+    container_name: be.wouterds--node
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wouterdsbe.rule=Host(`wouterds.be`)"
+      - "traefik.http.routers.wouterdsbe.entrypoints=websecure"
+      - "traefik.http.routers.wouterdsbe.tls=true"
+      - "traefik.http.routers.wouterdsbe-http.rule=Host(`wouterds.be`)"
+      - "traefik.http.routers.wouterdsbe-http.entrypoints=web"
+      - "traefik.http.routers.wouterdsbe-http.middlewares=https-redirect"
+      - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+      - "traefik.docker.network=proxy"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
