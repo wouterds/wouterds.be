@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "fc2c58c4-75d7-42c4-8687-fcbcc7f297b8",
+  "id": "c4a2eec5-4d95-4810-9054-c0cb8a4ab918",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "aranet-readings": {
@@ -154,66 +154,6 @@
         }
       }
     },
-    "p1-history": {
-      "name": "p1-history",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "int",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": true
-        },
-        "total": {
-          "name": "total",
-          "type": "float",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "peak": {
-          "name": "peak",
-          "type": "int",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "peak_time": {
-          "name": "peak_time",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(now())"
-        }
-      },
-      "indexes": {
-        "created_at_idx": {
-          "name": "created_at_idx",
-          "columns": [
-            "created_at"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {
-        "p1-history_id": {
-          "name": "p1-history_id",
-          "columns": [
-            "id"
-          ]
-        }
-      },
-      "uniqueConstraints": {}
-    },
     "p1-readings": {
       "name": "p1-readings",
       "columns": {
@@ -234,6 +174,20 @@
         "total": {
           "name": "total",
           "type": "float",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "peak": {
+          "name": "peak",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "peaked_at": {
+          "name": "peaked_at",
+          "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -291,6 +245,20 @@
           "notNull": true,
           "autoincrement": false
         },
+        "temperature_inside": {
+          "name": "temperature_inside",
+          "type": "float",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "temperature_outside": {
+          "name": "temperature_outside",
+          "type": "float",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "wake": {
           "name": "wake",
           "type": "boolean",
@@ -312,6 +280,13 @@
           "name": "created_at_idx",
           "columns": [
             "created_at"
+          ],
+          "isUnique": false
+        },
+        "wake_idx": {
+          "name": "wake_idx",
+          "columns": [
+            "wake"
           ],
           "isUnique": false
         }

@@ -1,1 +1,0 @@
-DROP TABLE `p1-history`;

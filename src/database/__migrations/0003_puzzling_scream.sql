@@ -1,1 +1,0 @@
-CREATE INDEX `wake_idx` ON `tesla-data` (`wake`);
