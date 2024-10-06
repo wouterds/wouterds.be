@@ -9,3 +9,6 @@ coverage/
 src/data/graphql/types.ts
 
 scripts/*/**.json
+
+# Sentry Config File
+.env.sentry-build-plugin
