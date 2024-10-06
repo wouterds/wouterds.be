@@ -9,11 +9,15 @@ const add = async (data: AranetReading) => {
 };
 
 const getAll = async () => {
-  return db.select().from(AranetReading);
+  return db.select().from(AranetReading).orderBy(desc(AranetReading.createdAt));
 };
 
 const getLast = async () => {
-  const rows = await db.select().from(AranetReading).orderBy(desc(AranetReading.id)).limit(1);
+  const rows = await db
+    .select()
+    .from(AranetReading)
+    .orderBy(desc(AranetReading.createdAt))
+    .limit(1);
 
   return rows[0] || null;
 };

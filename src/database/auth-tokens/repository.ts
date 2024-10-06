@@ -23,7 +23,7 @@ const get = async (vendor: AuthToken['vendor'], type: AuthToken['type']) => {
     .select()
     .from(AuthToken)
     .where(and(eq(AuthToken.vendor, vendor), eq(AuthToken.type, type)))
-    .orderBy(desc(AuthToken.id))
+    .orderBy(desc(AuthToken.createdAt))
     .limit(1);
 
   const token = tokens[0];
@@ -82,6 +82,6 @@ export const AuthTokens = {
   add,
   get,
   update,
-  upsert, // Add this to the exported object
+  upsert,
   truncate,
 };

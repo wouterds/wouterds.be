@@ -9,11 +9,11 @@ const add = async (data: P1Reading) => {
 };
 
 const getAll = async () => {
-  return db.select().from(P1Reading);
+  return db.select().from(P1Reading).orderBy(desc(P1Reading.createdAt));
 };
 
 const getLast = async () => {
-  const rows = await db.select().from(P1Reading).orderBy(desc(P1Reading.id)).limit(1);
+  const rows = await db.select().from(P1Reading).orderBy(desc(P1Reading.createdAt)).limit(1);
 
   return rows[0] || null;
 };

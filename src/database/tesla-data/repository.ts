@@ -18,7 +18,11 @@ const getAll = async (limit?: number) => {
 };
 
 const getLast = async () => {
-  const rows = await db.select().from(TeslaDataRecord).orderBy(desc(TeslaDataRecord.id)).limit(1);
+  const rows = await db
+    .select()
+    .from(TeslaDataRecord)
+    .orderBy(desc(TeslaDataRecord.createdAt))
+    .limit(1);
 
   return rows[0] || null;
 };
@@ -28,7 +32,7 @@ const getLastAwake = async () => {
     .select()
     .from(TeslaDataRecord)
     .where(eq(TeslaDataRecord.wake, true))
-    .orderBy(desc(TeslaDataRecord.id))
+    .orderBy(desc(TeslaDataRecord.createdAt))
     .limit(1);
 
   return rows[0] || null;
