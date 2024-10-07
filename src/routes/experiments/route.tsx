@@ -11,9 +11,9 @@ import { EnergyCharts } from './energy-charts';
 
 export const loader = async () => {
   return {
-    aranetAveragesLast24h: AranetReadings.getLast24h({ sort: 'asc' }),
-    lastAranetReading: AranetReadings.getLast(),
-    p1AveragesLast24h: P1Readings.getLast24h({ sort: 'asc' }),
+    aranetAveragesLast24h: await AranetReadings.getLast24h({ sort: 'asc' }),
+    lastAranetReading: await AranetReadings.getLast(),
+    p1AveragesLast24h: await P1Readings.getLast24h({ sort: 'asc' }),
   };
 
   // return json({
