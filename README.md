@@ -6,7 +6,7 @@
 ![coverage](https://wouterds.github.io/wouterds.be/badges/main/coverage.svg)
 ![code-size](https://img.shields.io/github/languages/code-size/wouterds/wouterds.be)
 
-Personal website, made with React, Remix, TypeScript, Cloudflare Pages and DatoCMS as headless CMS.
+Personal website, made with React, Remix, TypeScript and DatoCMS as headless CMS.
 
 ## Development
 
