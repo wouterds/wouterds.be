@@ -71,7 +71,7 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "jest": "^29.7.0",
     "lefthook": "^1.7.17",
-    "postcss": "^8.4.38",
+    "postcss": "^8.4.47",
     "prettier": "^3.3.3",
     "ts-jest": "^29.2.5",
     "typescript": "5.3.3",
