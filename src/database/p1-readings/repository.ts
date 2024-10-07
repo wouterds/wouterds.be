@@ -1,5 +1,5 @@
 import { subHours } from 'date-fns';
-import { asc, avg, desc, gte, sql } from 'drizzle-orm';
+import { asc, desc, gte, sql } from 'drizzle-orm';
 
 import { db } from '~/database/connection';
 
