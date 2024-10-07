@@ -35,7 +35,7 @@ export const AranetCharts = () => {
                     dataKey="temperature"
                     unit=" ºC"
                     rounding={1}
-                    header={`${resolvedAranetAverages[resolvedAranetAverages.length - 1].temperature} ºC`}
+                    header={`${resolvedAranetAverages[resolvedAranetAverages.length - 1].temperature.toFixed(1)} ºC`}
                     label="temperature"
                     scale={{ min: 0.9, max: 1 }}
                     compact

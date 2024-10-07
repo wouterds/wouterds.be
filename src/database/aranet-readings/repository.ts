@@ -27,7 +27,7 @@ const getLast24h = async (options?: { sort: 'asc' | 'desc' }) => {
         DATE_FORMAT(
           DATE_SUB(
             ${AranetReading.createdAt},
-            INTERVAL MINUTE(${AranetReading.createdAt}) % 10 MINUTE
+            INTERVAL MINUTE(${AranetReading.createdAt}) % 20 MINUTE
           ),
           '%Y-%m-%d %H:%i:00'
         )
