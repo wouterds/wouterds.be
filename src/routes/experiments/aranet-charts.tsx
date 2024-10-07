@@ -10,7 +10,7 @@ export const AranetCharts = () => {
   const { aranetAveragesLast24h, lastAranetReading } = useLoaderData<typeof loader>();
 
   return (
-    <>
+    <div>
       <h2 className="text-lg font-medium mb-4">Aranet readings</h2>
       <Suspense fallback={<div>Loading Aranet data...</div>}>
         <Await resolve={aranetAveragesLast24h}>
@@ -86,6 +86,6 @@ export const AranetCharts = () => {
           )}
         </Await>
       </Suspense>
-    </>
+    </div>
   );
 };
