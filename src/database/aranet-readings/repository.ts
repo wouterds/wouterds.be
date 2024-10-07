@@ -1,5 +1,5 @@
 import { subHours } from 'date-fns';
-import { desc, gte, sql } from 'drizzle-orm';
+import { asc, desc, gte, sql } from 'drizzle-orm';
 
 import { db } from '~/database/connection';
 
@@ -18,7 +18,9 @@ const getAll = async (limit?: number) => {
   return query.orderBy(desc(AranetReading.createdAt));
 };
 
-const getLast24h = async () => {
+const getLast24h = async (options?: { sort: 'asc' | 'desc' }) => {
+  const sort = options?.sort ?? 'desc';
+
   const rows = await db
     .select({
       timeGroup: sql<string>`
@@ -38,7 +40,7 @@ const getLast24h = async () => {
     .from(AranetReading)
     .where(gte(AranetReading.createdAt, subHours(new Date(), 24)))
     .groupBy(sql`timeGroup`)
-    .orderBy(desc(sql`timeGroup`));
+    .orderBy(sort === 'desc' ? desc(sql`timeGroup`) : asc(sql`timeGroup`));
 
   return rows.map((row) => ({
     co2: parseFloat(row.avgCo2),

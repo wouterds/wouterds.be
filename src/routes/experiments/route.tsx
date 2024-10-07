@@ -19,7 +19,7 @@ import { AranetCharts } from './aranet-charts';
 
 export const loader = async () => {
   return {
-    aranetAveragesLast24h: AranetReadings.getLast24h(),
+    aranetAveragesLast24h: AranetReadings.getLast24h({ sort: 'asc' }),
     lastAranetReading: AranetReadings.getLast(),
   };
   // const p1Repository = P1Repository.create(context);
