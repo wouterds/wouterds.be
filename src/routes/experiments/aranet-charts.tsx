@@ -2,15 +2,18 @@ import { useLoaderData } from '@remix-run/react';
 import { formatDistanceToNowStrict } from 'date-fns';
 
 import { LineChart } from '~/components/charts/line-chart';
+import { useTick } from '~/hooks/use-tick';
 
 import { loader } from './route';
 
 export const AranetCharts = () => {
+  useTick('1 second');
+
   const { aranetAveragesLast24h, lastAranetReading } = useLoaderData<typeof loader>();
 
   return (
     <div>
-      <h2 className="text-lg font-medium mb-4">Aranet readings</h2>
+      <h2 className="text-lg font-medium mb-3">Aranet readings</h2>
       {!!aranetAveragesLast24h?.length && (
         <div className="gap-1.5 grid grid-cols-2 sm:grid-cols-4 text-center">
           <LineChart

@@ -14,6 +14,7 @@ export const loader = async () => {
     aranetAveragesLast24h: await AranetReadings.getLast24h({ sort: 'asc' }),
     lastAranetReading: await AranetReadings.getLast(),
     p1AveragesLast24h: await P1Readings.getLast24h({ sort: 'asc' }),
+    lastP1Reading: await P1Readings.getLast(),
   };
 };
 
