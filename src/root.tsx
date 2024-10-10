@@ -37,7 +37,7 @@ export const loader = async ({ request, context: _context }: LoaderFunctionArgs)
   return {
     url,
     ray: request.headers.get('cf-ray'),
-    canonical: new URL(url.pathname, `${url.protocol}//${url.host}`).href,
+    canonical: new URL(url.pathname, url),
   };
 };
 
@@ -66,7 +66,6 @@ export const meta: MetaFunction<typeof loader> = ({ error, data }) => {
 
 const App = () => {
   const data = useLoaderData<typeof loader>();
-  const includeTrackers = data?.url?.toString()?.includes?.('wouterds.be');
 
   return (
     <html lang="en">
@@ -81,13 +80,13 @@ const App = () => {
           rel="alternate"
           type="application/rss+xml"
           title="Blog RSS feed for wouterds.be"
-          href={new URL('/feed.xml', data?.url).toString()}
+          href={new URL('/feed.xml', data.url).toString()}
         />
         <meta property="og:site_name" content="Wouter De Schuyter" />
         <Meta />
         <Links />
-        {data?.canonical && <link rel="canonical" href={data?.canonical} />}
-        {includeTrackers && (
+        <link rel="canonical" href={data.canonical.toString()} />
+        {data.url.hostname === 'wouterds.be' && (
           <script
             defer
             src="https://analytics.eu.umami.is/script.js"
