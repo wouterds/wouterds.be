@@ -1,4 +1,5 @@
-import { desc, eq } from 'drizzle-orm';
+import { subHours } from 'date-fns';
+import { asc, desc, eq, gte } from 'drizzle-orm';
 
 import { db } from '~/database/connection';
 
@@ -15,6 +16,18 @@ const getAll = async (limit?: number) => {
   }
 
   return query.orderBy(desc(TeslaDataRecord.createdAt));
+};
+
+const getLast24h = async (options?: { sort: 'asc' | 'desc' }) => {
+  const sort = options?.sort ?? 'desc';
+
+  const rows = await db
+    .select()
+    .from(TeslaDataRecord)
+    .where(gte(TeslaDataRecord.createdAt, subHours(new Date(), 24)))
+    .orderBy(sort === 'desc' ? desc(TeslaDataRecord.createdAt) : asc(TeslaDataRecord.createdAt));
+
+  return rows;
 };
 
 const getLast = async () => {
@@ -45,6 +58,7 @@ const truncate = async () => {
 export const TeslaData = {
   add,
   getAll,
+  getLast24h,
   getLast,
   getLastAwake,
   truncate,
