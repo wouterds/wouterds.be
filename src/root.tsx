@@ -31,7 +31,7 @@ export const links: LinksFunction = () => [
   },
 ];
 
-export const loader = async ({ request, context: _context }: LoaderFunctionArgs) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
 
   return {
