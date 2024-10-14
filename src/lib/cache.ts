@@ -1,12 +1,26 @@
 import { createClient, RedisClientType } from '@redis/client';
 
-export class Cache {
-  private static _client: RedisClientType = createClient({
-    url: 'redis://redis:6379',
-  });
+const REDIS_HOST = process.env.REDIS_HOST || 'redis';
 
-  public static get = async (key: string) => {
-    const value = await this._client.get(key);
+class RedisCache {
+  private _client: RedisClientType;
+
+  public constructor() {
+    this._client = createClient({
+      url: `redis://${REDIS_HOST}:6379`,
+    });
+  }
+
+  private get client() {
+    if (!this._client.isOpen) {
+      this._client.connect();
+    }
+
+    return this._client;
+  }
+
+  public get = async (key: string) => {
+    const value = await this.client.get(key);
     if (value) {
       console.log('cache hit', key);
 
@@ -18,11 +32,13 @@ export class Cache {
     return null;
   };
 
-  public static set = async <T = unknown>(key: string, value: T, expiry?: Date) => {
+  public set = async <T = unknown>(key: string, value: T, expiry?: Date) => {
     console.log('cache set', key);
 
-    return this._client.set(key, JSON.stringify(value), {
+    return this.client.set(key, JSON.stringify(value), {
       EX: expiry ? Math.floor((expiry.getTime() - Date.now()) / 1000) : undefined,
     });
   };
 }
+
+export const Cache = new RedisCache();
