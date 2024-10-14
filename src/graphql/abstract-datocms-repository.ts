@@ -1,4 +1,8 @@
+import { addHours } from 'date-fns';
 import { ASTNode, print } from 'graphql';
+
+import { Cache } from '~/lib/cache';
+import { md5 } from '~/lib/crypto';
 
 export abstract class DatoCMSRepository {
   private get apiKey() {
@@ -24,12 +28,23 @@ export abstract class DatoCMSRepository {
       variables?: TVariables;
     },
   ) => {
+    const request = JSON.stringify({ query: print(query), variables: options.variables });
+    const hash = md5(request);
+
+    const cached = await Cache.get(hash);
+    if (cached) {
+      return cached as TData;
+    }
+
     const response = await fetch('https://graphql.datocms.com', {
       method: 'POST',
       headers: this.headers,
-      body: JSON.stringify({ query: print(query), variables: options.variables }),
+      body: request,
     });
 
-    return response.json().then(({ data }) => data as TData);
+    const data = await response.json().then(({ data }) => data as TData);
+    await Cache.set(hash, data, addHours(new Date(), 4));
+
+    return data;
   };
 }
