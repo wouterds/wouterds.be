@@ -12,3 +12,6 @@ scripts/*/**.json
 
 # Sentry Config File
 .env.sentry-build-plugin
+
+# Generated Vite files
+vite.config.ts.*
