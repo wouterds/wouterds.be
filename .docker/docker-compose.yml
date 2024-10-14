@@ -7,6 +7,7 @@ services:
     env_file: .env
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
       - "traefik.http.routers.wouterdsbe.rule=Host(`wouterds.be`)"
       - "traefik.http.routers.wouterdsbe.entrypoints=websecure"
       - "traefik.http.routers.wouterdsbe.tls=true"
@@ -14,13 +15,23 @@ services:
       - "traefik.http.routers.wouterdsbe-http.entrypoints=web"
       - "traefik.http.routers.wouterdsbe-http.middlewares=https-redirect"
       - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
-      - "traefik.docker.network=proxy"
     networks:
       - proxy
       - mariadb
+      - wouterds
+
+  redis:
+    image: redis:7.4-alpine
+    mem_limit: 128mb
+    container_name: be.wouterds--redis
+    restart: unless-stopped
+    networks:
+      - wouterds
 
 networks:
   proxy:
     external: true
   mariadb:
     external: true
+  wouterds:
+    name: wouterds
