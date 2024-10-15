@@ -27,7 +27,7 @@ const getLast24h = async (options?: { sort: 'asc' | 'desc' }) => {
       DATE_FORMAT(
         DATE_SUB(
           ${P1Reading.createdAt},
-          INTERVAL MINUTE(${P1Reading.createdAt}) % 15 MINUTE
+          INTERVAL MINUTE(${P1Reading.createdAt}) % 10 MINUTE
         ),
         '%Y-%m-%d %H:%i:00'
       )
