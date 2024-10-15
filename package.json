@@ -21,7 +21,7 @@
     "@redis/client": "^1.6.0",
     "@remix-run/node": "^2.12.1",
     "@remix-run/react": "^2.12.1",
-    "@remix-run/serve": "^2.12.1",
+    "@remix-run/serve": "^2.13.1",
     "@sentry/remix": "^8.34.0",
     "clsx": "^2.1.1",
     "country-code-lookup": "^0.1.3",
