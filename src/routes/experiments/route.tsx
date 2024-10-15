@@ -12,14 +12,21 @@ import { EnergyCharts } from './energy-charts';
 import { TeslaCharts } from './tesla-charts';
 
 export const loader = async () => {
-  const [aranetAveragesLast24h, lastAranetReading, p1AveragesLast24h, lastP1Reading, teslaLast24h] =
-    await Promise.all([
-      AranetReadings.getLast24h({ sort: 'asc' }),
-      AranetReadings.getLast(),
-      P1Readings.getLast24h({ sort: 'asc' }),
-      P1Readings.getLast(),
-      TeslaData.getLast24h({ sort: 'asc' }),
-    ]);
+  const [
+    aranetAveragesLast24h,
+    lastAranetReading,
+    p1AveragesLast24h,
+    lastP1Reading,
+    teslaLast24h,
+    lastTeslaCharged,
+  ] = await Promise.all([
+    AranetReadings.getLast24h({ sort: 'asc' }),
+    AranetReadings.getLast(),
+    P1Readings.getLast24h({ sort: 'asc' }),
+    P1Readings.getLast(),
+    TeslaData.getLast24h({ sort: 'asc' }),
+    TeslaData.getLastCharged(),
+  ]);
 
   return {
     aranetAveragesLast24h,
@@ -27,6 +34,7 @@ export const loader = async () => {
     p1AveragesLast24h,
     lastP1Reading,
     teslaLast24h,
+    lastTeslaCharged,
   };
 };
 

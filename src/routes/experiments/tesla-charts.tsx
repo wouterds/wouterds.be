@@ -1,5 +1,5 @@
 import { useLoaderData } from '@remix-run/react';
-import { formatDistanceToNowStrict } from 'date-fns';
+import { format, formatDistanceToNowStrict } from 'date-fns';
 
 import { LineChart } from '~/components/charts/line-chart';
 import { useTick } from '~/hooks/use-tick';
@@ -9,7 +9,7 @@ import { loader } from './route';
 export const TeslaCharts = () => {
   useTick('1 second');
 
-  const { teslaLast24h } = useLoaderData<typeof loader>();
+  const { teslaLast24h, lastTeslaCharged } = useLoaderData<typeof loader>();
 
   const lastReading = teslaLast24h[teslaLast24h.length - 1];
 
@@ -34,6 +34,12 @@ export const TeslaCharts = () => {
           <span>
             last updated: {formatDistanceToNowStrict(lastReading.createdAt, { addSuffix: true })}
           </span>
+          {lastTeslaCharged && (
+            <span>
+              last charged: {lastTeslaCharged.battery.toFixed(0)}% @{' '}
+              {format(lastTeslaCharged.createdAt!, 'dd.MM.yyyy, HH:mm')}
+            </span>
+          )}
         </p>
       )}
     </div>
