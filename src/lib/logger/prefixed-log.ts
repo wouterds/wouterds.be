@@ -15,7 +15,7 @@ const LOGGING_METHOD = {
   error: 'error',
 } as const;
 
-export const prefixedLog = (prefixType: keyof typeof prefixes, ...message: any[]) => {
+export const prefixedLog = (prefixType: keyof typeof prefixes, ...message: unknown[]) => {
   if (process.env.NODE_ENV === 'test') {
     return;
   }
