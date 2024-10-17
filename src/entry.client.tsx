@@ -19,12 +19,8 @@ Sentry.init({
       useLocation,
       useMatches,
     }),
-    // Replay is only available in the client
-    Sentry.replayIntegration(),
   ],
   tracesSampleRate: 1.0,
-  replaysSessionSampleRate: 0.1,
-  replaysOnErrorSampleRate: 1.0,
 });
 
 startTransition(() => {
