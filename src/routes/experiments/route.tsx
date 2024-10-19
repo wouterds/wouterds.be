@@ -4,11 +4,13 @@ import ms from 'ms';
 import { useEffect } from 'react';
 
 import { AranetReadings } from '~/database/aranet-readings/repository';
+import { NUCReadings } from '~/database/nuc/repository';
 import { P1Readings } from '~/database/p1-readings/repository';
 import { TeslaData } from '~/database/tesla-data/repository';
 
 import { AranetCharts } from './aranet-charts';
 import { EnergyCharts } from './energy-charts';
+import { NUCCharts } from './nuc-charts';
 import { TeslaCharts } from './tesla-charts';
 
 export const loader = async () => {
@@ -19,6 +21,8 @@ export const loader = async () => {
     lastP1Reading,
     teslaLast24h,
     lastTeslaCharged,
+    NUCAveragesLast24h,
+    lastNUCReading,
   ] = await Promise.all([
     AranetReadings.getLast24h({ sort: 'asc' }),
     AranetReadings.getLast(),
@@ -26,6 +30,8 @@ export const loader = async () => {
     P1Readings.getLast(),
     TeslaData.getLast24h({ sort: 'asc' }),
     TeslaData.getLastCharged(),
+    NUCReadings.getLast24h({ sort: 'asc' }),
+    NUCReadings.getLast(),
   ]);
 
   return {
@@ -35,6 +41,8 @@ export const loader = async () => {
     lastP1Reading,
     teslaLast24h,
     lastTeslaCharged,
+    NUCAveragesLast24h,
+    lastNUCReading,
   };
 };
 
@@ -60,6 +68,7 @@ export default function Experiments() {
     <>
       <h1 className="text-xl font-medium mb-6">Experiments</h1>
       <div className="flex flex-col w-full gap-6">
+        <NUCCharts />
         <AranetCharts />
         <EnergyCharts />
         <TeslaCharts />

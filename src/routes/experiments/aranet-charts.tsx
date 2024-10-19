@@ -31,9 +31,9 @@ export const AranetCharts = () => {
             syncId="aranet"
             data={aranetAveragesLast24h}
             dataKey="temperature"
-            unit=" ºC"
+            unit="ºC"
             rounding={1}
-            header={`${aranetAveragesLast24h[aranetAveragesLast24h.length - 1].temperature} ºC`}
+            header={`${aranetAveragesLast24h[aranetAveragesLast24h.length - 1].temperature}ºC`}
             label="temperature"
             scale={{ min: 0.9, max: 1 }}
             compact
