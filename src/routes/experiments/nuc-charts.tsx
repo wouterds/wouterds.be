@@ -24,6 +24,7 @@ export const NUCCharts = () => {
             rounding={1}
             header={`${NUCAveragesLast24h[NUCAveragesLast24h.length - 1].cpuTemp}ºC`}
             label="cpu temperature"
+            scale={{ min: 0.8, max: 1.1 }}
             compact
           />
           <LineChart
@@ -34,6 +35,7 @@ export const NUCCharts = () => {
             rounding={1}
             header={`${NUCAveragesLast24h[NUCAveragesLast24h.length - 1].cpuUsage}%`}
             label="cpu"
+            scale={{ min: 0.6, max: 1.4 }}
             compact
           />
           <LineChart
@@ -44,6 +46,7 @@ export const NUCCharts = () => {
             rounding={0}
             header={`${NUCAveragesLast24h[NUCAveragesLast24h.length - 1].memoryUsage}%`}
             label="memory"
+            scale={{ min: 0.8, max: 1.1 }}
             compact
           />
           <LineChart
@@ -54,6 +57,7 @@ export const NUCCharts = () => {
             rounding={0}
             header={`${NUCAveragesLast24h[NUCAveragesLast24h.length - 1].diskUsage}%`}
             label="disk"
+            scale={{ min: 0.99, max: 1.01 }}
             compact
           />
         </div>
