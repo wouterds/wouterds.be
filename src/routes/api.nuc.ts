@@ -10,7 +10,7 @@ export const action = async ({ request }: LoaderFunctionArgs) => {
   }
 
   const lastPush = await NUCReadings.getLast();
-  if (lastPush && differenceInMinutes(new Date(), lastPush.createdAt) < 1) {
+  if (lastPush && differenceInMinutes(new Date(), lastPush.createdAt) <= 1) {
     return json({ success: false }, { status: StatusCodes.TOO_MANY_REQUESTS });
   }
 

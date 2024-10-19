@@ -15,7 +15,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   const lastPush = await P1Readings.getLast();
-  if (lastPush && differenceInMinutes(new Date(), lastPush.createdAt) < 1) {
+  if (lastPush && differenceInMinutes(new Date(), lastPush.createdAt) <= 1) {
     return json({ success: false }, { status: StatusCodes.TOO_MANY_REQUESTS });
   }
 
