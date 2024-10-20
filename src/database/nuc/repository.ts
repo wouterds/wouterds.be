@@ -33,7 +33,7 @@ const getLast24h = async (options?: { sort: 'asc' | 'desc' }) => {
         DATE_FORMAT(
           DATE_SUB(
             ${NUCReading.createdAt},
-            INTERVAL MINUTE(${NUCReading.createdAt}) % 5 MINUTE
+            INTERVAL MINUTE(${NUCReading.createdAt}) % 15 MINUTE
           ),
           '%Y-%m-%d %H:%i:00'
         )
