@@ -43,7 +43,7 @@ export const NUCCharts = () => {
             data={NUCAveragesLast24h}
             dataKey="memoryUsage"
             unit="%"
-            rounding={0}
+            rounding={1}
             header={`${NUCAveragesLast24h[NUCAveragesLast24h.length - 1].memoryUsage}%`}
             label="memory"
             scale={{ min: 0.8, max: 1.1 }}
@@ -54,7 +54,7 @@ export const NUCCharts = () => {
             data={NUCAveragesLast24h}
             dataKey="diskUsage"
             unit="%"
-            rounding={0}
+            rounding={1}
             header={`${NUCAveragesLast24h[NUCAveragesLast24h.length - 1].diskUsage}%`}
             label="disk"
             scale={{ min: 0.99, max: 1.01 }}
