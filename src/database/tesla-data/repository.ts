@@ -80,7 +80,7 @@ const getLastCharged = async (offset?: Date): Promise<TeslaDataRecord | null> =>
   for (let i = 1; i < rows.length; i++) {
     const currentRecord = rows[i];
 
-    if (peakBattery - currentRecord.battery >= SIGNIFICANT_CHARGE_INCREASE) {
+    if (peakBattery - currentRecord.battery > SIGNIFICANT_CHARGE_INCREASE) {
       chargingSessionPeak = rows.find((r) => r.battery === peakBattery);
       break;
     }
