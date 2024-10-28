@@ -81,7 +81,7 @@
     "vite-tsconfig-paths": "^5.0.1"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-musl": "^4.24.0"
+    "@rollup/rollup-linux-x64-musl": "^4.24.2"
   },
   "engines": {
     "node": "^20.0.0",
