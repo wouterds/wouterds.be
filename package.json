@@ -16,7 +16,7 @@
     "database:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.9.0",
+    "@hookform/resolvers": "^3.9.1",
     "@marsidev/react-turnstile": "^1.0.2",
     "@redis/client": "^1.6.0",
     "@remix-run/node": "^2.13.1",
