@@ -38,7 +38,7 @@
     "mysql2": "^3.11.4",
     "picocolors": "^1.1.1",
     "react": "^18.2.0",
-    "react-datocms": "^7.0.3",
+    "react-datocms": "^7.0.4",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.53.2",
     "recharts": "^2.13.3",
