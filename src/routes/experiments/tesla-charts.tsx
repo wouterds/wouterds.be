@@ -28,7 +28,34 @@ export const TeslaCharts = () => {
           max: 1.02,
         }}
         label="battery level (last 24 hours)"
+        syncId="tesla"
       />
+
+      <div className="gap-1.5 grid grid-cols-2 mt-3">
+        <LineChart
+          data={teslaLast24h}
+          dataKey="temperatureInside"
+          unit="ºC"
+          rounding={1}
+          header={`${lastReading.temperatureInside}ºC`}
+          label="interior temperature"
+          scale={{ min: 0.9, max: 1 }}
+          syncId="tesla"
+          compact
+        />
+        <LineChart
+          data={teslaLast24h}
+          dataKey="temperatureOutside"
+          unit="ºC"
+          rounding={1}
+          header={`${lastReading.temperatureOutside}ºC`}
+          label="exterior temperature"
+          scale={{ min: 0.9, max: 1 }}
+          syncId="tesla"
+          compact
+        />
+      </div>
+
       {!!lastReading && (
         <p className="flex flex-col sm:flex-row gap-1 justify-start sm:justify-between mt-2">
           <span>
