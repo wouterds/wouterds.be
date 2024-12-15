@@ -10,6 +10,9 @@ export const EnergyCharts = () => {
   useTick('1 second');
 
   const { p1AveragesLast24h, lastP1Reading } = useLoaderData<typeof loader>();
+  if (!p1AveragesLast24h?.length) {
+    return null;
+  }
 
   return (
     <div>
