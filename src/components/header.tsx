@@ -1,4 +1,4 @@
-import { Link } from '@remix-run/react';
+import { Link } from 'react-router';
 
 const Header = () => (
   <header className="border-t border-b border-dashed border-zinc-900 dark:border-zinc-100 py-3">

@@ -1,10 +1,14 @@
-import { Link } from '@remix-run/react';
 import { format } from 'date-fns';
-
-import { type Posts as PostsType } from '~/graphql/posts/repository';
+import { Link } from 'react-router';
 
 export interface PostsProps {
-  posts: PostsType;
+  posts: Array<{
+    id: string;
+    title: string;
+    slug: string;
+    excerpt: string;
+    date: string;
+  }>;
 }
 
 export const Posts = ({ posts }: PostsProps) => {

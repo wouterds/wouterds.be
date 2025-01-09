@@ -1,43 +1,17 @@
-import { vitePlugin as remix } from '@remix-run/dev';
-import { sentryVitePlugin } from '@sentry/vite-plugin';
+import { reactRouter } from '@react-router/dev/vite';
+import autoprefixer from 'autoprefixer';
+import tailwindcss from 'tailwindcss';
 import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
-declare module '@remix-run/node' {
-  interface Future {
-    v3_singleFetch: true;
-  }
-}
-
 export default defineConfig({
-  build: {
-    target: 'esnext',
-    sourcemap: true,
+  css: {
+    postcss: {
+      plugins: [tailwindcss, autoprefixer],
+    },
   },
-  define: {
-    'process.env.COMMIT_SHA': JSON.stringify(process.env.COMMIT_SHA),
-  },
-  plugins: [
-    remix({
-      appDirectory: 'src',
-      future: {
-        v3_fetcherPersist: true,
-        v3_relativeSplatPath: true,
-        v3_throwAbortReason: true,
-        unstable_optimizeDeps: true,
-        v3_singleFetch: false,
-      },
-    }),
-    tsconfigPaths(),
-    sentryVitePlugin({
-      org: 'wouterds',
-      project: 'website',
-      release: {
-        name: process.env.COMMIT_SHA,
-      },
-      sourcemaps: {
-        filesToDeleteAfterUpload: ['build/**/*.map'],
-      },
-    }),
-  ],
+  plugins: [reactRouter(), tsconfigPaths()],
+  // optimizeDeps: {
+  //   exclude: ['@graphql-typed-document-node/core'],
+  // },
 });

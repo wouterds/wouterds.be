@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { ReactNode, useMemo, useState } from 'react';
+import { type ReactNode, useMemo, useState } from 'react';
 import { Line, LineChart as Chart, ResponsiveContainer, Tooltip, YAxis } from 'recharts';
 import colors from 'tailwindcss/colors';
 

@@ -1,24 +1,24 @@
-import './tailwind.css';
-
-import type { LinksFunction, LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
+import type { ReactNode } from 'react';
 import {
   isRouteErrorResponse,
   Links,
+  type LoaderFunctionArgs,
   Meta,
+  type MetaFunction,
   Outlet,
   Scripts,
   ScrollRestoration,
   useLoaderData,
-  useRouteError,
-} from '@remix-run/react';
-import { captureRemixErrorBoundaryError, withSentry } from '@sentry/remix';
+} from 'react-router';
 
+import type { Route } from './+types/root';
 import { Code } from './components/code';
 import Footer from './components/footer';
 import Header from './components/header';
 import { NowPlaying } from './components/now-playing';
+import stylesheet from './main.css?url';
 
-export const links: LinksFunction = () => [
+export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
   {
     rel: 'preconnect',
@@ -29,6 +29,7 @@ export const links: LinksFunction = () => [
     rel: 'stylesheet',
     href: 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap',
   },
+  { rel: 'stylesheet', href: stylesheet },
 ];
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -64,7 +65,7 @@ export const meta: MetaFunction<typeof loader> = ({ error, data }) => {
   ];
 };
 
-const App = () => {
+export function Layout({ children }: { children: ReactNode }) {
   const data = useLoaderData<typeof loader>();
 
   return (
@@ -76,17 +77,19 @@ const App = () => {
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <link
-          rel="alternate"
-          type="application/rss+xml"
-          title="Blog RSS feed for wouterds.be"
-          href={new URL('/feed.xml', data.url).toString()}
-        />
+        {data?.url && (
+          <link
+            rel="alternate"
+            type="application/rss+xml"
+            title="Blog RSS feed for wouterds.be"
+            href={new URL('/feed.xml', data?.url).toString()}
+          />
+        )}
         <meta property="og:site_name" content="Wouter De Schuyter" />
         <Meta />
         <Links />
-        <link rel="canonical" href={data.canonical.toString()} />
-        {data.url.hostname === 'wouterds.be' && (
+        {data?.canonical && <link rel="canonical" href={data?.canonical.toString()} />}
+        {data?.url?.hostname === 'wouterds.be' && (
           <script
             defer
             src="https://analytics.eu.umami.is/script.js"
@@ -94,20 +97,15 @@ const App = () => {
           />
         )}
       </head>
-      <body suppressHydrationWarning className="relative">
+      <body className="relative">
         <div className="mx-auto" style={{ maxWidth: '768px' }}>
           <NowPlaying />
           <Header />
-          <main className="my-6 sm:my-10">
-            <Outlet />
-          </main>
+          <main className="my-6 sm:my-10">{children}</main>
           <Footer ray={data?.ray} />
         </div>
         <div id="modal-portal" />
-
-        {false && (
-          // todo
-          <div className="fixed bottom-2 left-2 z-50 group">
+        {/* <div className="fixed bottom-2 left-2 z-50 group">
             <p className="flex items-center text-white font-semibold py-2 px-2.5 rounded bg-rose-500 transition w-fit pointer-events-none">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -124,54 +122,35 @@ const App = () => {
                 <span className="pl-2 block">preview mode</span>
               </span>
             </p>
-          </div>
-        )}
+          </div> */}
         <ScrollRestoration />
         <Scripts />
       </body>
     </html>
   );
-};
+}
 
-export default withSentry(App, { wrapWithErrorBoundary: false });
+export default function App() {
+  return <Outlet />;
+}
 
-export const ErrorBoundary = () => {
-  const error = useRouteError();
-
-  captureRemixErrorBoundaryError(error);
-
+export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="robots" content="noindex" />
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <div className="mx-auto" style={{ maxWidth: '768px' }}>
-          <Header />
-          <main className="my-6 sm:my-10">
-            <h1 className="text-xl font-medium mb-4">
-              {(isRouteErrorResponse(error) && `${error.status} ${error.statusText}`) ||
-                'Oops, something went wrong!'}
-            </h1>
-            <p>
-              {isRouteErrorResponse(error) && error.status === 404
-                ? 'The page you were looking for could not be found.'
-                : (error instanceof Error && error.message) || 'Unknown error occured'}
-            </p>
-            {error instanceof Error && error.stack && (
-              <Code className="mt-1" lang="log">
-                {error.stack}
-              </Code>
-            )}
-          </main>
-          <Footer />
-        </div>
-        <Scripts />
-      </body>
-    </html>
+    <>
+      <h1 className="text-xl font-medium mb-4">
+        {(isRouteErrorResponse(error) && `${error.status} ${error.statusText}`) ||
+          'Oops, something went wrong!'}
+      </h1>
+      <p>
+        {isRouteErrorResponse(error) && error.status === 404
+          ? 'The page you were looking for could not be found.'
+          : (error instanceof Error && error.message) || 'Unknown error occured'}
+      </p>
+      {error instanceof Error && error.stack && (
+        <Code className="mt-1" lang="log">
+          {error.stack}
+        </Code>
+      )}
+    </>
   );
-};
+}
