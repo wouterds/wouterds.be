@@ -5,6 +5,21 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      "@typescript-eslint/*":
+        patterns:
+          - "@typescript-eslint/*"
+      "@commitlint/*":
+        patterns:
+          - "@commitlint/*"
+      "@react-router/*":
+        patterns:
+          - "@react-router/*"
+      datocms:
+        patterns:
+          - "datocms-structured-text-to-html-string"
+          - "datocms-structured-text-to-plain-text"
+          - "datocms-structured-text-utils"
 
   - package-ecosystem: "github-actions"
     directory: "/"

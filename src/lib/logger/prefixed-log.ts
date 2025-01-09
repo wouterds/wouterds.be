@@ -34,6 +34,6 @@ export const prefixedLog = (prefixType: keyof typeof prefixes, ...message: unkno
   if (message.length === 0) {
     console[consoleMethod]('');
   } else {
-    console[consoleMethod](' ' + prefix, ...message);
+    console[consoleMethod](prefix, ...message);
   }
 };

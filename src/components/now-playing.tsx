@@ -1,7 +1,18 @@
 import { Fragment, useCallback, useEffect, useState } from 'react';
 
 import { useInterval } from '~/hooks/use-interval';
-import { SpotifyTrack } from '~/lib/spotify';
+
+type SpotifyTrack = {
+  id: string;
+  url: string;
+  explicit: boolean;
+  name: string;
+  artist: {
+    id: string;
+    name: string;
+    url: string;
+  }[];
+};
 
 export const NowPlaying = () => {
   const [nowPlaying, setNowPlaying] = useState<SpotifyTrack | null>(null);

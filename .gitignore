@@ -1,17 +1,8 @@
-node_modules
-
-/.cache
-/build
 .env
 .DS_Store
+/node_modules/
+/coverage/
 
-coverage/
-src/graphql/types.ts
-
-scripts/*/**.json
-
-# Sentry Config File
-.env.sentry-build-plugin
-
-# Generated Vite files
-vite.config.ts.*
+# React Router
+/.react-router/
+/build/

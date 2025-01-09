@@ -1,8 +1,8 @@
 import { addHours } from 'date-fns';
-import { ASTNode, print } from 'graphql';
+import { type ASTNode, print } from 'graphql';
 
-import { Cache } from '~/lib/cache';
-import { md5 } from '~/lib/crypto';
+import { Cache } from '~/lib/cache.server';
+import { md5 } from '~/lib/crypto.server';
 
 export abstract class DatoCMSRepository {
   private get apiKey() {

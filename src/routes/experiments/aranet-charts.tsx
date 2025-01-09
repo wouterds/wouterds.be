@@ -1,10 +1,10 @@
-import { useLoaderData } from '@remix-run/react';
 import { formatDistanceToNowStrict } from 'date-fns';
+import { useLoaderData } from 'react-router';
 
 import { LineChart } from '~/components/charts/line-chart';
 import { useTick } from '~/hooks/use-tick';
 
-import { loader } from './route';
+import { loader } from './index';
 
 export const AranetCharts = () => {
   useTick('1 second');

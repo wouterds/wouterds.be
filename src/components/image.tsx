@@ -1,8 +1,8 @@
-import { useLocation, useSearchParams } from '@remix-run/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useLocation, useSearchParams } from 'react-router';
 
-import { FileField } from '~/graphql';
+import type { FileField } from '~/graphql';
 import { humanReadableSize } from '~/lib/utils';
 
 import Loader from './loader';
