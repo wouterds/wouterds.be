@@ -1,6 +1,6 @@
 import 'dotenv/config';
 
-import { CodegenConfig } from '@graphql-codegen/cli';
+import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   overwrite: true,
@@ -28,6 +28,7 @@ const config: CodegenConfig = {
         },
       ],
       config: {
+        useTypeImports: true,
         strictScalars: true,
         scalars: {
           BooleanType: 'boolean',
