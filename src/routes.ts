@@ -5,11 +5,11 @@ export default [
   index('routes/pages/home.tsx'),
   route('/about', 'routes/pages/about.tsx'),
   ...prefix('/blog', [
-    index('routes/blog/index.tsx'),
-    route('/:slug', 'routes/blog/slug.tsx'),
+    index('routes/pages/blog/index.tsx'),
+    route('/:slug', 'routes/pages/blog/slug.tsx'),
   ]),
   route('/contact', 'routes/pages/contact.tsx'),
-  route('/experiments', 'routes/experiments/index.tsx'),
+  route('/experiments', 'routes/pages/experiments/index.tsx'),
 
   ...prefix('/api', [
     route('/spotify/auth', 'routes/api/spotify/auth.ts'),
