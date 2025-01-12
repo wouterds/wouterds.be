@@ -3,7 +3,7 @@ import { asc, desc, gte, sql } from 'drizzle-orm';
 
 import { db } from '~/database/connection.server';
 
-import { NUCReading } from './model.server';
+import { NUCReading } from '../schema/nuc.server';
 
 const add = async (data: NUCReading) => {
   await db.insert(NUCReading).values(data);

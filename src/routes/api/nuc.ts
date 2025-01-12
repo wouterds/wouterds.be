@@ -2,7 +2,7 @@ import { differenceInMinutes } from 'date-fns';
 import { StatusCodes } from 'http-status-codes';
 import type { LoaderFunctionArgs } from 'react-router';
 
-import { NUCReadings } from '~/database/nuc/repository.server';
+import { NUCReadings } from '~/database';
 
 export const action = async ({ request }: LoaderFunctionArgs) => {
   if (request.headers.get('authorization') !== process.env.API_AUTH_TOKEN) {

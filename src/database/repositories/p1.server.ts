@@ -3,7 +3,7 @@ import { asc, desc, gte, sql } from 'drizzle-orm';
 
 import { db } from '~/database/connection.server';
 
-import { P1Reading } from './model.server';
+import { P1Reading } from '../schema/p1.server';
 
 const add = async (data: P1Reading) => {
   await db.insert(P1Reading).values(data);

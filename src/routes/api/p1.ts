@@ -2,7 +2,7 @@ import { differenceInMinutes } from 'date-fns';
 import { StatusCodes } from 'http-status-codes';
 import type { ActionFunctionArgs } from 'react-router';
 
-import { P1Readings } from '~/database/p1-readings/repository.server';
+import { P1Readings } from '~/database';
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   if (request.headers.get('authorization') !== process.env.API_AUTH_TOKEN) {

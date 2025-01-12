@@ -1,6 +1,6 @@
 import { addSeconds, isPast } from 'date-fns';
 
-import { AuthTokens } from '~/database/auth-tokens/repository.server';
+import { AuthTokens } from '~/database';
 
 export class Tesla {
   private _refreshToken?: string | null;

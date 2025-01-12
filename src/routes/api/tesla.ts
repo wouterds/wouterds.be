@@ -2,7 +2,7 @@ import { differenceInMinutes } from 'date-fns';
 import { StatusCodes } from 'http-status-codes';
 import type { LoaderFunctionArgs } from 'react-router';
 
-import { TeslaData } from '~/database/tesla-data/repository.server';
+import { TeslaData } from '~/database';
 import { Tesla } from '~/lib/tesla.server';
 
 const SYNC_INTERVAL_MINUTES = 15; // 15 minutes

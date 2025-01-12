@@ -2,7 +2,7 @@ import { differenceInMinutes, fromUnixTime } from 'date-fns';
 import { StatusCodes } from 'http-status-codes';
 import type { ActionFunctionArgs } from 'react-router';
 
-import { AranetReadings } from '~/database/aranet-readings/repository.server';
+import { AranetReadings } from '~/database';
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const query = new URL(request.url).searchParams;

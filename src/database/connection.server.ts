@@ -1,6 +1,8 @@
 import { drizzle } from 'drizzle-orm/mysql2';
 import mysql from 'mysql2';
 
+import * as schema from './schema';
+
 const connection = mysql.createConnection({
   host: process.env.DB_HOST!,
   port: 3306,
@@ -9,4 +11,4 @@ const connection = mysql.createConnection({
   database: process.env.DB_NAME!,
 });
 
-export const db = drizzle(connection);
+export const db = drizzle(connection, { schema, mode: 'default' });

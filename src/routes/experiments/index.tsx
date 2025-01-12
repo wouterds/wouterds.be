@@ -2,10 +2,7 @@ import ms from 'ms';
 import { useEffect } from 'react';
 import { type MetaFunction, useRevalidator } from 'react-router';
 
-import { AranetReadings } from '~/database/aranet-readings/repository.server';
-import { NUCReadings } from '~/database/nuc/repository.server';
-import { P1Readings } from '~/database/p1-readings/repository.server';
-import { TeslaData } from '~/database/tesla-data/repository.server';
+import { AranetReadings, NUCReadings, P1Readings, TeslaData } from '~/database';
 
 import { AranetCharts } from './aranet-charts';
 import { EnergyCharts } from './energy-charts';

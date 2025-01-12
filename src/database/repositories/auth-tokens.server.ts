@@ -3,7 +3,7 @@ import { and, desc, eq } from 'drizzle-orm';
 import { db } from '~/database/connection.server';
 import { decrypt, encrypt } from '~/lib/encryption.server';
 
-import { AuthToken } from './model.server';
+import { AuthToken } from '../schema/auth-tokens.server';
 
 const add = async (
   vendor: AuthToken['vendor'],

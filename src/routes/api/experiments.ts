@@ -1,7 +1,6 @@
 import { differenceInMinutes } from 'date-fns';
 
-import { AranetReadings } from '~/database/aranet-readings/repository.server';
-import { TeslaData } from '~/database/tesla-data/repository.server';
+import { AranetReadings, TeslaData } from '~/database';
 import { Spotify } from '~/lib/spotify.server';
 
 export const loader = async () => {

@@ -2,7 +2,7 @@ import { Buffer } from 'node:buffer';
 
 import { addSeconds, getUnixTime, isPast } from 'date-fns';
 
-import { AuthTokens } from '~/database/auth-tokens/repository.server';
+import { AuthTokens } from '~/database';
 
 export class Spotify {
   private _refreshToken: string | null;

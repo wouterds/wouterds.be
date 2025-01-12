@@ -3,7 +3,7 @@ import { asc, desc, eq, gte, lt } from 'drizzle-orm';
 
 import { db } from '~/database/connection.server';
 
-import { TeslaDataRecord } from './model.server';
+import { TeslaDataRecord } from '../schema/tesla.server';
 
 const add = async (data: TeslaDataRecord) => {
   await db.insert(TeslaDataRecord).values(data);
