@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <>
       <header className="text-center mb-12 pt-2">
-        <div className="relative overflow-hidden rounded-full w-32 h-32 mx-auto mb-4 bg-zinc-100 dark:bg-zinc-800 dark:bg-opacity-50">
+        <div className="relative overflow-hidden rounded-full w-32 h-32 mx-auto mb-4 bg-zinc-100">
           <img
             src="/images/wouterds-2024.jpg"
             alt="Headshot of Wouter De Schuyter"
@@ -23,9 +23,7 @@ export default function Home() {
           />
         </div>
         <h1 className="text-2xl font-medium mb-2">Wouter De Schuyter</h1>
-        <h2 className="text-black dark:text-white text-opacity-50 dark:text-opacity-50">
-          Digital Creative & Developer
-        </h2>
+        <h2 className="text-black text-opacity-50">Digital Creative & Developer</h2>
       </header>
 
       <Posts posts={posts} />

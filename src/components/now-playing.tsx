@@ -40,7 +40,7 @@ export const NowPlaying = () => {
   return (
     <a
       aria-hidden
-      className="flex items-center gap-2 pb-2 text-zinc-400 dark:text-zinc-500 hover:text-emerald-500 dark:hover:text-emerald-400 text-nowrap flex-nowrap w-full group relative cursor-pointer hover:bg-transparent"
+      className="flex items-center gap-2 pb-2 text-zinc-400 hover:text-emerald-500 text-nowrap flex-nowrap w-full group relative cursor-pointer hover:bg-transparent"
       href={nowPlaying.url}
       target="_blank"
       rel="noopener noreferrer"
@@ -84,10 +84,9 @@ export const NowPlaying = () => {
           }
         `}</style>
         <span className="sound-bars mr-0.5 shrink-0">
-          <span className="bg-zinc-400 dark:bg-zinc-500 group-hover:bg-emerald-500 dark:group-hover:bg-emerald-400" />
-          <span className="bg-zinc-400 dark:bg-zinc-500 group-hover:bg-emerald-500 dark:group-hover:bg-emerald-400" />
-          <span className="bg-zinc-400 dark:bg-zinc-500 group-hover:bg-emerald-500 dark:group-hover:bg-emerald-400" />
-          {/* <span className="bg-zinc-400 dark:bg-zinc-500 group-hover:bg-emerald-500 dark:group-hover:bg-emerald-400" /> */}
+          <span className="bg-zinc-400 group-hover:bg-emerald-500" />
+          <span className="bg-zinc-400 group-hover:bg-emerald-500" />
+          <span className="bg-zinc-400 group-hover:bg-emerald-500" />
         </span>
         {nowPlaying.explicit && <span className="font-sans text-lg leading-none">🅴</span>}
         {nowPlaying.name}

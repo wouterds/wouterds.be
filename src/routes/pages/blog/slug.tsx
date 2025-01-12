@@ -13,7 +13,6 @@ import { type LoaderFunctionArgs, type MetaFunction, useLoaderData } from 'react
 import { Image } from '~/components/image';
 import type { GalleryRecord, VideoRecord } from '~/graphql';
 import { PostRepository } from '~/graphql/posts/repository.server';
-import { useIsDarkMode } from '~/hooks/use-is-dark-mode';
 import { excerptFromContent, imagesFromContent, plainTextFromContent } from '~/lib/datocms.server';
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
@@ -102,7 +101,6 @@ export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
 export default function BlogSlug() {
   const { post, nextPost, previousPost, containsCodeBlocks } = useLoaderData<typeof loader>();
 
-  const isDarkMode = useIsDarkMode();
   const ref = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -123,21 +121,17 @@ export default function BlogSlug() {
       import('https://esm.sh/shiki@1.5.2').then(async ({ codeToHtml }) => {
         pre.outerHTML = await codeToHtml(code, {
           lang,
-          theme: isDarkMode ? 'github-dark' : 'github-light',
+          theme: 'github-light',
         });
       });
     }
-  }, [isDarkMode, containsCodeBlocks]);
+  }, [containsCodeBlocks]);
 
   return (
     <>
-      <article
-        ref={ref}
-        className="prose-zinc dark:prose-dark dark:prose-invert prose-sm max-w-none text-xs leading-relaxed">
+      <article ref={ref} className="prose-zinc prose-sm max-w-none text-xs leading-relaxed">
         <header className="mb-4">
-          <time
-            className="text-xs text-zinc-400 dark:text-zinc-500 mb-2 block"
-            dateTime={post.date}>
+          <time className="text-xs text-zinc-400 mb-2 block" dateTime={post.date}>
             {format(post.date, 'MMMM do, yyyy')}
           </time>
           <h1 className="text-xl font-medium my-0">{post.title}</h1>
@@ -188,7 +182,7 @@ const renderBlock = ({
       return (
         <div className="not-prose mt-6">
           <div
-            className="bg-zinc-50 dark:bg-zinc-800 dark:bg-opacity-25 relative overflow-hidden bg-center bg-cover aspect-video w-full rounded-sm"
+            className="bg-zinc-50 relative overflow-hidden bg-center bg-cover aspect-video w-full rounded-sm"
             style={{ backgroundImage: `url(${record.video.thumbnailUrl})` }}>
             <iframe
               loading="lazy"

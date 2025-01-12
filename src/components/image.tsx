@@ -93,7 +93,7 @@ export const Image = ({ id, width, height, responsiveImage, url, alt, images }: 
           setExpanded(!expanded);
         }}
         href={`${location.pathname}?image=${id}`}
-        className="m-0 p-0 block bg-zinc-50 dark:bg-zinc-800 dark:bg-opacity-25 relative overflow-hidden rounded-sm w-full"
+        className="m-0 p-0 block bg-zinc-50 relative overflow-hidden rounded-sm w-full"
         style={{ aspectRatio: `${width! / height!}` }}>
         {responsiveImage?.base64 && (
           <img className="absolute inset-0 w-full h-full" src={responsiveImage.base64} />

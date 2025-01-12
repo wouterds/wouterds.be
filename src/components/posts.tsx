@@ -13,9 +13,7 @@ export const Posts = ({ posts }: PostsProps) => {
       {posts.map((post) => {
         return (
           <li key={post.id}>
-            <time
-              className="text-xs text-zinc-400 dark:text-zinc-500 mb-1 block"
-              dateTime={post.date}>
+            <time className="text-xs text-zinc-400 mb-1 block" dateTime={post.date}>
               {format(post.date, 'MMMM do, yyyy')}
             </time>
             <h3 className="text-base font-medium mb-2">
@@ -23,7 +21,7 @@ export const Posts = ({ posts }: PostsProps) => {
                 {post.title}
               </Link>
             </h3>
-            <p className="leading-relaxed line-clamp-3 sm:line-clamp-2 text-zinc-700 dark:text-zinc-300">
+            <p className="leading-relaxed line-clamp-3 sm:line-clamp-2 text-zinc-700">
               {post.excerpt}
             </p>
           </li>

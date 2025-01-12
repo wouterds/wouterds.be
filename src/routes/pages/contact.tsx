@@ -84,7 +84,7 @@ export default function Contact() {
 
   if (data?.success) {
     return (
-      <p className="text-emerald-700 dark:text-emerald-400">
+      <p className="text-emerald-700">
         Your message has been sent, I&apos;ll get back to you as soon as possible!
       </p>
     );
@@ -103,9 +103,7 @@ export default function Contact() {
         method="post"
         onSubmit={isValid ? undefined : handleSubmit(() => {})}>
         {data?.success === false && (
-          <p className="text-rose-600 dark:text-rose-400 mt-2 mb-4">
-            Something went wrong, please try again later.
-          </p>
+          <p className="text-rose-600 mt-2 mb-4">Something went wrong, please try again later.</p>
         )}
         <div className="flex gap-4 flex-col sm:flex-row">
           <div className="flex-1">
@@ -116,12 +114,10 @@ export default function Contact() {
               type="text"
               id="name"
               {...register('name')}
-              className={errors.name ? 'border-rose-600 dark:border-rose-400' : undefined}
+              className={errors.name ? 'border-rose-600' : undefined}
             />
             {errors.name?.message && (
-              <p className="text-rose-600 dark:text-rose-400 mt-1.5">
-                {errors.name?.message as string}
-              </p>
+              <p className="text-rose-600 mt-1.5">{errors.name?.message as string}</p>
             )}
           </div>
           <div className="flex-1">
@@ -132,12 +128,10 @@ export default function Contact() {
               type="text"
               id="email"
               {...register('email')}
-              className={errors.email ? 'border-rose-600 dark:border-rose-400' : undefined}
+              className={errors.email ? 'border-rose-600' : undefined}
             />
             {errors.email?.message && (
-              <p className="text-rose-600 dark:text-rose-400 mt-1.5">
-                {errors.email?.message as string}
-              </p>
+              <p className="text-rose-600 mt-1.5">{errors.email?.message as string}</p>
             )}
           </div>
         </div>
@@ -148,19 +142,17 @@ export default function Contact() {
           <textarea
             id="message"
             {...register('message')}
-            className={errors.message ? 'border-rose-600 dark:border-rose-400' : undefined}
+            className={errors.message ? 'border-rose-600' : undefined}
           />
           {errors.message?.message && (
-            <p className="text-rose-600 dark:text-rose-400 mt-1.5">
-              {errors.message?.message as string}
-            </p>
+            <p className="text-rose-600 mt-1.5">{errors.message?.message as string}</p>
           )}
         </div>
         <div className="flex flex-col sm:flex-row justify-between gap-4">
           <div>
             <button
               type="submit"
-              className="relative leading-none flex items-center justify-center group font-medium bg-gray-50 hover:bg-gray-100 dark:bg-zinc-800 dark:bg-opacity-50 dark:hover:bg-zinc-800 dark:hover:bg-opacity-100">
+              className="relative leading-none flex items-center justify-center group font-medium bg-gray-50 hover:bg-gray-100">
               <span className="text-xl relative left-0" style={{ bottom: -3 }}>
                 &#8990;
               </span>

@@ -1,9 +1,7 @@
 import clsx from 'clsx';
-import { type ReactNode, useMemo, useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import { Bar, BarChart as Chart, ResponsiveContainer, Tooltip, YAxis } from 'recharts';
 import colors from 'tailwindcss/colors';
-
-import { useIsDarkMode } from '~/hooks/use-is-dark-mode';
 
 type Props = {
   data: Array<Record<string, unknown>>;
@@ -28,14 +26,13 @@ export const BarChart = ({
   footer,
   syncId,
 }: Props) => {
-  const isDarkMode = useIsDarkMode();
-  const chartColor = useMemo(() => (isDarkMode ? '#fff' : '#000'), [isDarkMode]);
+  const chartColor = '#000';
   const filteredComponents = footer?.filter(Boolean);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
     <>
-      <div className={clsx('border border-black dark:border-white text-center', className)}>
+      <div className={clsx('border border-black text-center', className)}>
         <div className="py-2">
           <span
             className={clsx('font-semibold', {
@@ -72,9 +69,7 @@ export const BarChart = ({
             </Chart>
           </ResponsiveContainer>
         </div>
-        <div
-          className="font-medium bg-black dark:bg-white text-white dark:text-black py-0.5"
-          style={{ margin: 1 }}>
+        <div className="font-medium bg-black text-white py-0.5" style={{ margin: 1 }}>
           {label}
         </div>
       </div>
