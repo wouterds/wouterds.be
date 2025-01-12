@@ -1,14 +1,10 @@
 import { format } from 'date-fns';
 import { Link } from 'react-router';
 
+import type { Post } from '~/graphql';
+
 export interface PostsProps {
-  posts: Array<{
-    id: string;
-    title: string;
-    slug: string;
-    excerpt: string;
-    date: string;
-  }>;
+  posts: Post[];
 }
 
 export const Posts = ({ posts }: PostsProps) => {
