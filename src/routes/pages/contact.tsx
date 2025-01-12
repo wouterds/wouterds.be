@@ -173,7 +173,10 @@ export default function Contact() {
             </button>
           </div>
           <div>
-            <Turnstile siteKey={import.meta.env.VITE_CLOUDFLARE_TURNSTILE_KEY} />
+            <Turnstile
+              siteKey={import.meta.env.VITE_CLOUDFLARE_TURNSTILE_KEY}
+              options={{ theme: 'light' }}
+            />
           </div>
         </div>
       </Form>
