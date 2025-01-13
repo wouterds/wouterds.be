@@ -9,7 +9,7 @@ type Props = {
 const Footer = ({ ray }: Props) => {
   return (
     <>
-      <footer className="border-t border-b border-dashed border-zinc-900 py-3">
+      <footer className="border-t border-b border-dashed border-zinc-900 py-3 text-nowrap">
         <div className="flex justify-between gap-2">
           <p>&copy; {new Date().getFullYear()} Wouter De Schuyter</p>
           <p>
@@ -23,7 +23,7 @@ const Footer = ({ ray }: Props) => {
       {ray && (
         <p className="text-center text-zinc-400 mt-3">
           <Typewriter delay={3000} interval={150}>
-            {ray}
+            {`${ray || ' '}`}
           </Typewriter>
         </p>
       )}
