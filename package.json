@@ -27,7 +27,7 @@
     "datocms-structured-text-to-plain-text": "^4.0.2",
     "datocms-structured-text-utils": "^4.0.1",
     "dotenv": "^16.4.7",
-    "drizzle-orm": "^0.38.3",
+    "drizzle-orm": "^0.38.4",
     "feed": "^4.2.2",
     "graphql": "^16.10.0",
     "http-status-codes": "^2.3.0",
