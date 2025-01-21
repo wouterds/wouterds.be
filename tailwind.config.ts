@@ -5,14 +5,14 @@ const css = {
   h2: { fontWeight: '600' },
   h3: { fontWeight: '600' },
   blockquote: { fontWeight: 'inherit' },
-  pre: { fontSize: '1.1em', color: '#202021', background: '#F9FBFC !important', overflow: 'auto' },
+  pre: { fontSize: '0.85em', color: '#202021', background: '#F9FBFC !important', overflow: 'auto' },
   'p > code': {
     color: '#db2756',
     padding: '0.15em 0.3em',
     borderRadius: '0.3em',
     fontWeight: '400',
+    fontSize: '0.85em',
     backgroundColor: '#f9f2f4',
-    fontSize: 'inherit',
     '&:before': {
       content: 'normal',
     },
@@ -28,7 +28,6 @@ export default {
     extend: {
       fontFamily: {
         sans: [
-          '"Inter"',
           'ui-sans-serif',
           'system-ui',
           'sans-serif',

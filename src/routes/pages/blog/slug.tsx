@@ -10,6 +10,7 @@ import {
 } from 'react-datocms';
 import { type LoaderFunctionArgs, type MetaFunction, useLoaderData } from 'react-router';
 
+import { Article } from '~/components/article';
 import { Image } from '~/components/image';
 import type { GalleryRecord, VideoRecord } from '~/graphql';
 import { PostRepository } from '~/graphql/posts/repository.server';
@@ -129,19 +130,21 @@ export default function BlogSlug() {
 
   return (
     <>
-      <article ref={ref} className="prose-zinc prose-sm max-w-none text-xs leading-relaxed">
+      <Article ref={ref}>
         <header className="mb-4">
-          <time className="text-xs text-zinc-400 mb-2 block" dateTime={post.date}>
+          <time
+            className="text-sm uppercase font-medium text-gray-400 mb-4 block"
+            dateTime={post.date}>
             {format(post.date, 'MMMM do, yyyy')}
           </time>
-          <h1 className="text-xl font-medium my-0">{post.title}</h1>
+          <h1>{post.title}</h1>
         </header>
 
         <StructuredText
           data={post.content as unknown as StructuredTextDocument}
           renderBlock={renderBlock}
         />
-      </article>
+      </Article>
       <nav
         className={clsx('mt-8 flex', {
           'justify-between': previousPost && nextPost,
@@ -182,7 +185,7 @@ const renderBlock = ({
       return (
         <div className="not-prose mt-6">
           <div
-            className="bg-zinc-50 relative overflow-hidden bg-center bg-cover aspect-video w-full rounded-sm"
+            className="bg-gray-50 relative overflow-hidden bg-center bg-cover aspect-video w-full rounded-sm"
             style={{ backgroundImage: `url(${record.video.thumbnailUrl})` }}>
             <iframe
               loading="lazy"

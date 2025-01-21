@@ -20,7 +20,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     id: baseUrl,
     link: baseUrl,
     copyright: `© ${new Date().getFullYear()} Wouter De Schuyter`,
-    image: `${baseUrl}/apple-touch-icon.png`,
+    image: `${baseUrl}/favicon.svg`,
     updated: new Date(posts[0].date),
     generator: 'https://github.com/wouterds/wouterds.be',
     author: { name: 'Wouter De Schuyter' },

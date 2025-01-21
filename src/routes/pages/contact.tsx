@@ -94,8 +94,7 @@ export default function Contact() {
     <>
       <p className="mb-4">
         If you&apos;re writing for a project or to work together, please include as much details as
-        possible (goal, timeline, budget, ...). For everything else, write as you please, I&apos;ll
-        be more than happy to reply!
+        possible (goal, timeline, budget, ..). For everything else, write as you please!
       </p>
       <Form
         className="flex flex-col gap-4 mt-6"
@@ -107,69 +106,31 @@ export default function Contact() {
         )}
         <div className="flex gap-4 flex-col sm:flex-row">
           <div className="flex-1">
-            <label className="font-semibold inline-block mb-1" htmlFor="name">
-              name
-            </label>
-            <input
-              type="text"
-              id="name"
-              {...register('name')}
-              className={errors.name ? 'border-rose-600' : undefined}
-            />
+            <label htmlFor="name">Name</label>
+            <input type="text" id="name" {...register('name')} />
             {errors.name?.message && (
               <p className="text-rose-600 mt-1.5">{errors.name?.message as string}</p>
             )}
           </div>
           <div className="flex-1">
-            <label className="font-semibold inline-block mb-1" htmlFor="email">
-              email
-            </label>
-            <input
-              type="text"
-              id="email"
-              {...register('email')}
-              className={errors.email ? 'border-rose-600' : undefined}
-            />
+            <label htmlFor="email">Email</label>
+            <input type="text" id="email" {...register('email')} />
             {errors.email?.message && (
               <p className="text-rose-600 mt-1.5">{errors.email?.message as string}</p>
             )}
           </div>
         </div>
         <div>
-          <label className="font-semibold inline-block mb-1" htmlFor="message">
-            message
-          </label>
-          <textarea
-            id="message"
-            {...register('message')}
-            className={errors.message ? 'border-rose-600' : undefined}
-          />
+          <label htmlFor="message">Message</label>
+          <textarea id="message" {...register('message')} />
           {errors.message?.message && (
             <p className="text-rose-600 mt-1.5">{errors.message?.message as string}</p>
           )}
         </div>
         <div className="flex flex-col sm:flex-row justify-between gap-4">
           <div>
-            <button
-              type="submit"
-              className="relative leading-none flex items-center justify-center group font-medium bg-gray-50 hover:bg-gray-100">
-              <span className="text-xl relative left-0" style={{ bottom: -3 }}>
-                &#8990;
-              </span>
-              <span
-                className="text-xl absolute left-0 hidden group-hover:inline-block"
-                style={{ top: -4 }}>
-                &#8988;
-              </span>
-              <span>submit</span>
-              <span className="text-xl relative" style={{ top: -4, right: 1 }}>
-                &#8989;
-              </span>
-              <span
-                className="text-xl absolute hidden group-hover:inline-block"
-                style={{ bottom: -3, right: 1 }}>
-                &#8991;
-              </span>
+            <button type="submit">
+              <span>Send message</span>
             </button>
           </div>
           <div>

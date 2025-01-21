@@ -1,33 +1,17 @@
-import { Link } from 'react-router';
-
-import Typewriter from './typewriter';
-
-type Props = {
-  ray?: string | null;
-};
-
-const Footer = ({ ray }: Props) => {
+const Footer = () => {
   return (
-    <>
-      <footer className="border-t border-b border-dashed border-zinc-900 py-3 text-nowrap">
-        <div className="flex justify-between gap-2">
-          <p>&copy; {new Date().getFullYear()} Wouter De Schuyter</p>
-          <p>
-            <Link to="/experiments" title="experiments">
-              experiments
-            </Link>
-          </p>
-        </div>
-      </footer>
-
-      {ray && (
-        <p className="text-center text-zinc-400 mt-3">
-          <Typewriter delay={3000} interval={150}>
-            {`${ray || ' '}`}
-          </Typewriter>
-        </p>
-      )}
-    </>
+    <footer className="my-12 max-w-screen-md mx-auto px-8">
+      <p className="text-sm text-gray-400">
+        <a
+          href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+          target="_blank"
+          rel="noreferrer"
+          className="border-b border-gray-200 hover:border-gray-400 transition-colors duration-500 pb-[1px]">
+          CC BY-NC-SA 4.0
+        </a>{' '}
+        &copy; 2015 - {new Date().getFullYear()} Wouter De Schuyter
+      </p>
+    </footer>
   );
 };
 
