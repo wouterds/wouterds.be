@@ -59,6 +59,11 @@
   }
 }
 
+a {
+  @apply transition-colors duration-500;
+  @apply underline hover:no-underline;
+}
+
 label {
   @apply block mb-2;
   @apply text-sm font-medium text-foreground;

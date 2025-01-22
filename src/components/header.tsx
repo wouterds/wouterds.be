@@ -23,10 +23,7 @@ const Header = () => (
 );
 
 const HeaderLink = ({ children, to }: { children: React.ReactNode; to: string }) => (
-  <Link
-    to={to}
-    prefetch="intent"
-    className="text-gray-400 hover:text-gray-500 transition-colors duration-500 p-2.5">
+  <Link to={to} prefetch="intent" className="text-gray-400 hover:text-gray-500 no-underline p-2.5">
     {children}
   </Link>
 );

@@ -12,7 +12,7 @@ export const Posts = ({ posts }: PostsProps) => {
     <ul className="flex flex-col w-full gap-6 sm:gap-10">
       {posts.map((post) => (
         <li key={post.id}>
-          <Link to={`/blog/${post.slug}`} prefetch="intent" className="block group">
+          <Link to={`/blog/${post.slug}`} prefetch="intent" className="block group no-underline">
             <time
               className="text-xs uppercase font-medium text-gray-400 mb-1 block"
               dateTime={post.date}>
