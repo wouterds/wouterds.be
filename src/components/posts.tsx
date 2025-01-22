@@ -14,7 +14,7 @@ export const Posts = ({ posts }: PostsProps) => {
         <li key={post.id}>
           <Link to={`/blog/${post.slug}`} prefetch="intent" className="block group">
             <time
-              className="text-sm uppercase font-medium text-gray-400 mb-1 block"
+              className="text-xs uppercase font-medium text-gray-400 mb-1 block"
               dateTime={post.date}>
               {format(post.date, 'MMMM do, yyyy')}
             </time>
