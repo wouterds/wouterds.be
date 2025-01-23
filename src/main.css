@@ -64,20 +64,6 @@ a {
   @apply underline hover:no-underline;
 }
 
-label {
-  @apply block mb-2;
-  @apply text-sm font-medium text-foreground;
-}
-
-input,
-textarea {
-  @apply bg-gray-50;
-  @apply border border-gray-300 rounded-lg;
-  @apply text-foreground text-sm;
-  @apply focus:ring-blue-500 focus:border-blue-500;
-  @apply block w-full py-2 px-2.5;
-}
-
 textarea {
   @apply min-h-32;
 }

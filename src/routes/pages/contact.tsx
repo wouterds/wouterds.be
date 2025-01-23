@@ -14,7 +14,9 @@ import {
 import * as z from 'zod';
 
 import { Button } from '~/components/ui/button';
+import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
+import { Textarea } from '~/components/ui/textarea';
 import { CloudflareTurnstileValidator } from '~/lib/cloudflare.server';
 import { MailjetMailer } from '~/lib/mailjet.server';
 
@@ -104,25 +106,27 @@ export default function Contact() {
         method="post"
         onSubmit={isValid ? undefined : handleSubmit(() => {})}>
         {data?.success === false && (
-          <p className="text-rose-600 mt-2 mb-4">Something went wrong, please try again later.</p>
+          <p className="text-rose-600 text-sm mt-2 mb-4">
+            Something went wrong, please try again later.
+          </p>
         )}
         <div className="flex gap-4 flex-col sm:flex-row">
           <div className="flex-1">
             <Label htmlFor="name">
               Name <span className="text-slate-600">*</span>
             </Label>
-            <input type="text" id="name" {...register('name')} />
+            <Input type="text" id="name" {...register('name')} />
             {errors.name?.message && (
-              <p className="text-rose-600 mt-1.5">{errors.name?.message as string}</p>
+              <p className="text-rose-600 text-sm mt-1.5">{errors.name?.message as string}</p>
             )}
           </div>
           <div className="flex-1">
             <Label htmlFor="email">
               Email <span className="text-slate-600">*</span>
             </Label>
-            <input type="text" id="email" {...register('email')} />
+            <Input type="text" id="email" {...register('email')} />
             {errors.email?.message && (
-              <p className="text-rose-600 mt-1.5">{errors.email?.message as string}</p>
+              <p className="text-rose-600 text-sm mt-1.5">{errors.email?.message as string}</p>
             )}
           </div>
         </div>
@@ -130,9 +134,9 @@ export default function Contact() {
           <Label htmlFor="message">
             Message <span className="text-slate-600">*</span>
           </Label>
-          <textarea id="message" {...register('message')} />
+          <Textarea id="message" {...register('message')} />
           {errors.message?.message && (
-            <p className="text-rose-600 mt-1.5">{errors.message?.message as string}</p>
+            <p className="text-rose-600 text-sm mt-1.5">{errors.message?.message as string}</p>
           )}
         </div>
         <div className="flex flex-col sm:flex-row justify-between gap-4">
