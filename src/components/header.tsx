@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { Logo } from './logo';
 
 const Header = () => (
-  <header className="px-8 py-3 mt-6 mb-12">
+  <header className="px-6 sm:px-8 py-3 mt-6 mb-12">
     <nav className="flex justify-between">
       <Link to="/" title="Home" className="inline-block relative text-2xl group">
         <Logo className="text-rose-400 absolute top-0 transition-transform duration-500 group-hover:translate-x-[-1px] group-hover:translate-y-[-1px]" />

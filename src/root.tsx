@@ -84,7 +84,7 @@ export function Layout({ children }: { children: ReactNode }) {
       </head>
       <body className="relative">
         <Header />
-        <main className="max-w-screen-md mx-auto px-8">{children}</main>
+        <main className="max-w-screen-md mx-auto px-6 sm:px-8">{children}</main>
         <Footer />
         <ScrollRestoration />
         <Scripts />

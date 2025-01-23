@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="my-12 max-w-screen-md mx-auto px-8">
+    <footer className="my-12 max-w-screen-md mx-auto px-6 sm:px-8">
       <p className="text-sm text-gray-400">
         <a
           href="https://creativecommons.org/licenses/by-nc-sa/4.0/"

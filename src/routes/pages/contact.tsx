@@ -13,6 +13,7 @@ import {
 } from 'react-router';
 import * as z from 'zod';
 
+import { Button } from '~/components/ui/button';
 import { CloudflareTurnstileValidator } from '~/lib/cloudflare.server';
 import { MailjetMailer } from '~/lib/mailjet.server';
 
@@ -106,14 +107,18 @@ export default function Contact() {
         )}
         <div className="flex gap-4 flex-col sm:flex-row">
           <div className="flex-1">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">
+              Name <span className="text-slate-600">*</span>
+            </label>
             <input type="text" id="name" {...register('name')} />
             {errors.name?.message && (
               <p className="text-rose-600 mt-1.5">{errors.name?.message as string}</p>
             )}
           </div>
           <div className="flex-1">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">
+              Email <span className="text-slate-600">*</span>
+            </label>
             <input type="text" id="email" {...register('email')} />
             {errors.email?.message && (
               <p className="text-rose-600 mt-1.5">{errors.email?.message as string}</p>
@@ -121,7 +126,9 @@ export default function Contact() {
           </div>
         </div>
         <div>
-          <label htmlFor="message">Message</label>
+          <label htmlFor="message">
+            Message <span className="text-slate-600">*</span>
+          </label>
           <textarea id="message" {...register('message')} />
           {errors.message?.message && (
             <p className="text-rose-600 mt-1.5">{errors.message?.message as string}</p>
@@ -129,9 +136,7 @@ export default function Contact() {
         </div>
         <div className="flex flex-col sm:flex-row justify-between gap-4">
           <div>
-            <button type="submit">
-              <span>Send message</span>
-            </button>
+            <Button type="submit">Send message</Button>
           </div>
           <div>
             <Turnstile

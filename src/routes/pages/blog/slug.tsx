@@ -2,13 +2,14 @@ import clsx from 'clsx';
 import { format } from 'date-fns';
 import { isCode } from 'datocms-structured-text-utils';
 import { StatusCodes } from 'http-status-codes';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import {
   type RenderBlockContext,
   StructuredText,
   type StructuredTextDocument,
 } from 'react-datocms';
-import { type LoaderFunctionArgs, type MetaFunction, useLoaderData } from 'react-router';
+import { Link, type LoaderFunctionArgs, type MetaFunction, useLoaderData } from 'react-router';
 
 import { Article } from '~/components/article';
 import { Image } from '~/components/image';
@@ -151,14 +152,22 @@ export default function BlogSlug() {
           'justify-end': previousPost && !nextPost,
         })}>
         {nextPost && (
-          <a href={`/blog/${nextPost.slug}`} title={nextPost.title}>
-            &laquo; next post
-          </a>
+          <Link
+            to={`/blog/${nextPost.slug}`}
+            title={nextPost.title}
+            className="no-underline flex items-center text-gray-500 hover:text-gray-600"
+            prefetch="intent">
+            <ChevronLeft className="size-4 -mb-0.5" /> next post
+          </Link>
         )}
         {previousPost && (
-          <a href={`/blog/${previousPost.slug}`} title={previousPost.title}>
-            previous post &raquo;
-          </a>
+          <Link
+            to={`/blog/${previousPost.slug}`}
+            title={previousPost.title}
+            className="no-underline flex items-center text-gray-500 hover:text-gray-600"
+            prefetch="intent">
+            previous post <ChevronRight className="size-4 -mb-0.5" />
+          </Link>
         )}
       </nav>
     </>
