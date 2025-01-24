@@ -15,6 +15,9 @@ updates:
       "@react-router/*":
         patterns:
           - "@react-router/*"
+      "@sentry/*":
+        patterns:
+          - "@sentry/*"
       react:
         patterns:
           - "react"
