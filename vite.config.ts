@@ -1,4 +1,5 @@
 import { reactRouter } from '@react-router/dev/vite';
+import { sentryVitePlugin } from '@sentry/vite-plugin';
 import autoprefixer from 'autoprefixer';
 import tailwindcss from 'tailwindcss';
 import { defineConfig } from 'vite';
@@ -10,8 +11,15 @@ export default defineConfig({
       plugins: [tailwindcss, autoprefixer],
     },
   },
-  plugins: [reactRouter(), tsconfigPaths()],
-  // optimizeDeps: {
-  //   exclude: ['@graphql-typed-document-node/core'],
-  // },
+  plugins: [
+    reactRouter(),
+    tsconfigPaths(),
+    sentryVitePlugin({
+      org: 'wouterds',
+      project: 'website',
+    }),
+  ],
+  build: {
+    sourcemap: true,
+  },
 });
