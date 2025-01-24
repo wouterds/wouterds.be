@@ -15,6 +15,12 @@ updates:
       "@react-router/*":
         patterns:
           - "@react-router/*"
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
       datocms:
         patterns:
           - "datocms-structured-text-to-html-string"
