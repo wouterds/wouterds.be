@@ -26,6 +26,7 @@ updates:
           - "datocms-structured-text-to-html-string"
           - "datocms-structured-text-to-plain-text"
           - "datocms-structured-text-utils"
+          - "react-datocms"
 
   - package-ecosystem: "github-actions"
     directory: "/"
