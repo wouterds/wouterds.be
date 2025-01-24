@@ -31,6 +31,7 @@ WORKDIR /code
 RUN apk update && apk add --no-cache libc6-compat dumb-init
 
 COPY --chown=node:node --from=build /code/build ./build
+COPY --chown=node:node --from=prod-deps /code/instrument.server.mjs ./instrument.server.mjs
 COPY --chown=node:node --from=prod-deps /code/package.json ./package.json
 COPY --chown=node:node --from=prod-deps /code/package-lock.json ./package-lock.json
 COPY --chown=node:node --from=prod-deps /code/node_modules ./node_modules
