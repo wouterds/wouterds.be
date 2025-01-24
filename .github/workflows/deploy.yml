@@ -53,6 +53,7 @@ jobs:
           build-args: |
             VITE_CLOUDFLARE_TURNSTILE_KEY=${{ secrets.VITE_CLOUDFLARE_TURNSTILE_KEY }}
             COMMIT_SHA=${{ env.COMMIT_SHA }}
+            SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
 
   deploy:
     needs: build
