@@ -63,7 +63,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     }<br /><strong>Message:</strong></p><p>${formData.message.replace(
       /\n/g,
       '<br />',
-    )}</p><hr /><p><strong>IP:</strong> ${ip}, <strong>location:</strong> ${location}</p>`,
+    )}</p>--<p><strong>IP:</strong> ${ip}, <strong>location:</strong> ${location}</p>`,
   );
 
   if (await mailer.send()) {
