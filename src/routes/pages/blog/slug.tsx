@@ -155,8 +155,7 @@ export default function BlogSlug() {
           <Link
             to={`/blog/${nextPost.slug}`}
             title={nextPost.title}
-            className="no-underline flex items-center text-gray-500 hover:text-gray-600"
-            prefetch="intent">
+            className="no-underline flex items-center text-gray-500 hover:text-gray-600">
             <ChevronLeft className="size-4 -mb-0.5" /> next post
           </Link>
         )}
@@ -164,8 +163,7 @@ export default function BlogSlug() {
           <Link
             to={`/blog/${previousPost.slug}`}
             title={previousPost.title}
-            className="no-underline flex items-center text-gray-500 hover:text-gray-600"
-            prefetch="intent">
+            className="no-underline flex items-center text-gray-500 hover:text-gray-600">
             previous post <ChevronRight className="size-4 -mb-0.5" />
           </Link>
         )}
