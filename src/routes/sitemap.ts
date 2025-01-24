@@ -12,7 +12,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   let sitemap = '<?xml version="1.0" encoding="UTF-8"?>';
   sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
   sitemap += `<url><loc>${baseUrl}</loc></url>`;
-  sitemap += `<url><loc>${baseUrl}/about</loc></url>`;
   sitemap += `<url><loc>${baseUrl}/blog</loc></url>`;
   sitemap += `<url><loc>${baseUrl}/contact</loc></url>`;
   sitemap += `<url><loc>${baseUrl}/experiments</loc></url>`;
