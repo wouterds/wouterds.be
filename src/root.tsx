@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/react';
 import type { ReactNode } from 'react';
 import {
   isRouteErrorResponse,
@@ -99,6 +100,10 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+  if (error instanceof Error) {
+    Sentry.captureException(error);
+  }
+
   return (
     <>
       <h1 className="text-xl font-medium mb-4">
