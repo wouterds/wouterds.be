@@ -7,7 +7,7 @@ import { useTick } from '~/hooks/use-tick';
 import { loader } from './index';
 
 export const TeslaCharts = () => {
-  useTick('1 second');
+  useTick(1000);
 
   const { teslaLast24h, lastTeslaCharged } = useLoaderData<typeof loader>();
 

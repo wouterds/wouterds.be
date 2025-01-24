@@ -7,7 +7,7 @@ import { useTick } from '~/hooks/use-tick';
 import { loader } from './index';
 
 export const EnergyCharts = () => {
-  useTick('1 second');
+  useTick(1000);
 
   const { p1AveragesLast24h, lastP1Reading } = useLoaderData<typeof loader>();
   if (!p1AveragesLast24h?.length) {

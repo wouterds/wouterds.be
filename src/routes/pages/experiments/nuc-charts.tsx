@@ -7,7 +7,7 @@ import { useTick } from '~/hooks/use-tick';
 import { loader } from './index';
 
 export const NUCCharts = () => {
-  useTick('1 second');
+  useTick(1000);
 
   const { NUCAveragesLast24h, lastNUCReading } = useLoaderData<typeof loader>();
 

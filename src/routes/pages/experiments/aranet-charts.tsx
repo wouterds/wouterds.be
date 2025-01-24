@@ -7,7 +7,7 @@ import { useTick } from '~/hooks/use-tick';
 import { loader } from './index';
 
 export const AranetCharts = () => {
-  useTick('1 second');
+  useTick(1000);
 
   const { aranetAveragesLast24h, lastAranetReading } = useLoaderData<typeof loader>();
 

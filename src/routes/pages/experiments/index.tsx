@@ -1,4 +1,3 @@
-import ms from 'ms';
 import { useEffect } from 'react';
 import { type MetaFunction, useRevalidator } from 'react-router';
 
@@ -55,7 +54,7 @@ export default function Experiments() {
   useEffect(() => {
     const interval = setInterval(() => {
       revalidate();
-    }, ms('30 seconds'));
+    }, 30_000);
 
     return () => clearInterval(interval);
   }, [revalidate]);
