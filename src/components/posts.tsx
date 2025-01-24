@@ -9,7 +9,7 @@ export interface PostsProps {
 
 export const Posts = ({ posts }: PostsProps) => {
   return (
-    <ul className="flex flex-col w-full gap-6 sm:gap-10">
+    <ul className="flex flex-col w-full gap-8 sm:gap-12">
       {posts.map((post) => (
         <li key={post.id}>
           <Link to={`/blog/${post.slug}`} prefetch="intent" className="block group no-underline">
@@ -18,7 +18,7 @@ export const Posts = ({ posts }: PostsProps) => {
               dateTime={post.date}>
               {format(post.date, 'MMMM do, yyyy')}
             </time>
-            <h3 className="text-xl font-medium mb-0.5 text-gray-600 group-hover:text-black hover:text-black transition-colors duration-500 truncate">
+            <h3 className="text-xl font-medium mb-0.5 text-gray-600 group-hover:text-black hover:text-black transition-colors duration-500 sm:truncate">
               {post.title}
             </h3>
             <p className="leading-relaxed line-clamp-3 sm:line-clamp-2 text-gray-500">
