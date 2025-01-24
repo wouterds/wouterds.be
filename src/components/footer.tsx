@@ -5,7 +5,8 @@ const Footer = () => {
         <a
           href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+          className="block sm:inline">
           CC BY-NC-SA 4.0
         </a>{' '}
         &copy; 2015 - {new Date().getFullYear()} Wouter De Schuyter
