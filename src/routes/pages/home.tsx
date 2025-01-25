@@ -12,16 +12,16 @@ export default function Home() {
           Digital Design & Development
         </a>{' '}
         at Howest University College and have worked with various startups, scale-ups, and agencies.
-        I love working on user facing products that are used by millions &#x2013; currently @{' '}
+        I love working on user facing products that are used by millions (currently @{' '}
         <a href="https://tally.so" target="_blank" rel="noreferrer">
           Tally
         </a>
-        .
+        ).
       </p>
       <p>
-        In my free time I enjoy travel, photography and experimenting with electronics, Raspberry
-        Pi, Linux, designing stickers &#x2013; just creating stuff. Been following the crypto space
-        since 2017 but have been taking some more distance from it recently.
+        In my free time I enjoy travel, photography and experimenting with electronics &amp;
+        Raspberry Pi. Or just in general creating stuff. Been following the crypto space since 2017
+        but have been taking some distance from it more recently.
       </p>
     </Article>
   );
