@@ -146,7 +146,7 @@ const renderBlock = ({
       <ul className="not-prose flex flex-col gap-3 mt-6">
         {record.images.map((image) => (
           <li key={`post-gallery.image:${image.id}`}>
-            <Image {...image} images={record.images} />
+            <Image {...image} />
           </li>
         ))}
       </ul>
