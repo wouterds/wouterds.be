@@ -1,15 +1,13 @@
-import clsx from 'clsx';
 import { format } from 'date-fns';
 import { isCode } from 'datocms-structured-text-utils';
 import { StatusCodes } from 'http-status-codes';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import {
   type RenderBlockContext,
   StructuredText,
   type StructuredTextDocument,
 } from 'react-datocms';
-import { Link, type LoaderFunctionArgs, type MetaFunction, useLoaderData } from 'react-router';
+import { type LoaderFunctionArgs, type MetaFunction, useLoaderData } from 'react-router';
 
 import { Article } from '~/components/article';
 import { Image } from '~/components/image';
@@ -29,11 +27,6 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
     });
   }
 
-  const [previousPost, nextPost] = await Promise.all([
-    new PostRepository().getPreviousPost(post.slug, post.date),
-    new PostRepository().getNextPost(post.slug, post.date),
-  ]);
-
   const content = post.content.value as unknown as StructuredTextDocument;
   const containsCodeBlocks = content.document.children.some(isCode);
 
@@ -50,8 +43,6 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
     url: baseUrl,
     post,
     containsCodeBlocks,
-    previousPost,
-    nextPost,
   };
 };
 
@@ -101,7 +92,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
 };
 
 export default function BlogSlug() {
-  const { post, nextPost, previousPost, containsCodeBlocks } = useLoaderData<typeof loader>();
+  const { post, containsCodeBlocks } = useLoaderData<typeof loader>();
 
   const ref = useRef<HTMLElement | null>(null);
 
@@ -130,45 +121,20 @@ export default function BlogSlug() {
   }, [containsCodeBlocks]);
 
   return (
-    <>
-      <Article ref={ref}>
-        <header className="mb-4">
-          <time
-            className="text-sm uppercase font-medium text-gray-400 mb-4 block"
-            dateTime={post.date}>
-            {format(post.date, 'MMMM do, yyyy')}
-          </time>
-          <h1>{post.title}</h1>
-        </header>
-
-        <StructuredText
-          data={post.content as unknown as StructuredTextDocument}
-          renderBlock={renderBlock}
-        />
-      </Article>
-      <nav
-        className={clsx('mt-8 flex', {
-          'justify-between': previousPost && nextPost,
-          'justify-end': previousPost && !nextPost,
-        })}>
-        {nextPost && (
-          <Link
-            to={`/blog/${nextPost.slug}`}
-            title={nextPost.title}
-            className="no-underline flex items-center text-gray-500 hover:text-gray-600">
-            <ChevronLeft className="size-4 -mb-0.5" /> next post
-          </Link>
-        )}
-        {previousPost && (
-          <Link
-            to={`/blog/${previousPost.slug}`}
-            title={previousPost.title}
-            className="no-underline flex items-center text-gray-500 hover:text-gray-600">
-            previous post <ChevronRight className="size-4 -mb-0.5" />
-          </Link>
-        )}
-      </nav>
-    </>
+    <Article ref={ref}>
+      <header className="mb-4">
+        <time
+          className="text-sm uppercase font-medium text-gray-400 mb-4 block"
+          dateTime={post.date}>
+          {format(post.date, 'MMMM do, yyyy')}
+        </time>
+        <h1>{post.title}</h1>
+      </header>
+      <StructuredText
+        data={post.content as unknown as StructuredTextDocument}
+        renderBlock={renderBlock}
+      />
+    </Article>
   );
 }
 
