@@ -100,7 +100,7 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  if (error instanceof Error) {
+  if (error instanceof Error && import.meta.env.PROD) {
     Sentry.captureException(error);
   }
 

@@ -72,7 +72,10 @@ export default function handleRequest(
 export const handleError: HandleErrorFunction = (error, { request }) => {
   // React Router may abort some interrupted requests, report those
   if (!request.signal.aborted) {
-    Sentry.captureException(error);
+    if (import.meta.env.PROD) {
+      Sentry.captureException(error);
+    }
+
     console.error(error);
   }
 };
