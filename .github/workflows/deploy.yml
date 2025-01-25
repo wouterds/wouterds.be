@@ -81,4 +81,5 @@ jobs:
       - run: |
           ssh ${{ env.USER }}@${{ env.HOST }} "mkdir -p ${{ env.DIRECTORY }}"
           scp .docker/docker-compose.yml ${{ env.USER }}@${{ env.HOST }}:${{ env.DIRECTORY }}/docker-compose.yml
+          scp .docker/nginx.conf ${{ env.USER }}@${{ env.HOST }}:${{ env.DIRECTORY }}/nginx.conf
           ssh ${{ env.USER }}@${{ env.HOST }} "cd ${{ env.DIRECTORY }} && docker compose pull && docker compose up -d"
