@@ -2,27 +2,24 @@ import { render, type StructuredTextDocument } from 'datocms-structured-text-to-
 import { isStructuredText } from 'datocms-structured-text-utils';
 import { Feed } from 'feed';
 import { StatusCodes } from 'http-status-codes';
-import type { LoaderFunctionArgs } from 'react-router';
 
+import { config } from '~/config';
 import type { GalleryRecord, VideoRecord } from '~/graphql';
 import { PostRepository } from '~/graphql/posts/repository.server';
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const url = new URL(request.url);
-  const baseUrl = `${url.protocol}//${url.host}`;
-
+export const loader = async () => {
   const posts = await new PostRepository().getPosts();
 
   const feed = new Feed({
     title: "Wouter's blog",
     description:
       'My personal blog where I write about software development, side projects, travel, and other random stuff that I find interesting.',
-    id: baseUrl,
-    link: baseUrl,
+    id: config.baseUrl,
+    link: config.baseUrl,
     copyright: `© ${new Date().getFullYear()} Wouter De Schuyter`,
-    image: `${baseUrl}/favicon.svg`,
+    image: new URL('/favicon.svg', config.baseUrl).toString(),
     updated: new Date(posts[0].date),
-    generator: 'https://github.com/wouterds/wouterds.be',
+    generator: 'https://github.com/wouterds/wouterds.com',
     author: { name: 'Wouter De Schuyter' },
   });
 
@@ -33,9 +30,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
     feed.addItem({
       title,
-      id: `${baseUrl}/blog/${slug}`,
-      link: `${baseUrl}/blog/${slug}`,
-      image: `${baseUrl}/images${new URL(poster.url).pathname}`,
+      id: new URL(`/blog/${slug}`, config.baseUrl).toString(),
+      link: new URL(`/blog/${slug}`, config.baseUrl).toString(),
+      image: new URL(`/images${new URL(poster.url).pathname}`, config.baseUrl).toString(),
       description: excerpt,
       content: render(content as unknown as StructuredTextDocument, {
         renderBlock: ({ record, adapter: { renderNode } }) => {
@@ -48,7 +45,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
                 images
                   .map((image, index) => [
                     renderNode('img', {
-                      src: `${baseUrl}/images${new URL(image.url).pathname}`,
+                      src: new URL(
+                        `/images${new URL(image.url).pathname}`,
+                        config.baseUrl,
+                      ).toString(),
                       width: '100%',
                     }),
                     index !== images.length - 1 && renderNode('br'),

@@ -14,7 +14,7 @@ export const action = async ({ request }: LoaderFunctionArgs) => {
     return Response.json({ success: false }, { status: StatusCodes.TOO_MANY_REQUESTS });
   }
 
-  const data = await fetch('https://nuc.wouterds.be/api').then((res) => res.json());
+  const data = await fetch('https://nuc.wouterds.com/api').then((res) => res.json());
   if (!data) {
     return Response.json({ success: false }, { status: StatusCodes.INTERNAL_SERVER_ERROR });
   }

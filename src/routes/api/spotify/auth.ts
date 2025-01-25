@@ -3,7 +3,7 @@ import { type LoaderFunctionArgs, redirect } from 'react-router';
 
 import { Spotify } from '~/lib/spotify.server';
 
-const redirectUri = 'https://wouterds.be/spotify/authorize';
+const redirectUri = 'https://wouterds.com/spotify/authorize';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const spotify = new Spotify();

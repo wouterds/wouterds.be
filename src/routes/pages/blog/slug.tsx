@@ -11,14 +11,12 @@ import { type LoaderFunctionArgs, type MetaFunction, useLoaderData } from 'react
 
 import { Article } from '~/components/article';
 import { Image } from '~/components/image';
+import { config } from '~/config';
 import type { GalleryRecord, VideoRecord } from '~/graphql';
 import { PostRepository } from '~/graphql/posts/repository.server';
 import { excerptFromContent, imagesFromContent, plainTextFromContent } from '~/lib/datocms.server';
 
-export const loader = async ({ request, params }: LoaderFunctionArgs) => {
-  const url = new URL(request.url);
-  const baseUrl = `${url.protocol}//${url.host}`;
-
+export const loader = async ({ params }: LoaderFunctionArgs) => {
   const post = await new PostRepository().getPost(params.slug as string);
   if (!post) {
     throw new Response(null, {
@@ -40,14 +38,13 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
     description,
     text,
     images,
-    url: baseUrl,
+    url: config.baseUrl,
     post,
     containsCodeBlocks,
   };
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
-  const url = data?.url;
   const post = data?.post;
   const title = data?.title;
   const description = data?.description;
@@ -74,15 +71,17 @@ export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
     { name: 'article:published_time', content: post?.date },
     {
       name: 'og:image',
-      content: ogImage ? `${url}/images${ogImage}` : '',
+      content: ogImage ? new URL(`/images${ogImage}`, config.baseUrl).toString() : '',
     },
-    { name: 'og:url', content: `${url}/blog/${post?.slug}` },
+    { name: 'og:url', content: new URL(`/blog/${post?.slug}`, config.baseUrl).toString() },
     { name: 'twitter:title', content: title },
     { name: 'twitter:description', content: description },
     { name: 'twitter:card', content: 'summary_large_image' },
     {
       name: 'twitter:image',
-      content: post?.poster ? `${url}/images${new URL(post?.poster.url).pathname}` : '',
+      content: post?.poster
+        ? new URL(`/images${new URL(post?.poster.url).pathname}`, config.baseUrl).toString()
+        : '',
     },
     { name: 'twitter:label1', content: 'Written by' },
     { name: 'twitter:data1', content: 'Wouter De Schuyter' },

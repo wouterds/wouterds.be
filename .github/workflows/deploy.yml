@@ -16,7 +16,7 @@ concurrency:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: wouterds/wouterds.be
+  IMAGE_NAME: wouterds/wouterds.com
 
 jobs:
   build:
@@ -60,11 +60,11 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: production
-      url: https://wouterds.be
+      url: https://wouterds.com
     env:
       HOST: ${{ secrets.CLOUDFLARE_TUNNEL }}
       USER: code
-      DIRECTORY: /code/be.wouterds
+      DIRECTORY: /code/com.wouterds
     steps:
       - uses: actions/checkout@v4
       - run: |
@@ -82,4 +82,4 @@ jobs:
           ssh ${{ env.USER }}@${{ env.HOST }} "mkdir -p ${{ env.DIRECTORY }}"
           scp .docker/docker-compose.yml ${{ env.USER }}@${{ env.HOST }}:${{ env.DIRECTORY }}/docker-compose.yml
           scp .docker/nginx.conf ${{ env.USER }}@${{ env.HOST }}:${{ env.DIRECTORY }}/nginx.conf
-          ssh ${{ env.USER }}@${{ env.HOST }} "cd ${{ env.DIRECTORY }} && docker compose pull && docker compose up -d"
+          ssh ${{ env.USER }}@${{ env.HOST }} "cd ${{ env.DIRECTORY }} && docker compose pull && docker compose up -d --force-recreate"

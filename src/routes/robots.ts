@@ -1,12 +1,10 @@
 import process from 'node:process';
 
 import { StatusCodes } from 'http-status-codes';
-import type { LoaderFunctionArgs } from 'react-router';
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const url = new URL(request.url);
-  const baseUrl = `${url.protocol}//${url.host}`;
+import { config } from '~/config';
 
+export const loader = async () => {
   let robots = '';
   robots += 'User-agent: *\n';
   if (process.env.NODE_ENV === 'development') {
@@ -16,8 +14,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   }
   robots += 'Disallow: /cdn-cgi/\n';
   robots += '\n';
-  robots += `Host: ${baseUrl}\n`;
-  robots += `Sitemap: ${new URL('/sitemap.xml', baseUrl)}\n`;
+  robots += `Host: ${config.baseUrl}\n`;
+  robots += `Sitemap: ${new URL('/sitemap.xml', config.baseUrl)}\n`;
 
   return new Response(robots, {
     status: StatusCodes.OK,

@@ -21,5 +21,6 @@ export default [
 
   route('/images/*', 'routes/images.$.ts'),
   route('/sitemap.xml', 'routes/sitemap.ts'),
+  route('/feed.xml', 'routes/feed.ts'),
   route('/robots.txt', 'routes/robots.ts'),
 ] satisfies RouteConfig;

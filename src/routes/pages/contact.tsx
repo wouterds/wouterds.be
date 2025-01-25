@@ -50,7 +50,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   const mailer = new MailjetMailer();
-  mailer.setSender({ email: 'noreply@wouterds.be' });
+  mailer.setSender({ email: 'noreply@wouterds.com' });
   mailer.setReplyTo({ name: formData.name, email: formData.email });
   mailer.setReceiver({ name: 'Wouter De Schuyter', email: 'wouter.de.schuyter@gmail.com' });
   mailer.setSubject(`[Contact] New message from ${formData.name}!`);

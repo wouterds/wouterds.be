@@ -16,6 +16,7 @@ import type { Route } from './+types/root';
 import { Code } from './components/code';
 import Footer from './components/footer';
 import Header from './components/header';
+import { config } from './config';
 import stylesheet from './main.css?url';
 
 export const links: Route.LinksFunction = () => [{ rel: 'stylesheet', href: stylesheet }];
@@ -24,8 +25,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
 
   return {
-    url,
-    canonical: new URL(url.pathname, url),
+    canonical: new URL(url.pathname, config.baseUrl),
   };
 };
 
@@ -43,12 +43,12 @@ export const meta: MetaFunction<typeof loader> = ({ error, data }) => {
     { name: 'description', content: description },
     { name: 'og:title', content: title },
     { name: 'og:description', content: description },
-    { name: 'og:image', content: `${data?.url}/images/og.jpg` },
-    { name: 'og:url', content: `${data?.url}` },
+    { name: 'og:image', content: new URL('/images/og.jpg', config.baseUrl).toString() },
+    { name: 'og:url', content: data?.canonical.toString() },
     { name: 'twitter:title', content: title },
     { name: 'twitter:description', content: description },
     { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:image', content: `${data?.url}/images/og.jpg` },
+    { name: 'twitter:image', content: new URL('/images/og.jpg', config.baseUrl).toString() },
   ];
 };
 
@@ -63,19 +63,17 @@ export function Layout({ children }: { children: ReactNode }) {
         <meta name="robots" content="index,follow" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        {data?.url && (
-          <link
-            rel="alternate"
-            type="application/rss+xml"
-            title="Blog RSS feed for wouterds.be"
-            href={new URL('/feed.xml', data?.url).toString()}
-          />
-        )}
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="Blog RSS feed for wouterds.com"
+          href={new URL('/feed.xml', config.baseUrl).toString()}
+        />
         <meta property="og:site_name" content="Wouter De Schuyter" />
         <Meta />
         <Links />
         {data?.canonical && <link rel="canonical" href={data?.canonical.toString()} />}
-        {data?.url?.hostname === 'wouterds.be' && (
+        {data?.canonical.hostname === 'wouterds.com' && (
           <script
             defer
             src="https://analytics.eu.umami.is/script.js"

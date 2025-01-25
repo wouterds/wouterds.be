@@ -1,7 +1,7 @@
 services:
   nginx:
     image: nginx:1.27-alpine
-    container_name: be.wouterds--nginx
+    container_name: com.wouterds--nginx
     mem_limit: 32mb
     restart: unless-stopped
     volumes:
@@ -12,18 +12,18 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
-      - "traefik.http.routers.wouterdsbe.rule=Host(`wouterds.be`)"
-      - "traefik.http.routers.wouterdsbe.entrypoints=websecure"
-      - "traefik.http.routers.wouterdsbe.tls=true"
-      - "traefik.http.routers.wouterdsbe-http.rule=Host(`wouterds.be`)"
-      - "traefik.http.routers.wouterdsbe-http.entrypoints=web"
-      - "traefik.http.routers.wouterdsbe-http.middlewares=https-redirect"
+      - "traefik.http.routers.comwouterds.rule=Host(`wouterds.com`)"
+      - "traefik.http.routers.comwouterds.entrypoints=websecure"
+      - "traefik.http.routers.comwouterds.tls=true"
+      - "traefik.http.routers.comwouterds-http.rule=Host(`wouterds.com`)"
+      - "traefik.http.routers.comwouterds-http.entrypoints=web"
+      - "traefik.http.routers.comwouterds-http.middlewares=https-redirect"
       - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
 
   node:
-    image: ghcr.io/wouterds/wouterds.be
+    image: ghcr.io/wouterds/wouterds.com
     mem_limit: 128mb
-    container_name: be.wouterds--node
+    container_name: com.wouterds--node
     restart: unless-stopped
     env_file: .env
     environment:
@@ -35,7 +35,7 @@ services:
   redis:
     image: redis:7.4-alpine
     mem_limit: 128mb
-    container_name: be.wouterds--redis
+    container_name: com.wouterds--redis
     restart: unless-stopped
     networks:
       - wouterds
