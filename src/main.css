@@ -55,24 +55,13 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply font-sans bg-background text-foreground;
   }
 }
 
 a {
   @apply transition-colors duration-500;
   @apply underline hover:no-underline;
-}
-
-textarea {
-  @apply min-h-32;
-}
-
-button {
-  @apply text-white font-medium text-sm text-center;
-  @apply bg-blue-700 hover:bg-blue-800;
-  @apply focus:ring-4 focus:outline-none focus:ring-blue-300;
-  @apply rounded-lg w-full sm:w-auto px-3.5 py-2;
 }
 
 blockquote footer {
