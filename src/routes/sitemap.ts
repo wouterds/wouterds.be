@@ -11,7 +11,6 @@ export const loader = async () => {
   sitemap += `<url><loc>${config.baseUrl}</loc></url>`;
   sitemap += `<url><loc>${new URL('/blog', config.baseUrl).toString()}</loc></url>`;
   sitemap += `<url><loc>${new URL('/contact', config.baseUrl).toString()}</loc></url>`;
-  sitemap += `<url><loc>${new URL('/experiments', config.baseUrl).toString()}</loc></url>`;
   for (const { slug } of posts) {
     sitemap += `<url><loc>${new URL('/blog', config.baseUrl).toString()}/${slug}</loc></url>`;
   }

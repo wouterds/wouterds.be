@@ -8,7 +8,6 @@ export default [
     route('/:slug', 'routes/pages/blog/slug.tsx'),
   ]),
   route('/contact', 'routes/pages/contact.tsx'),
-  route('/experiments', 'routes/pages/experiments/index.tsx'),
 
   ...prefix('/api', [
     route('/spotify/auth', 'routes/api/spotify/auth.ts'),
