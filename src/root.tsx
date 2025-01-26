@@ -73,7 +73,7 @@ export function Layout({ children }: { children: ReactNode }) {
         <Meta />
         <Links />
         {data?.canonical && <link rel="canonical" href={data?.canonical.toString()} />}
-        {data?.canonical.hostname === 'wouterds.com' && (
+        {import.meta.env.PROD && (
           <>
             <script
               defer
@@ -85,7 +85,14 @@ export function Layout({ children }: { children: ReactNode }) {
               defer
               async
               src="https://analytics.ahrefs.com/analytics.js"
-              data-key="Owr/uCSPdf5IKCNDeu9yDg"></script>
+              data-key="Owr/uCSPdf5IKCNDeu9yDg"
+            />
+            <script
+              defer
+              async
+              src="https://static.cloudflareinsights.com/beacon.min.js"
+              data-cf-beacon='{"token": "07f72723f78e4631ae9d5b78947516d4"}'
+            />
           </>
         )}
       </head>
