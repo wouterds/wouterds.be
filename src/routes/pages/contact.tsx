@@ -139,15 +139,15 @@ export default function Contact() {
             <p className="text-rose-600 text-sm mt-1.5">{errors.message?.message as string}</p>
           )}
         </div>
-        <div className="flex flex-col sm:flex-row justify-between gap-4">
-          <div>
-            <Button type="submit">Send message</Button>
-          </div>
+        <div className="flex flex-col sm:flex-row-reverse justify-between gap-4">
           <div>
             <Turnstile
               siteKey={import.meta.env.VITE_CLOUDFLARE_TURNSTILE_KEY}
-              options={{ theme: 'light' }}
+              options={{ theme: 'light', size: 'flexible' }}
             />
+          </div>
+          <div>
+            <Button type="submit">Send message</Button>
           </div>
         </div>
       </Form>
