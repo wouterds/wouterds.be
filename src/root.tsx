@@ -74,11 +74,19 @@ export function Layout({ children }: { children: ReactNode }) {
         <Links />
         {data?.canonical && <link rel="canonical" href={data?.canonical.toString()} />}
         {data?.canonical.hostname === 'wouterds.com' && (
-          <script
-            defer
-            src="https://analytics.eu.umami.is/script.js"
-            data-website-id="d504a83c-bc7e-49a6-b643-74c90cd77d01"
-          />
+          <>
+            <script
+              defer
+              async
+              src="https://analytics.eu.umami.is/script.js"
+              data-website-id="d504a83c-bc7e-49a6-b643-74c90cd77d01"
+            />
+            <script
+              defer
+              async
+              src="https://analytics.ahrefs.com/analytics.js"
+              data-key="Owr/uCSPdf5IKCNDeu9yDg"></script>
+          </>
         )}
       </head>
       <body className="relative">
