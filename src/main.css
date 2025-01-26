@@ -54,16 +54,22 @@
     @apply border-border;
   }
 
+  html {
+    @apply h-full;
+  }
+
   body {
     @apply font-sans bg-background text-foreground;
+    @apply relative;
+    @apply flex flex-col min-h-full;
   }
-}
 
-a {
-  @apply transition-colors duration-500;
-  @apply underline hover:no-underline;
-}
+  a {
+    @apply transition-colors duration-500;
+    @apply underline hover:no-underline;
+  }
 
-blockquote footer {
-  @apply opacity-50 not-italic;
+  blockquote footer {
+    @apply opacity-50 not-italic;
+  }
 }

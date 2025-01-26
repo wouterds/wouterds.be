@@ -14,6 +14,7 @@ import {
 
 import type { Route } from './+types/root';
 import { Code } from './components/code';
+import { Experiments } from './components/experiments';
 import Footer from './components/footer';
 import Header from './components/header';
 import { config } from './config';
@@ -96,13 +97,14 @@ export function Layout({ children }: { children: ReactNode }) {
           </>
         )}
       </head>
-      <body className="relative">
+      <body>
         <Header />
         <main className="max-w-screen-md mx-auto px-6 sm:px-8">{children}</main>
         <Footer />
+        <Experiments />
+        <div id="modal-portal" />
         <ScrollRestoration />
         <Scripts />
-        <div id="modal-portal" />
       </body>
     </html>
   );
