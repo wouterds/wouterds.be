@@ -25,7 +25,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
 
   return {
-    canonical: new URL(url.pathname, config.baseUrl),
+    canonical: new URL(url.pathname, config.baseUrl).toString().replace(/\/$/, ''),
   };
 };
 
