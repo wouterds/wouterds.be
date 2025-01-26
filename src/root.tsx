@@ -78,7 +78,7 @@ export function Layout({ children }: { children: ReactNode }) {
             <script
               defer
               async
-              src="https://analytics.eu.umami.is/script.js"
+              src="https://cloud.umami.is/script.js"
               data-website-id="d504a83c-bc7e-49a6-b643-74c90cd77d01"
             />
             <script
