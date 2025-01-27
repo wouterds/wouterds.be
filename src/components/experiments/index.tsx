@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
 import { Aranet4 } from './aranet4';
-import { NucServer } from './nuc-server';
+import { NUC } from './nuc';
 import { Power } from './power';
 import { SpotifyNowPlaying } from './spotify-now-playing';
-import { TeslaCar } from './tesla-car';
+import { Tesla } from './tesla';
 
 type Data = {
   aranet: {
@@ -62,9 +62,9 @@ export const Experiments = () => {
   return (
     <div className="mt-12 flex flex-nowrap whitespace-nowrap text-nowrap bg-gradient-to-b from-gray-100 to-white text-gray-800 min-w-full px-3 sm:px-5 py-2 text-sm overflow-x-auto border-t border-gray-200">
       <Aranet4 data={data?.aranet} />
-      <TeslaCar data={data?.tesla} />
+      <Tesla data={data?.tesla} />
       <Power data={data?.p1} />
-      <NucServer data={data?.nuc} />
+      <NUC data={data?.nuc} />
       {data?.spotify && <SpotifyNowPlaying data={data.spotify} />}
     </div>
   );

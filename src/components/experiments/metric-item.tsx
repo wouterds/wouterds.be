@@ -1,18 +1,24 @@
+import { Skeleton } from '~/components/ui/skeleton';
+
 import type { MetricProps } from './types';
 
 export const MetricItem = ({ icon: Icon, value, unit = '', href }: MetricProps) => {
   const content = (
     <>
       <Icon size={16} />
-      <span>
-        {value}
-        {unit}
-      </span>
+      {typeof value === 'undefined' ? (
+        <Skeleton className="w-7 h-3.5" />
+      ) : (
+        <span>
+          <span className="tabular-nums">{value}</span>
+          {unit}
+        </span>
+      )}
     </>
   );
 
   return (
-    <div className="flex items-center gap-1.5 tabular-nums">
+    <div className="flex items-center gap-1.5">
       {href ? (
         <a
           href={href}

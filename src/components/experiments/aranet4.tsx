@@ -15,22 +15,10 @@ type Props = {
 export const Aranet4 = ({ data }: Props) => {
   return (
     <ExperimentCard title="Aranet4">
-      <MetricItem
-        icon={Thermometer}
-        value={data?.temperature ?? '--'}
-        unit={data?.temperature != null ? '°C' : ''}
-      />
-      <MetricItem
-        icon={Droplets}
-        value={data?.humidity ?? '--'}
-        unit={data?.humidity != null ? '%' : ''}
-      />
-      <MetricItem icon={Wind} value={data?.co2 ?? '--'} unit={data?.co2 != null ? 'ppm' : ''} />
-      <MetricItem
-        icon={Gauge}
-        value={data?.pressure ?? '--'}
-        unit={data?.pressure != null ? 'hPa' : ''}
-      />
+      <MetricItem icon={Thermometer} value={data?.temperature} unit="°C" />
+      <MetricItem icon={Droplets} value={data?.humidity} unit="%" />
+      <MetricItem icon={Wind} value={data?.co2} unit="ppm" />
+      <MetricItem icon={Gauge} value={data?.pressure} unit="hPa" />
     </ExperimentCard>
   );
 };

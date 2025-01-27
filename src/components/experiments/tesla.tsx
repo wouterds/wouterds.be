@@ -10,7 +10,7 @@ type Props = {
   };
 };
 
-export const TeslaCar = ({ data }: Props) => {
+export const Tesla = ({ data }: Props) => {
   const getBatteryIcon = (percentage?: number) => {
     if (percentage == null) return Battery;
     if (percentage < 15) return Battery;
@@ -23,14 +23,10 @@ export const TeslaCar = ({ data }: Props) => {
     <ExperimentCard title="Car">
       <MetricItem
         icon={Car}
-        value={data?.distance ? Math.ceil(data.distance) : '--'}
-        unit={data?.distance != null ? 'km' : ''}
+        value={data?.distance ? Math.ceil(data.distance) : undefined}
+        unit="km"
       />
-      <MetricItem
-        icon={getBatteryIcon(data?.battery)}
-        value={data?.battery ?? '--'}
-        unit={data?.battery != null ? '%' : ''}
-      />
+      <MetricItem icon={getBatteryIcon(data?.battery)} value={data?.battery} unit="%" />
     </ExperimentCard>
   );
 };

@@ -13,8 +13,7 @@ type Props = {
 export const Power = ({ data }: Props) => {
   return (
     <ExperimentCard title="Power">
-      <MetricItem icon={Zap} value={data?.active ?? '--'} unit={data?.active != null ? 'W' : ''} />
-      {/* <MetricItem icon={Zap} value={data?.peak ?? '--'} unit={data?.peak != null ? 'W' : ''} /> */}
+      <MetricItem icon={Zap} value={data?.active} unit="W" />
     </ExperimentCard>
   );
 };
