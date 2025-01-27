@@ -1,5 +1,4 @@
 import { differenceInMinutes } from 'date-fns';
-import { data } from 'react-router';
 
 import { AranetReadings, NUCReadings, P1Readings, TeslaData } from '~/database';
 import { Spotify } from '~/lib/spotify.server';
@@ -17,7 +16,7 @@ export const loader = async () => {
     { aranet, tesla, p1, nuc, spotify },
     {
       headers: {
-        'Cache-Control': 'public, max-age=30, must-revalidate',
+        'Cache-Control': 'public, max-age=10, must-revalidate',
         'Access-Control-Allow-Origin': '*',
       },
     },
