@@ -14,12 +14,7 @@ export const loader = async () => {
 
   return Response.json(
     { aranet, tesla, p1, nuc, spotify },
-    {
-      headers: {
-        'Cache-Control': 'public, max-age=10, must-revalidate',
-        'Access-Control-Allow-Origin': '*',
-      },
-    },
+    { headers: { 'Access-Control-Allow-Origin': '*' } },
   );
 };
 
