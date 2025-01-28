@@ -1,5 +1,5 @@
 import { differenceInMinutes } from 'date-fns';
-import { desc } from 'drizzle-orm';
+import { desc, sql } from 'drizzle-orm';
 
 import { db } from '~/database/connection.server';
 
@@ -20,6 +20,38 @@ const getLast = async () => {
   return null;
 };
 
+const getDailyAverages = async (limit: number) => {
+  const rows = await db
+    .select({
+      date: sql<string>`DATE(${P1Reading.createdAt})`,
+      active: sql<number>`CAST(ROUND(AVG(${P1Reading.active}), 2) AS DECIMAL(10,2))`,
+      total: sql<number>`CAST(ROUND(AVG(${P1Reading.total}), 2) AS DECIMAL(10,2))`,
+      peak: sql<number>`CAST(ROUND(AVG(${P1Reading.peak}), 2) AS DECIMAL(10,2))`,
+    })
+    .from(P1Reading)
+    .groupBy(sql`DATE(${P1Reading.createdAt})`)
+    .orderBy(desc(sql`DATE(${P1Reading.createdAt})`))
+    .limit(limit);
+
+  return rows.reverse();
+};
+
+const getHourlyAverages = async (limit: number) => {
+  const rows = await db
+    .select({
+      date: sql<string>`DATE_FORMAT(${P1Reading.createdAt}, '%Y-%m-%d %H:00:00')`,
+      active: sql<number>`CAST(ROUND(AVG(${P1Reading.active}), 2) AS DECIMAL(10,2))`,
+      total: sql<number>`CAST(ROUND(AVG(${P1Reading.total}), 2) AS DECIMAL(10,2))`,
+      peak: sql<number>`CAST(ROUND(AVG(${P1Reading.peak}), 2) AS DECIMAL(10,2))`,
+    })
+    .from(P1Reading)
+    .groupBy(sql`DATE(${P1Reading.createdAt}), HOUR(${P1Reading.createdAt})`)
+    .orderBy(desc(sql`${P1Reading.createdAt}`))
+    .limit(limit);
+
+  return rows.reverse();
+};
+
 const truncate = async () => {
   await db.delete(P1Reading);
 };
@@ -27,5 +59,7 @@ const truncate = async () => {
 export const P1Readings = {
   add,
   getLast,
+  getDailyAverages,
+  getHourlyAverages,
   truncate,
 };

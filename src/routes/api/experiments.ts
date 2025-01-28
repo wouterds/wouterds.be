@@ -1,9 +1,38 @@
 import { differenceInMinutes } from 'date-fns';
+import type { LoaderFunctionArgs } from 'react-router';
 
 import { AranetReadings, NUCReadings, P1Readings, TeslaData } from '~/database';
 import { Spotify } from '~/lib/spotify.server';
 
-export const loader = async () => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const url = new URL(request.url);
+  switch (url.searchParams.get('timeseries')) {
+    case 'aranet': {
+      const daily = await AranetReadings.getDailyAverages(30);
+      const hourly = await AranetReadings.getHourlyAverages(24);
+
+      return Response.json({ daily, hourly });
+    }
+    case 'tesla': {
+      const daily = await TeslaData.getDailyAverages(30);
+      const hourly = await TeslaData.getHourlyAverages(24);
+
+      return Response.json({ daily, hourly });
+    }
+    case 'p1': {
+      const daily = await P1Readings.getDailyAverages(30);
+      const hourly = await P1Readings.getHourlyAverages(24);
+
+      return Response.json({ daily, hourly });
+    }
+    case 'nuc': {
+      const daily = await NUCReadings.getDailyAverages(30);
+      const hourly = await NUCReadings.getHourlyAverages(24);
+
+      return Response.json({ daily, hourly });
+    }
+  }
+
   const [aranet, tesla, p1, nuc, spotify] = await Promise.all([
     AranetReadings.getLast(),
     TeslaData.getLast(),
@@ -12,10 +41,7 @@ export const loader = async () => {
     getLastSpotifyTrack(),
   ]);
 
-  return Response.json(
-    { aranet, tesla, p1, nuc, spotify },
-    { headers: { 'Access-Control-Allow-Origin': '*' } },
-  );
+  return Response.json({ aranet, tesla, p1, nuc, spotify });
 };
 
 const getLastSpotifyTrack = async () => {
