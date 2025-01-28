@@ -14,7 +14,7 @@ type Props = {
 
 export const NUC = ({ data }: Props) => {
   return (
-    <ExperimentCard title="Server">
+    <ExperimentCard title="NUC">
       <MetricItem icon={Thermometer} value={data?.cpuTemp} unit="°C" />
       <MetricItem icon={Cpu} value={data?.cpuUsage} unit="%" />
       <MetricItem icon={MemoryStick} value={data?.memoryUsage} unit="%" />
