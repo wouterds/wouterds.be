@@ -10,15 +10,15 @@ type Props = {
   };
 };
 
-export const Tesla = ({ data }: Props) => {
-  const getBatteryIcon = (percentage?: number) => {
-    if (percentage == null) return Battery;
-    if (percentage < 15) return Battery;
-    if (percentage < 30) return BatteryLow;
-    if (percentage < 70) return BatteryMedium;
-    return BatteryFull;
-  };
+const getBatteryIcon = (percentage?: number) => {
+  if (percentage == null) return Battery;
+  if (percentage < 15) return Battery;
+  if (percentage < 30) return BatteryLow;
+  if (percentage < 70) return BatteryMedium;
+  return BatteryFull;
+};
 
+export const Tesla = ({ data }: Props) => {
   return (
     <ExperimentCard title="Car">
       <MetricItem
