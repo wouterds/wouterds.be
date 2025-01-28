@@ -1,3 +1,4 @@
+import { differenceInMinutes } from 'date-fns';
 import { desc, eq } from 'drizzle-orm';
 
 import { db } from '~/database/connection.server';
@@ -15,7 +16,12 @@ const getLast = async () => {
     .orderBy(desc(TeslaDataRecord.createdAt))
     .limit(1);
 
-  return rows[0] || null;
+  const row = rows[0];
+  if (row && differenceInMinutes(new Date(), row.createdAt) <= 15) {
+    return row;
+  }
+
+  return null;
 };
 
 const getLastAwake = async () => {
