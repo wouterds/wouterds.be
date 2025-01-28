@@ -17,6 +17,8 @@ type Data = {
   tesla: {
     battery: number;
     distance: number;
+    temperatureInside: number;
+    temperatureOutside: number;
   };
   p1: {
     active: number;
