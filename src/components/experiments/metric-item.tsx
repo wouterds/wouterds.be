@@ -7,10 +7,10 @@ export const MetricItem = ({ icon: Icon, value, unit = '', href }: MetricProps) 
     <>
       <Icon size={16} />
       {typeof value === 'undefined' ? (
-        <Skeleton className="w-7 h-3.5" />
+        <Skeleton className="w-7 h-4" />
       ) : (
         <span>
-          <span className="tabular-nums">{value}</span>
+          {value}
           {unit}
         </span>
       )}
