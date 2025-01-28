@@ -1,4 +1,4 @@
-import { Battery, BatteryFull, BatteryLow, BatteryMedium, Car } from 'lucide-react';
+import { Battery, BatteryFull, BatteryLow, BatteryMedium, Car, Thermometer } from 'lucide-react';
 
 import { ExperimentCard } from './experiment-card';
 import { MetricItem } from './metric-item';
@@ -7,6 +7,8 @@ type Props = {
   data?: {
     battery: number;
     distance: number;
+    temperatureInside: number;
+    temperatureOutside: number;
   };
 };
 
@@ -26,6 +28,7 @@ export const Tesla = ({ data }: Props) => {
         value={data?.distance ? Math.ceil(data.distance) : undefined}
         unit="km"
       />
+      <MetricItem icon={Thermometer} value={data?.temperatureInside} unit="°C" />
       <MetricItem icon={getBatteryIcon(data?.battery)} value={data?.battery} unit="%" />
     </ExperimentCard>
   );
