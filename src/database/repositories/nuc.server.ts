@@ -1,4 +1,3 @@
-import { differenceInMinutes } from 'date-fns';
 import { desc, sql } from 'drizzle-orm';
 
 import { db } from '~/database/connection.server';
@@ -12,12 +11,7 @@ const add = async (data: NUCReading) => {
 const getLast = async () => {
   const rows = await db.select().from(NUCReading).orderBy(desc(NUCReading.createdAt)).limit(1);
 
-  const row = rows[0];
-  if (row && differenceInMinutes(new Date(), row.createdAt) <= 15) {
-    return row;
-  }
-
-  return null;
+  return rows[0] || null;
 };
 
 const getDailyAverages = async (limit: number) => {
