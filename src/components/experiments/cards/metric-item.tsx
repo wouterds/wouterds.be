@@ -1,6 +1,13 @@
+import type { LucideIcon } from 'lucide-react';
+
 import { Skeleton } from '~/components/ui/skeleton';
 
-import type { MetricProps } from './types';
+export type MetricProps = {
+  icon: LucideIcon;
+  value?: string | number;
+  unit?: string;
+  href?: string;
+};
 
 export const MetricItem = ({ icon: Icon, value, unit = '', href }: MetricProps) => {
   const content = (

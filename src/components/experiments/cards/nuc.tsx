@@ -10,11 +10,13 @@ type Props = {
     memoryUsage: number;
     diskUsage: number;
   };
+  onHoverIn?: () => void;
+  onHoverOut?: () => void;
 };
 
-export const NUC = ({ data }: Props) => {
+export const NUC = ({ data, onHoverIn, onHoverOut }: Props) => {
   return (
-    <ExperimentCard title="NUC">
+    <ExperimentCard title="NUC" onHoverIn={onHoverIn} onHoverOut={onHoverOut}>
       <MetricItem icon={Thermometer} value={data?.cpuTemp} unit="°C" />
       <MetricItem icon={Cpu} value={data?.cpuUsage} unit="%" />
       <MetricItem icon={MemoryStick} value={data?.memoryUsage} unit="%" />

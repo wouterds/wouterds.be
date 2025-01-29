@@ -33,10 +33,10 @@ const getDailyAverages = async (limit: number) => {
   const rows = await db
     .select({
       date: sql<string>`DATE(${TeslaDataRecord.createdAt})`,
-      battery: sql<number>`CAST(ROUND(AVG(${TeslaDataRecord.battery}), 2) AS DECIMAL(10,2))`,
-      distance: sql<number>`CAST(ROUND(AVG(${TeslaDataRecord.distance}), 2) AS DECIMAL(10,2))`,
-      temperatureInside: sql<number>`CAST(ROUND(AVG(${TeslaDataRecord.temperatureInside}), 2) AS DECIMAL(10,2))`,
-      temperatureOutside: sql<number>`CAST(ROUND(AVG(${TeslaDataRecord.temperatureOutside}), 2) AS DECIMAL(10,2))`,
+      battery: sql<number>`AVG(${TeslaDataRecord.battery})`,
+      distance: sql<number>`AVG(${TeslaDataRecord.distance})`,
+      temperatureInside: sql<number>`AVG(${TeslaDataRecord.temperatureInside})`,
+      temperatureOutside: sql<number>`AVG(${TeslaDataRecord.temperatureOutside})`,
     })
     .from(TeslaDataRecord)
     .groupBy(sql`DATE(${TeslaDataRecord.createdAt})`)
@@ -50,10 +50,10 @@ const getHourlyAverages = async (limit: number) => {
   const rows = await db
     .select({
       date: sql<string>`DATE_FORMAT(${TeslaDataRecord.createdAt}, '%Y-%m-%d %H:00:00')`,
-      battery: sql<number>`CAST(ROUND(AVG(${TeslaDataRecord.battery}), 2) AS DECIMAL(10,2))`,
-      distance: sql<number>`CAST(ROUND(AVG(${TeslaDataRecord.distance}), 2) AS DECIMAL(10,2))`,
-      temperatureInside: sql<number>`CAST(ROUND(AVG(${TeslaDataRecord.temperatureInside}), 2) AS DECIMAL(10,2))`,
-      temperatureOutside: sql<number>`CAST(ROUND(AVG(${TeslaDataRecord.temperatureOutside}), 2) AS DECIMAL(10,2))`,
+      battery: sql<number>`AVG(${TeslaDataRecord.battery})`,
+      distance: sql<number>`AVG(${TeslaDataRecord.distance})`,
+      temperatureInside: sql<number>`AVG(${TeslaDataRecord.temperatureInside})`,
+      temperatureOutside: sql<number>`AVG(${TeslaDataRecord.temperatureOutside})`,
     })
     .from(TeslaDataRecord)
     .groupBy(sql`DATE(${TeslaDataRecord.createdAt}), HOUR(${TeslaDataRecord.createdAt})`)

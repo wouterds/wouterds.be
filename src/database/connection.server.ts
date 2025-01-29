@@ -9,6 +9,15 @@ const connection = mysql.createConnection({
   user: process.env.DB_USER!,
   password: process.env.DB_PASS!,
   database: process.env.DB_NAME!,
+  decimalNumbers: true,
+  dateStrings: false,
+  typeCast: function (field, next) {
+    if (field.type === 'DECIMAL' || field.type === 'NEWDECIMAL') {
+      const value = field.string();
+      return value === null ? null : Number(value);
+    }
+    return next();
+  },
 });
 
 export const db = drizzle(connection, { schema, mode: 'default' });

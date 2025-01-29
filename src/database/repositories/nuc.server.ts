@@ -18,10 +18,10 @@ const getDailyAverages = async (limit: number) => {
   const rows = await db
     .select({
       date: sql<string>`DATE(${NUCReading.createdAt})`,
-      cpuTemp: sql<number>`CAST(ROUND(AVG(${NUCReading.cpuTemp}), 2) AS DECIMAL(10,2))`,
-      cpuUsage: sql<number>`CAST(ROUND(AVG(${NUCReading.cpuUsage}), 2) AS DECIMAL(10,2))`,
-      memoryUsage: sql<number>`CAST(ROUND(AVG(${NUCReading.memoryUsage}), 2) AS DECIMAL(10,2))`,
-      diskUsage: sql<number>`CAST(ROUND(AVG(${NUCReading.diskUsage}), 2) AS DECIMAL(10,2))`,
+      cpuTemp: sql<number>`AVG(${NUCReading.cpuTemp})`,
+      cpuUsage: sql<number>`AVG(${NUCReading.cpuUsage})`,
+      memoryUsage: sql<number>`AVG(${NUCReading.memoryUsage})`,
+      diskUsage: sql<number>`AVG(${NUCReading.diskUsage})`,
     })
     .from(NUCReading)
     .groupBy(sql`DATE(${NUCReading.createdAt})`)
@@ -35,10 +35,10 @@ const getHourlyAverages = async (limit: number) => {
   const rows = await db
     .select({
       date: sql<string>`DATE_FORMAT(${NUCReading.createdAt}, '%Y-%m-%d %H:00:00')`,
-      cpuTemp: sql<number>`CAST(ROUND(AVG(${NUCReading.cpuTemp}), 2) AS DECIMAL(10,2))`,
-      cpuUsage: sql<number>`CAST(ROUND(AVG(${NUCReading.cpuUsage}), 2) AS DECIMAL(10,2))`,
-      memoryUsage: sql<number>`CAST(ROUND(AVG(${NUCReading.memoryUsage}), 2) AS DECIMAL(10,2))`,
-      diskUsage: sql<number>`CAST(ROUND(AVG(${NUCReading.diskUsage}), 2) AS DECIMAL(10,2))`,
+      cpuTemp: sql<number>`AVG(${NUCReading.cpuTemp})`,
+      cpuUsage: sql<number>`AVG(${NUCReading.cpuUsage})`,
+      memoryUsage: sql<number>`AVG(${NUCReading.memoryUsage})`,
+      diskUsage: sql<number>`AVG(${NUCReading.diskUsage})`,
     })
     .from(NUCReading)
     .groupBy(sql`DATE(${NUCReading.createdAt}), HOUR(${NUCReading.createdAt})`)

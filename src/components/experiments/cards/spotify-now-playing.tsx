@@ -11,11 +11,13 @@ type Props = {
       name: string;
     }>;
   };
+  onHoverIn?: () => void;
+  onHoverOut?: () => void;
 };
 
-export const SpotifyNowPlaying = ({ data }: Props) => {
+export const SpotifyNowPlaying = ({ data, onHoverIn, onHoverOut }: Props) => {
   return (
-    <ExperimentCard title="Now Playing">
+    <ExperimentCard title="Now Playing" onHoverIn={onHoverIn} onHoverOut={onHoverOut}>
       <MetricItem icon={Music} value={`${data.name} - ${data.artist[0].name}`} href={data.url} />
     </ExperimentCard>
   );

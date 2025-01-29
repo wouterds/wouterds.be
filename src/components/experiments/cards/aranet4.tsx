@@ -20,6 +20,8 @@ type Props = {
     pressure: number;
     battery: number;
   };
+  onHoverIn?: () => void;
+  onHoverOut?: () => void;
 };
 
 const getBatteryIcon = (percentage?: number) => {
@@ -30,9 +32,9 @@ const getBatteryIcon = (percentage?: number) => {
   return BatteryFull;
 };
 
-export const Aranet4 = ({ data }: Props) => {
+export const Aranet4 = ({ data, onHoverIn, onHoverOut }: Props) => {
   return (
-    <ExperimentCard title="Aranet4">
+    <ExperimentCard title="Aranet4" onHoverIn={onHoverIn} onHoverOut={onHoverOut}>
       <MetricItem icon={Thermometer} value={data?.temperature} unit="°C" />
       <MetricItem icon={Droplets} value={data?.humidity} unit="%" />
       <MetricItem icon={Wind} value={data?.co2} unit="ppm" />

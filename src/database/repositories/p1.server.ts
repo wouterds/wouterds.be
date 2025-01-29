@@ -18,9 +18,9 @@ const getDailyAverages = async (limit: number) => {
   const rows = await db
     .select({
       date: sql<string>`DATE(${P1Reading.createdAt})`,
-      active: sql<number>`CAST(ROUND(AVG(${P1Reading.active}), 2) AS DECIMAL(10,2))`,
-      total: sql<number>`CAST(ROUND(AVG(${P1Reading.total}), 2) AS DECIMAL(10,2))`,
-      peak: sql<number>`CAST(ROUND(AVG(${P1Reading.peak}), 2) AS DECIMAL(10,2))`,
+      active: sql<number>`AVG(${P1Reading.active})`,
+      total: sql<number>`AVG(${P1Reading.total})`,
+      peak: sql<number>`AVG(${P1Reading.peak})`,
     })
     .from(P1Reading)
     .groupBy(sql`DATE(${P1Reading.createdAt})`)
@@ -34,9 +34,9 @@ const getHourlyAverages = async (limit: number) => {
   const rows = await db
     .select({
       date: sql<string>`DATE_FORMAT(${P1Reading.createdAt}, '%Y-%m-%d %H:00:00')`,
-      active: sql<number>`CAST(ROUND(AVG(${P1Reading.active}), 2) AS DECIMAL(10,2))`,
-      total: sql<number>`CAST(ROUND(AVG(${P1Reading.total}), 2) AS DECIMAL(10,2))`,
-      peak: sql<number>`CAST(ROUND(AVG(${P1Reading.peak}), 2) AS DECIMAL(10,2))`,
+      active: sql<number>`AVG(${P1Reading.active})`,
+      total: sql<number>`AVG(${P1Reading.total})`,
+      peak: sql<number>`AVG(${P1Reading.peak})`,
     })
     .from(P1Reading)
     .groupBy(sql`DATE(${P1Reading.createdAt}), HOUR(${P1Reading.createdAt})`)

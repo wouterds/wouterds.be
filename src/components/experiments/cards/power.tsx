@@ -8,11 +8,13 @@ type Props = {
     active: number;
     peak: number;
   };
+  onHoverIn?: () => void;
+  onHoverOut?: () => void;
 };
 
-export const Power = ({ data }: Props) => {
+export const Power = ({ data, onHoverIn, onHoverOut }: Props) => {
   return (
-    <ExperimentCard title="Power">
+    <ExperimentCard title="Power" onHoverIn={onHoverIn} onHoverOut={onHoverOut}>
       <MetricItem icon={Zap} value={data?.active} unit="W" />
     </ExperimentCard>
   );

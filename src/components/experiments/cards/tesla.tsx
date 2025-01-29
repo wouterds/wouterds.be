@@ -10,6 +10,8 @@ type Props = {
     temperatureInside: number;
     temperatureOutside: number;
   };
+  onHoverIn?: () => void;
+  onHoverOut?: () => void;
 };
 
 const getBatteryIcon = (percentage?: number) => {
@@ -20,9 +22,9 @@ const getBatteryIcon = (percentage?: number) => {
   return BatteryFull;
 };
 
-export const Tesla = ({ data }: Props) => {
+export const Tesla = ({ data, onHoverIn, onHoverOut }: Props) => {
   return (
-    <ExperimentCard title="Car">
+    <ExperimentCard title="Car" onHoverIn={onHoverIn} onHoverOut={onHoverOut}>
       <MetricItem
         icon={Car}
         value={data?.distance ? Math.ceil(data.distance) : undefined}

@@ -6,8 +6,6 @@ import colors from 'tailwindcss/colors';
 type Props = {
   data: Array<Record<string, unknown>>;
   dataKey: string;
-  label: string;
-  header?: string;
   unit: string;
   rounding?: number;
   className?: string;
@@ -20,40 +18,30 @@ export const BarChart = ({
   dataKey,
   unit,
   rounding = 2,
-  label,
-  header,
   className,
   footer,
   syncId,
 }: Props) => {
-  const chartColor = '#000';
+  const chartColor = colors.lime[500];
+  const activeColor = colors.lime[600];
   const filteredComponents = footer?.filter(Boolean);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const value = ((data?.[activeIndex || data.length - 1]?.[dataKey] as number) || 0)?.toFixed(
+    rounding,
+  );
 
   return (
     <>
-      <div className={clsx('border border-black text-center', className)}>
-        <div className="py-2">
-          <span
-            className={clsx('font-semibold', {
-              'text-rose-500': typeof activeIndex === 'number',
-            })}>
-            {typeof activeIndex === 'number' || !header
-              ? `${((data?.[activeIndex || data.length - 1]?.[dataKey] as number) || 0)?.toFixed(
-                  rounding,
-                )}${unit}`
-              : header}
-          </span>
-        </div>
-        <div className="relative aspect-[8/1] sm:aspect-[10/1] -mt-2">
+      <div className={clsx('w-full', className)}>
+        <div className="h-[60px]">
           <ResponsiveContainer>
-            <Chart data={data} syncId={syncId}>
+            <Chart data={data} syncId={syncId} margin={{ right: 1, left: 2, bottom: 3 }}>
               <YAxis hide />
               <Bar
                 dataKey={dataKey}
                 fill={chartColor}
                 minPointSize={1}
-                activeBar={{ fill: colors.rose['500'], strokeWidth: 0 }}
+                activeBar={{ fill: activeColor, strokeWidth: 0 }}
               />
               <Tooltip
                 cursor={false}
@@ -69,8 +57,9 @@ export const BarChart = ({
             </Chart>
           </ResponsiveContainer>
         </div>
-        <div className="font-medium bg-black text-white py-0.5" style={{ margin: 1 }}>
-          {label}
+        <div className="font-medium bg-gray-100 text-gray-500 py-0.5 text-xs text-center">
+          {value}
+          {unit}
         </div>
       </div>
       {filteredComponents && (

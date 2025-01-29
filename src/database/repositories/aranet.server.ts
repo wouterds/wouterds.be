@@ -22,31 +22,29 @@ const getDailyAverages = async (limit: number) => {
   const rows = await db
     .select({
       date: sql<string>`DATE(${AranetReading.createdAt})`,
-      temperature: sql<number>`CAST(ROUND(AVG(${AranetReading.temperature}), 2) AS DECIMAL(10,2))`,
-      humidity: sql<number>`CAST(ROUND(AVG(${AranetReading.humidity}), 2) AS DECIMAL(10,2))`,
-      co2: sql<number>`CAST(ROUND(AVG(${AranetReading.co2}), 2) AS DECIMAL(10,2))`,
-      pressure: sql<number>`CAST(ROUND(AVG(${AranetReading.pressure}), 2) AS DECIMAL(10,2))`,
-      battery: sql<number>`CAST(ROUND(AVG(${AranetReading.battery}), 2) AS DECIMAL(10,2))`,
+      temperature: sql<number>`AVG(${AranetReading.temperature})`,
+      humidity: sql<number>`AVG(${AranetReading.humidity})`,
+      co2: sql<number>`AVG(${AranetReading.co2})`,
+      pressure: sql<number>`AVG(${AranetReading.pressure})`,
+      battery: sql<number>`AVG(${AranetReading.battery})`,
     })
     .from(AranetReading)
     .groupBy(sql`DATE(${AranetReading.createdAt})`)
     .orderBy(desc(sql`DATE(${AranetReading.createdAt})`))
     .limit(limit);
 
-  console.log({ rows });
-
   return rows.reverse();
 };
 
-export const getHourlyAverages = async (limit: number) => {
+const getHourlyAverages = async (limit: number) => {
   const rows = await db
     .select({
       date: sql<string>`DATE_FORMAT(${AranetReading.createdAt}, '%Y-%m-%d %H:00:00')`,
-      temperature: sql<number>`CAST(ROUND(AVG(${AranetReading.temperature}), 2) AS DECIMAL(10,2))`,
-      humidity: sql<number>`CAST(ROUND(AVG(${AranetReading.humidity}), 2) AS DECIMAL(10,2))`,
-      co2: sql<number>`CAST(ROUND(AVG(${AranetReading.co2}), 2) AS DECIMAL(10,2))`,
-      pressure: sql<number>`CAST(ROUND(AVG(${AranetReading.pressure}), 2) AS DECIMAL(10,2))`,
-      battery: sql<number>`CAST(ROUND(AVG(${AranetReading.battery}), 2) AS DECIMAL(10,2))`,
+      temperature: sql<number>`AVG(${AranetReading.temperature})`,
+      humidity: sql<number>`AVG(${AranetReading.humidity})`,
+      co2: sql<number>`AVG(${AranetReading.co2})`,
+      pressure: sql<number>`AVG(${AranetReading.pressure})`,
+      battery: sql<number>`AVG(${AranetReading.battery})`,
     })
     .from(AranetReading)
     .groupBy(sql`DATE(${AranetReading.createdAt}), HOUR(${AranetReading.createdAt})`)
