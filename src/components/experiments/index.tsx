@@ -49,7 +49,7 @@ type Data = {
 
 export const Experiments = () => {
   const [data, setData] = useState<Data | null>(null);
-  const [activeExperiment, setActiveExperiment] = useState<string | null>(null);
+  const [activeExperiment, setActiveExperiment] = useState<string | null>();
 
   const fetchData = async () => {
     const response = await fetch('/api/experiments');

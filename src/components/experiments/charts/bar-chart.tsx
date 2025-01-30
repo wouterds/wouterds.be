@@ -7,6 +7,7 @@ type Props = {
   data: Array<Record<string, unknown>>;
   dataKey: string;
   unit: string;
+  label: string;
   rounding?: number;
   className?: string;
   footer?: ReactNode[];
@@ -17,13 +18,14 @@ export const BarChart = ({
   data,
   dataKey,
   unit,
+  label,
   rounding = 2,
   className,
   footer,
   syncId,
 }: Props) => {
-  const chartColor = colors.lime[500];
-  const activeColor = colors.lime[600];
+  const chartColor = colors.lime[600];
+  const activeColor = colors.lime[700];
   const filteredComponents = footer?.filter(Boolean);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const value = ((data?.[activeIndex || data.length - 1]?.[dataKey] as number) || 0)?.toFixed(
@@ -32,10 +34,10 @@ export const BarChart = ({
 
   return (
     <>
-      <div className={clsx('w-full', className)}>
+      <div className={clsx('w-full max-w-52 shrink-0', className)}>
         <div className="h-[60px]">
           <ResponsiveContainer>
-            <Chart data={data} syncId={syncId} margin={{ right: 1, left: 2, bottom: 3 }}>
+            <Chart data={data} syncId={syncId} margin={{ right: 3, left: 3, bottom: 6 }}>
               <YAxis hide />
               <Bar
                 dataKey={dataKey}
@@ -57,9 +59,8 @@ export const BarChart = ({
             </Chart>
           </ResponsiveContainer>
         </div>
-        <div className="font-medium bg-gray-100 text-gray-500 py-0.5 text-xs text-center">
-          {value}
-          {unit}
+        <div className="font-medium bg-gray-200/50 text-gray-600 py-0.5 text-xs text-center rounded-tl-full rounded-r-full">
+          {activeIndex !== null ? `${value}${unit}` : label}
         </div>
       </div>
       {filteredComponents && (

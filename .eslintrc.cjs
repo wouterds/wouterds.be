@@ -22,5 +22,6 @@ module.exports = {
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
     'no-duplicate-imports': 'error',
+    'react/prop-types': 'off',
   },
 };
