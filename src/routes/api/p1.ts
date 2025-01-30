@@ -19,10 +19,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return Response.json({ success: false }, { status: StatusCodes.TOO_MANY_REQUESTS });
   }
 
-  const active = data.active_power_w;
-  const total = data.total_power_import_kwh;
-  const peak = data.montly_power_peak_w;
-  const time = `${data.montly_power_peak_timestamp}`.match(/.{1,2}/g)?.flat() || [];
+  const { active, total, peak, peak_timestamp } = data;
+  const time = `${peak_timestamp}`.match(/.{1,2}/g)?.flat() || [];
   if (time?.length < 5) {
     return Response.json({ success: false }, { status: StatusCodes.BAD_REQUEST });
   }
