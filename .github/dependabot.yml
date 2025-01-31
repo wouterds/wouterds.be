@@ -14,6 +14,7 @@ updates:
           - "@commitlint/*"
       "@react-router/*":
         patterns:
+          - "react-router"
           - "@react-router/*"
       "@sentry/*":
         patterns:
