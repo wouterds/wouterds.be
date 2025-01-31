@@ -9,6 +9,8 @@ import {
   Wind,
 } from 'lucide-react';
 
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
+
 import { ExperimentCard } from './experiment-card';
 import { MetricItem } from './metric-item';
 
@@ -35,11 +37,52 @@ const getBatteryIcon = (percentage?: number) => {
 export const Aranet4 = ({ data, onHoverIn, onHoverOut }: Props) => {
   return (
     <ExperimentCard title="Aranet4" onHoverIn={onHoverIn} onHoverOut={onHoverOut}>
-      <MetricItem icon={Thermometer} value={data?.temperature} unit="°C" />
-      <MetricItem icon={Droplets} value={data?.humidity} unit="%" />
-      <MetricItem icon={Wind} value={data?.co2} unit="ppm" />
-      <MetricItem icon={Gauge} value={data?.pressure} unit="hPa" />
-      <MetricItem icon={getBatteryIcon(data?.battery)} value={data?.battery} unit="%" />
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <MetricItem icon={Thermometer} value={data?.temperature} unit="°C" />
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Indoor temperature</p>
+          </TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger>
+            <MetricItem icon={Droplets} value={data?.humidity} unit="%" />
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Relative humidity</p>
+          </TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger>
+            <MetricItem icon={Wind} value={data?.co2} unit="ppm" />
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>CO₂ concentration</p>
+          </TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger>
+            <MetricItem icon={Gauge} value={data?.pressure} unit="hPa" />
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Atmospheric pressure</p>
+          </TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger>
+            <MetricItem icon={getBatteryIcon(data?.battery)} value={data?.battery} unit="%" />
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Battery level</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     </ExperimentCard>
   );
 };

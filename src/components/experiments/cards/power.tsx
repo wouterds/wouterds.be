@@ -1,5 +1,7 @@
 import { Zap } from 'lucide-react';
 
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
+
 import { ExperimentCard } from './experiment-card';
 import { MetricItem } from './metric-item';
 
@@ -15,7 +17,16 @@ type Props = {
 export const Power = ({ data, onHoverIn, onHoverOut }: Props) => {
   return (
     <ExperimentCard title="Power" onHoverIn={onHoverIn} onHoverOut={onHoverOut}>
-      <MetricItem icon={Zap} value={data?.active} unit="W" />
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <MetricItem icon={Zap} value={data?.active} unit="W" />
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Active power consumption</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     </ExperimentCard>
   );
 };
