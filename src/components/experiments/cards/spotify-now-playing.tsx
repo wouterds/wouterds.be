@@ -13,13 +13,11 @@ type Props = {
       name: string;
     }>;
   };
-  onHoverIn?: () => void;
-  onHoverOut?: () => void;
 };
 
-export const SpotifyNowPlaying = ({ data, onHoverIn, onHoverOut }: Props) => {
+export const SpotifyNowPlaying = ({ data }: Props) => {
   return (
-    <ExperimentCard title="Now Playing" onHoverIn={onHoverIn} onHoverOut={onHoverOut}>
+    <ExperimentCard title="Now Playing">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>

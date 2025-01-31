@@ -10,13 +10,11 @@ type Props = {
     active: number;
     peak: number;
   };
-  onHoverIn?: () => void;
-  onHoverOut?: () => void;
 };
 
-export const Power = ({ data, onHoverIn, onHoverOut }: Props) => {
+export const Power = ({ data }: Props) => {
   return (
-    <ExperimentCard title="Power" onHoverIn={onHoverIn} onHoverOut={onHoverOut}>
+    <ExperimentCard title="Power">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>

@@ -12,13 +12,11 @@ type Props = {
     memoryUsage: number;
     diskUsage: number;
   };
-  onHoverIn?: () => void;
-  onHoverOut?: () => void;
 };
 
-export const NUC = ({ data, onHoverIn, onHoverOut }: Props) => {
+export const NUC = ({ data }: Props) => {
   return (
-    <ExperimentCard title="NUC" onHoverIn={onHoverIn} onHoverOut={onHoverOut}>
+    <ExperimentCard title="NUC">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>

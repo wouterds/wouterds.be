@@ -12,8 +12,6 @@ type Props = {
     temperatureInside: number;
     temperatureOutside: number;
   };
-  onHoverIn?: () => void;
-  onHoverOut?: () => void;
 };
 
 const getBatteryIcon = (percentage?: number) => {
@@ -24,9 +22,9 @@ const getBatteryIcon = (percentage?: number) => {
   return BatteryFull;
 };
 
-export const Tesla = ({ data, onHoverIn, onHoverOut }: Props) => {
+export const Tesla = ({ data }: Props) => {
   return (
-    <ExperimentCard title="Car" onHoverIn={onHoverIn} onHoverOut={onHoverOut}>
+    <ExperimentCard title="Car">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>

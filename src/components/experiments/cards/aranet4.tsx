@@ -22,8 +22,6 @@ type Props = {
     pressure: number;
     battery: number;
   };
-  onHoverIn?: () => void;
-  onHoverOut?: () => void;
 };
 
 const getBatteryIcon = (percentage?: number) => {
@@ -34,9 +32,9 @@ const getBatteryIcon = (percentage?: number) => {
   return BatteryFull;
 };
 
-export const Aranet4 = ({ data, onHoverIn, onHoverOut }: Props) => {
+export const Aranet4 = ({ data }: Props) => {
   return (
-    <ExperimentCard title="Aranet4" onHoverIn={onHoverIn} onHoverOut={onHoverOut}>
+    <ExperimentCard title="Aranet4">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
