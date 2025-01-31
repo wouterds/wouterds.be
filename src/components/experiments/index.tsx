@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 
 import { Aranet4 } from './cards/aranet4';
@@ -5,10 +6,10 @@ import { NUC } from './cards/nuc';
 import { Power } from './cards/power';
 import { SpotifyNowPlaying } from './cards/spotify-now-playing';
 import { Tesla } from './cards/tesla';
-// import { Aranet4Charts } from './charts/aranet4-charts';
-// import { NUCCharts } from './charts/nuc-charts';
-// import { PowerCharts } from './charts/power-charts';
-// import { TeslaCharts } from './charts/tesla-charts';
+import { Aranet4Charts } from './charts/aranet4-charts';
+import { NUCCharts } from './charts/nuc-charts';
+import { PowerCharts } from './charts/power-charts';
+import { TeslaCharts } from './charts/tesla-charts';
 
 type Data = {
   aranet: {
@@ -47,8 +48,15 @@ type Data = {
   };
 };
 
+type ChartType = 'aranet4' | 'tesla' | 'power' | 'nuc' | null;
+
 export const Experiments = () => {
   const [data, setData] = useState<Data | null>(null);
+  const [visibleChart, setVisibleChart] = useState<ChartType>(null);
+
+  const toggleChart = (chart: ChartType) => {
+    setVisibleChart((current) => (current === chart ? null : chart));
+  };
 
   const fetchData = async () => {
     const response = await fetch('/api/experiments');
@@ -67,15 +75,29 @@ export const Experiments = () => {
 
   return (
     <div className="mt-12 text-gray-800">
-      {/* <Aranet4Charts />
-      <TeslaCharts />
-      <PowerCharts />
-      <NUCCharts /> */}
+      <div
+        className={clsx('transition-opacity duration-500', {
+          'opacity-100 pointer-events-auto': visibleChart,
+          'opacity-0 pointer-events-none': !visibleChart,
+        })}>
+        {visibleChart === 'aranet4' && <Aranet4Charts />}
+        {visibleChart === 'tesla' && <TeslaCharts />}
+        {visibleChart === 'power' && <PowerCharts />}
+        {visibleChart === 'nuc' && <NUCCharts />}
+      </div>
       <div className="flex flex-nowrap whitespace-nowrap text-nowrap bg-gradient-to-b from-gray-100 to-white min-w-full px-3 sm:px-5 py-2 text-sm overflow-x-auto border-t border-gray-200">
-        <Aranet4 data={data?.aranet} />
-        <Tesla data={data?.tesla} />
-        <Power data={data?.p1} />
-        <NUC data={data?.nuc} />
+        <div onClick={() => toggleChart('aranet4')} className="cursor-pointer group">
+          <Aranet4 data={data?.aranet} />
+        </div>
+        <div onClick={() => toggleChart('tesla')} className="cursor-pointer group">
+          <Tesla data={data?.tesla} />
+        </div>
+        <div onClick={() => toggleChart('power')} className="cursor-pointer group">
+          <Power data={data?.p1} />
+        </div>
+        <div onClick={() => toggleChart('nuc')} className="cursor-pointer group">
+          <NUC data={data?.nuc} />
+        </div>
         {data?.spotify && <SpotifyNowPlaying data={data.spotify} />}
       </div>
     </div>

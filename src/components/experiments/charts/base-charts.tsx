@@ -28,7 +28,11 @@ export const BaseCharts = ({ dataConfigs, apiEndpoint }: BaseChartsProps) => {
   const [data, setData] = useState<ChartData | null>(null);
 
   const fetchData = useCallback(async () => {
-    const response = await fetch(apiEndpoint);
+    const [response] = await Promise.all([
+      fetch(apiEndpoint),
+      new Promise((resolve) => setTimeout(resolve, 600)),
+    ]);
+
     if (!response.ok) {
       return;
     }
