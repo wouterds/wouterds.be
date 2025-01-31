@@ -20,6 +20,7 @@
     "@marsidev/react-turnstile": "^1.1.0",
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-slot": "^1.1.1",
+    "@radix-ui/react-tooltip": "^1.1.7",
     "@react-router/node": "^7.1.4",
     "@react-router/serve": "^7.1.4",
     "@redis/client": "^1.6.0",
