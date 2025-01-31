@@ -18,6 +18,13 @@ updates:
       "@sentry/*":
         patterns:
           - "@sentry/*"
+      "drizzle-orm":
+        patterns:
+          - "drizzle-orm"
+          - "drizzle-kit"
+      "eslint-plugins":
+        patterns:
+          - "eslint-plugin-*"
       react:
         patterns:
           - "react"
