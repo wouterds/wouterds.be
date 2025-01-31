@@ -41,7 +41,7 @@ export const Aranet4 = ({ data }: Props) => {
             <MetricItem icon={Thermometer} value={data?.temperature} unit="°C" />
           </TooltipTrigger>
           <TooltipContent>
-            <p>Indoor temperature</p>
+            <p>Temperature</p>
           </TooltipContent>
         </Tooltip>
 
