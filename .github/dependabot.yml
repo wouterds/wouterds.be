@@ -18,6 +18,9 @@ updates:
       "@sentry/*":
         patterns:
           - "@sentry/*"
+      "@radix-ui/*":
+        patterns:
+          - "@radix-ui/*"
       "drizzle-orm":
         patterns:
           - "drizzle-orm"
