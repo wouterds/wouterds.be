@@ -20,6 +20,12 @@ const mapReply = (reply: BlueskyAPIReply, depth: number = 0): BlueskyReply => {
     date: reply.post.record.createdAt,
     text: reply.post.record.text,
     replies: depth < 2 ? reply.replies.map((r) => mapReply(r, depth + 1)) : [],
+    counts: {
+      replies: reply.post.replyCount,
+      reposts: reply.post.repostCount,
+      likes: reply.post.likeCount,
+      quotes: reply.post.quoteCount,
+    },
   };
 };
 
@@ -77,6 +83,12 @@ const getPost = async (url: string): Promise<BlueskyPost | null> => {
         uri: data.posts[0].uri.toString(),
         url: `https://bsky.app/profile/${did}/post/${rkey}`,
         replies: replies.map((r) => mapReply(r, 0)),
+        counts: {
+          replies: data.posts[0].replyCount,
+          reposts: data.posts[0].repostCount,
+          likes: data.posts[0].likeCount,
+          quotes: data.posts[0].quoteCount,
+        },
       };
 
       const expiryDate = new Date();

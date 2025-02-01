@@ -14,6 +14,10 @@ export interface BlueskyAPIPost {
     uri: string;
     author: BlueskyAPIAuthor;
     record: BlueskyAPIRecord;
+    replyCount: number;
+    repostCount: number;
+    likeCount: number;
+    quoteCount: number;
   };
 }
 
@@ -34,10 +38,22 @@ export interface BlueskyReply {
   date: string;
   text: string;
   replies: BlueskyReply[];
+  counts: {
+    replies: number;
+    reposts: number;
+    likes: number;
+    quotes: number;
+  };
 }
 
 export interface BlueskyPost {
   uri: string;
   url: string;
   replies: BlueskyReply[];
+  counts: {
+    replies: number;
+    reposts: number;
+    likes: number;
+    quotes: number;
+  };
 }

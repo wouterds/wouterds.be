@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { format } from 'date-fns';
+import { Heart, MessageCircle, Repeat2 } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
@@ -10,7 +11,16 @@ export type CommentProps = BlueskyReply & {
   uri: string;
 };
 
-export const Comment = ({ author, date, text, replies, level = 0, uri }: CommentProps) => {
+export const Comment = ({
+  url,
+  author,
+  date,
+  text,
+  replies,
+  level = 0,
+  uri,
+  counts,
+}: CommentProps) => {
   return (
     <>
       <div
@@ -41,7 +51,33 @@ export const Comment = ({ author, date, text, replies, level = 0, uri }: Comment
               </Tooltip>
             </TooltipProvider>
           </div>
-          <p className="mt-1 text-gray-700">{text}</p>
+          <p className="mt-1 text-gray-700 mb-2">{text}</p>
+          <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
+            <a
+              href={url}
+              target="_blank"
+              className="inline-flex items-center gap-1 transition-colors hover:text-blue-600 no-underline font-normal text-inherit rounded-full px-2 py-1 hover:bg-slate-50"
+              rel="noreferrer">
+              <MessageCircle size={16} />
+              <span>{counts.replies}</span>
+            </a>
+            <a
+              href={url}
+              target="_blank"
+              className="inline-flex items-center gap-1 transition-colors hover:text-emerald-600 no-underline font-normal text-inherit rounded-full px-2 py-1 hover:bg-slate-50"
+              rel="noreferrer">
+              <Repeat2 size={16} />
+              <span>{counts.reposts}</span>
+            </a>
+            <a
+              href={url}
+              target="_blank"
+              className="inline-flex items-center gap-1 transition-colors hover:text-rose-600 no-underline font-normal text-inherit rounded-full px-2 py-1 hover:bg-slate-50"
+              rel="noreferrer">
+              <Heart size={16} />
+              <span>{counts.likes}</span>
+            </a>
+          </div>
         </div>
       </div>
       {replies.map((reply) => (

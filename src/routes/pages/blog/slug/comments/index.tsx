@@ -46,7 +46,7 @@ export const Comments = () => {
       fallback={
         <div className="mt-16 border-t border-gray-200 pt-4">
           <h2 className="text-2xl font-bold">Comments</h2>
-          <p className="mb-6">
+          <p className="mb-3">
             Join the conversation by{' '}
             <span className="inline-flex items-center gap-2">
               <span className="text-gray-500">replying on Bluesky</span>
@@ -73,7 +73,7 @@ export const Comments = () => {
           return (
             <div className="mt-16 border-t border-gray-200 pt-4">
               <h2 className="text-2xl font-bold">Comments</h2>
-              <p className="mb-6">
+              <p className="mb-3">
                 Join the conversation by{' '}
                 <span className="inline-flex items-center gap-2">
                   <a href={post.url} target="_blank" rel="noreferrer">
