@@ -24,7 +24,7 @@ const mapReply = (reply: BlueskyAPIReply, depth: number = 0): BlueskyReply => {
 };
 
 const getPostReplies = async (atUri: string): Promise<BlueskyAPIReply[]> => {
-  const cacheKey = md5(`bluesky:thread:${atUri}`);
+  const cacheKey = `bluesky.post.replies:${md5(atUri)}`;
   const cached = await Cache.get(cacheKey);
   if (cached) {
     return cached as BlueskyAPIReply[];
@@ -51,7 +51,7 @@ const getPostReplies = async (atUri: string): Promise<BlueskyAPIReply[]> => {
 };
 
 const getPost = async (url: string): Promise<BlueskyPost | null> => {
-  const cacheKey = md5(`bluesky:post:${url}`);
+  const cacheKey = `bluesky.post:${md5(url)}`;
   const cached = await Cache.get(cacheKey);
   if (cached) {
     return cached as BlueskyPost;

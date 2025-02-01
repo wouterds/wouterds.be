@@ -29,9 +29,9 @@ export abstract class DatoCMSRepository {
     },
   ) => {
     const request = JSON.stringify({ query: print(query), variables: options.variables });
-    const hash = md5(request);
+    const cacheKey = `datocms.query:${md5(request)}`;
 
-    const cached = await Cache.get(hash);
+    const cached = await Cache.get(cacheKey);
     if (cached) {
       return cached as TData;
     }
@@ -43,7 +43,7 @@ export abstract class DatoCMSRepository {
     });
 
     const data = await response.json().then(({ data }) => data as TData);
-    await Cache.set(hash, data, addHours(new Date(), 4));
+    await Cache.set(cacheKey, data, addHours(new Date(), 4));
 
     return data;
   };
