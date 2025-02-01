@@ -25,6 +25,11 @@ class RedisCache {
   public get = async (key: string) => {
     logger.wait(`[${key}]`, 'checking cache');
 
+    // development mode
+    if (import.meta.env.DEV) {
+      return null;
+    }
+
     const value = await this.client.get(key);
     if (value) {
       const ttl = await this.client.ttl(key);
@@ -41,6 +46,10 @@ class RedisCache {
   };
 
   public set = async <T = unknown>(key: string, value: T, expiry?: Date) => {
+    if (import.meta.env.DEV) {
+      return;
+    }
+
     const diff = expiry ? formatDistanceToNowStrict(expiry) : null;
 
     logger.event(`[${key}]`, `cache set${diff ? `, expires in ${diff}` : ''}`);

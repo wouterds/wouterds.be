@@ -5,7 +5,7 @@ export default [
   index('routes/pages/home.tsx'),
   ...prefix('/blog', [
     index('routes/pages/blog/index.tsx'),
-    route('/:slug', 'routes/pages/blog/slug.tsx'),
+    route('/:slug', 'routes/pages/blog/slug/index.tsx'),
   ]),
   route('/contact', 'routes/pages/contact.tsx'),
 

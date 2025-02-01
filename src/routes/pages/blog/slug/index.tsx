@@ -14,7 +14,10 @@ import { Image } from '~/components/image';
 import { config } from '~/config';
 import type { GalleryRecord, VideoRecord } from '~/graphql';
 import { PostRepository } from '~/graphql/posts/repository.server';
+import { Bluesky } from '~/lib/bluesky/bluesky.server';
 import { excerptFromContent, imagesFromContent, plainTextFromContent } from '~/lib/datocms.server';
+
+import { Comments } from './comments';
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const post = await new PostRepository().getPost(params.slug as string);
@@ -33,6 +36,9 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   const text = post?.content ? plainTextFromContent(post.content) : '';
   const images = imagesFromContent(post?.content);
 
+  const canonical = new URL(`/blog/${post.slug}`, 'https://wouterds.com').toString();
+  const blueskyPost = Bluesky.getPost(canonical);
+
   return {
     title,
     description,
@@ -41,6 +47,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     url: config.baseUrl,
     post,
     containsCodeBlocks,
+    blueskyPost,
   };
 };
 
@@ -133,6 +140,7 @@ export default function BlogSlug() {
         data={post.content as unknown as StructuredTextDocument}
         renderBlock={renderBlock}
       />
+      <Comments />
     </Article>
   );
 }
