@@ -1,20 +1,56 @@
 import { format } from 'date-fns';
 import { isCode } from 'datocms-structured-text-utils';
 import { StatusCodes } from 'http-status-codes';
-import { useEffect, useRef } from 'react';
+import { Suspense, useEffect, useRef } from 'react';
 import {
   type RenderBlockContext,
   StructuredText,
   type StructuredTextDocument,
 } from 'react-datocms';
-import { type LoaderFunctionArgs, type MetaFunction, useLoaderData } from 'react-router';
+import { Await, type LoaderFunctionArgs, type MetaFunction, useLoaderData } from 'react-router';
 
 import { Article } from '~/components/article';
+import { BlueskyIcon } from '~/components/icons/bluesky';
 import { Image } from '~/components/image';
+import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
+import { Skeleton } from '~/components/ui/skeleton';
 import { config } from '~/config';
 import type { GalleryRecord, VideoRecord } from '~/graphql';
 import { PostRepository } from '~/graphql/posts/repository.server';
+import { Bluesky } from '~/lib/bluesky.server';
 import { excerptFromContent, imagesFromContent, plainTextFromContent } from '~/lib/datocms.server';
+
+// Comment Component
+function CommentComponent({
+  author,
+  date,
+  text,
+}: {
+  uri: string;
+  author: {
+    avatarUrl: string;
+    displayName: string;
+    handle: string;
+  };
+  date: string;
+  text: string;
+}) {
+  return (
+    <div className="group relative flex gap-4 py-4">
+      <Avatar>
+        <AvatarImage src={author.avatarUrl} alt={author.displayName} />
+        <AvatarFallback>{author.displayName.slice(0, 1).toUpperCase()}</AvatarFallback>
+      </Avatar>
+      <div className="flex-1">
+        <div className="flex items-center gap-2">
+          <span className="font-medium text-gray-900">{author.displayName}</span>
+          <span className="text-sm text-gray-500">{format(date, 'MMM d, yyyy')}</span>
+        </div>
+        <p className="mt-1 text-gray-700">{text}</p>
+      </div>
+    </div>
+  );
+}
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const post = await new PostRepository().getPost(params.slug as string);
@@ -33,6 +69,9 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   const text = post?.content ? plainTextFromContent(post.content) : '';
   const images = imagesFromContent(post?.content);
 
+  const canonical = new URL(`/blog/${post.slug}`, 'https://wouterds.com').toString();
+  const blueskyPost = Bluesky.getPost(canonical);
+
   return {
     title,
     description,
@@ -41,6 +80,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     url: config.baseUrl,
     post,
     containsCodeBlocks,
+    blueskyPost,
   };
 };
 
@@ -91,7 +131,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
 };
 
 export default function BlogSlug() {
-  const { post, containsCodeBlocks } = useLoaderData<typeof loader>();
+  const { post, containsCodeBlocks, blueskyPost } = useLoaderData<typeof loader>();
 
   const ref = useRef<HTMLElement | null>(null);
 
@@ -133,6 +173,42 @@ export default function BlogSlug() {
         data={post.content as unknown as StructuredTextDocument}
         renderBlock={renderBlock}
       />
+
+      <Suspense
+        fallback={
+          <div className="mt-16 border-t border-gray-200 pt-8">
+            <Skeleton className="w-full h-64" />
+          </div>
+        }>
+        <Await resolve={blueskyPost}>
+          {(post) => {
+            if (!post?.uri) {
+              return null;
+            }
+
+            return (
+              <div className="mt-16 border-t border-gray-200 pt-4">
+                <h2 className="text-2xl font-bold">Comments</h2>
+                <p className="mb-6">
+                  Join the conversation by{' '}
+                  <span className="inline-flex items-center gap-2">
+                    <a href={post.url} target="_blank" rel="noreferrer">
+                      replying on Bluesky
+                    </a>
+                    <BlueskyIcon size={18} className="text-blue-600" />
+                  </span>
+                </p>
+
+                <div className="divide-y divide-gray-200">
+                  {post.replies.map((reply) => (
+                    <CommentComponent key={reply.uri} {...reply} />
+                  ))}
+                </div>
+              </div>
+            );
+          }}
+        </Await>
+      </Suspense>
     </Article>
   );
 }
