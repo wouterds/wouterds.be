@@ -52,7 +52,7 @@ export const Comment = ({
             </TooltipProvider>
           </div>
           <p className="mt-1 text-gray-700 mb-2">{text}</p>
-          <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
+          <div className="flex items-center gap-2 text-sm text-gray-500 mb-2 -mx-2">
             <a
               href={url}
               target="_blank"
