@@ -35,7 +35,7 @@ export const Comment = ({
         </Avatar>
         <div className="flex-1">
           <div className="flex items-center gap-2 leading-tight">
-            <span className="font-medium text-gray-900">{author.displayName}</span>
+            <span className="font-medium text-gray-900">{author.displayName || author.handle}</span>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -51,7 +51,7 @@ export const Comment = ({
               </Tooltip>
             </TooltipProvider>
           </div>
-          <p className="mt-1 text-gray-700 mb-2">{text}</p>
+          <p className="mt-1 text-gray-700 mb-1">{text}</p>
           <div className="flex items-center gap-2 text-sm text-gray-500 mb-2 -mx-2">
             <a
               href={url}
