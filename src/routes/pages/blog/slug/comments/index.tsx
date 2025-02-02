@@ -52,7 +52,7 @@ export const Comments = () => {
               replying on Bluesky{' '}
               <BlueskyIcon
                 size={18}
-                className="text-gray-400 inline-block align-text-bottom ml-1"
+                className="text-gray-400 hidden sm:inline-block align-text-bottom ml-1"
               />
             </span>
           </p>
@@ -84,7 +84,7 @@ export const Comments = () => {
                   </a>{' '}
                   <BlueskyIcon
                     size={18}
-                    className="text-blue-600 inline-block align-text-bottom ml-1"
+                    className="text-blue-600 hidden sm:inline-block align-text-bottom ml-1"
                   />
                 </span>
               </p>
