@@ -1,8 +1,9 @@
-import { addHours } from 'date-fns';
 import { type ASTNode, print } from 'graphql';
 
 import { Cache } from '~/lib/cache.server';
 import { md5 } from '~/lib/crypto.server';
+
+const CACHE_TTL_HOURS = 2;
 
 export abstract class DatoCMSRepository {
   private get apiKey() {
@@ -43,7 +44,7 @@ export abstract class DatoCMSRepository {
     });
 
     const data = await response.json().then(({ data }) => data as TData);
-    await Cache.set(cacheKey, data, addHours(new Date(), 4));
+    await Cache.set(cacheKey, data, CACHE_TTL_HOURS * 60 * 60);
 
     return data;
   };

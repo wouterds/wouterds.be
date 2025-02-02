@@ -4,7 +4,7 @@ import { md5 } from '~/lib/crypto.server';
 import { transformPost } from './transformers';
 import type { BlueskyAPIReply, BlueskyPost } from './types';
 
-const CACHE_TTL = 2; // minutes
+const CACHE_TTL_MINUTES = 2;
 const BLUESKY_AUTHOR = 'wouterds.com';
 
 const getPostReplies = async (atUri: string): Promise<BlueskyAPIReply[]> => {
@@ -27,9 +27,7 @@ const getPostReplies = async (atUri: string): Promise<BlueskyAPIReply[]> => {
 
   const result = data.thread.replies as BlueskyAPIReply[];
 
-  const expiryDate = new Date();
-  expiryDate.setMinutes(expiryDate.getMinutes() + CACHE_TTL);
-  await Cache.set(cacheKey, result, expiryDate);
+  await Cache.set(cacheKey, result, CACHE_TTL_MINUTES * 60);
 
   return result;
 };
@@ -57,9 +55,7 @@ const getPost = async (url: string): Promise<BlueskyPost | null> => {
       const replies = await getPostReplies(data.posts[0].uri);
       const post = transformPost(data.posts[0], replies);
 
-      const expiryDate = new Date();
-      expiryDate.setMinutes(expiryDate.getMinutes() + CACHE_TTL);
-      await Cache.set(cacheKey, post, expiryDate);
+      await Cache.set(cacheKey, post, CACHE_TTL_MINUTES * 60);
 
       return post;
     }

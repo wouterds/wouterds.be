@@ -45,9 +45,13 @@ class RedisCache {
     return null;
   };
 
-  public set = async <T = unknown>(key: string, value: T, expiry?: Date) => {
+  public set = async <T = unknown>(key: string, value: T, expiry?: Date | number) => {
     if (import.meta.env.DEV) {
       return;
+    }
+
+    if (typeof expiry === 'number') {
+      expiry = new Date(Date.now() + expiry * 1000);
     }
 
     const diff = expiry ? formatDistanceToNowStrict(expiry) : null;
