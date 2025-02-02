@@ -1,33 +1,11 @@
 import { Cache } from '~/lib/cache.server';
 import { md5 } from '~/lib/crypto.server';
 
-import type { BlueskyAPIReply, BlueskyPost, BlueskyReply } from './types';
+import { transformPost, transformReply } from './transformers';
+import type { BlueskyAPIReply, BlueskyPost } from './types';
 
 const CACHE_TTL = 2; // minutes
 const BLUESKY_AUTHOR = 'wouterds.com';
-
-const mapReply = (reply: BlueskyAPIReply, depth: number = 0): BlueskyReply => {
-  const [, , did, , rkey] = reply.post.uri.split('/');
-
-  return {
-    url: `https://bsky.app/profile/${did}/post/${rkey}`,
-    uri: reply.post.uri,
-    author: {
-      avatarUrl: reply.post.author.avatar,
-      displayName: reply.post.author.displayName,
-      handle: reply.post.author.handle,
-    },
-    date: reply.post.record.createdAt,
-    text: reply.post.record.text,
-    replies: depth < 2 ? reply.replies.map((r) => mapReply(r, depth + 1)) : [],
-    counts: {
-      replies: reply.post.replyCount,
-      reposts: reply.post.repostCount,
-      likes: reply.post.likeCount,
-      quotes: reply.post.quoteCount,
-    },
-  };
-};
 
 const getPostReplies = async (atUri: string): Promise<BlueskyAPIReply[]> => {
   const cacheKey = `bluesky.post.replies:${md5(atUri)}`;
@@ -76,26 +54,14 @@ const getPost = async (url: string): Promise<BlueskyPost | null> => {
 
   const result = await response.json().then(async (data) => {
     if (data?.posts?.[0]) {
-      const [, , did, , rkey] = data.posts[0].uri.split('/');
-
       const replies = await getPostReplies(data.posts[0].uri);
-      const result: BlueskyPost = {
-        uri: data.posts[0].uri.toString(),
-        url: `https://bsky.app/profile/${did}/post/${rkey}`,
-        replies: replies.map((r) => mapReply(r, 0)),
-        counts: {
-          replies: data.posts[0].replyCount,
-          reposts: data.posts[0].repostCount,
-          likes: data.posts[0].likeCount,
-          quotes: data.posts[0].quoteCount,
-        },
-      };
+      const post = transformPost(data.posts[0], replies);
 
       const expiryDate = new Date();
       expiryDate.setMinutes(expiryDate.getMinutes() + CACHE_TTL);
-      await Cache.set(cacheKey, result, expiryDate);
+      await Cache.set(cacheKey, post, expiryDate);
 
-      return result;
+      return post;
     }
 
     return null;
