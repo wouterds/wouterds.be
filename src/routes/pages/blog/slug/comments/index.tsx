@@ -48,7 +48,7 @@ export const Comments = () => {
           <h2 className="text-2xl font-bold">Comments</h2>
           <p className="mb-3">
             Join the conversation by{' '}
-            <span className="text-gray-500 inline-flex items-center gap-2">
+            <span className="font-medium text-gray-500 inline-flex items-center gap-2">
               replying on Bluesky <BlueskyIcon size={18} className="text-gray-400" />
             </span>
           </p>
@@ -74,7 +74,7 @@ export const Comments = () => {
               <h2 className="text-2xl font-bold">Comments</h2>
               <p className="mb-3">
                 Join the conversation by{' '}
-                <span className="inline-flex items-center gap-2 flex-wrap">
+                <span className="inline-flex items-center gap-2">
                   <a href={post.url} target="_blank" rel="noreferrer">
                     replying on Bluesky
                   </a>
