@@ -21,7 +21,7 @@ export const CommentSkeleton = () => {
           <Skeleton className="h-4 w-24" />
           <Skeleton className="h-4 w-16" />
         </div>
-        <div className="mt-3 space-y-2">
+        <div className="mt-3 space-y-2 pb-3">
           <Skeleton className="h-4 w-3/4" />
           <Skeleton className="h-4 w-2/5" />
         </div>
@@ -44,7 +44,7 @@ export const Comments = () => {
   return (
     <Suspense
       fallback={
-        <div className="mt-16 border-t border-gray-200 pt-4">
+        <div className="mt-12 sm:mt-16 pt-0 sm:pt-2 border-t border-gray-200">
           <h2 className="text-2xl font-bold">Comments</h2>
           <p className="mb-3">
             Join the conversation by{' '}
@@ -70,7 +70,7 @@ export const Comments = () => {
           }
 
           return (
-            <div className="mt-16 border-t border-gray-200 pt-4">
+            <div className="mt-12 sm:mt-16 pt-0 sm:pt-2 border-t border-gray-200">
               <h2 className="text-2xl font-bold">Comments</h2>
               <p className="mb-3">
                 Join the conversation by{' '}
