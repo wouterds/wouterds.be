@@ -9,6 +9,7 @@ type Props = {
   unit: string;
   label: string;
   rounding?: number;
+  scale?: { min: number; max: number };
   className?: string;
   footer?: ReactNode[];
   syncId?: string;
@@ -20,6 +21,7 @@ export const BarChart = ({
   unit,
   label,
   rounding = 2,
+  scale,
   className,
   footer,
   syncId,
@@ -38,7 +40,17 @@ export const BarChart = ({
         <div className="h-[60px]">
           <ResponsiveContainer>
             <Chart data={data} syncId={syncId} margin={{ right: 3, left: 3, bottom: 6 }}>
-              <YAxis hide />
+              <YAxis
+                hide
+                domain={
+                  scale
+                    ? [
+                        Math.min(...data.map((record) => record[dataKey] as number)) * scale.min,
+                        Math.max(...data.map((record) => record[dataKey] as number)) * scale.max,
+                      ]
+                    : undefined
+                }
+              />
               <Bar
                 dataKey={dataKey}
                 fill={chartColor}

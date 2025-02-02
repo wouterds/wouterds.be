@@ -17,6 +17,7 @@ type DataConfig = {
   dataKey: string;
   unit: string;
   label: string;
+  scale?: { min: number; max: number };
 };
 
 type BaseChartsProps = {
@@ -98,6 +99,7 @@ const ChartSection = ({
           unit={config.unit}
           label={config.label}
           syncId={syncId}
+          scale={config.scale}
         />
       ))}
     </div>
