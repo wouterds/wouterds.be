@@ -78,7 +78,7 @@ export const Experiments = () => {
       {visibleChart === 'tesla' && <TeslaCharts />}
       {visibleChart === 'power' && <PowerCharts />}
       {visibleChart === 'nuc' && <NUCCharts />}
-      <div className="flex flex-nowrap whitespace-nowrap text-nowrap bg-gradient-to-b from-gray-100 to-white min-w-full px-3 sm:px-5 py-2 text-sm overflow-x-auto border-t border-gray-200">
+      <div className="flex flex-nowrap whitespace-nowrap text-nowrap bg-gradient-to-b from-gray-100 to-gray-50 min-w-full px-3 sm:px-5 py-2 text-sm overflow-x-auto border-t border-gray-200">
         <div onClick={() => toggleChart('aranet4')} className="cursor-pointer group">
           <Aranet4 data={data?.aranet} />
         </div>
