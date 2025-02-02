@@ -48,8 +48,12 @@ export const Comments = () => {
           <h2 className="text-2xl font-bold">Comments</h2>
           <p className="mb-3">
             Join the conversation by{' '}
-            <span className="font-medium text-gray-500 inline-flex items-center gap-2">
-              replying on Bluesky <BlueskyIcon size={18} className="text-gray-400" />
+            <span className="font-medium text-gray-500">
+              replying on Bluesky{' '}
+              <BlueskyIcon
+                size={18}
+                className="text-gray-400 inline-block align-text-bottom ml-1"
+              />
             </span>
           </p>
 
@@ -74,11 +78,14 @@ export const Comments = () => {
               <h2 className="text-2xl font-bold">Comments</h2>
               <p className="mb-3">
                 Join the conversation by{' '}
-                <span className="inline-flex items-center gap-2">
+                <span>
                   <a href={post.url} target="_blank" rel="noreferrer">
                     replying on Bluesky
-                  </a>
-                  <BlueskyIcon size={18} className="text-blue-600" />
+                  </a>{' '}
+                  <BlueskyIcon
+                    size={18}
+                    className="text-blue-600 inline-block align-text-bottom ml-1"
+                  />
                 </span>
               </p>
 
