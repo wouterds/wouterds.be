@@ -1,7 +1,7 @@
 import { Cache } from '~/lib/cache.server';
 import { md5 } from '~/lib/crypto.server';
 
-import { transformPost, transformReply } from './transformers';
+import { transformPost } from './transformers';
 import type { BlueskyAPIReply, BlueskyPost } from './types';
 
 const CACHE_TTL = 2; // minutes
