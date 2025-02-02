@@ -24,6 +24,9 @@ const css = {
 
 export default {
   content: ['./src/**/{**,.client,.server}/**/*.{js,jsx,ts,tsx}'],
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   theme: {
     extend: {
       fontFamily: {
