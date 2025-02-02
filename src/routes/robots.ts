@@ -6,6 +6,7 @@ export const loader = async () => {
   let robots = '';
   robots += 'User-agent: *\n';
   robots += 'Allow: /\n';
+  robots += 'Disallow: /cdn-cgi/\n';
   robots += '\n';
   robots += `Host: ${config.baseUrl}\n`;
   robots += `Sitemap: ${new URL('/sitemap.xml', config.baseUrl)}\n`;
