@@ -1,7 +1,7 @@
 import { BaseCharts } from './base-charts';
 
 const dataConfigs = [
-  { dataKey: 'active', unit: 'W', label: 'power usage', scale: { min: 0.8, max: 1 } },
+  { dataKey: 'active', unit: 'W', label: 'power usage', scale: { min: 0.9, max: 1 } },
 ];
 
 export const PowerCharts = () => {
