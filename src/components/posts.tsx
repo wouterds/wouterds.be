@@ -18,7 +18,7 @@ export const Posts = ({ posts }: PostsProps) => {
               dateTime={post.date}>
               {format(post.date, 'MMMM do, yyyy')}
             </time>
-            <h3 className="text-xl font-semibold mb-0.5 text-zinc-600 group-hover:text-black dark:text-zinc-300 dark:group-hover:text-white transition-colors duration-500 sm:truncate">
+            <h3 className="text-xl font-semibold mb-0.5 text-zinc-600 group-hover:text-black dark:text-zinc-300 dark:group-hover:text-white transition-colors duration-300 sm:truncate">
               {post.title}
             </h3>
             <p className="leading-relaxed line-clamp-3 sm:line-clamp-2 text-zinc-500 dark:text-zinc-400">
