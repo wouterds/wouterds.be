@@ -84,7 +84,7 @@ export const Comments = () => {
                   </a>{' '}
                   <BlueskyIcon
                     size={18}
-                    className="text-blue-600 hidden sm:inline-block align-text-bottom ml-1"
+                    className="text-blue-600 dark:text-blue-500 hidden sm:inline-block align-text-bottom ml-1"
                   />
                 </span>
               </p>
