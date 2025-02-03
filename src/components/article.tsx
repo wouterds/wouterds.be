@@ -5,7 +5,7 @@ type Props = {
 };
 
 export const Article = forwardRef<HTMLElement, Props>(({ children }, ref) => (
-  <article ref={ref} className="prose prose-gray max-w-none">
+  <article ref={ref} className="prose dark:prose-invert max-w-none">
     {children}
   </article>
 ));

@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
     <footer className="mt-12 mb-4 max-w-screen-md mx-auto px-6 sm:px-8 w-full flex-1">
-      <p className="text-sm text-gray-400">
+      <p className="text-sm text-zinc-400">
         <a
           href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
           target="_blank"

@@ -17,6 +17,7 @@ import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
 import { Textarea } from '~/components/ui/textarea';
+import { useIsDarkMode } from '~/hooks/use-is-dark-mode';
 import { CloudflareTurnstileValidator } from '~/lib/cloudflare.server';
 import { MailjetMailer } from '~/lib/mailjet.server';
 
@@ -81,6 +82,7 @@ export default function Contact() {
     handleSubmit,
     reset,
   } = useForm({ resolver: zodResolver(schema) });
+  const isDarkMode = useIsDarkMode();
 
   useEffect(() => {
     if (data?.success) reset();
@@ -143,7 +145,7 @@ export default function Contact() {
           <div>
             <Turnstile
               siteKey={import.meta.env.VITE_CLOUDFLARE_TURNSTILE_KEY}
-              options={{ theme: 'light', size: 'flexible' }}
+              options={{ theme: isDarkMode ? 'dark' : 'light', size: 'flexible' }}
             />
           </div>
           <div>

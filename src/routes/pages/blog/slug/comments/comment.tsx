@@ -35,7 +35,9 @@ export const Comment = ({
         </Avatar>
         <div className="flex-1">
           <div className="flex items-center gap-2 leading-tight">
-            <span className="font-medium text-gray-900">{author.displayName || author.handle}</span>
+            <span className="font-medium text-zinc-900 dark:text-zinc-100">
+              {author.displayName || author.handle}
+            </span>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -43,7 +45,7 @@ export const Comment = ({
                     href={`https://bsky.app/profile/${author.handle}/post/${uri.split('/').pop()}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm font-normal text-gray-500 no-underline hover:underline">
+                    className="text-sm font-normal text-zinc-500 dark:text-zinc-400 no-underline hover:underline">
                     {format(date, 'MMM d, yyyy')}
                   </a>
                 </TooltipTrigger>
@@ -51,12 +53,12 @@ export const Comment = ({
               </Tooltip>
             </TooltipProvider>
           </div>
-          <p className="mt-1 text-gray-700 mb-1">{text}</p>
-          <div className="flex items-center gap-2 text-sm text-gray-500 -mx-2">
+          <p className="mt-1 text-zinc-700 dark:text-zinc-300 mb-1">{text}</p>
+          <div className="flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400 -mx-2">
             <a
               href={url}
               target="_blank"
-              className="inline-flex items-center gap-1 transition-colors hover:text-blue-600 no-underline font-normal text-inherit rounded-full px-2 py-1 hover:bg-slate-50"
+              className="inline-flex items-center gap-1 transition-colors hover:text-blue-600 dark:hover:text-blue-400 no-underline font-normal text-inherit rounded-full px-2 py-1 hover:bg-slate-50 dark:hover:bg-zinc-800"
               rel="noreferrer">
               <MessageCircle size={16} />
               <span>{counts.replies}</span>
@@ -64,7 +66,7 @@ export const Comment = ({
             <a
               href={url}
               target="_blank"
-              className="inline-flex items-center gap-1 transition-colors hover:text-emerald-600 no-underline font-normal text-inherit rounded-full px-2 py-1 hover:bg-slate-50"
+              className="inline-flex items-center gap-1 transition-colors hover:text-emerald-600 dark:hover:text-emerald-400 no-underline font-normal text-inherit rounded-full px-2 py-1 hover:bg-slate-50 dark:hover:bg-zinc-800"
               rel="noreferrer">
               <Repeat2 size={16} />
               <span>{counts.reposts}</span>
@@ -72,7 +74,7 @@ export const Comment = ({
             <a
               href={url}
               target="_blank"
-              className="inline-flex items-center gap-1 transition-colors hover:text-rose-600 no-underline font-normal text-inherit rounded-full px-2 py-1 hover:bg-slate-50"
+              className="inline-flex items-center gap-1 transition-colors hover:text-rose-600 dark:hover:text-rose-400 no-underline font-normal text-inherit rounded-full px-2 py-1 hover:bg-slate-50 dark:hover:bg-zinc-800"
               rel="noreferrer">
               <Heart size={16} />
               <span>{counts.likes}</span>

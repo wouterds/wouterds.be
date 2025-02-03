@@ -32,7 +32,7 @@ export const CommentSkeleton = () => {
 
 export const CommentThread = ({ reply }: { reply: BlueskyReply }) => {
   return (
-    <div className="border-t border-gray-200 first:border-t-0">
+    <div className="border-t border-zinc-200 dark:border-zinc-800 first:border-t-0">
       <Comment {...reply} />
     </div>
   );
@@ -44,24 +44,24 @@ export const Comments = () => {
   return (
     <Suspense
       fallback={
-        <div className="mt-12 sm:mt-16 pt-0 sm:pt-2 border-t border-gray-200">
+        <div className="mt-12 sm:mt-16 pt-0 sm:pt-2 border-t border-zinc-200 dark:border-zinc-800">
           <h2 className="text-2xl font-bold">Comments</h2>
           <p className="mb-3">
             Join the conversation by{' '}
-            <span className="font-medium text-gray-500">
+            <span className="font-medium text-zinc-500 dark:text-zinc-400">
               replying on Bluesky{' '}
               <BlueskyIcon
                 size={18}
-                className="text-gray-400 hidden sm:inline-block align-text-bottom ml-1"
+                className="text-zinc-400 dark:text-zinc-500 hidden sm:inline-block align-text-bottom ml-1"
               />
             </span>
           </p>
 
           <div>
-            <div className="border-t border-gray-200 first:border-t-0">
+            <div className="border-t border-zinc-200 dark:border-zinc-800 first:border-t-0">
               <CommentSkeleton />
             </div>
-            <div className="border-t border-gray-200">
+            <div className="border-t border-zinc-200 dark:border-zinc-800">
               <CommentSkeleton />
             </div>
           </div>
@@ -74,7 +74,7 @@ export const Comments = () => {
           }
 
           return (
-            <div className="mt-12 sm:mt-16 pt-0 sm:pt-2 border-t border-gray-200">
+            <div className="mt-12 sm:mt-16 pt-0 sm:pt-2 border-t border-zinc-200 dark:border-zinc-800">
               <h2 className="text-2xl font-bold">Comments</h2>
               <p className="mb-3">
                 Join the conversation by{' '}

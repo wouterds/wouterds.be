@@ -14,14 +14,14 @@ export const Posts = ({ posts }: PostsProps) => {
         <li key={post.id}>
           <Link to={`/blog/${post.slug}`} prefetch="intent" className="block group no-underline">
             <time
-              className="text-xs uppercase font-medium text-gray-400 mb-1 block"
+              className="text-xs uppercase font-medium text-zinc-400 dark:text-zinc-500 mb-1 block"
               dateTime={post.date}>
               {format(post.date, 'MMMM do, yyyy')}
             </time>
-            <h3 className="text-xl font-medium mb-0.5 text-gray-600 group-hover:text-black hover:text-black transition-colors duration-500 sm:truncate">
+            <h3 className="text-xl font-semibold mb-0.5 text-zinc-600 group-hover:text-black dark:text-zinc-300 dark:group-hover:text-white transition-colors duration-500 sm:truncate">
               {post.title}
             </h3>
-            <p className="leading-relaxed line-clamp-3 sm:line-clamp-2 text-gray-500">
+            <p className="leading-relaxed line-clamp-3 sm:line-clamp-2 text-zinc-500 dark:text-zinc-400">
               {post.excerpt}
             </p>
           </Link>

@@ -12,11 +12,11 @@ export type MetricProps = {
 export const MetricItem = ({ icon: Icon, value, unit = '', href }: MetricProps) => {
   const content = (
     <>
-      <Icon size={16} />
+      <Icon size={16} className="text-zinc-600 dark:text-zinc-400" />
       {typeof value === 'undefined' ? (
         <Skeleton className="w-7 h-4" />
       ) : (
-        <span>
+        <span className="text-zinc-700 dark:text-zinc-300">
           {value}
           {unit}
         </span>

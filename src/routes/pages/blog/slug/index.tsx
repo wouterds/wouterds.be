@@ -14,6 +14,7 @@ import { Image } from '~/components/image';
 import { config } from '~/config';
 import type { GalleryRecord, VideoRecord } from '~/graphql';
 import { PostRepository } from '~/graphql/posts/repository.server';
+import { useIsDarkMode } from '~/hooks/use-is-dark-mode';
 import { Bluesky } from '~/lib/bluesky/bluesky.server';
 import { excerptFromContent, imagesFromContent, plainTextFromContent } from '~/lib/datocms.server';
 
@@ -99,6 +100,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
 
 export default function BlogSlug() {
   const { post, containsCodeBlocks } = useLoaderData<typeof loader>();
+  const isDarkMode = useIsDarkMode();
 
   const ref = useRef<HTMLElement | null>(null);
 
@@ -119,18 +121,18 @@ export default function BlogSlug() {
       // @ts-expect-error: import from esm.sh to avoid a too large bundle size for CF Workers
       import('https://esm.sh/shiki@1.5.2').then(async ({ codeToHtml }) => {
         pre.outerHTML = await codeToHtml(code, {
+          theme: isDarkMode ? 'github-dark' : 'github-light',
           lang,
-          theme: 'github-light',
         });
       });
     }
-  }, [containsCodeBlocks]);
+  }, [containsCodeBlocks, isDarkMode]);
 
   return (
     <Article ref={ref}>
       <header className="mb-4">
         <time
-          className="text-sm uppercase font-medium text-gray-400 mb-4 block"
+          className="text-sm uppercase font-medium text-zinc-400 mb-4 block"
           dateTime={post.date}>
           {format(post.date, 'MMMM do, yyyy')}
         </time>
@@ -165,7 +167,7 @@ const renderBlock = ({
       return (
         <div className="not-prose mt-6">
           <div
-            className="bg-gray-50 relative overflow-hidden bg-center bg-cover aspect-video w-full rounded-sm"
+            className="bg-zinc-50 relative overflow-hidden bg-center bg-cover aspect-video w-full rounded-sm"
             style={{ backgroundImage: `url(${record.video.thumbnailUrl})` }}>
             <iframe
               loading="lazy"

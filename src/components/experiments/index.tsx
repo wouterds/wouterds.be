@@ -73,12 +73,12 @@ export const Experiments = () => {
   }, []);
 
   return (
-    <div className="mt-12 text-gray-800">
+    <div className="mt-12 text-zinc-800 dark:text-zinc-200">
       {visibleChart === 'aranet4' && <Aranet4Charts />}
       {visibleChart === 'tesla' && <TeslaCharts />}
       {visibleChart === 'power' && <PowerCharts />}
       {visibleChart === 'nuc' && <NUCCharts />}
-      <div className="flex flex-nowrap whitespace-nowrap text-nowrap bg-gradient-to-b from-gray-100 to-gray-50 min-w-full px-3 sm:px-5 py-2 text-sm overflow-x-auto border-t border-gray-200">
+      <div className="flex flex-nowrap whitespace-nowrap text-nowrap bg-zinc-100 dark:bg-zinc-900 min-w-full px-3 sm:px-5 py-2 text-sm overflow-x-auto border-t border-zinc-200 dark:border-zinc-800">
         <div onClick={() => toggleChart('aranet4')} className="cursor-pointer group">
           <Aranet4 data={data?.aranet} />
         </div>
