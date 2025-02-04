@@ -1,7 +1,7 @@
+import { SiBluesky } from '@icons-pack/react-simple-icons';
 import { Suspense } from 'react';
 import { Await, useLoaderData } from 'react-router';
 
-import { BlueskyIcon } from '~/components/icons/bluesky';
 import { Avatar, AvatarFallback } from '~/components/ui/avatar';
 import { Skeleton } from '~/components/ui/skeleton';
 import type { BlueskyPost, BlueskyReply } from '~/lib/bluesky/types';
@@ -50,7 +50,7 @@ export const Comments = () => {
             Join the conversation by{' '}
             <span className="font-medium text-zinc-500 dark:text-zinc-400">
               replying on Bluesky{' '}
-              <BlueskyIcon
+              <SiBluesky
                 size={18}
                 className="text-zinc-400 dark:text-zinc-500 hidden sm:inline-block align-text-bottom ml-1"
               />
@@ -82,7 +82,7 @@ export const Comments = () => {
                   <a href={post.url} target="_blank" rel="noreferrer">
                     replying on Bluesky
                   </a>{' '}
-                  <BlueskyIcon
+                  <SiBluesky
                     size={18}
                     className="text-blue-600 dark:text-blue-500 hidden sm:inline-block align-text-bottom ml-1"
                   />
