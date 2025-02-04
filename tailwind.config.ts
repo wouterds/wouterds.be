@@ -3,9 +3,6 @@ import type { Config } from 'tailwindcss';
 
 export default {
   darkMode: 'media',
-  future: {
-    hoverOnlyWhenSupported: true,
-  },
   content: ['./src/**/{**,.client,.server}/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
