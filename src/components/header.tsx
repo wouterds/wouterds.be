@@ -1,3 +1,6 @@
+import { SiBluesky, SiGithub, SiInstagram, SiRss } from '@icons-pack/react-simple-icons';
+import clsx from 'clsx';
+import type { ReactNode } from 'react';
 import { Link } from 'react-router';
 
 import { Logo } from './logo';
@@ -11,24 +14,51 @@ const Header = () => (
         <Logo className="relative" />
       </Link>
       <ul className="flex justify-end items-center -m-2.5">
-        <li>
-          <HeaderLink to="/blog">Blog</HeaderLink>
-        </li>
-        <li>
-          <HeaderLink to="/contact">Contact</HeaderLink>
-        </li>
+        <HeaderLink to="/blog">Blog</HeaderLink>
+        <HeaderLink to="/contact">Contact</HeaderLink>
+        <HeaderLink
+          to="https://bsky.app/profile/wouterds.com"
+          target="_blank"
+          rel="noopener noreferrer">
+          <SiBluesky className="size-4" />
+        </HeaderLink>
+        <HeaderLink to="https://instagram.com/wouterds" target="_blank" rel="noopener noreferrer">
+          <SiInstagram className="size-4" />
+        </HeaderLink>
+        <HeaderLink to="https://github.com/wouterds" target="_blank" rel="noopener noreferrer">
+          <SiGithub className="size-4" />
+        </HeaderLink>
+        <HeaderLink to="/feed.xml">
+          <SiRss className="size-3.5" />
+        </HeaderLink>
       </ul>
     </nav>
   </header>
 );
 
-const HeaderLink = ({ children, to }: { children: React.ReactNode; to: string }) => (
-  <Link
-    to={to}
-    prefetch="intent"
-    className="text-zinc-400 hover:text-zinc-500 dark:text-zinc-500 dark:hover:text-zinc-300 no-underline p-2.5">
-    {children}
-  </Link>
+const HeaderLink = ({
+  children,
+  to,
+  target,
+  rel,
+  className,
+}: {
+  children: ReactNode;
+  to: string;
+  target?: string;
+  rel?: string;
+  className?: string;
+}) => (
+  <li className={clsx('flex flex-1 h-full items-center justify-center', className)}>
+    <Link
+      to={to}
+      target={target}
+      rel={rel}
+      prefetch={!target ? 'intent' : undefined}
+      className="text-zinc-400 hover:text-zinc-500 dark:text-zinc-500 dark:hover:text-zinc-300 no-underline p-2.5 flex-1 flex items-center justify-center h-full">
+      {children}
+    </Link>
+  </li>
 );
 
 export default Header;
