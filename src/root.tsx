@@ -99,7 +99,7 @@ export function Layout({ children }: { children: ReactNode }) {
       </head>
       <body>
         <Header />
-        <main className="max-w-screen-md mx-auto px-6 sm:px-8">{children}</main>
+        <main className="max-w-screen-md w-full mx-auto px-6 sm:px-8">{children}</main>
         <Footer />
         <Experiments />
         <div id="modal-portal" />
