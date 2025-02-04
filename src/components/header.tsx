@@ -1,4 +1,4 @@
-import { SiBluesky, SiGithub, SiInstagram, SiRss } from '@icons-pack/react-simple-icons';
+import { SiBluesky, SiGithub, SiRss } from '@icons-pack/react-simple-icons';
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router';
@@ -21,9 +21,6 @@ const Header = () => (
           target="_blank"
           rel="noopener noreferrer">
           <SiBluesky className="size-4" />
-        </HeaderLink>
-        <HeaderLink to="https://instagram.com/wouterds" target="_blank" rel="noopener noreferrer">
-          <SiInstagram className="size-4" />
         </HeaderLink>
         <HeaderLink to="https://github.com/wouterds" target="_blank" rel="noopener noreferrer">
           <SiGithub className="size-4" />
