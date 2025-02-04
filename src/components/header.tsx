@@ -28,7 +28,7 @@ const Header = () => (
         <HeaderLink to="https://github.com/wouterds" target="_blank" rel="noopener noreferrer">
           <SiGithub className="size-4" />
         </HeaderLink>
-        <HeaderLink to="/feed.xml">
+        <HeaderLink to="/feed.xml" target="_blank" rel="noopener noreferrer">
           <SiRss className="size-3.5" />
         </HeaderLink>
       </ul>
