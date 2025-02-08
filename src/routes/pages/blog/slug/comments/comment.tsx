@@ -35,7 +35,7 @@ export const Comment = ({
         </Avatar>
         <div className="flex-1">
           <div className="flex items-center gap-2 leading-tight">
-            <span className="font-medium text-zinc-900 dark:text-zinc-100">
+            <span className="font-medium text-zinc-900 dark:text-zinc-100 truncate">
               {author.displayName || author.handle}
             </span>
             <TooltipProvider>
@@ -45,7 +45,7 @@ export const Comment = ({
                     href={`https://bsky.app/profile/${author.handle}/post/${uri.split('/').pop()}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm font-normal text-zinc-500 dark:text-zinc-400 no-underline hover:underline">
+                    className="text-sm font-normal text-zinc-500 dark:text-zinc-400 no-underline hover:underline shrink-0">
                     {format(date, 'MMM d, yyyy')}
                   </a>
                 </TooltipTrigger>
