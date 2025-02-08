@@ -35,9 +35,13 @@ export const Comment = ({
         </Avatar>
         <div className="flex-1">
           <div className="flex items-center gap-2 leading-tight">
-            <span className="font-medium text-zinc-900 dark:text-zinc-100 truncate">
+            <a
+              href={`https://bsky.app/profile/${author.handle}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-zinc-900 no-underline hover:underline dark:text-zinc-100 truncate">
               {author.displayName || author.handle}
-            </span>
+            </a>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
